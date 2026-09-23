@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mohammed Reguig">
+
+<title>Symmetries, groups and conservation laws – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#why-symmetries-matter" id="toc-why-symmetries-matter" class="nav-link active" data-scroll-target="#why-symmetries-matter"><span class="header-section-number">1</span> Why symmetries matter</a></li>
+  <li><a href="#the-action-and-field-equations" id="toc-the-action-and-field-equations" class="nav-link" data-scroll-target="#the-action-and-field-equations"><span class="header-section-number">2</span> The action and field equations</a></li>
+  <li><a href="#noethers-theorem" id="toc-noethers-theorem" class="nav-link" data-scroll-target="#noethers-theorem"><span class="header-section-number">3</span> Noether’s theorem</a></li>
+  <li><a href="#groups-and-lie-algebras" id="toc-groups-and-lie-algebras" class="nav-link" data-scroll-target="#groups-and-lie-algebras"><span class="header-section-number">4</span> Groups and Lie algebras</a></li>
+  <li><a href="#the-poincaré-group" id="toc-the-poincaré-group" class="nav-link" data-scroll-target="#the-poincaré-group"><span class="header-section-number">5</span> The Poincaré group</a></li>
+  <li><a href="#internal-symmetries" id="toc-internal-symmetries" class="nav-link" data-scroll-target="#internal-symmetries"><span class="header-section-number">6</span> Internal symmetries</a></li>
+  <li><a href="#exact-broken-and-anomalous-symmetries" id="toc-exact-broken-and-anomalous-symmetries" class="nav-link" data-scroll-target="#exact-broken-and-anomalous-symmetries"><span class="header-section-number">7</span> Exact, broken and anomalous symmetries</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">8</span> Exercises</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">9</span> Problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">10</span> Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Symmetries, groups and conservation laws</h1>
+<p class="subtitle lead">From Noether’s theorem to internal symmetries</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mohammed Reguig </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../cours.html">← Back to the course list</a></p>
+<section id="why-symmetries-matter" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="why-symmetries-matter"><span class="header-section-number">1</span> Why symmetries matter</h2>
+<p>A symmetry is a transformation that changes the mathematical description of a system without changing its physical laws. For example, an isolated experiment gives the same result if it is performed one hour later or if the whole apparatus is rotated. These two observations are related to the conservation of energy and angular momentum.</p>
+<p>The relation between symmetry and conservation is not an extra rule added to mechanics. It follows from the action principle. This chapter first derives this connection, then introduces the group language used to describe continuous symmetries. The last sections explain how space-time symmetries define mass and spin, while internal symmetries organise electric charge, isospin and colour.</p>
+<p>We use natural units,</p>
+<p><span class="math display">\[
+\hbar=c=1,
+\]</span></p>
+<p>and the Minkowski metric</p>
+<p><span class="math display">\[
+\eta_{\mu\nu}=\operatorname{diag}(1,-1,-1,-1).
+\]</span></p>
+<p>Greek indices label space-time components. Repeated indices are summed.</p>
+</section>
+<section id="the-action-and-field-equations" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-action-and-field-equations"><span class="header-section-number">2</span> The action and field equations</h2>
+<p>For a mechanical system with coordinates <span class="math inline">\(q_i(t)\)</span>, the action is</p>
+<p><span class="math display">\[
+S[q_i]=\int_{t_1}^{t_2}L(q_i,\dot q_i,t)\,dt.
+\]</span></p>
+<p>In field theory, the dynamical variables are fields <span class="math inline">\(\phi_a(x)\)</span> defined at every point of space-time. The action becomes</p>
+<p><span id="eq-action"><span class="math display">\[
+S[\phi]=\int d^4x\,\mathcal L(\phi_a,\partial_\mu\phi_a,x),
+\tag{1}\]</span></span></p>
+<p>where <span class="math inline">\(\mathcal L\)</span> is the Lagrangian density. Consider a small variation <span class="math inline">\(\phi_a\to\phi_a+\delta\phi_a\)</span> which vanishes on the boundary. At first order,</p>
+<p><span class="math display">\[
+\delta S=\int d^4x\left[
+\frac{\partial\mathcal L}{\partial\phi_a}\delta\phi_a
++\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}
+\partial_\mu\delta\phi_a
+\right].
+\]</span></p>
+<p>Integrating the second term by parts gives</p>
+<p><span class="math display">\[
+\delta S=\int d^4x\left[
+\frac{\partial\mathcal L}{\partial\phi_a}
+-\partial_\mu\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}
+\right]\delta\phi_a,
+\]</span></p>
+<p>because the surface term vanishes. The variations are arbitrary inside the integration region, so a physical field satisfies</p>
+<p><span id="eq-euler-lagrange"><span class="math display">\[
+\boxed{
+\frac{\partial\mathcal L}{\partial\phi_a}
+-\partial_\mu\left[
+\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}
+\right]=0.}
+\tag{2}\]</span></span></p>
+<p>These are the Euler–Lagrange equations for fields.</p>
+<p>For a real scalar field,</p>
+<p><span id="eq-real-scalar"><span class="math display">\[
+\mathcal L=\frac12\partial_\mu\phi\,\partial^\mu\phi
+-\frac12m^2\phi^2.
+\tag{3}\]</span></span></p>
+<p>We have</p>
+<p><span class="math display">\[
+\frac{\partial\mathcal L}{\partial\phi}=-m^2\phi,
+\qquad
+\frac{\partial\mathcal L}{\partial(\partial_\mu\phi)}=\partial^\mu\phi.
+\]</span></p>
+<p>Equation <a href="#eq-euler-lagrange" class="quarto-xref">Equation&nbsp;2</a> therefore gives</p>
+<p><span id="eq-klein-gordon"><span class="math display">\[
+(\Box+m^2)\phi=0,
+\qquad
+\Box=\partial_\mu\partial^\mu.
+\tag{4}\]</span></span></p>
+<p>The action, rather than the precise form of <span class="math inline">\(\mathcal L\)</span>, is the important object. Adding a total divergence,</p>
+<p><span class="math display">\[
+\mathcal L' = \mathcal L+\partial_\mu F^\mu,
+\]</span></p>
+<p>changes the action only by a boundary term. Under the usual boundary conditions, <span class="math inline">\(\mathcal L\)</span> and <span class="math inline">\(\mathcal L'\)</span> give the same field equations.</p>
+</section>
+<section id="noethers-theorem" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="noethers-theorem"><span class="header-section-number">3</span> Noether’s theorem</h2>
+<section id="internal-transformations" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="internal-transformations"><span class="header-section-number">3.1</span> Internal transformations</h3>
+<p>Consider a continuous transformation which does not move the space-time point:</p>
+<p><span id="eq-internal-transformation"><span class="math display">\[
+\phi_a(x)\longrightarrow \phi'_a(x)
+=\phi_a(x)+\varepsilon R_a(\phi,x)+O(\varepsilon^2),
+\tag{5}\]</span></span></p>
+<p>where <span class="math inline">\(\varepsilon\)</span> is a small constant. The variation of the Lagrangian density can always be rearranged as</p>
+<p><span id="eq-noether-identity"><span class="math display">\[
+\delta\mathcal L
+=\left[
+\frac{\partial\mathcal L}{\partial\phi_a}
+-\partial_\mu\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}
+\right]\delta\phi_a
++\partial_\mu\left[
+\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}\delta\phi_a
+\right].
+\tag{6}\]</span></span></p>
+<p>On a solution of the field equations, the first term vanishes. If the transformation is a symmetry, the remaining variation is at most a total divergence,</p>
+<p><span class="math display">\[
+\delta\mathcal L=\varepsilon\,\partial_\mu K^\mu.
+\]</span></p>
+<p>Using <span class="math inline">\(\delta\phi_a=\varepsilon R_a\)</span> in <a href="#eq-noether-identity" class="quarto-xref">Equation&nbsp;6</a> gives</p>
+<p><span id="eq-noether-current"><span class="math display">\[
+\boxed{
+j^\mu=
+\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}R_a-K^\mu,
+\qquad
+\partial_\mu j^\mu=0.}
+\tag{7}\]</span></span></p>
+<p>This is the first Noether theorem: every continuous global symmetry of the action produces a conserved current.</p>
+<p>Writing the conservation equation as</p>
+<p><span class="math display">\[
+\partial_tj^0+\boldsymbol\nabla\cdot\mathbf j=0
+\]</span></p>
+<p>and integrating over space gives</p>
+<p><span class="math display">\[
+\frac{dQ}{dt}
+=-\oint_{\partial V}\mathbf j\cdot d\mathbf S,
+\qquad
+Q=\int_V d^3\mathbf x\,j^0.
+\]</span></p>
+<p>If the flux through the boundary vanishes, <span class="math inline">\(Q\)</span> is conserved.</p>
+<div class="historical-note callout callout-style-default callout-note no-icon callout-titled" title="Emmy Noether">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Emmy Noether
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In 1918, Emmy Noether showed that continuous symmetries of the action lead to conservation laws and that local symmetries lead to identities between field equations. Her result gave a common origin to conservation laws which had previously been treated separately.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-a-complex-scalar-field" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="example-a-complex-scalar-field"><span class="header-section-number">3.2</span> Example: a complex scalar field</h3>
+<p>Let</p>
+<p><span id="eq-complex-scalar"><span class="math display">\[
+\mathcal L=\partial_\mu\phi^*\partial^\mu\phi-m^2\phi^*\phi.
+\tag{8}\]</span></span></p>
+<p>It is invariant under the global phase transformation</p>
+<p><span id="eq-global-u1"><span class="math display">\[
+\phi\to e^{-iq\alpha}\phi,
+\qquad
+\phi^*\to e^{iq\alpha}\phi^*,
+\tag{9}\]</span></span></p>
+<p>where <span class="math inline">\(\alpha\)</span> is constant. At first order,</p>
+<p><span class="math display">\[
+\delta\phi=-iq\alpha\phi,
+\qquad
+\delta\phi^*=iq\alpha\phi^*.
+\]</span></p>
+<p>Treating <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\phi^*\)</span> as independent fields, <a href="#eq-noether-current" class="quarto-xref">Equation&nbsp;7</a> gives</p>
+<p><span id="eq-u1-current"><span class="math display">\[
+\boxed{
+j^\mu=iq\left(
+\phi^*\partial^\mu\phi-\phi\partial^\mu\phi^*
+\right).}
+\tag{10}\]</span></span></p>
+<p>Its divergence is</p>
+<p><span class="math display">\[
+\partial_\mu j^\mu
+=iq(\phi^*\Box\phi-\phi\Box\phi^*).
+\]</span></p>
+<p>The field equations <span class="math inline">\(\Box\phi=-m^2\phi\)</span> and <span class="math inline">\(\Box\phi^*=-m^2\phi^*\)</span> make this expression zero. After quantisation, the associated charge counts particles and antiparticles with opposite signs.</p>
+</section>
+<section id="translations-and-energy-momentum" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="translations-and-energy-momentum"><span class="header-section-number">3.3</span> Translations and energy-momentum</h3>
+<p>Space-time transformations also produce Noether currents. Under a translation</p>
+<p><span class="math display">\[
+x^\mu\to x'^\mu=x^\mu+\varepsilon^\mu,
+\]</span></p>
+<p>a scalar field varies at a fixed point as</p>
+<p><span class="math display">\[
+\delta\phi=-\varepsilon^\nu\partial_\nu\phi.
+\]</span></p>
+<p>If <span class="math inline">\(\mathcal L\)</span> has no explicit dependence on <span class="math inline">\(x\)</span>, the associated current contains the canonical energy-momentum tensor</p>
+<p><span id="eq-energy-momentum"><span class="math display">\[
+\boxed{
+T^\mu{}_{\nu}
+=\frac{\partial\mathcal L}{\partial(\partial_\mu\phi_a)}
+\partial_\nu\phi_a
+-\delta^\mu{}_{\nu}\mathcal L,
+\qquad
+\partial_\mu T^\mu{}_{\nu}=0.}
+\tag{11}\]</span></span></p>
+<p>The conserved four-momentum is</p>
+<p><span class="math display">\[
+P_\nu=\int d^3\mathbf x\,T^0{}_{\nu}.
+\]</span></p>
+<p>Time translations give energy conservation and spatial translations give momentum conservation. For the real scalar field in <a href="#eq-real-scalar" class="quarto-xref">Equation&nbsp;3</a>,</p>
+<p><span class="math display">\[
+T^{00}=\frac12\dot\phi^2
++\frac12(\boldsymbol\nabla\phi)^2
++\frac12m^2\phi^2.
+\]</span></p>
+<p>This expression is the energy density stored in the field.</p>
+<p>An infinitesimal Lorentz transformation has the form</p>
+<p><span class="math display">\[
+\delta x^\mu=\omega^\mu{}_{\nu}x^\nu,
+\qquad
+\omega_{\mu\nu}=-\omega_{\nu\mu}.
+\]</span></p>
+<p>The antisymmetric tensor <span class="math inline">\(\omega_{\mu\nu}\)</span> contains three rotations and three boosts. The corresponding current is</p>
+<p><span id="eq-angular-current"><span class="math display">\[
+J^{\lambda\mu\nu}
+=x^\mu T^{\lambda\nu}-x^\nu T^{\lambda\mu}
++S^{\lambda\mu\nu}.
+\tag{12}\]</span></span></p>
+<p>The first two terms describe orbital angular momentum. The last term depends on how the field components transform and gives the intrinsic spin part. It vanishes for a scalar field.</p>
+</section>
+<section id="global-and-local-symmetries" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="global-and-local-symmetries"><span class="header-section-number">3.4</span> Global and local symmetries</h3>
+<p>In a global symmetry, the transformation parameter is constant. The corresponding Noether charge generally acts on physical states. In a local symmetry, the parameter may depend on space-time. Such a transformation often expresses a redundancy in the description.</p>
+<p>For electromagnetism,</p>
+<p><span class="math display">\[
+A_\mu\to A_\mu+\partial_\mu\alpha(x)
+\]</span></p>
+<p>does not change</p>
+<p><span class="math display">\[
+F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu.
+\]</span></p>
+<p>The local symmetry implies an identity between the equations of motion. If</p>
+<p><span class="math display">\[
+\mathcal E_A^\mu=\frac{\delta S}{\delta A_\mu},
+\]</span></p>
+<p>then gauge invariance gives</p>
+<p><span class="math display">\[
+0=\delta S
+=\int d^4x\,\mathcal E_A^\mu\partial_\mu\alpha
+=-\int d^4x\,\alpha\,\partial_\mu\mathcal E_A^\mu.
+\]</span></p>
+<p>Since <span class="math inline">\(\alpha(x)\)</span> is arbitrary,</p>
+<p><span id="eq-noether-second"><span class="math display">\[
+\partial_\mu\mathcal E_A^\mu\equiv0.
+\tag{13}\]</span></span></p>
+<p>This is a simple form of Noether’s second theorem. It does not provide one independent physical charge at every point; instead, it shows that some field equations are not independent.</p>
+</section>
+</section>
+<section id="groups-and-lie-algebras" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="groups-and-lie-algebras"><span class="header-section-number">4</span> Groups and Lie algebras</h2>
+<p>A set <span class="math inline">\(G\)</span> is a group if it has an associative product, an identity, an inverse for every element and closure under the product. A symmetry transformation must be reversible, and two successive symmetry transformations must still be a symmetry. This is why groups appear naturally.</p>
+<p>A Lie group is also a smooth manifold. Its elements near the identity can be written</p>
+<p><span id="eq-lie-exponential"><span class="math display">\[
+U(\boldsymbol\alpha)
+=\exp(-i\alpha^aT^a),
+\tag{14}\]</span></span></p>
+<p>where the Hermitian operators <span class="math inline">\(T^a\)</span> are generators. For small parameters,</p>
+<p><span class="math display">\[
+U(\boldsymbol\alpha)=1-i\alpha^aT^a+O(\alpha^2).
+\]</span></p>
+<p>The generators satisfy commutation relations</p>
+<p><span id="eq-lie-algebra"><span class="math display">\[
+\boxed{[T^a,T^b]=if^{ab}{}_cT^c,}
+\tag{15}\]</span></span></p>
+<p>where <span class="math inline">\(f^{ab}{}_c\)</span> are the structure constants. They describe the Lie algebra of the group.</p>
+<p>For an abelian group, all generators commute. For a non-abelian group, the order of two transformations matters. The Jacobi identity,</p>
+<p><span class="math display">\[
+[T^a,[T^b,T^c]]+[T^b,[T^c,T^a]]+[T^c,[T^a,T^b]]=0,
+\]</span></p>
+<p>imposes a consistency condition on the structure constants.</p>
+<div class="historical-note callout callout-style-default callout-note no-icon callout-titled" title="Sophus Lie">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sophus Lie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sophus Lie introduced continuous transformation groups in the nineteenth century while studying differential equations. The passage from a group to its generators turns a nonlinear composition law into the linear algebra of commutators.</p>
+</div>
+</div>
+</div>
+<section id="representations" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="representations"><span class="header-section-number">4.1</span> Representations</h3>
+<p>An abstract group becomes useful in physics through a representation. A representation assigns a matrix or an operator <span class="math inline">\(D(g)\)</span> to each group element such that</p>
+<p><span class="math display">\[
+D(g_1g_2)=D(g_1)D(g_2).
+\]</span></p>
+<p>Different objects may transform in different representations of the same group. Under rotations, a scalar has one component, a vector has three components and a spinor has two complex components. The group is the same, but its representations are different.</p>
+<p>A representation is reducible if its vector space contains a proper invariant subspace. Otherwise it is irreducible. Irreducible representations are the basic blocks used to classify states.</p>
+<p>An operator <span class="math inline">\(C\)</span> which commutes with every generator,</p>
+<p><span class="math display">\[
+[C,T^a]=0,
+\]</span></p>
+<p>is called a Casimir operator. By Schur’s lemma, a Casimir is proportional to the identity inside an irreducible representation. Its eigenvalue can therefore label that representation.</p>
+<p>For <span class="math inline">\(SU(2)\)</span>, the quadratic Casimir is</p>
+<p><span class="math display">\[
+\mathbf T^2=T_1^2+T_2^2+T_3^2,
+\]</span></p>
+<p>with eigenvalue <span class="math inline">\(j(j+1)\)</span> in the spin-<span class="math inline">\(j\)</span> representation.</p>
+</section>
+<section id="tensor-products" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="tensor-products"><span class="header-section-number">4.2</span> Tensor products</h3>
+<p>If one state transforms in <span class="math inline">\(R_1\)</span> and another in <span class="math inline">\(R_2\)</span>, their combined state transforms in the tensor product <span class="math inline">\(R_1\otimes R_2\)</span>. This product is usually reducible. For two <span class="math inline">\(SU(2)\)</span> doublets,</p>
+<p><span id="eq-two-doublets"><span class="math display">\[
+\mathbf2\otimes\mathbf2=\mathbf3\oplus\mathbf1.
+\tag{16}\]</span></span></p>
+<p>The singlet is invariant under the group. In quantum mechanics it is the antisymmetric combination</p>
+<p><span class="math display">\[
+|0,0\rangle
+=\frac{1}{\sqrt2}
+(|\uparrow\downarrow\rangle-|\downarrow\uparrow\rangle).
+\]</span></p>
+<p>The three symmetric states form the triplet.</p>
+</section>
+</section>
+<section id="the-poincaré-group" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="the-poincaré-group"><span class="header-section-number">5</span> The Poincaré group</h2>
+<p>The Poincaré group contains translations and Lorentz transformations. Its generators are the four-momentum <span class="math inline">\(P^\mu\)</span> and the antisymmetric Lorentz generators <span class="math inline">\(M^{\mu\nu}=-M^{\nu\mu}\)</span>. Their algebra is</p>
+<p><span class="math display">\[
+[P^\mu,P^\nu]=0,
+\]</span></p>
+<p><span class="math display">\[
+[M^{\mu\nu},P^\rho]
+=i(\eta^{\mu\rho}P^\nu-\eta^{\nu\rho}P^\mu),
+\]</span></p>
+<p>and</p>
+<p><span id="eq-poincare-algebra"><span class="math display">\[
+\begin{aligned}
+[M^{\mu\nu},M^{\rho\sigma}]
+=i(&amp;\eta^{\mu\rho}M^{\nu\sigma}
+-\eta^{\mu\sigma}M^{\nu\rho}\\
+&amp;-\eta^{\nu\rho}M^{\mu\sigma}
++\eta^{\nu\sigma}M^{\mu\rho}).
+\end{aligned}
+\tag{17}\]</span></span></p>
+<p>The first Casimir is</p>
+<p><span class="math display">\[
+P^2=P_\mu P^\mu.
+\]</span></p>
+<p>For a one-particle state, its eigenvalue is <span class="math inline">\(m^2\)</span>. Mass is therefore not just a parameter in an equation: it labels an irreducible representation of the space-time symmetry group.</p>
+<p>The second Casimir is built from the Pauli–Lubanski vector</p>
+<p><span id="eq-pauli-lubanski"><span class="math display">\[
+W^\mu=\frac12\varepsilon^{\mu\nu\rho\sigma}
+P_\nu M_{\rho\sigma}.
+\tag{18}\]</span></span></p>
+<p>For a massive particle, we may work in its rest frame, <span class="math inline">\(P^\mu=(m,\mathbf0)\)</span>. Then</p>
+<p><span class="math display">\[
+W^0=0,
+\qquad
+\mathbf W=m\mathbf J,
+\]</span></p>
+<p>and</p>
+<p><span id="eq-massive-spin"><span class="math display">\[
+W^2=-m^2s(s+1).
+\tag{19}\]</span></span></p>
+<p>The states are labelled by mass <span class="math inline">\(m\)</span> and spin <span class="math inline">\(s\)</span>, with <span class="math inline">\(2s+1\)</span> spin projections.</p>
+<p>For a massless particle there is no rest frame. Physical states are instead labelled by helicity,</p>
+<p><span class="math display">\[
+h=\frac{\mathbf J\cdot\mathbf p}{|\mathbf p|}.
+\]</span></p>
+<p>A photon has two physical helicities, <span class="math inline">\(h=+1\)</span> and <span class="math inline">\(h=-1\)</span>. This does not mean that a four-vector field has only two components. Field components, constraints, gauge freedom and physical particle states are different things.</p>
+<div class="historical-note callout callout-style-default callout-note no-icon callout-titled" title="Wigner's classification">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Wigner’s classification
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Eugene Wigner classified elementary particles through the unitary irreducible representations of the Poincaré group. In this view, mass and spin are the invariant labels of a particle, not properties added after the theory has been built.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="internal-symmetries" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="internal-symmetries"><span class="header-section-number">6</span> Internal symmetries</h2>
+<p>Internal symmetries act on field components without moving the space-time point. They organise particles into multiplets and determine which interactions are allowed.</p>
+<section id="the-group-u1" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="the-group-u1"><span class="header-section-number">6.1</span> The group <span class="math inline">\(U(1)\)</span></h3>
+<p><span class="math inline">\(U(1)\)</span> contains complex phases</p>
+<p><span class="math display">\[
+U(\alpha)=e^{-iq\alpha}.
+\]</span></p>
+<p>It is one-dimensional and abelian. A field of charge <span class="math inline">\(q\)</span> transforms as in <a href="#eq-global-u1" class="quarto-xref">Equation&nbsp;9</a>. Products with zero total charge are invariant. For example, <span class="math inline">\(\phi^*\phi\)</span> is invariant, while <span class="math inline">\(\phi^2\)</span> is not invariant unless <span class="math inline">\(q=0\)</span>.</p>
+<p>If the phase becomes local, <span class="math inline">\(\alpha\to\alpha(x)\)</span>, an ordinary derivative produces an extra term:</p>
+<p><span class="math display">\[
+\partial_\mu\phi
+\to e^{-iq\alpha}
+(\partial_\mu\phi-iq\,\partial_\mu\alpha\,\phi).
+\]</span></p>
+<p>Introduce a gauge field <span class="math inline">\(A_\mu\)</span> and the covariant derivative</p>
+<p><span class="math display">\[
+D_\mu=\partial_\mu+iqA_\mu.
+\]</span></p>
+<p>If</p>
+<p><span class="math display">\[
+A_\mu\to A_\mu+\partial_\mu\alpha,
+\]</span></p>
+<p>then</p>
+<p><span class="math display">\[
+D_\mu\phi\to e^{-iq\alpha}D_\mu\phi.
+\]</span></p>
+<p>The kinetic term <span class="math inline">\(|D_\mu\phi|^2\)</span> is locally invariant. The interaction with the gauge field is therefore required by local phase invariance.</p>
+</section>
+<section id="the-group-su2" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="the-group-su2"><span class="header-section-number">6.2</span> The group <span class="math inline">\(SU(2)\)</span></h3>
+<p><span class="math inline">\(SU(2)\)</span> is the group of unitary <span class="math inline">\(2\times2\)</span> matrices with determinant one. In its fundamental representation, the generators are</p>
+<p><span class="math display">\[
+T^a=\frac{\sigma^a}{2},
+\]</span></p>
+<p>where <span class="math inline">\(\sigma^a\)</span> are the Pauli matrices. They satisfy</p>
+<p><span id="eq-su2-algebra"><span class="math display">\[
+[T^a,T^b]=i\varepsilon^{abc}T^c.
+\tag{20}\]</span></span></p>
+<p>A doublet</p>
+<p><span class="math display">\[
+\Psi=\begin{pmatrix}\psi_1\\\psi_2\end{pmatrix}
+\]</span></p>
+<p>transforms as</p>
+<p><span class="math display">\[
+\Psi\to U\Psi,
+\qquad
+U=\exp\left(-i\alpha^a\frac{\sigma^a}{2}\right).
+\]</span></p>
+<p>Because <span class="math inline">\(U^\dagger U=1\)</span>, the quantity <span class="math inline">\(\Psi^\dagger\Psi\)</span> is invariant. The irreducible representations are labelled by <span class="math inline">\(j=0,\frac12,1,\ldots\)</span> and have dimension <span class="math inline">\(2j+1\)</span>.</p>
+<p>Historically, the proton and neutron were treated as an approximate isospin doublet,</p>
+<p><span class="math display">\[
+N=\begin{pmatrix}p\\n\end{pmatrix}.
+\]</span></p>
+<p>The strong interaction is nearly invariant under rotations in this internal space. Electromagnetic effects and the difference between the up- and down-quark masses break the symmetry, which is why the proton and neutron masses are close but not equal.</p>
+</section>
+<section id="the-group-su3" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="the-group-su3"><span class="header-section-number">6.3</span> The group <span class="math inline">\(SU(3)\)</span></h3>
+<p><span class="math inline">\(SU(3)\)</span> is the group of unitary <span class="math inline">\(3\times3\)</span> matrices with determinant one. It has eight generators,</p>
+<p><span class="math display">\[
+T^a=\frac{\lambda^a}{2},
+\qquad a=1,\ldots,8,
+\]</span></p>
+<p>where <span class="math inline">\(\lambda^a\)</span> are the Gell-Mann matrices. Their commutators are</p>
+<p><span class="math display">\[
+[T^a,T^b]=if^{abc}T^c.
+\]</span></p>
+<p>Quark colours form the fundamental triplet,</p>
+<p><span class="math display">\[
+q=\begin{pmatrix}q_r\\q_g\\q_b\end{pmatrix}.
+\]</span></p>
+<p>The eight gluons transform in the adjoint representation, which also has dimension eight. The tensor products</p>
+<p><span class="math display">\[
+\mathbf3\otimes\overline{\mathbf3}
+=\mathbf1\oplus\mathbf8,
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\mathbf3\otimes\mathbf3\otimes\mathbf3
+=\mathbf1\oplus\mathbf8\oplus\mathbf8\oplus\mathbf{10}
+\]</span></p>
+<p>show how colour singlets can be formed from a quark-antiquark pair or from three quarks. Observed hadrons are colour singlets.</p>
+<p>For a local non-abelian symmetry, the covariant derivative is</p>
+<p><span class="math display">\[
+D_\mu=\partial_\mu+igA_\mu^aT^a.
+\]</span></p>
+<p>The field strength is</p>
+<p><span id="eq-nonabelian-strength"><span class="math display">\[
+F_{\mu\nu}^a
+=\partial_\mu A_\nu^a-\partial_\nu A_\mu^a
+-gf^{abc}A_\mu^bA_\nu^c.
+\tag{21}\]</span></span></p>
+<p>The last term is absent in electromagnetism. It produces direct interactions between gauge bosons. This difference follows from the non-commuting generators, not from an extra choice made later.</p>
+</section>
+</section>
+<section id="exact-broken-and-anomalous-symmetries" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="exact-broken-and-anomalous-symmetries"><span class="header-section-number">7</span> Exact, broken and anomalous symmetries</h2>
+<p>An exact symmetry leaves the action invariant and is also respected by the physical state under consideration. Its charge is conserved and states can be arranged into exact multiplets.</p>
+<p>An explicit breaking occurs when a term in the Lagrangian is not invariant. The current then satisfies</p>
+<p><span class="math display">\[
+\partial_\mu j^\mu=\Delta,
+\]</span></p>
+<p>where <span class="math inline">\(\Delta\)</span> measures the breaking. If <span class="math inline">\(\Delta\)</span> is small, the symmetry remains a useful approximation.</p>
+<p>In spontaneous breaking, the action is symmetric but the lowest-energy state is not. Consider</p>
+<p><span class="math display">\[
+V(\phi)=-\mu^2|\phi|^2+\lambda|\phi|^4,
+\qquad \mu^2,\lambda&gt;0.
+\]</span></p>
+<p>The minima satisfy</p>
+<p><span class="math display">\[
+|\phi|=\frac{\mu}{\sqrt{2\lambda}}.
+\]</span></p>
+<p>All phases have the same energy, but a particular vacuum chooses one phase. For a global continuous symmetry this produces a massless Goldstone mode. For a gauge symmetry, the corresponding degree of freedom becomes part of a massive gauge field through the Higgs mechanism.</p>
+<p>Finally, an anomaly is a symmetry of the classical action which is not preserved after quantisation. Anomalies of global symmetries can have physical effects. An anomaly in a gauge symmetry would make the theory inconsistent, so the particle content must make gauge anomalies cancel.</p>
+<p>These cases should not be confused: explicit breaking changes the action, spontaneous breaking changes the vacuum, and an anomaly appears during quantisation.</p>
+</section>
+<section id="exercises" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8</span> Exercises</h2>
+<section id="exercise-1-kleingordon-equation" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="exercise-1-kleingordon-equation"><span class="header-section-number">8.1</span> Exercise 1 — Klein–Gordon equation</h3>
+<p>Starting from <a href="#eq-real-scalar" class="quarto-xref">Equation&nbsp;3</a>, derive the Euler–Lagrange equation. Then write it explicitly in terms of time and spatial derivatives.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The derivatives of the Lagrangian density are</p>
+<p><span class="math display">\[
+\frac{\partial\mathcal L}{\partial\phi}=-m^2\phi,
+\qquad
+\frac{\partial\mathcal L}{\partial(\partial_\mu\phi)}=\partial^\mu\phi.
+\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+(\Box+m^2)\phi=0.
+\]</span></p>
+<p>With the chosen metric, <span class="math inline">\(\Box=\partial_t^2-\nabla^2\)</span>, so</p>
+<p><span class="math display">\[
+\frac{\partial^2\phi}{\partial t^2}-\nabla^2\phi+m^2\phi=0.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-a-shift-symmetry" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="exercise-2-a-shift-symmetry"><span class="header-section-number">8.2</span> Exercise 2 — A shift symmetry</h3>
+<p>Consider a real massless scalar field,</p>
+<p><span class="math display">\[
+\mathcal L=\frac12\partial_\mu\phi\partial^\mu\phi.
+\]</span></p>
+<p>Show that it is invariant under <span class="math inline">\(\phi\to\phi+\varepsilon\)</span>, find the Noether current and explain what changes when a mass term is added.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Lagrangian contains only derivatives, so a constant shift does not change it. Here <span class="math inline">\(R=1\)</span> and <span class="math inline">\(K^\mu=0\)</span>. Thus</p>
+<p><span class="math display">\[
+j^\mu=\frac{\partial\mathcal L}{\partial(\partial_\mu\phi)}
+=\partial^\mu\phi.
+\]</span></p>
+<p>Its conservation, <span class="math inline">\(\partial_\mu j^\mu=\Box\phi=0\)</span>, is the field equation. A mass term <span class="math inline">\(-m^2\phi^2/2\)</span> changes under the shift and explicitly breaks the symmetry.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3-current-of-a-complex-field" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="exercise-3-current-of-a-complex-field"><span class="header-section-number">8.3</span> Exercise 3 — Current of a complex field</h3>
+<p>Derive <a href="#eq-u1-current" class="quarto-xref">Equation&nbsp;10</a> from the global transformation <a href="#eq-global-u1" class="quarto-xref">Equation&nbsp;9</a>. Verify its conservation directly with the field equations.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The infinitesimal variations are</p>
+<p><span class="math display">\[
+\frac{\delta\phi}{\alpha}=-iq\phi,
+\qquad
+\frac{\delta\phi^*}{\alpha}=iq\phi^*.
+\]</span></p>
+<p>Noether’s formula gives</p>
+<p><span class="math display">\[
+j^\mu
+=\partial^\mu\phi^*(-iq\phi)
++\partial^\mu\phi(iq\phi^*)
+=iq(\phi^*\partial^\mu\phi-\phi\partial^\mu\phi^*).
+\]</span></p>
+<p>Taking the divergence gives</p>
+<p><span class="math display">\[
+\partial_\mu j^\mu=iq(\phi^*\Box\phi-\phi\Box\phi^*)=0,
+\]</span></p>
+<p>because both fields satisfy the Klein–Gordon equation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4-energy-of-a-scalar-field" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="exercise-4-energy-of-a-scalar-field"><span class="header-section-number">8.4</span> Exercise 4 — Energy of a scalar field</h3>
+<p>Use <a href="#eq-energy-momentum" class="quarto-xref">Equation&nbsp;11</a> to calculate <span class="math inline">\(T^{00}\)</span> for the real scalar field. Why is each contribution to the total energy non-negative?</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For this field,</p>
+<p><span class="math display">\[
+T^{\mu\nu}=\partial^\mu\phi\partial^\nu\phi
+-\eta^{\mu\nu}\mathcal L.
+\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[
+\mathcal L=\frac12\dot\phi^2
+-\frac12(\boldsymbol\nabla\phi)^2-\frac12m^2\phi^2,
+\]</span></p>
+<p>we obtain</p>
+<p><span class="math display">\[
+T^{00}=\frac12\dot\phi^2
++\frac12(\boldsymbol\nabla\phi)^2+\frac12m^2\phi^2.
+\]</span></p>
+<p>For real <span class="math inline">\(\phi\)</span> and <span class="math inline">\(m^2\geq0\)</span>, every term is a square multiplied by a non-negative coefficient.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-5-the-lie-algebra-of-su2" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="exercise-5-the-lie-algebra-of-su2"><span class="header-section-number">8.5</span> Exercise 5 — The Lie algebra of <span class="math inline">\(SU(2)\)</span></h3>
+<p>Using the Pauli matrices, verify</p>
+<p><span class="math display">\[
+\left[\frac{\sigma_i}{2},\frac{\sigma_j}{2}\right]
+=i\varepsilon_{ijk}\frac{\sigma_k}{2}.
+\]</span></p>
+<p>Then calculate the quadratic Casimir in the fundamental representation.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Pauli matrices obey</p>
+<p><span class="math display">\[
+[\sigma_i,\sigma_j]=2i\varepsilon_{ijk}\sigma_k.
+\]</span></p>
+<p>Dividing by four gives the required relation. Since <span class="math inline">\(\sigma_i^2=I\)</span>,</p>
+<p><span class="math display">\[
+\mathbf T^2=\sum_{i=1}^3\frac{\sigma_i^2}{4}
+=\frac34I.
+\]</span></p>
+<p>This is <span class="math inline">\(j(j+1)\)</span> with <span class="math inline">\(j=1/2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-6-two-spin-12-states" class="level3" data-number="8.6">
+<h3 data-number="8.6" class="anchored" data-anchor-id="exercise-6-two-spin-12-states"><span class="header-section-number">8.6</span> Exercise 6 — Two spin-<span class="math inline">\(1/2\)</span> states</h3>
+<p>Show that the singlet state in <a href="#eq-two-doublets" class="quarto-xref">Equation&nbsp;16</a> is annihilated by the total generators</p>
+<p><span class="math display">\[
+T_i^{\mathrm{tot}}=T_i\otimes I+I\otimes T_i.
+\]</span></p>
+<p>Why does this prove that the state is invariant under <span class="math inline">\(SU(2)\)</span>?</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(T_3^{\mathrm{tot}}\)</span>, the two terms in the singlet each have total magnetic number zero. For the raising operator,</p>
+<p><span class="math display">\[
+T_+^{\mathrm{tot}}|\uparrow\downarrow\rangle
+=|\uparrow\uparrow\rangle,
+\qquad
+T_+^{\mathrm{tot}}|\downarrow\uparrow\rangle
+=|\uparrow\uparrow\rangle,
+\]</span></p>
+<p>so the difference is annihilated. The same holds for <span class="math inline">\(T_-^{\mathrm{tot}}\)</span>. All three generators therefore vanish on the singlet. Exponentiating them leaves the state unchanged.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-7-abelian-and-non-abelian-transformations" class="level3" data-number="8.7">
+<h3 data-number="8.7" class="anchored" data-anchor-id="exercise-7-abelian-and-non-abelian-transformations"><span class="header-section-number">8.7</span> Exercise 7 — Abelian and non-abelian transformations</h3>
+<p>Take two infinitesimal transformations</p>
+<p><span class="math display">\[
+U_a=1-i\alpha T^a,
+\qquad
+U_b=1-i\beta T^b.
+\]</span></p>
+<p>Calculate <span class="math inline">\(U_aU_b-U_bU_a\)</span> to the first non-zero order. Interpret the result for <span class="math inline">\(U(1)\)</span> and <span class="math inline">\(SU(2)\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Terms linear in the parameters cancel, leaving</p>
+<p><span class="math display">\[
+U_aU_b-U_bU_a=-\alpha\beta[T^a,T^b]+O(\alpha^2,\beta^2).
+\]</span></p>
+<p><span class="math inline">\(U(1)\)</span> has one generator, so the commutator vanishes. In <span class="math inline">\(SU(2)\)</span>, different generators do not commute; successive rotations around different internal axes depend on their order.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-8-mass-and-spin-from-poincaré-symmetry" class="level3" data-number="8.8">
+<h3 data-number="8.8" class="anchored" data-anchor-id="exercise-8-mass-and-spin-from-poincaré-symmetry"><span class="header-section-number">8.8</span> Exercise 8 — Mass and spin from Poincaré symmetry</h3>
+<p>For a massive particle in its rest frame, use <a href="#eq-pauli-lubanski" class="quarto-xref">Equation&nbsp;18</a> to show that <span class="math inline">\(W^0=0\)</span> and <span class="math inline">\(\mathbf W=m\mathbf J\)</span>. Deduce <a href="#eq-massive-spin" class="quarto-xref">Equation&nbsp;19</a>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>With <span class="math inline">\(P^\mu=(m,\mathbf0)\)</span>, the time component contains only spatial components of <span class="math inline">\(P\)</span> and is zero. The spatial components reduce to</p>
+<p><span class="math display">\[
+W^i=\frac m2\varepsilon^{i0jk}M_{jk}=mJ^i.
+\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+W^2=-\mathbf W^2=-m^2\mathbf J^2.
+\]</span></p>
+<p>In the spin-<span class="math inline">\(s\)</span> representation, <span class="math inline">\(\mathbf J^2=s(s+1)\)</span>, hence</p>
+<p><span class="math display">\[
+W^2=-m^2s(s+1).
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-9-selection-rule" class="level3" data-number="8.9">
+<h3 data-number="8.9" class="anchored" data-anchor-id="exercise-9-selection-rule"><span class="header-section-number">8.9</span> Exercise 9 — Selection rule</h3>
+<p>Let <span class="math inline">\(Q\)</span> be a conserved charge with <span class="math inline">\([Q,S]=0\)</span>, where <span class="math inline">\(S\)</span> is the scattering operator. If</p>
+<p><span class="math display">\[
+Q|i\rangle=q_i|i\rangle,
+\qquad
+Q|f\rangle=q_f|f\rangle,
+\]</span></p>
+<p>show that <span class="math inline">\((q_f-q_i)\langle f|S|i\rangle=0\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Insert the commutator between the two states:</p>
+<p><span class="math display">\[
+0=\langle f|[Q,S]|i\rangle
+=(q_f-q_i)\langle f|S|i\rangle.
+\]</span></p>
+<p>If <span class="math inline">\(q_f\neq q_i\)</span>, the transition amplitude must vanish. Conservation laws therefore appear as selection rules.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-10-building-u1-invariants" class="level3" data-number="8.10">
+<h3 data-number="8.10" class="anchored" data-anchor-id="exercise-10-building-u1-invariants"><span class="header-section-number">8.10</span> Exercise 10 — Building <span class="math inline">\(U(1)\)</span> invariants</h3>
+<p>A complex field transforms as <span class="math inline">\(\phi\to e^{-iq\alpha}\phi\)</span>. Decide which expressions are invariant: <span class="math inline">\(\phi\)</span>, <span class="math inline">\(\phi^2\)</span>, <span class="math inline">\(\phi^*\phi\)</span>, <span class="math inline">\((\phi^*\phi)^2\)</span> and <span class="math inline">\(\phi^*\partial_\mu\phi\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\phi\)</span> has charge <span class="math inline">\(q\)</span> and <span class="math inline">\(\phi^2\)</span> has charge <span class="math inline">\(2q\)</span>, so neither is invariant for <span class="math inline">\(q\neq0\)</span>. The products <span class="math inline">\(\phi^*\phi\)</span> and <span class="math inline">\((\phi^*\phi)^2\)</span> have total charge zero and are invariant. For a global transformation, <span class="math inline">\(\phi^*\partial_\mu\phi\)</span> is also invariant because the phase is constant. Under a local transformation, it gains an extra term and must be replaced by <span class="math inline">\(\phi^*D_\mu\phi\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-11-colour-singlets" class="level3" data-number="8.11">
+<h3 data-number="8.11" class="anchored" data-anchor-id="exercise-11-colour-singlets"><span class="header-section-number">8.11</span> Exercise 11 — Colour singlets</h3>
+<p>Under <span class="math inline">\(SU(3)\)</span>, a quark transforms as <span class="math inline">\(q_i\to U_i{}^j q_j\)</span> and an antiquark as <span class="math inline">\(\bar q^i\to\bar q^j(U^\dagger)_j{}^i\)</span>. Show that <span class="math inline">\(\bar q^iq_i\)</span> is a singlet. Then explain why <span class="math inline">\(\varepsilon^{ijk}q_iq_jq_k\)</span> is also invariant.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For the quark-antiquark combination,</p>
+<p><span class="math display">\[
+\bar q^i q_i
+\to \bar q^j(U^\dagger)_j{}^iU_i{}^kq_k
+=\bar q^jq_j.
+\]</span></p>
+<p>For three quarks,</p>
+<p><span class="math display">\[
+\varepsilon^{ijk}U_i{}^aU_j{}^bU_k{}^c
+=(\det U)\varepsilon^{abc}.
+\]</span></p>
+<p>Since <span class="math inline">\(\det U=1\)</span> in <span class="math inline">\(SU(3)\)</span>, the antisymmetric three-quark combination is invariant.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-12-explicit-or-spontaneous-breaking" class="level3" data-number="8.12">
+<h3 data-number="8.12" class="anchored" data-anchor-id="exercise-12-explicit-or-spontaneous-breaking"><span class="header-section-number">8.12</span> Exercise 12 — Explicit or spontaneous breaking?</h3>
+<p>For a complex scalar field, compare the two potentials</p>
+<p><span class="math display">\[
+V_1=m^2|\phi|^2+\lambda|\phi|^4+\epsilon(\phi+\phi^*)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+V_2=-\mu^2|\phi|^2+\lambda|\phi|^4,
+\]</span></p>
+<p>with positive <span class="math inline">\(\lambda\)</span>, <span class="math inline">\(\mu^2\)</span> and non-zero <span class="math inline">\(\epsilon\)</span>. Identify the type of symmetry breaking in each case.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The term <span class="math inline">\(\epsilon(\phi+\phi^*)\)</span> changes under a phase rotation, so <span class="math inline">\(V_1\)</span> explicitly breaks <span class="math inline">\(U(1)\)</span>. The potential <span class="math inline">\(V_2\)</span> is invariant, but its minima have non-zero magnitude and arbitrary phase. Choosing one minimum breaks the symmetry spontaneously.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problems" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="problems"><span class="header-section-number">9</span> Problems</h2>
+<section id="problem-1-noether-theorem-in-an-internal-plane" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="problem-1-noether-theorem-in-an-internal-plane"><span class="header-section-number">9.1</span> Problem 1 — Noether theorem in an internal plane</h3>
+<p>Consider two real scalar fields with</p>
+<p><span class="math display">\[
+\mathcal L
+=\frac12\partial_\mu\phi_1\partial^\mu\phi_1
++\frac12\partial_\mu\phi_2\partial^\mu\phi_2
+-\frac12m^2(\phi_1^2+\phi_2^2).
+\]</span></p>
+<ol type="1">
+<li>Show that the action is invariant under rotations of <span class="math inline">\((\phi_1,\phi_2)\)</span>.</li>
+<li>Find the infinitesimal variations.</li>
+<li>Derive the conserved current.</li>
+<li>Define <span class="math inline">\(\Phi=(\phi_1+i\phi_2)/\sqrt2\)</span> and relate the result to the <span class="math inline">\(U(1)\)</span> current.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The finite transformation is</p>
+<p><span class="math display">\[
+\begin{pmatrix}\phi_1'\\\phi_2'\end{pmatrix}
+=\begin{pmatrix}
+\cos\alpha&amp;-\sin\alpha\\
+\sin\alpha&amp;\cos\alpha
+\end{pmatrix}
+\begin{pmatrix}\phi_1\\\phi_2\end{pmatrix}.
+\]</span></p>
+<p>Both <span class="math inline">\(\phi_1^2+\phi_2^2\)</span> and the corresponding kinetic term are invariant. At first order,</p>
+<p><span class="math display">\[
+\delta\phi_1=-\alpha\phi_2,
+\qquad
+\delta\phi_2=\alpha\phi_1.
+\]</span></p>
+<p>Dividing out <span class="math inline">\(\alpha\)</span>, Noether’s formula gives</p>
+<p><span class="math display">\[
+j^\mu
+=-\partial^\mu\phi_1\,\phi_2
++\partial^\mu\phi_2\,\phi_1.
+\]</span></p>
+<p>With <span class="math inline">\(\Phi=(\phi_1+i\phi_2)/\sqrt2\)</span>, the rotation becomes <span class="math inline">\(\Phi\to e^{i\alpha}\Phi\)</span>. Apart from the sign convention chosen for the charge, the current is</p>
+<p><span class="math display">\[
+j^\mu=i(\Phi^*\partial^\mu\Phi-\Phi\partial^\mu\Phi^*).
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-2-from-a-global-phase-to-an-interaction" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="problem-2-from-a-global-phase-to-an-interaction"><span class="header-section-number">9.2</span> Problem 2 — From a global phase to an interaction</h3>
+<p>Let a complex scalar field transform locally as</p>
+<p><span class="math display">\[
+\phi(x)\to e^{-iq\alpha(x)}\phi(x).
+\]</span></p>
+<ol type="1">
+<li>Show why <span class="math inline">\(\partial_\mu\phi\)</span> does not transform like <span class="math inline">\(\phi\)</span>.</li>
+<li>Find the transformation of <span class="math inline">\(A_\mu\)</span> that makes <span class="math inline">\(D_\mu\phi=(\partial_\mu+iqA_\mu)\phi\)</span> covariant.</li>
+<li>Expand <span class="math inline">\((D_\mu\phi)^*D^\mu\phi\)</span> and identify the interaction terms.</li>
+<li>Explain why the electromagnetic field strength is invariant.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Differentiating the transformed field gives</p>
+<p><span class="math display">\[
+\partial_\mu\phi'
+=e^{-iq\alpha}
+(\partial_\mu\phi-iq\,\partial_\mu\alpha\,\phi).
+\]</span></p>
+<p>The extra term is cancelled if</p>
+<p><span class="math display">\[
+A_\mu' = A_\mu+\partial_\mu\alpha.
+\]</span></p>
+<p>Then <span class="math inline">\(D_\mu'\phi'=e^{-iq\alpha}D_\mu\phi\)</span>. Expanding the kinetic term gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+(D_\mu\phi)^*D^\mu\phi
+={}&amp;\partial_\mu\phi^*\partial^\mu\phi
++iqA^\mu(\phi\partial_\mu\phi^*-\phi^*\partial_\mu\phi)\\
+&amp;+q^2A_\mu A^\mu\phi^*\phi.
+\end{aligned}
+\]</span></p>
+<p>The last two terms describe interactions. Finally,</p>
+<p><span class="math display">\[
+F_{\mu\nu}'
+=\partial_\mu A_\nu'-\partial_\nu A_\mu'
+=F_{\mu\nu},
+\]</span></p>
+<p>because mixed derivatives commute.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3-why-non-abelian-gauge-bosons-interact" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="problem-3-why-non-abelian-gauge-bosons-interact"><span class="header-section-number">9.3</span> Problem 3 — Why non-abelian gauge bosons interact</h3>
+<p>Take</p>
+<p><span class="math display">\[
+D_\mu=\partial_\mu+igA_\mu,
+\qquad
+A_\mu=A_\mu^aT^a.
+\]</span></p>
+<ol type="1">
+<li>Calculate <span class="math inline">\([D_\mu,D_\nu]\)</span>.</li>
+<li>Show that it can be written as <span class="math inline">\(igF_{\mu\nu}\)</span>.</li>
+<li>Recover <a href="#eq-nonabelian-strength" class="quarto-xref">Equation&nbsp;21</a>.</li>
+<li>Explain the physical difference with <span class="math inline">\(U(1)\)</span>.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Acting on a field,</p>
+<p><span class="math display">\[
+[D_\mu,D_\nu]
+=ig(\partial_\mu A_\nu-\partial_\nu A_\mu)
+-g^2[A_\mu,A_\nu].
+\]</span></p>
+<p>Using</p>
+<p><span class="math display">\[
+[A_\mu,A_\nu]
+=A_\mu^aA_\nu^b[T^a,T^b]
+=if^{abc}A_\mu^aA_\nu^bT^c,
+\]</span></p>
+<p>we find</p>
+<p><span class="math display">\[
+[D_\mu,D_\nu]=igF_{\mu\nu}^aT^a,
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+F_{\mu\nu}^a
+=\partial_\mu A_\nu^a-\partial_\nu A_\mu^a
+-gf^{abc}A_\mu^bA_\nu^c,
+\]</span></p>
+<p>which agrees with <a href="#eq-nonabelian-strength" class="quarto-xref">Equation&nbsp;21</a>. For <span class="math inline">\(U(1)\)</span>, the generators commute and the last term vanishes. In a non-abelian theory it remains, so the gauge field itself carries the group charge and interacts with other gauge fields.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="further-reading" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">10</span> Further reading</h2>
+<p>For a first approach, see D. Griffiths, <em>Introduction to Elementary Particles</em>. More complete discussions can be found in M. Schwartz, <em>Quantum Field Theory and the Standard Model</em>, and M. Srednicki, <em>Quantum Field Theory</em>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

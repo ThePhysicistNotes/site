@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mohammed Reguig">
+
+<title>Riemannian geometry – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#manifolds-and-tangent-spaces" id="toc-manifolds-and-tangent-spaces" class="nav-link active" data-scroll-target="#manifolds-and-tangent-spaces"><span class="header-section-number">1</span> Manifolds and tangent spaces</a></li>
+  <li><a href="#the-riemannian-metric" id="toc-the-riemannian-metric" class="nav-link" data-scroll-target="#the-riemannian-metric"><span class="header-section-number">2</span> The Riemannian metric</a></li>
+  <li><a href="#the-levicivita-connection" id="toc-the-levicivita-connection" class="nav-link" data-scroll-target="#the-levicivita-connection"><span class="header-section-number">3</span> The Levi–Civita connection</a></li>
+  <li><a href="#geodesics" id="toc-geodesics" class="nav-link" data-scroll-target="#geodesics"><span class="header-section-number">4</span> Geodesics</a></li>
+  <li><a href="#curvature" id="toc-curvature" class="nav-link" data-scroll-target="#curvature"><span class="header-section-number">5</span> Curvature</a></li>
+  <li><a href="#coordinate-exercises" id="toc-coordinate-exercises" class="nav-link" data-scroll-target="#coordinate-exercises"><span class="header-section-number">6</span> Coordinate exercises</a></li>
+  <li><a href="#metric-and-measure-exercises" id="toc-metric-and-measure-exercises" class="nav-link" data-scroll-target="#metric-and-measure-exercises"><span class="header-section-number">7</span> Metric and measure exercises</a></li>
+  <li><a href="#differential-operator-exercises" id="toc-differential-operator-exercises" class="nav-link" data-scroll-target="#differential-operator-exercises"><span class="header-section-number">8</span> Differential-operator exercises</a></li>
+  <li><a href="#connection-exercises" id="toc-connection-exercises" class="nav-link" data-scroll-target="#connection-exercises"><span class="header-section-number">9</span> Connection exercises</a></li>
+  <li><a href="#geodesic-exercises" id="toc-geodesic-exercises" class="nav-link" data-scroll-target="#geodesic-exercises"><span class="header-section-number">10</span> Geodesic exercises</a></li>
+  <li><a href="#curvature-exercises" id="toc-curvature-exercises" class="nav-link" data-scroll-target="#curvature-exercises"><span class="header-section-number">11</span> Curvature exercises</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">12</span> Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Riemannian geometry</h1>
+<p class="subtitle lead">Metrics, connections, geodesics and curvature</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mohammed Reguig </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../cours.html">← Back to the course list</a></p>
+<section id="manifolds-and-tangent-spaces" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="manifolds-and-tangent-spaces"><span class="header-section-number">1</span> Manifolds and tangent spaces</h2>
+<p>A smooth manifold of dimension <span class="math inline">\(n\)</span> is a space which locally looks like <span class="math inline">\(\mathbb R^n\)</span>. A coordinate chart is a map</p>
+<p><span class="math display">\[
+x=(x^1,\ldots,x^n):U\subset M\longrightarrow x(U)\subset\mathbb R^n
+\]</span></p>
+<p>whose transition maps are smooth. Coordinates are only local labels. A coordinate singularity does not necessarily mean that the geometry itself is singular.</p>
+<p>At a point <span class="math inline">\(p\)</span>, the tangent space <span class="math inline">\(T_pM\)</span> is an <span class="math inline">\(n\)</span>-dimensional vector space. In a chart its natural basis is</p>
+<p><span class="math display">\[
+\partial_i=\frac{\partial}{\partial x^i}.
+\]</span></p>
+<p>The dual basis of the cotangent space <span class="math inline">\(T_p^*M\)</span> is denoted by <span class="math inline">\(dx^i\)</span> and satisfies</p>
+<p><span class="math display">\[
+dx^i(\partial_j)=\delta^i{}_j.
+\]</span></p>
+<p>A vector and a one-form are written</p>
+<p><span class="math display">\[
+X=X^i\partial_i,
+\qquad
+\alpha=\alpha_i\,dx^i.
+\]</span></p>
+<p>Their pairing, <span class="math inline">\(\alpha(X)=\alpha_iX^i\)</span>, is independent of the chosen coordinates.</p>
+</section>
+<section id="the-riemannian-metric" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-riemannian-metric"><span class="header-section-number">2</span> The Riemannian metric</h2>
+<p>A Riemannian metric assigns a scalar product to every tangent space. In coordinates,</p>
+<p><span class="math display">\[
+g=g_{ij}\,dx^i\otimes dx^j,
+\qquad
+g_{ij}=g_{ji},
+\]</span></p>
+<p>and the matrix <span class="math inline">\((g_{ij})\)</span> is positive definite. Its inverse satisfies</p>
+<p><span class="math display">\[
+g^{ik}g_{kj}=\delta^i{}_j.
+\]</span></p>
+<p>The line element is</p>
+<p><span class="math display">\[
+ds^2=g_{ij}\,dx^i dx^j.
+\]</span></p>
+<p>For a curve <span class="math inline">\(\gamma(t)\)</span>, its length and energy are</p>
+<p><span class="math display">\[
+L(\gamma)=\int_a^b
+\sqrt{g_{ij}\dot x^i\dot x^j}\,dt,
+\]</span></p>
+<p><span class="math display">\[
+E(\gamma)=\frac12\int_a^b
+g_{ij}\dot x^i\dot x^j\,dt.
+\]</span></p>
+<p>The Riemannian volume form on an oriented manifold is</p>
+<p><span id="eq-volume-form"><span class="math display">\[
+dV_g=\sqrt{|g|}\,dx^1\wedge\cdots\wedge dx^n,
+\qquad
+|g|=\det(g_{ij}).
+\tag{1}\]</span></span></p>
+<p>For example, the Euclidean plane in polar coordinates has</p>
+<p><span class="math display">\[
+ds^2=dr^2+r^2d\theta^2.
+\]</span></p>
+<p>The sphere of radius <span class="math inline">\(R\)</span> has</p>
+<p><span class="math display">\[
+ds^2=R^2(d\theta^2+\sin^2\theta\,d\varphi^2),
+\]</span></p>
+<p>and the Poincaré half-plane has</p>
+<p><span class="math display">\[
+ds^2=\frac{dx^2+dy^2}{y^2},
+\qquad y&gt;0.
+\]</span></p>
+<section id="gradient-divergence-and-laplacian" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="gradient-divergence-and-laplacian"><span class="header-section-number">2.1</span> Gradient, divergence and Laplacian</h3>
+<p>The gradient of a function <span class="math inline">\(f\)</span> is defined by</p>
+<p><span class="math display">\[
+g(\operatorname{grad}f,X)=df(X).
+\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+\operatorname{grad}f
+=g^{ij}(\partial_jf)\partial_i.
+\]</span></p>
+<p>The divergence of a vector field and the Laplace–Beltrami operator are</p>
+<p><span id="eq-divergence"><span class="math display">\[
+\operatorname{div}X
+=\frac1{\sqrt{|g|}}
+\partial_i\left(\sqrt{|g|}X^i\right),
+\tag{2}\]</span></span></p>
+<p><span id="eq-laplace-beltrami"><span class="math display">\[
+\boxed{
+\Delta_gf
+=\frac1{\sqrt{|g|}}
+\partial_i\left(\sqrt{|g|}g^{ij}\partial_jf\right).}
+\tag{3}\]</span></span></p>
+<p>With this sign convention, <span class="math inline">\(\Delta=\sum_i\partial_i^2\)</span> in Euclidean space.</p>
+</section>
+</section>
+<section id="the-levicivita-connection" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="the-levicivita-connection"><span class="header-section-number">3</span> The Levi–Civita connection</h2>
+<p>Vectors based at different points belong to different vector spaces. A connection gives a rule for differentiating a vector field in the direction of another vector field. A Riemannian metric determines one connection which is torsion-free and compatible with the metric. It is called the Levi–Civita connection.</p>
+<p>In coordinates,</p>
+<p><span class="math display">\[
+\nabla_{\partial_i}\partial_j
+=\Gamma^k{}_{ij}\partial_k,
+\]</span></p>
+<p>where</p>
+<p><span id="eq-christoffel"><span class="math display">\[
+\boxed{
+\Gamma^k{}_{ij}
+=\frac12g^{k\ell}
+\left(
+\partial_i g_{j\ell}
++\partial_j g_{i\ell}
+-\partial_\ell g_{ij}
+\right).}
+\tag{4}\]</span></span></p>
+<p>Christoffel symbols depend on the coordinates and are not tensor components. They can be non-zero in a flat space when a curved coordinate system is used.</p>
+<p>Along a curve, a vector field <span class="math inline">\(V=V^k\partial_k\)</span> has covariant derivative</p>
+<p><span id="eq-covariant-along-curve"><span class="math display">\[
+\frac{DV^k}{dt}
+=\dot V^k+\Gamma^k{}_{ij}\dot x^iV^j.
+\tag{5}\]</span></span></p>
+<p><span class="math inline">\(V\)</span> is parallel when <span class="math inline">\(DV/dt=0\)</span>. Metric compatibility then implies that scalar products between parallel fields remain constant.</p>
+</section>
+<section id="geodesics" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="geodesics"><span class="header-section-number">4</span> Geodesics</h2>
+<p>A geodesic has a velocity vector which is parallel along the curve:</p>
+<p><span class="math display">\[
+\frac{D\dot\gamma}{dt}=0.
+\]</span></p>
+<p>In coordinates,</p>
+<p><span id="eq-geodesic"><span class="math display">\[
+\boxed{
+\ddot x^k+\Gamma^k{}_{ij}\dot x^i\dot x^j=0.}
+\tag{6}\]</span></span></p>
+<p>An affine parameter gives constant speed. Geodesics are stationary points of the energy functional and locally minimize length over sufficiently short intervals.</p>
+<p>The exponential map is defined by</p>
+<p><span class="math display">\[
+\exp_p(v)=\gamma_v(1),
+\]</span></p>
+<p>where <span class="math inline">\(\gamma_v(0)=p\)</span> and <span class="math inline">\(\dot\gamma_v(0)=v\)</span>. A connected manifold is geodesically complete if every geodesic can be extended for all real parameter values. The Hopf–Rinow theorem relates this property to completeness of the metric distance.</p>
+</section>
+<section id="curvature" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="curvature"><span class="header-section-number">5</span> Curvature</h2>
+<p>Our sign convention for the Riemann tensor is</p>
+<p><span class="math display">\[
+R(X,Y)Z
+=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z.
+\]</span></p>
+<p>Its coordinate components are</p>
+<p><span id="eq-riemann-components"><span class="math display">\[
+R^\ell{}_{kij}
+=\partial_i\Gamma^\ell{}_{jk}
+-\partial_j\Gamma^\ell{}_{ik}
++\Gamma^m{}_{jk}\Gamma^\ell{}_{im}
+-\Gamma^m{}_{ik}\Gamma^\ell{}_{jm}.
+\tag{7}\]</span></span></p>
+<p>For two independent vectors <span class="math inline">\(X,Y\)</span>, the sectional curvature is</p>
+<p><span class="math display">\[
+K(X,Y)
+=\frac{g(R(X,Y)Y,X)}
+{g(X,X)g(Y,Y)-g(X,Y)^2}.
+\]</span></p>
+<p>The Ricci tensor and scalar curvature are contractions of the Riemann tensor:</p>
+<p><span class="math display">\[
+\operatorname{Ric}_{ij}=R^k{}_{ikj},
+\qquad
+S=g^{ij}\operatorname{Ric}_{ij}.
+\]</span></p>
+<p>In dimension two, the Riemann tensor is completely determined by the Gaussian curvature <span class="math inline">\(K\)</span>, and</p>
+<p><span class="math display">\[
+S=2K.
+\]</span></p>
+<p>Euclidean space has <span class="math inline">\(K=0\)</span>, a sphere of radius <span class="math inline">\(R\)</span> has <span class="math inline">\(K=1/R^2\)</span>, and hyperbolic space of radius <span class="math inline">\(R\)</span> has <span class="math inline">\(K=-1/R^2\)</span>.</p>
+<div class="historical-note callout callout-style-default callout-note no-icon callout-titled" title="Riemann's idea of intrinsic geometry">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Riemann’s idea of intrinsic geometry
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In 1854, Bernhard Riemann proposed that geometry could be defined from measurements made inside a space, without referring to an external Euclidean space. The metric and its curvature make this idea precise: inhabitants of a surface can detect its curvature using distances, angles and geodesics alone.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="coordinate-exercises" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="coordinate-exercises"><span class="header-section-number">6</span> Coordinate exercises</h2>
+<p>The stars indicate the difficulty. Each solution is folded so that the question can be attempted first.</p>
+<section id="exercise-1-polar-coordinates" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="exercise-1-polar-coordinates"><span class="header-section-number">6.1</span> Exercise 1 — Polar coordinates</h3>
+<p>Let</p>
+<p><span class="math display">\[
+F(r,\theta)=(r\cos\theta,r\sin\theta),
+\qquad r&gt;0.
+\]</span></p>
+<p>Find the Jacobian, the natural basis and the Euclidean metric. Explain why polar coordinates fail at <span class="math inline">\(r=0\)</span> and why the angular interval must be restricted.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Jacobian matrix and its determinant are</p>
+<p><span class="math display">\[
+DF=\begin{pmatrix}
+\cos\theta&amp;-r\sin\theta\\
+\sin\theta&amp;r\cos\theta
+\end{pmatrix},
+\qquad
+\det DF=r.
+\]</span></p>
+<p>The basis vectors are</p>
+<p><span class="math display">\[
+e_r=(\cos\theta,\sin\theta),
+\qquad
+e_\theta=(-r\sin\theta,r\cos\theta).
+\]</span></p>
+<p>They are orthogonal, with norms <span class="math inline">\(1\)</span> and <span class="math inline">\(r\)</span>, so</p>
+<p><span class="math display">\[
+ds^2=dr^2+r^2d\theta^2.
+\]</span></p>
+<p>At <span class="math inline">\(r=0\)</span>, the Jacobian vanishes and every angle represents the same point. For <span class="math inline">\(r&gt;0\)</span>, <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta+2\pi\)</span> also represent the same point, so one chooses an open angular interval and removes a ray if needed.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-cylindrical-coordinates" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="exercise-2-cylindrical-coordinates"><span class="header-section-number">6.2</span> Exercise 2 — Cylindrical coordinates</h3>
+<p>In <span class="math inline">\(\mathbb R^3\)</span>, let</p>
+<p><span class="math display">\[
+F(\rho,\varphi,z)=(\rho\cos\varphi,\rho\sin\varphi,z).
+\]</span></p>
+<p>Describe the coordinate surfaces and calculate the natural basis, metric and volume element.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\rho=\rho_0\)</span> gives a cylinder, <span class="math inline">\(\varphi=\varphi_0\)</span> a half-plane and <span class="math inline">\(z=z_0\)</span> a horizontal plane. The basis is</p>
+<p><span class="math display">\[
+e_\rho=(\cos\varphi,\sin\varphi,0),
+\quad
+e_\varphi=(-\rho\sin\varphi,\rho\cos\varphi,0),
+\quad
+e_z=(0,0,1).
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+ds^2=d\rho^2+\rho^2d\varphi^2+dz^2,
+\qquad
+dV=\rho\,d\rho\,d\varphi\,dz.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3-parabolic-coordinates" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="exercise-3-parabolic-coordinates"><span class="header-section-number">6.3</span> Exercise 3 — Parabolic coordinates</h3>
+<p>Consider</p>
+<p><span class="math display">\[
+x=\frac12(u^2-v^2),
+\qquad
+y=uv.
+\]</span></p>
+<p>Show that the coordinate curves are parabolas. Find the Jacobian and metric, then express <span class="math inline">\(u^2\)</span> and <span class="math inline">\(v^2\)</span> in terms of <span class="math inline">\(x,y\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For fixed <span class="math inline">\(u=u_0\)</span>,</p>
+<p><span class="math display">\[
+x=\frac{u_0^2}{2}-\frac{y^2}{2u_0^2},
+\]</span></p>
+<p>and a similar calculation for fixed <span class="math inline">\(v\)</span> gives the second family of parabolas. The basis vectors are</p>
+<p><span class="math display">\[
+e_u=(u,v),
+\qquad
+e_v=(-v,u).
+\]</span></p>
+<p>Their determinant is <span class="math inline">\(u^2+v^2\)</span>, and they are orthogonal. Therefore</p>
+<p><span class="math display">\[
+ds^2=(u^2+v^2)(du^2+dv^2).
+\]</span></p>
+<p>If <span class="math inline">\(r=\sqrt{x^2+y^2}\)</span>, then</p>
+<p><span class="math display">\[
+u^2=r+x,
+\qquad
+v^2=r-x.
+\]</span></p>
+<p>The signs must still be chosen so that <span class="math inline">\(uv=y\)</span>; the inverse is only local.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4-a-helix" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="exercise-4-a-helix"><span class="header-section-number">6.4</span> Exercise 4 — A helix</h3>
+<p>The curve</p>
+<p><span class="math display">\[
+\gamma(t)=(\cos t,\sin t,t),
+\qquad 0\leq t\leq2\pi,
+\]</span></p>
+<p>is given in Cartesian coordinates. Express it in cylindrical and spherical coordinates, then calculate its length.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In cylindrical coordinates,</p>
+<p><span class="math display">\[
+\rho=1,
+\qquad
+\varphi=t,
+\qquad
+z=t.
+\]</span></p>
+<p>In spherical coordinates with colatitude <span class="math inline">\(\theta\)</span>,</p>
+<p><span class="math display">\[
+r=\sqrt{1+t^2},
+\qquad
+\varphi=t,
+\qquad
+\theta=\arccos\frac{t}{\sqrt{1+t^2}}.
+\]</span></p>
+<p>Since <span class="math inline">\(\dot\gamma=(-\sin t,\cos t,1)\)</span>, its speed is <span class="math inline">\(\sqrt2\)</span> and</p>
+<p><span class="math display">\[
+L=2\pi\sqrt2.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-5-stereographic-projection" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="exercise-5-stereographic-projection"><span class="header-section-number">6.5</span> Exercise 5 — Stereographic projection</h3>
+<p>Project the unit sphere without its north pole onto the plane <span class="math inline">\(z=0\)</span>. Derive the direct and inverse maps, then find the spherical metric in the projected coordinates <span class="math inline">\((X,Y)\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The line through the north pole and <span class="math inline">\((x,y,z)\)</span> gives</p>
+<p><span class="math display">\[
+X=\frac{x}{1-z},
+\qquad
+Y=\frac{y}{1-z}.
+\]</span></p>
+<p>With <span class="math inline">\(R^2=X^2+Y^2\)</span>, the inverse is</p>
+<p><span class="math display">\[
+x=\frac{2X}{1+R^2},
+\quad
+y=\frac{2Y}{1+R^2},
+\quad
+z=\frac{R^2-1}{1+R^2}.
+\]</span></p>
+<p>Differentiation gives</p>
+<p><span class="math display">\[
+g=\frac{4}{(1+X^2+Y^2)^2}(dX^2+dY^2).
+\]</span></p>
+<p>The projection is conformal: it preserves angles but not lengths. Two such charts, from opposite poles, cover the sphere.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="metric-and-measure-exercises" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="metric-and-measure-exercises"><span class="header-section-number">7</span> Metric and measure exercises</h2>
+<section id="exercise-6-a-metric-with-a-cross-term" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="exercise-6-a-metric-with-a-cross-term"><span class="header-section-number">7.1</span> Exercise 6 — A metric with a cross term</h3>
+<p>For</p>
+<p><span class="math display">\[
+ds^2=2(du^2+du\,dv+dv^2),
+\]</span></p>
+<p>find <span class="math inline">\((g_{ij})\)</span> and its inverse. Use <span class="math inline">\(x=(u+v)/\sqrt2\)</span>, <span class="math inline">\(y=(u-v)/\sqrt2\)</span> to diagonalize the metric.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Because the cross term is <span class="math inline">\(2g_{uv}du\,dv\)</span>,</p>
+<p><span class="math display">\[
+(g_{ij})=\begin{pmatrix}2&amp;1\\1&amp;2\end{pmatrix},
+\qquad
+(g^{ij})=\frac13\begin{pmatrix}2&amp;-1\\-1&amp;2\end{pmatrix}.
+\]</span></p>
+<p>The coordinates are not orthogonal. Substitution gives</p>
+<p><span class="math display">\[
+ds^2=3dx^2+dy^2.
+\]</span></p>
+<p>With <span class="math inline">\(X=\sqrt3x\)</span> and <span class="math inline">\(Y=y\)</span>, this becomes <span class="math inline">\(ds^2=dX^2+dY^2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-7-metric-and-area-of-a-sphere" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="exercise-7-metric-and-area-of-a-sphere"><span class="header-section-number">7.2</span> Exercise 7 — Metric and area of a sphere</h3>
+<p>For</p>
+<p><span class="math display">\[
+F(\theta,\varphi)
+=R(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta),
+\]</span></p>
+<p>calculate the induced metric, area element and total area.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The tangent vectors are orthogonal and have norms <span class="math inline">\(R\)</span> and <span class="math inline">\(R\sin\theta\)</span>. Hence</p>
+<p><span class="math display">\[
+ds^2=R^2(d\theta^2+\sin^2\theta\,d\varphi^2),
+\]</span></p>
+<p><span class="math display">\[
+dA=R^2\sin\theta\,d\theta\,d\varphi.
+\]</span></p>
+<p>Integrating over <span class="math inline">\(0\leq\theta\leq\pi\)</span> and <span class="math inline">\(0\leq\varphi&lt;2\pi\)</span> gives</p>
+<p><span class="math display">\[
+\operatorname{Area}(S_R^2)=4\pi R^2.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-8-geometry-of-a-torus" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="exercise-8-geometry-of-a-torus"><span class="header-section-number">7.3</span> Exercise 8 — Geometry of a torus</h3>
+<p>For <span class="math inline">\(R&gt;a&gt;0\)</span>, consider</p>
+<p><span class="math display">\[
+F(\theta,\varphi)
+=((R+a\cos\theta)\cos\varphi,
+(R+a\cos\theta)\sin\varphi,a\sin\theta).
+\]</span></p>
+<p>Find the induced metric, surface area and enclosed volume.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The tangent vectors are orthogonal, with norms <span class="math inline">\(a\)</span> and <span class="math inline">\(R+a\cos\theta\)</span>. Thus</p>
+<p><span class="math display">\[
+ds^2=a^2d\theta^2+(R+a\cos\theta)^2d\varphi^2,
+\]</span></p>
+<p><span class="math display">\[
+dA=a(R+a\cos\theta)\,d\theta\,d\varphi,
+\qquad
+A=4\pi^2Ra.
+\]</span></p>
+<p>Replacing <span class="math inline">\(a\)</span> by <span class="math inline">\(0\leq\rho\leq a\)</span> gives</p>
+<p><span class="math display">\[
+dV=\rho(R+\rho\cos\theta)\,d\rho\,d\theta\,d\varphi,
+\]</span></p>
+<p>and therefore</p>
+<p><span class="math display">\[
+V=2\pi^2Ra^2.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-9-conformal-change-of-metric" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="exercise-9-conformal-change-of-metric"><span class="header-section-number">7.4</span> Exercise 9 — Conformal change of metric</h3>
+<p>Let</p>
+<p><span class="math display">\[
+g=e^{2\sigma(x,y)}(dx^2+dy^2).
+\]</span></p>
+<p>Find the inverse metric and area element. Show that angles are unchanged and determine the local scale factors for lengths and areas.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We have</p>
+<p><span class="math display">\[
+g_{ij}=e^{2\sigma}\delta_{ij},
+\qquad
+g^{ij}=e^{-2\sigma}\delta^{ij},
+\qquad
+dA_g=e^{2\sigma}dx\,dy.
+\]</span></p>
+<p>The factor <span class="math inline">\(e^{2\sigma}\)</span> cancels in the cosine formula for an angle. Infinitesimal lengths are multiplied by <span class="math inline">\(e^\sigma\)</span> and areas by <span class="math inline">\(e^{2\sigma}\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-10-radial-metrics" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="exercise-10-radial-metrics"><span class="header-section-number">7.5</span> Exercise 10 — Radial metrics</h3>
+<p>For</p>
+<p><span class="math display">\[
+g=dr^2+f(r)^2d\theta^2,
+\]</span></p>
+<p>find the circumference of <span class="math inline">\(r=r_0\)</span> and the area of <span class="math inline">\(0\leq r\leq r_0\)</span>. Apply the result to <span class="math inline">\(f(r)=r\)</span>, <span class="math inline">\(R\sin(r/R)\)</span> and <span class="math inline">\(R\sinh(r/R)\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Directly from the metric,</p>
+<p><span class="math display">\[
+L(r_0)=2\pi f(r_0),
+\qquad
+A(r_0)=2\pi\int_0^{r_0}f(r)\,dr.
+\]</span></p>
+<p>For the plane,</p>
+<p><span class="math display">\[
+L=2\pi r_0,
+\qquad A=\pi r_0^2.
+\]</span></p>
+<p>For the sphere,</p>
+<p><span class="math display">\[
+L=2\pi R\sin(r_0/R),
+\quad
+A=2\pi R^2[1-\cos(r_0/R)].
+\]</span></p>
+<p>For the hyperbolic plane,</p>
+<p><span class="math display">\[
+L=2\pi R\sinh(r_0/R),
+\quad
+A=2\pi R^2[\cosh(r_0/R)-1].
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-11-mercator-projection" class="level3" data-number="7.6">
+<h3 data-number="7.6" class="anchored" data-anchor-id="exercise-11-mercator-projection"><span class="header-section-number">7.6</span> Exercise 11 — Mercator projection</h3>
+<p>On a sphere, use latitude <span class="math inline">\(\lambda\)</span> and longitude <span class="math inline">\(\varphi\)</span>:</p>
+<p><span class="math display">\[
+g=R^2(d\lambda^2+\cos^2\lambda\,d\varphi^2).
+\]</span></p>
+<p>Set <span class="math inline">\(x=\varphi\)</span> and find <span class="math inline">\(y(\lambda)\)</span> such that the metric is conformal to <span class="math inline">\(dx^2+dy^2\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Equal coefficients require</p>
+<p><span class="math display">\[
+\frac{dy}{d\lambda}=\frac1{\cos\lambda}.
+\]</span></p>
+<p>Hence one may choose</p>
+<p><span class="math display">\[
+y=\log\tan\left(\frac\pi4+\frac\lambda2\right).
+\]</span></p>
+<p>Since <span class="math inline">\(\cos\lambda=\operatorname{sech}y\)</span>,</p>
+<p><span class="math display">\[
+g=R^2\operatorname{sech}^2y\,(dx^2+dy^2).
+\]</span></p>
+<p>The map preserves angles, but distances and areas are distorted, and the poles are sent to <span class="math inline">\(y=\pm\infty\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="differential-operator-exercises" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="differential-operator-exercises"><span class="header-section-number">8</span> Differential-operator exercises</h2>
+<section id="exercise-12-gradient-in-polar-coordinates" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="exercise-12-gradient-in-polar-coordinates"><span class="header-section-number">8.1</span> Exercise 12 — Gradient in polar coordinates</h3>
+<p>For the Euclidean polar metric and</p>
+<p><span class="math display">\[
+f(r,\theta)=r^2\cos(2\theta),
+\]</span></p>
+<p>find <span class="math inline">\(\operatorname{grad}f\)</span> and its squared norm. Check the answer in Cartesian coordinates.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Using <span class="math inline">\(g^{ij}=\operatorname{diag}(1,r^{-2})\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{grad}f
+=2r\cos(2\theta)\partial_r
+-2\sin(2\theta)\partial_\theta.
+\]</span></p>
+<p>Since <span class="math inline">\(f=x^2-y^2\)</span>, the Cartesian result is <span class="math inline">\(2x\partial_x-2y\partial_y\)</span>. Finally,</p>
+<p><span class="math display">\[
+\|\operatorname{grad}f\|^2=4r^2.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-13-divergence-and-flux" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="exercise-13-divergence-and-flux"><span class="header-section-number">8.2</span> Exercise 13 — Divergence and flux</h3>
+<p>On the punctured plane, let <span class="math inline">\(X=r\partial_r\)</span>. Find its divergence and verify the divergence theorem on the disk <span class="math inline">\(D_R\)</span>. Generalize to <span class="math inline">\(X_p=r^p\partial_r\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since <span class="math inline">\(\sqrt{|g|}=r\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{div}X=\frac1r\partial_r(r^2)=2.
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+\int_{D_R}\operatorname{div}X\,dA=2\pi R^2.
+\]</span></p>
+<p>On the boundary, <span class="math inline">\(n=\partial_r\)</span> and <span class="math inline">\(ds=R\,d\theta\)</span>, so the flux is also <span class="math inline">\(2\pi R^2\)</span>. More generally,</p>
+<p><span class="math display">\[
+\operatorname{div}(r^p\partial_r)=(p+1)r^{p-1}.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-14-laplacian-on-the-sphere" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="exercise-14-laplacian-on-the-sphere"><span class="header-section-number">8.3</span> Exercise 14 — Laplacian on the sphere</h3>
+<p>Derive the Laplace–Beltrami operator on <span class="math inline">\(S_R^2\)</span> and apply it to <span class="math inline">\(f=\cos\theta\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Using <a href="#eq-laplace-beltrami" class="quarto-xref">Equation&nbsp;3</a>,</p>
+<p><span class="math display">\[
+\Delta f
+=\frac1{R^2\sin\theta}
+\partial_\theta(\sin\theta\,\partial_\theta f)
++\frac1{R^2\sin^2\theta}\partial_\varphi^2f.
+\]</span></p>
+<p>For <span class="math inline">\(f=\cos\theta\)</span>,</p>
+<p><span class="math display">\[
+\Delta f=-\frac2{R^2}f.
+\]</span></p>
+<p>Since <span class="math inline">\(f=z/R\)</span>, it is the restriction of a Cartesian coordinate and is a spherical harmonic of degree one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-15-radial-harmonic-functions" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="exercise-15-radial-harmonic-functions"><span class="header-section-number">8.4</span> Exercise 15 — Radial harmonic functions</h3>
+<p>For <span class="math inline">\(u(x)=U(r)\)</span> in <span class="math inline">\(\mathbb R^n\setminus\{0\}\)</span>, show that</p>
+<p><span class="math display">\[
+\Delta u=U''+\frac{n-1}{r}U'.
+\]</span></p>
+<p>Solve <span class="math inline">\(\Delta u=0\)</span> for <span class="math inline">\(n=2\)</span> and <span class="math inline">\(n\geq3\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The radial part of the Euclidean volume contains <span class="math inline">\(r^{n-1}\)</span>, hence</p>
+<p><span class="math display">\[
+\Delta u=\frac1{r^{n-1}}\frac d{dr}
+\left(r^{n-1}U'\right).
+\]</span></p>
+<p>Therefore <span class="math inline">\(r^{n-1}U'=C\)</span>. The solutions are</p>
+<p><span class="math display">\[
+U=A+B\log r
+\quad(n=2),
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+U=A+Br^{2-n}
+\quad(n\geq3).
+\]</span></p>
+<p>The non-constant solutions are singular at the origin and are not smooth harmonic functions on all of <span class="math inline">\(\mathbb R^n\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-16-greens-identity" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="exercise-16-greens-identity"><span class="header-section-number">8.5</span> Exercise 16 — Green’s identity</h3>
+<p>Let <span class="math inline">\((M,g)\)</span> be compact, connected and without boundary. Prove</p>
+<p><span class="math display">\[
+\int_Mf\Delta f\,dV_g
+=-\int_M\|\operatorname{grad}f\|^2dV_g,
+\]</span></p>
+<p>and deduce that every harmonic function on <span class="math inline">\(M\)</span> is constant.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The product rule gives</p>
+<p><span class="math display">\[
+\operatorname{div}(f\operatorname{grad}f)
+=\|\operatorname{grad}f\|^2+f\Delta f.
+\]</span></p>
+<p>Its integral is zero because <span class="math inline">\(M\)</span> has no boundary. This proves the identity. If <span class="math inline">\(\Delta f=0\)</span>, then the integral of <span class="math inline">\(\|\operatorname{grad}f\|^2\)</span> vanishes, so <span class="math inline">\(\operatorname{grad}f=0\)</span>. Connectedness makes <span class="math inline">\(f\)</span> constant.</p>
+<p>With a boundary, one adds</p>
+<p><span class="math display">\[
+\int_{\partial M}f\,\partial_nf\,dA_g.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="connection-exercises" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="connection-exercises"><span class="header-section-number">9</span> Connection exercises</h2>
+<section id="exercise-17-christoffel-symbols-in-polar-coordinates" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="exercise-17-christoffel-symbols-in-polar-coordinates"><span class="header-section-number">9.1</span> Exercise 17 — Christoffel symbols in polar coordinates</h3>
+<p>Find all non-zero Christoffel symbols for</p>
+<p><span class="math display">\[
+g=dr^2+r^2d\theta^2.
+\]</span></p>
+<p>Write the covariant derivatives of the coordinate basis and explain why the plane can still be flat.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The only non-zero metric derivative is <span class="math inline">\(\partial_rg_{\theta\theta}=2r\)</span>. Thus</p>
+<p><span class="math display">\[
+\Gamma^r{}_{\theta\theta}=-r,
+\qquad
+\Gamma^\theta{}_{r\theta}
+=\Gamma^\theta{}_{\theta r}=\frac1r.
+\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+\nabla_{\partial_r}\partial_\theta
+=\nabla_{\partial_\theta}\partial_r
+=\frac1r\partial_\theta,
+\qquad
+\nabla_{\partial_\theta}\partial_\theta=-r\partial_r.
+\]</span></p>
+<p>These coefficients describe the variation of the polar basis. Curvature is tensorial and remains zero.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-18-christoffel-symbols-on-the-sphere" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="exercise-18-christoffel-symbols-on-the-sphere"><span class="header-section-number">9.2</span> Exercise 18 — Christoffel symbols on the sphere</h3>
+<p>For the spherical metric, find the non-zero Christoffel symbols. Determine which regular curves with constant <span class="math inline">\(\theta\)</span> are geodesics.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The non-zero symbols are</p>
+<p><span class="math display">\[
+\Gamma^\theta{}_{\varphi\varphi}
+=-\sin\theta\cos\theta,
+\]</span></p>
+<p><span class="math display">\[
+\Gamma^\varphi{}_{\theta\varphi}
+=\Gamma^\varphi{}_{\varphi\theta}=\cot\theta.
+\]</span></p>
+<p>For constant <span class="math inline">\(\theta=\theta_0\)</span>, the first geodesic equation requires</p>
+<p><span class="math display">\[
+\sin\theta_0\cos\theta_0=0.
+\]</span></p>
+<p>The polar cases are degenerate, so the only regular parallel which is a geodesic is the equator, <span class="math inline">\(\theta_0=\pi/2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-19-a-conformal-metric" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="exercise-19-a-conformal-metric"><span class="header-section-number">9.3</span> Exercise 19 — A conformal metric</h3>
+<p>For <span class="math inline">\(g_{ij}=e^{2\sigma}\delta_{ij}\)</span>, show that</p>
+<p><span class="math display">\[
+\Gamma^k{}_{ij}
+=\delta^k{}_j\partial_i\sigma
++\delta^k{}_i\partial_j\sigma
+-\delta_{ij}\delta^{k\ell}\partial_\ell\sigma.
+\]</span></p>
+<p>Apply this formula to the Poincaré half-plane.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Insert <span class="math inline">\(g^{ij}=e^{-2\sigma}\delta^{ij}\)</span> and</p>
+<p><span class="math display">\[
+\partial_i g_{j\ell}
+=2e^{2\sigma}(\partial_i\sigma)\delta_{j\ell}
+\]</span></p>
+<p>into <a href="#eq-christoffel" class="quarto-xref">Equation&nbsp;4</a>. For <span class="math inline">\(\sigma=-\log y\)</span>, the non-zero symbols are</p>
+<p><span class="math display">\[
+\Gamma^x{}_{xy}=\Gamma^x{}_{yx}=-\frac1y,
+\]</span></p>
+<p><span class="math display">\[
+\Gamma^y{}_{xx}=\frac1y,
+\qquad
+\Gamma^y{}_{yy}=-\frac1y.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-20-uniqueness-of-the-levicivita-connection" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="exercise-20-uniqueness-of-the-levicivita-connection"><span class="header-section-number">9.4</span> Exercise 20 — Uniqueness of the Levi–Civita connection</h3>
+<p>Let <span class="math inline">\(\nabla\)</span> and <span class="math inline">\(\widetilde\nabla\)</span> be torsion-free and compatible with the same metric. Set</p>
+<p><span class="math display">\[
+A(X,Y)=\nabla_XY-\widetilde\nabla_XY,
+\qquad
+B(X,Y,Z)=g(A(X,Y),Z).
+\]</span></p>
+<p>Prove that the two connections are equal.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The difference of two connections is tensorial. The torsion-free condition gives</p>
+<p><span class="math display">\[
+B(X,Y,Z)=B(Y,X,Z),
+\]</span></p>
+<p>while metric compatibility gives</p>
+<p><span class="math display">\[
+B(X,Y,Z)=-B(X,Z,Y).
+\]</span></p>
+<p>Applying these two symmetries repeatedly yields</p>
+<p><span class="math display">\[
+B(X,Y,Z)=-B(X,Y,Z),
+\]</span></p>
+<p>so <span class="math inline">\(B=0\)</span>. Since the metric is non-degenerate, <span class="math inline">\(A=0\)</span> and</p>
+<p><span class="math display">\[
+\nabla=\widetilde\nabla.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-21-christoffel-symbols-are-not-a-tensor" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="exercise-21-christoffel-symbols-are-not-a-tensor"><span class="header-section-number">9.5</span> Exercise 21 — Christoffel symbols are not a tensor</h3>
+<p>Compare the Euclidean connection in Cartesian and polar coordinates. Use the transformation law to identify the non-tensorial term.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Cartesian Christoffel symbols vanish, while in polar coordinates</p>
+<p><span class="math display">\[
+\Gamma^r{}_{\theta\theta}=-r,
+\qquad
+\Gamma^\theta{}_{r\theta}=\frac1r.
+\]</span></p>
+<p>A tensor which vanishes in one chart vanishes in every chart. The connection law contains the additional term</p>
+<p><span class="math display">\[
+\frac{\partial y^a}{\partial x^k}
+\frac{\partial^2x^k}{\partial y^b\partial y^c},
+\]</span></p>
+<p>which prevents tensoriality. This term cancels in the difference between two connections.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-22-contracted-christoffel-symbol" class="level3" data-number="9.6">
+<h3 data-number="9.6" class="anchored" data-anchor-id="exercise-22-contracted-christoffel-symbol"><span class="header-section-number">9.6</span> Exercise 22 — Contracted Christoffel symbol</h3>
+<p>Show that</p>
+<p><span class="math display">\[
+\Gamma^i{}_{ik}=\partial_k\log\sqrt{|g|},
+\]</span></p>
+<p>and deduce the coordinate formula for the divergence.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Contracting <a href="#eq-christoffel" class="quarto-xref">Equation&nbsp;4</a> and exchanging dummy indices gives</p>
+<p><span class="math display">\[
+\Gamma^i{}_{ik}=\frac12g^{i\ell}\partial_k g_{i\ell}.
+\]</span></p>
+<p>Jacobi’s determinant formula gives</p>
+<p><span class="math display">\[
+\partial_k\log|g|=g^{i\ell}\partial_k g_{i\ell}.
+\]</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\Gamma^i{}_{ik}=\partial_k\log\sqrt{|g|}.
+\]</span></p>
+<p>Using <span class="math inline">\(\nabla_iX^i=\partial_iX^i+\Gamma^i{}_{ik}X^k\)</span> gives <a href="#eq-divergence" class="quarto-xref">Equation&nbsp;2</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="geodesic-exercises" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="geodesic-exercises"><span class="header-section-number">10</span> Geodesic exercises</h2>
+<section id="exercise-23-plane-geodesics-in-polar-coordinates" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="exercise-23-plane-geodesics-in-polar-coordinates"><span class="header-section-number">10.1</span> Exercise 23 — Plane geodesics in polar coordinates</h3>
+<p>Derive the polar geodesic equations, show that <span class="math inline">\(r^2\dot\theta\)</span> is constant, and decide whether radial lines and circles are geodesics.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Using Exercise 17 in <a href="#eq-geodesic" class="quarto-xref">Equation&nbsp;6</a> gives</p>
+<p><span class="math display">\[
+\ddot r-r\dot\theta^2=0,
+\qquad
+\ddot\theta+\frac2r\dot r\dot\theta=0.
+\]</span></p>
+<p>The second equation is equivalent to</p>
+<p><span class="math display">\[
+\frac d{dt}(r^2\dot\theta)=0.
+\]</span></p>
+<p>If <span class="math inline">\(\theta\)</span> is constant, <span class="math inline">\(\ddot r=0\)</span>, so radial lines at constant speed are geodesics. If <span class="math inline">\(r=r_0&gt;0\)</span>, the first equation forces <span class="math inline">\(\dot\theta=0\)</span>; non-trivial circles are not geodesics.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-24-geodesics-of-the-sphere" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="exercise-24-geodesics-of-the-sphere"><span class="header-section-number">10.2</span> Exercise 24 — Geodesics of the sphere</h3>
+<p>Let <span class="math inline">\(\gamma(t)\in S_R^2\)</span> be a constant-speed geodesic. Show that</p>
+<p><span class="math display">\[
+\ddot\gamma=-\frac{v^2}{R^2}\gamma
+\]</span></p>
+<p>and deduce that non-constant geodesics are great circles.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The tangential part of <span class="math inline">\(\ddot\gamma\)</span> vanishes, so <span class="math inline">\(\ddot\gamma\)</span> is parallel to the normal vector <span class="math inline">\(\gamma\)</span>. Differentiating <span class="math inline">\(\gamma\cdot\gamma=R^2\)</span> twice gives</p>
+<p><span class="math display">\[
+v^2+\gamma\cdot\ddot\gamma=0.
+\]</span></p>
+<p>Thus the stated equation follows. If <span class="math inline">\(p=\gamma(0)\)</span> and <span class="math inline">\(w=\dot\gamma(0)\)</span>,</p>
+<p><span class="math display">\[
+\gamma(t)=
+\cos\left(\frac{vt}{R}\right)p
++\frac Rv\sin\left(\frac{vt}{R}\right)w.
+\]</span></p>
+<p>The curve stays in the plane spanned by <span class="math inline">\(p\)</span> and <span class="math inline">\(w\)</span>, whose intersection with the sphere is a great circle.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-25-hyperbolic-geodesics" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="exercise-25-hyperbolic-geodesics"><span class="header-section-number">10.3</span> Exercise 25 — Hyperbolic geodesics</h3>
+<p>For</p>
+<p><span class="math display">\[
+g=\frac{dx^2+dy^2}{y^2},
+\]</span></p>
+<p>find the unit-speed geodesics and show that the boundary <span class="math inline">\(y=0\)</span> is infinitely far away.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The geodesic Lagrangian is</p>
+<p><span class="math display">\[
+L=\frac{\dot x^2+\dot y^2}{2y^2}.
+\]</span></p>
+<p>Since <span class="math inline">\(x\)</span> is cyclic,</p>
+<p><span class="math display">\[
+\frac{\dot x}{y^2}=c.
+\]</span></p>
+<p>Unit speed gives <span class="math inline">\(\dot x^2+\dot y^2=y^2\)</span>. If <span class="math inline">\(c=0\)</span>, the geodesics are vertical lines. Otherwise integration gives</p>
+<p><span class="math display">\[
+(x-a)^2+y^2=\frac1{c^2}.
+\]</span></p>
+<p>They are semicircles orthogonal to the boundary. Along a vertical line,</p>
+<p><span class="math display">\[
+\int_\varepsilon^{y_0}\frac{dy}{y}
+=\log\frac{y_0}{\varepsilon}\to\infty,
+\]</span></p>
+<p>so the boundary lies at infinite distance.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-26-energy-and-length" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="exercise-26-energy-and-length"><span class="header-section-number">10.4</span> Exercise 26 — Energy and length</h3>
+<p>For a regular curve <span class="math inline">\(\gamma:[a,b]\to M\)</span>, prove</p>
+<p><span class="math display">\[
+L(\gamma)^2\leq2(b-a)E(\gamma),
+\]</span></p>
+<p>and determine the equality case.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(v(t)=\|\dot\gamma(t)\|\)</span>. Cauchy–Schwarz gives</p>
+<p><span class="math display">\[
+\left(\int_a^bv\,dt\right)^2
+\leq(b-a)\int_a^bv^2dt
+=2(b-a)E.
+\]</span></p>
+<p>Equality holds exactly when the speed is constant. Length is unchanged by an increasing reparametrization, while energy usually changes because it contains the square of the speed.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-27-clairauts-relation" class="level3" data-number="10.5">
+<h3 data-number="10.5" class="anchored" data-anchor-id="exercise-27-clairauts-relation"><span class="header-section-number">10.5</span> Exercise 27 — Clairaut’s relation</h3>
+<p>A surface of revolution has metric</p>
+<p><span class="math display">\[
+g=du^2+f(u)^2dv^2.
+\]</span></p>
+<p>For a unit-speed geodesic, show that</p>
+<p><span class="math display">\[
+f(u)\sin\alpha=\text{constant},
+\]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span> is the angle with a meridian.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The coordinate <span class="math inline">\(v\)</span> is cyclic in</p>
+<p><span class="math display">\[
+L=\frac12(\dot u^2+f(u)^2\dot v^2),
+\]</span></p>
+<p>so <span class="math inline">\(f(u)^2\dot v=C\)</span>. In the orthonormal basis</p>
+<p><span class="math display">\[
+e_u=\partial_u,
+\qquad
+e_v=\frac1{f(u)}\partial_v,
+\]</span></p>
+<p>the azimuthal component of the unit velocity is <span class="math inline">\(f(u)\dot v=\sin\alpha\)</span>. Hence <span class="math inline">\(f(u)\sin\alpha=C\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="curvature-exercises" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="curvature-exercises"><span class="header-section-number">11</span> Curvature exercises</h2>
+<section id="exercise-28-the-polar-plane-is-flat" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="exercise-28-the-polar-plane-is-flat"><span class="header-section-number">11.1</span> Exercise 28 — The polar plane is flat</h3>
+<p>Use the polar Christoffel symbols to calculate <span class="math inline">\(R^r{}_{\theta r\theta}\)</span> and deduce the Gaussian curvature.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>From <a href="#eq-riemann-components" class="quarto-xref">Equation&nbsp;7</a>,</p>
+<p><span class="math display">\[
+R^r{}_{\theta r\theta}
+=\partial_r(-r)
+-\Gamma^\theta{}_{r\theta}\Gamma^r{}_{\theta\theta}
+=-1-\frac1r(-r)=0.
+\]</span></p>
+<p>In dimension two, the Riemann tensor is determined by <span class="math inline">\(K\)</span>, so</p>
+<p><span class="math display">\[
+K=0.
+\]</span></p>
+<p>The non-zero Christoffel symbols came only from the polar coordinates.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-29-curvature-of-conformal-metrics" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="exercise-29-curvature-of-conformal-metrics"><span class="header-section-number">11.2</span> Exercise 29 — Curvature of conformal metrics</h3>
+<p>For</p>
+<p><span class="math display">\[
+g=e^{2\sigma}(dx^2+dy^2),
+\]</span></p>
+<p>use</p>
+<p><span class="math display">\[
+K=-e^{-2\sigma}(\partial_x^2\sigma+\partial_y^2\sigma)
+\]</span></p>
+<p>to find the curvature of the stereographic unit-sphere metric and the Poincaré half-plane.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For the sphere,</p>
+<p><span class="math display">\[
+\sigma=\log2-\log(1+r^2),
+\qquad
+\Delta\sigma=-\frac4{(1+r^2)^2}.
+\]</span></p>
+<p>Since <span class="math inline">\(e^{-2\sigma}=(1+r^2)^2/4\)</span>, we obtain <span class="math inline">\(K=1\)</span>.</p>
+<p>For the half-plane,</p>
+<p><span class="math display">\[
+\sigma=-\log y,
+\qquad
+\Delta\sigma=\frac1{y^2},
+\qquad
+e^{-2\sigma}=y^2,
+\]</span></p>
+<p>so <span class="math inline">\(K=-1\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-30-constant-curvature-spaces" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="exercise-30-constant-curvature-spaces"><span class="header-section-number">11.3</span> Exercise 30 — Constant-curvature spaces</h3>
+<p>Suppose an <span class="math inline">\(n\)</span>-dimensional manifold satisfies</p>
+<p><span class="math display">\[
+R(X,Y)Z
+=K[g(Y,Z)X-g(X,Z)Y].
+\]</span></p>
+<p>Find the Ricci tensor and scalar curvature, then apply the result to <span class="math inline">\(S_R^n\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In an orthonormal basis <span class="math inline">\((e_a)\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{Ric}(Y,Z)
+=\sum_a g(R(e_a,Y)Z,e_a).
+\]</span></p>
+<p>Substitution gives <span class="math inline">\(nKg(Y,Z)-Kg(Y,Z)\)</span>, hence</p>
+<p><span class="math display">\[
+\operatorname{Ric}=(n-1)Kg,
+\qquad
+S=n(n-1)K.
+\]</span></p>
+<p>For <span class="math inline">\(S_R^n\)</span>, <span class="math inline">\(K=1/R^2\)</span>, so</p>
+<p><span class="math display">\[
+\operatorname{Ric}=\frac{n-1}{R^2}g,
+\qquad
+S=\frac{n(n-1)}{R^2}.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-31-gaussbonnet-theorem" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="exercise-31-gaussbonnet-theorem"><span class="header-section-number">11.4</span> Exercise 31 — Gauss–Bonnet theorem</h3>
+<p>For a compact oriented surface without boundary,</p>
+<p><span class="math display">\[
+\int_MK\,dA=2\pi\chi(M).
+\]</span></p>
+<p>Check the theorem on a sphere, find the integral for a torus and discuss the possible sign of curvature for a surface of genus <span class="math inline">\(q\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On <span class="math inline">\(S_R^2\)</span>,</p>
+<p><span class="math display">\[
+\int K\,dA=\frac1{R^2}(4\pi R^2)=4\pi
+=2\pi\chi(S^2).
+\]</span></p>
+<p>For the torus, <span class="math inline">\(\chi=0\)</span>, so <span class="math inline">\(\int K\,dA=0\)</span>. For an orientable surface of genus <span class="math inline">\(q\)</span>,</p>
+<p><span class="math display">\[
+\int_MK\,dA=4\pi(1-q).
+\]</span></p>
+<p>Everywhere positive curvature is possible only when <span class="math inline">\(q=0\)</span>. Everywhere negative curvature requires <span class="math inline">\(q\geq2\)</span>. A torus cannot have curvature of one strict sign everywhere.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-32-jacobi-fields" class="level3" data-number="11.5">
+<h3 data-number="11.5" class="anchored" data-anchor-id="exercise-32-jacobi-fields"><span class="header-section-number">11.5</span> Exercise 32 — Jacobi fields</h3>
+<p>Along a unit-speed geodesic in a constant-curvature space, let <span class="math inline">\(E\)</span> be parallel, unit and normal to <span class="math inline">\(\dot\gamma\)</span>. Set <span class="math inline">\(J=fE\)</span> and solve</p>
+<p><span class="math display">\[
+\frac{D^2J}{dt^2}+R(J,\dot\gamma)\dot\gamma=0
+\]</span></p>
+<p>with <span class="math inline">\(f(0)=0\)</span>, <span class="math inline">\(f'(0)=1\)</span> for <span class="math inline">\(K=1/R^2\)</span>, <span class="math inline">\(0\)</span> and <span class="math inline">\(-1/R^2\)</span>.</p>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since <span class="math inline">\(E\)</span> is parallel and normal to <span class="math inline">\(\dot\gamma\)</span>,</p>
+<p><span class="math display">\[
+f''+Kf=0.
+\]</span></p>
+<p>The three solutions are</p>
+<p><span class="math display">\[
+f(t)=R\sin(t/R)
+\quad(K=1/R^2),
+\]</span></p>
+<p><span class="math display">\[
+f(t)=t
+\quad(K=0),
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+f(t)=R\sinh(t/R)
+\quad(K=-1/R^2).
+\]</span></p>
+<p>Positive curvature can refocus geodesics, flat geometry gives linear separation, and negative curvature makes nearby geodesics diverge rapidly.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="further-reading" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">12</span> Further reading</h2>
+<p>Natural continuations are differential forms and the Hodge operator, submanifolds and the second fundamental form, comparison theorems, conjugate points and the cut locus. Introductory references include M. do Carmo, <em>Riemannian Geometry</em>, and J. Lee, <em>Introduction to Riemannian Manifolds</em>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

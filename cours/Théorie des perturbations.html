@@ -1,0 +1,2950 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Un cours sur les perturbations indépendantes et dépendantes du temps, les niveaux dégénérés, l’effet Stark et la dynamique de Rabi.">
+
+<title>Théorie des perturbations en mécanique quantique – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#décomposer-un-problème-presque-soluble" id="toc-décomposer-un-problème-presque-soluble" class="nav-link active" data-scroll-target="#décomposer-un-problème-presque-soluble"><span class="header-section-number">1</span> Décomposer un problème presque soluble</a></li>
+  <li><a href="#perturbations-stationnaires-sans-dégénérescence" id="toc-perturbations-stationnaires-sans-dégénérescence" class="nav-link" data-scroll-target="#perturbations-stationnaires-sans-dégénérescence"><span class="header-section-number">2</span> Perturbations stationnaires sans dégénérescence</a></li>
+  <li><a href="#trois-applications-stationnaires" id="toc-trois-applications-stationnaires" class="nav-link" data-scroll-target="#trois-applications-stationnaires"><span class="header-section-number">3</span> Trois applications stationnaires</a></li>
+  <li><a href="#perturbations-stationnaires-avec-dégénérescence" id="toc-perturbations-stationnaires-avec-dégénérescence" class="nav-link" data-scroll-target="#perturbations-stationnaires-avec-dégénérescence"><span class="header-section-number">4</span> Perturbations stationnaires avec dégénérescence</a></li>
+  <li><a href="#perturbations-dépendant-du-temps" id="toc-perturbations-dépendant-du-temps" class="nav-link" data-scroll-target="#perturbations-dépendant-du-temps"><span class="header-section-number">5</span> Perturbations dépendant du temps</a></li>
+  <li><a href="#choisir-lapproximation-adaptée" id="toc-choisir-lapproximation-adaptée" class="nav-link" data-scroll-target="#choisir-lapproximation-adaptée"><span class="header-section-number">6</span> Choisir l’approximation adaptée</a></li>
+  <li><a href="#simulations-interactives" id="toc-simulations-interactives" class="nav-link" data-scroll-target="#simulations-interactives"><span class="header-section-number">7</span> Simulations interactives</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Théorie des perturbations en mécanique quantique</h1>
+<p class="subtitle lead">Corrections stationnaires, dégénérescences et transitions induites</p>
+</div>
+
+<div>
+  <div class="description">
+    Un cours sur les perturbations indépendantes et dépendantes du temps, les niveaux dégénérés, l’effet Stark et la dynamique de Rabi.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="décomposer-un-problème-presque-soluble" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="décomposer-un-problème-presque-soluble"><span class="header-section-number">1</span> Décomposer un problème presque soluble</h2>
+<p>Les rares systèmes quantiques exactement solubles jouent un rôle central : particule libre, puits infini, oscillateur harmonique, atome d’hydrogène. Un système réel diffère cependant toujours un peu de ce modèle idéal. Un champ électrique déforme l’atome, un potentiel de confinement n’est jamais parfaitement parabolique, deux niveaux peuvent se coupler, et une excitation extérieure peut varier dans le temps.</p>
+<p>La théorie des perturbations organise ces écarts au lieu de les ignorer. On écrit l’hamiltonien sous la forme</p>
+<p><span id="eq-hamiltonian-perturbed"><span class="math display">\[
+\widehat H(\lambda)=\widehat H_0+\lambda\widehat W,
+\tag{1}\]</span></span></p>
+<p>où :</p>
+<ul>
+<li><span class="math inline">\(\widehat H_0\)</span> est l’hamiltonien non perturbé, supposé connu ;</li>
+<li><span class="math inline">\(\widehat W\)</span> décrit la correction physique ;</li>
+<li><span class="math inline">\(\lambda\)</span> est un paramètre contrôlable servant à compter les ordres, avec <span class="math inline">\(\lambda\widehat W\)</span> homogène à une énergie.</li>
+</ul>
+<p>Lorsque toute l’amplitude physique est incluse dans <span class="math inline">\(\widehat W\)</span>, <span class="math inline">\(\lambda\)</span> est un paramètre formel sans dimension que l’on fixe à un à la fin. On peut aussi conserver <span class="math inline">\(\lambda\)</span> comme un véritable couplage physique ; ses dimensions sont alors déterminées par celles de <span class="math inline">\(\widehat W\)</span>.</p>
+<p>Nous distinguerons deux problèmes.</p>
+<ol type="1">
+<li>Si <span class="math inline">\(\widehat W\)</span> ne dépend pas du temps, on cherche les déplacements des énergies et la déformation des états propres.</li>
+<li>Si <span class="math inline">\(\widehat W(t)\)</span> varie dans le temps, on cherche les amplitudes de transition entre les états propres de <span class="math inline">\(\widehat H_0\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Cadre et conventions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Cadre et conventions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les vecteurs propres orthonormés de <span class="math inline">\(\widehat H_0\)</span> sont notés <span class="math inline">\(|n^{(0)}\rangle\)</span> et vérifient</p>
+<p><span class="math display">\[
+\widehat H_0|n^{(0)}\rangle=E_n^{(0)}|n^{(0)}\rangle,
+\qquad
+\langle m^{(0)}|n^{(0)}\rangle=\delta_{mn}.
+\]</span></p>
+<p>L’exposant entre parenthèses indique l’ordre perturbatif. Ainsi, <span class="math inline">\(E_n^{(1)}\)</span> est le coefficient d’ordre un en <span class="math inline">\(\lambda\)</span>, tandis que l’énergie physique approchée est</p>
+<p><span class="math display">\[
+E_n\simeq E_n^{(0)}+\lambda E_n^{(1)}+\lambda^2E_n^{(2)}.
+\]</span></p>
+<p>Les formules conservent <span class="math inline">\(\hbar\)</span>. Certaines figures emploient des unités adimensionnées, annoncées dans leur légende.</p>
+</div>
+</div>
+<section id="ce-que-signifie-petite-perturbation" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="ce-que-signifie-petite-perturbation"><span class="header-section-number">1.1</span> Ce que signifie « petite perturbation »</h3>
+<p>La condition pertinente n’est pas simplement <span class="math inline">\(|W|\ll|H_0|\)</span>, car un opérateur n’est pas un nombre. Pour un état <span class="math inline">\(n\)</span> isolé, les coefficients qui mélangent les autres niveaux sont de la forme</p>
+<p><span class="math display">\[
+\lambda\frac{\langle m^{(0)}|\widehat W|n^{(0)}\rangle}
+{E_n^{(0)}-E_m^{(0)}}.
+\]</span></p>
+<p>La perturbation est donc faible lorsque</p>
+<p><span id="eq-smallness-criterion"><span class="math display">\[
+\boxed{
+\left|
+\lambda\frac{W_{mn}}{E_n^{(0)}-E_m^{(0)}}
+\right|\ll1
+}
+\qquad (m\ne n),
+\tag{2}\]</span></span></p>
+<p>pour les états effectivement couplés par <span class="math inline">\(\widehat W\)</span>. Une correction de faible amplitude peut ainsi produire un grand effet lorsque deux niveaux sont très proches. Si le dénominateur s’annule, la méthode non dégénérée échoue et il faut traiter ensemble les états concernés.</p>
+<p>Une série perturbative n’est pas nécessairement convergente pour toute valeur de <span class="math inline">\(\lambda\)</span>. Elle peut être <strong>asymptotique</strong> : les premiers termes améliorent fortement le résultat, puis les ordres très élevés finissent par le dégrader. Son usage reste alors légitime tant que les premiers termes diminuent et que l’on contrôle l’erreur.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère historique">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère historique
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les méthodes perturbatives existaient déjà en mécanique céleste, où elles servaient à calculer les faibles déviations des orbites planétaires. En mécanique quantique, Lord Rayleigh avait développé une méthode analogue pour les vibrations classiques ; Schrödinger l’a adaptée dès 1926 à ses fonctions propres. On parle donc souvent de théorie des perturbations de <strong>Rayleigh–Schrödinger</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="outils-numériques-et-conventions-graphiques" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="outils-numériques-et-conventions-graphiques"><span class="header-section-number">1.2</span> Outils numériques et conventions graphiques</h3>
+<div id="code-outils-perturbations" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Afficher les imports et conventions graphiques</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.figsize"</span>: (<span class="fl">9.6</span>, <span class="fl">4.8</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.grid"</span>: <span class="va">True</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.22</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>BLEU <span class="op">=</span> <span class="st">"#2563eb"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ORANGE <span class="op">=</span> <span class="st">"#ea580c"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>VERT <span class="op">=</span> <span class="st">"#059669"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ROUGE <span class="op">=</span> <span class="st">"#dc2626"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>VIOLET <span class="op">=</span> <span class="st">"#7c3aed"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>GRIS <span class="op">=</span> <span class="st">"#64748b"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normaliser(vecteur, x):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    norme <span class="op">=</span> np.sqrt(np.<span class="bu">sum</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.5</span> <span class="op">*</span> (np.<span class="bu">abs</span>(vecteur[<span class="dv">1</span>:])<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> np.<span class="bu">abs</span>(vecteur[:<span class="op">-</span><span class="dv">1</span>])<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span> np.diff(x)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vecteur <span class="op">/</span> norme</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fixer_phase(vecteur):</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Choisit un signe reproductible pour faciliter les comparaisons."""</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> np.argmax(np.<span class="bu">abs</span>(vecteur))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vecteur <span class="cf">if</span> vecteur[i] <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="op">-</span>vecteur</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="perturbations-stationnaires-sans-dégénérescence" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="perturbations-stationnaires-sans-dégénérescence"><span class="header-section-number">2</span> Perturbations stationnaires sans dégénérescence</h2>
+<p>Supposons d’abord que <span class="math inline">\(E_n^{(0)}\)</span> soit un niveau non dégénéré. Nous cherchons un état propre de <span class="math inline">\(\widehat H(\lambda)\)</span>,</p>
+<p><span id="eq-exact-eigenproblem"><span class="math display">\[
+\widehat H(\lambda)|n(\lambda)\rangle
+=E_n(\lambda)|n(\lambda)\rangle,
+\tag{3}\]</span></span></p>
+<p>sous la forme de deux séries :</p>
+<p><span id="eq-energy-expansion"><span class="math display">\[
+E_n(\lambda)
+=E_n^{(0)}+\lambda E_n^{(1)}+\lambda^2E_n^{(2)}+\cdots,
+\tag{4}\]</span></span></p>
+<p><span id="eq-state-expansion"><span class="math display">\[
+|n(\lambda)\rangle
+=|n^{(0)}\rangle+\lambda|n^{(1)}\rangle
++\lambda^2|n^{(2)}\rangle+\cdots.
+\tag{5}\]</span></span></p>
+<p>Un vecteur propre pouvant être multiplié par une constante, sa normalisation doit être fixée. Le choix le plus commode pendant le calcul est la <strong>normalisation intermédiaire</strong></p>
+<p><span id="eq-intermediate-normalization"><span class="math display">\[
+\langle n^{(0)}|n(\lambda)\rangle=1.
+\tag{6}\]</span></span></p>
+<p>Il en résulte</p>
+<p><span class="math display">\[
+\langle n^{(0)}|n^{(k)}\rangle=0
+\qquad (k\ge1).
+\]</span></p>
+<p>Le vecteur approché devra être normalisé à la fin si l’on calcule des probabilités.</p>
+<section id="développement-ordre-par-ordre" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="développement-ordre-par-ordre"><span class="header-section-number">2.1</span> Développement ordre par ordre</h3>
+<p>Insérons <a href="#eq-energy-expansion" class="quarto-xref">Equation&nbsp;4</a> et <a href="#eq-state-expansion" class="quarto-xref">Equation&nbsp;5</a> dans <a href="#eq-exact-eigenproblem" class="quarto-xref">Equation&nbsp;3</a> :</p>
+<p><span class="math display">\[
+(\widehat H_0+\lambda\widehat W)
+\left(|n^{(0)}\rangle+\lambda|n^{(1)}\rangle+\lambda^2|n^{(2)}\rangle+\cdots\right)
+\]</span></p>
+<p><span class="math display">\[
+=
+\left(E_n^{(0)}+\lambda E_n^{(1)}+\lambda^2E_n^{(2)}+\cdots\right)
+\left(|n^{(0)}\rangle+\lambda|n^{(1)}\rangle+\lambda^2|n^{(2)}\rangle+\cdots\right).
+\]</span></p>
+<p>Deux polynômes en <span class="math inline">\(\lambda\)</span> égaux pour toute valeur de <span class="math inline">\(\lambda\)</span> ont les mêmes coefficients à chaque ordre.</p>
+<p>À l’ordre zéro,</p>
+<p><span class="math display">\[
+\widehat H_0|n^{(0)}\rangle=E_n^{(0)}|n^{(0)}\rangle,
+\]</span></p>
+<p>ce qui reproduit le problème connu.</p>
+<p>À l’ordre un,</p>
+<p><span class="math display">\[
+\widehat H_0|n^{(1)}\rangle
++\widehat W|n^{(0)}\rangle
+=E_n^{(0)}|n^{(1)}\rangle
++E_n^{(1)}|n^{(0)}\rangle.
+\]</span></p>
+<p>Réarrangeons :</p>
+<p><span id="eq-first-order-vector-equation"><span class="math display">\[
+(\widehat H_0-E_n^{(0)})|n^{(1)}\rangle
+=-(\widehat W-E_n^{(1)})|n^{(0)}\rangle.
+\tag{7}\]</span></span></p>
+<p>Projetons à gauche sur <span class="math inline">\(\langle n^{(0)}|\)</span>. Comme</p>
+<p><span class="math display">\[
+\langle n^{(0)}|(\widehat H_0-E_n^{(0)})=0,
+\]</span></p>
+<p>le membre de gauche s’annule. Il reste</p>
+<p><span class="math display">\[
+0=-\langle n^{(0)}|\widehat W|n^{(0)}\rangle+E_n^{(1)},
+\]</span></p>
+<p>d’où la première formule fondamentale :</p>
+<p><span id="eq-first-order-energy"><span class="math display">\[
+\boxed{E_n^{(1)}=\langle n^{(0)}|\widehat W|n^{(0)}\rangle.}
+\tag{8}\]</span></span></p>
+<p>La correction d’énergie au premier ordre est donc la valeur moyenne de la perturbation dans l’état non perturbé.</p>
+<p>Pour obtenir l’état, projetons maintenant <a href="#eq-first-order-vector-equation" class="quarto-xref">Equation&nbsp;7</a> sur <span class="math inline">\(\langle m^{(0)}|\)</span> avec <span class="math inline">\(m\ne n\)</span> :</p>
+<p><span class="math display">\[
+(E_m^{(0)}-E_n^{(0)})
+\langle m^{(0)}|n^{(1)}\rangle
+=-\langle m^{(0)}|\widehat W|n^{(0)}\rangle.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\langle m^{(0)}|n^{(1)}\rangle
+=\frac{W_{mn}}{E_n^{(0)}-E_m^{(0)}}.
+\]</span></p>
+<p>La complétude de la base non perturbée donne</p>
+<p><span id="eq-first-order-state"><span class="math display">\[
+\boxed{
+|n^{(1)}\rangle
+=\sum_{m\ne n}
+\frac{\langle m^{(0)}|\widehat W|n^{(0)}\rangle}
+{E_n^{(0)}-E_m^{(0)}}|m^{(0)}\rangle.
+}
+\tag{9}\]</span></span></p>
+<p>Cette expression rend le critère <a href="#eq-smallness-criterion" class="quarto-xref">Equation&nbsp;2</a> transparent : la perturbation mélange surtout les états proches en énergie et fortement couplés par <span class="math inline">\(\widehat W\)</span>.</p>
+</section>
+<section id="correction-dénergie-au-deuxième-ordre" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="correction-dénergie-au-deuxième-ordre"><span class="header-section-number">2.2</span> Correction d’énergie au deuxième ordre</h3>
+<p>À l’ordre deux, l’équation propre fournit</p>
+<p><span class="math display">\[
+\widehat H_0|n^{(2)}\rangle+\widehat W|n^{(1)}\rangle
+=E_n^{(0)}|n^{(2)}\rangle
++E_n^{(1)}|n^{(1)}\rangle
++E_n^{(2)}|n^{(0)}\rangle.
+\]</span></p>
+<p>Projetons sur <span class="math inline">\(\langle n^{(0)}|\)</span>. Les termes contenant <span class="math inline">\(|n^{(2)}\rangle\)</span> s’annulent par l’équation propre d’ordre zéro, et <span class="math inline">\(\langle n^{(0)}|n^{(1)}\rangle=0\)</span>. Il vient</p>
+<p><span class="math display">\[
+E_n^{(2)}=\langle n^{(0)}|\widehat W|n^{(1)}\rangle.
+\]</span></p>
+<p>En insérant <a href="#eq-first-order-state" class="quarto-xref">Equation&nbsp;9</a>,</p>
+<p><span id="eq-second-order-energy"><span class="math display">\[
+\boxed{
+E_n^{(2)}=
+\sum_{m\ne n}
+\frac{|\langle m^{(0)}|\widehat W|n^{(0)}\rangle|^2}
+{E_n^{(0)}-E_m^{(0)}}.
+}
+\tag{10}\]</span></span></p>
+<p>Plusieurs conséquences sont immédiates.</p>
+<ul>
+<li>Les éléments diagonaux de <span class="math inline">\(\widehat W\)</span> ne contribuent pas directement à <span class="math inline">\(E_n^{(2)}\)</span>.</li>
+<li>Un niveau <span class="math inline">\(m\)</span> situé au-dessus de <span class="math inline">\(n\)</span> apporte une contribution négative.</li>
+<li>Un niveau situé en dessous apporte une contribution positive.</li>
+<li>Pour l’état fondamental, tous les dénominateurs sont négatifs :</li>
+</ul>
+<p><span id="eq-ground-second-order-negative"><span class="math display">\[
+\boxed{E_0^{(2)}\le0.}
+\tag{11}\]</span></span></p>
+<p>Cette dernière propriété traduit la répulsion entre niveaux : le couplage avec les états excités abaisse le niveau fondamental.</p>
+</section>
+<section id="normalisation-de-létat-approché" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="normalisation-de-létat-approché"><span class="header-section-number">2.3</span> Normalisation de l’état approché</h3>
+<p>Avec la normalisation intermédiaire, le vecteur</p>
+<p><span class="math display">\[
+|\widetilde n\rangle=|n^{(0)}\rangle+\lambda|n^{(1)}\rangle
+\]</span></p>
+<p>n’est pas exactement normalisé. En effet,</p>
+<p><span class="math display">\[
+\langle\widetilde n|\widetilde n\rangle
+=1+\lambda^2\langle n^{(1)}|n^{(1)}\rangle+O(\lambda^3).
+\]</span></p>
+<p>Comme <span class="math inline">\((1+u)^{-1/2}=1-u/2+O(u^2)\)</span>, le vecteur tronqué et renormalisé s’écrit</p>
+<p><span id="eq-normalized-perturbed-state"><span class="math display">\[
+|\widetilde n\rangle_{\mathrm{norm}}
+=\left(1-\frac{\lambda^2}{2}
+\langle n^{(1)}|n^{(1)}\rangle\right)|n^{(0)}\rangle
++\lambda|n^{(1)}\rangle+O(\lambda^3),
+\tag{12}\]</span></span></p>
+<p>Cette expression normalise l’approximation contenant <span class="math inline">\(|n^{(0)}\rangle\)</span> et <span class="math inline">\(|n^{(1)}\rangle\)</span>. Le véritable état à l’ordre deux possède en plus des composantes orthogonales <span class="math inline">\(|n^{(2)}\rangle\)</span>, qui doivent être calculées si une observable exige cette précision.</p>
+<p>Pour une observable <span class="math inline">\(\widehat A\)</span> indépendante de <span class="math inline">\(\lambda\)</span>, la correction au premier ordre se déduit déjà de <a href="#eq-first-order-state" class="quarto-xref">Equation&nbsp;9</a> :</p>
+<p><span id="eq-first-order-observable"><span class="math display">\[
+\begin{aligned}
+\langle A\rangle_n
+&amp;=\langle n^{(0)}|\widehat A|n^{(0)}\rangle\\
+&amp;\quad+2\lambda\operatorname{Re}
+\sum_{m\ne n}
+\frac{\langle n^{(0)}|\widehat A|m^{(0)}\rangle
+\langle m^{(0)}|\widehat W|n^{(0)}\rangle}
+{E_n^{(0)}-E_m^{(0)}}
++O(\lambda^2).
+\end{aligned}
+\tag{13}\]</span></span></p>
+<p>Cette expression permet par exemple de calculer le dipôle induit par un champ, même lorsque la correction d’énergie au premier ordre s’annule.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Théorème de Hellmann–Feynman">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Théorème de Hellmann–Feynman
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour un état propre normalisé exact de <span class="math inline">\(\widehat H(\lambda)\)</span>, la dérivation de</p>
+<p><span class="math display">\[
+E_n(\lambda)=\langle n(\lambda)|\widehat H(\lambda)|n(\lambda)\rangle
+\]</span></p>
+<p>et l’utilisation de l’équation propre donnent</p>
+<p><span class="math display">\[
+\frac{\mathrm dE_n}{\mathrm d\lambda}
+=\left\langle n(\lambda)\left|
+\frac{\partial\widehat H}{\partial\lambda}
+\right|n(\lambda)\right\rangle.
+\]</span></p>
+<p>À <span class="math inline">\(\lambda=0\)</span>, cette relation redonne immédiatement <span class="math inline">\(E_n^{(1)}=\langle n^{(0)}|W|n^{(0)}\rangle\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Énergie et état ne commencent pas toujours au même ordre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Énergie et état ne commencent pas toujours au même ordre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une symétrie peut imposer <span class="math inline">\(E_n^{(1)}=0\)</span> alors que <span class="math inline">\(|n^{(1)}\rangle\ne0\)</span>. Le niveau ne se déplace alors qu’au deuxième ordre, mais la fonction d’onde est déjà déformée au premier ordre. Il ne faut donc pas conclure qu’une perturbation « n’a aucun effet » parce que sa valeur moyenne est nulle.</p>
+</div>
+</div>
+</section>
+<section id="schéma-général-déplacement-et-mélange-des-niveaux" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="schéma-général-déplacement-et-mélange-des-niveaux"><span class="header-section-number">2.4</span> Schéma général : déplacement et mélange des niveaux</h3>
+<p>Le code suivant construit un hamiltonien à trois niveaux. Les traits en pointillés représentent les énergies non perturbées ; les courbes pleines sont les valeurs propres exactes lorsque le couplage augmente.</p>
+<div id="cell-fig-deplacement-niveaux" class="cell" data-fig-height="4.8" data-fig-width="9.6" data-execution_count="2">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">0.8</span>, <span class="dv">250</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>H0 <span class="op">=</span> np.diag([<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">2.25</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> np.array([</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.20</span>, <span class="fl">0.34</span>, <span class="fl">0.00</span>],</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.34</span>, <span class="op">-</span><span class="fl">0.10</span>, <span class="fl">0.46</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.00</span>, <span class="fl">0.46</span>, <span class="fl">0.15</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>energies <span class="op">=</span> np.array([</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    np.linalg.eigvalsh(H0 <span class="op">+</span> lam <span class="op">*</span> W) <span class="cf">for</span> lam <span class="kw">in</span> lambdas</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n, couleur <span class="kw">in</span> <span class="bu">enumerate</span>([BLEU, ORANGE, VERT]):</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ax.plot(lambdas, energies[:, n], color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="fl">2.2</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="vs">E_</span><span class="sc">{</span>n<span class="sc">}</span><span class="kw">(</span><span class="er">\</span><span class="vs">lambda</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> exact"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ax.axhline(H0[n, n], color<span class="op">=</span>couleur, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.55</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"intensité </span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"énergie"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>       title<span class="op">=</span><span class="st">"La perturbation déplace et mélange les états propres"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>ax.legend(ncol<span class="op">=</span><span class="dv">2</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-deplacement-niveaux" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deplacement-niveaux-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-deplacement-niveaux-output-1.png" width="786" height="439" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deplacement-niveaux-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Déplacement et répulsion de trois niveaux couplés par une perturbation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="trois-applications-stationnaires" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="trois-applications-stationnaires"><span class="header-section-number">3</span> Trois applications stationnaires</h2>
+<p>Les formules générales prennent leur sens lorsqu’on identifie les symétries et les éléments de matrice propres à chaque système. Nous étudions successivement une boîte quantique inclinée, un oscillateur anharmonique et une perturbation exactement diagonale.</p>
+<section id="particule-dans-une-boîte-soumise-à-un-champ-uniforme" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="particule-dans-une-boîte-soumise-à-un-champ-uniforme"><span class="header-section-number">3.1</span> Particule dans une boîte soumise à un champ uniforme</h3>
+<p>Considérons une particule confinée dans le puits infini centré</p>
+<p><span class="math display">\[
+V_0(x)=
+\begin{cases}
+0,&amp; |x|&lt;L/2,\\
++\infty,&amp; |x|\ge L/2.
+\end{cases}
+\]</span></p>
+<p>Les états ont une parité définie. En les ordonnant par <span class="math inline">\(n=1,2,\ldots\)</span>,</p>
+<p><span class="math display">\[
+\psi_n^{(0)}(x)=
+\begin{cases}
+\sqrt{\dfrac{2}{L}}\cos\!\left(\dfrac{n\pi x}{L}\right),&amp;n\text{ impair},\\[2mm]
+\sqrt{\dfrac{2}{L}}\sin\!\left(\dfrac{n\pi x}{L}\right),&amp;n\text{ pair},
+\end{cases}
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+E_n^{(0)}=\frac{n^2\pi^2\hbar^2}{2mL^2}.
+\]</span></p>
+<p>Un champ uniforme dirigé selon <span class="math inline">\(x\)</span> ajoute une perturbation linéaire</p>
+<p><span id="eq-box-linear-perturbation"><span class="math display">\[
+\widehat W=F\widehat x,
+\tag{14}\]</span></span></p>
+<p>où <span class="math inline">\(F\)</span> est une force constante. Le potentiel total est donc incliné à l’intérieur de la boîte.</p>
+<p>Comme <span class="math inline">\(|\psi_n^{(0)}(x)|^2\)</span> est pair et <span class="math inline">\(x\)</span> impair,</p>
+<p><span id="eq-box-first-order-zero"><span class="math display">\[
+E_n^{(1)}
+=F\int_{-L/2}^{L/2}x|\psi_n^{(0)}(x)|^2\,\mathrm dx=0.
+\tag{15}\]</span></span></p>
+<p>La correction de l’état n’est pourtant pas nulle. L’opérateur <span class="math inline">\(x\)</span> étant impair, il relie uniquement des états de parités opposées :</p>
+<p><span id="eq-parity-selection-box"><span class="math display">\[
+\langle m^{(0)}|x|n^{(0)}\rangle=0
+\quad\text{si }m\text{ et }n\text{ ont la même parité}.
+\tag{16}\]</span></span></p>
+<p>Pour l’état fondamental, tous les états couplés sont plus hauts en énergie. Le deuxième ordre est donc négatif :</p>
+<p><span class="math display">\[
+E_1^{(2)}
+=F^2\sum_{m\ne1}
+\frac{|\langle m^{(0)}|x|1^{(0)}\rangle|^2}
+{E_1^{(0)}-E_m^{(0)}}&lt;0.
+\]</span></p>
+<p>Le champ déplace la densité de probabilité dans la direction où l’énergie potentielle diminue et abaisse l’énergie fondamentale. C’est l’analogue élémentaire d’une polarisation électrique induite.</p>
+<div id="cell-fig-boite-inclinee" class="cell" data-fig-height="4.5" data-fig-width="10" data-execution_count="3">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unités : L = 1 et hbar^2/(2m) = 1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span>L<span class="op">/</span><span class="dv">2</span>, L<span class="op">/</span><span class="dv">2</span>, <span class="dv">1200</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>n_base <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> etat_boite(n, x):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">2</span><span class="op">/</span>L) <span class="op">*</span> np.cos(n <span class="op">*</span> np.pi <span class="op">*</span> x <span class="op">/</span> L)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(<span class="dv">2</span><span class="op">/</span>L) <span class="op">*</span> np.sin(n <span class="op">*</span> np.pi <span class="op">*</span> x <span class="op">/</span> L)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> np.array([etat_boite(n, x) <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_base <span class="op">+</span> <span class="dv">1</span>)])</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>E0_boite <span class="op">=</span> (np.arange(<span class="dv">1</span>, n_base <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> np.pi <span class="op">/</span> L)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Xmn <span class="op">=</span> np.einsum(<span class="st">"ix,x,jx-&gt;ij"</span>, base, x, base) <span class="op">*</span> dx</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> <span class="fl">18.0</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>H_boite <span class="op">=</span> np.diag(E0_boite) <span class="op">+</span> F <span class="op">*</span> Xmn</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>E_exacte, C_exact <span class="op">=</span> np.linalg.eigh(H_boite)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>psi_exacte <span class="op">=</span> fixer_phase(C_exact[:, <span class="dv">0</span>] <span class="op">@</span> base)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>coeff1 <span class="op">=</span> np.zeros(n_base)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_base):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    coeff1[m] <span class="op">=</span> F <span class="op">*</span> Xmn[m, <span class="dv">0</span>] <span class="op">/</span> (E0_boite[<span class="dv">0</span>] <span class="op">-</span> E0_boite[m])</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>psi_pert <span class="op">=</span> normaliser(base[<span class="dv">0</span>] <span class="op">+</span> coeff1 <span class="op">@</span> base, x)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>psi_pert <span class="op">=</span> fixer_phase(psi_pert)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>Fs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">121</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>Efond <span class="op">=</span> np.array([</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    np.linalg.eigvalsh(np.diag(E0_boite) <span class="op">+</span> f <span class="op">*</span> Xmn)[<span class="dv">0</span>] <span class="cf">for</span> f <span class="kw">in</span> Fs</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>E2_coeff <span class="op">=</span> np.<span class="bu">sum</span>(</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    np.<span class="bu">abs</span>(Xmn[<span class="dv">1</span>:, <span class="dv">0</span>])<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (E0_boite[<span class="dv">0</span>] <span class="op">-</span> E0_boite[<span class="dv">1</span>:])</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>E_pert2 <span class="op">=</span> E0_boite[<span class="dv">0</span>] <span class="op">+</span> E2_coeff <span class="op">*</span> Fs<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="fl">4.1</span>))</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, F<span class="op">*</span>x, color<span class="op">=</span>ROUGE, lw<span class="op">=</span><span class="fl">2.2</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].vlines([<span class="op">-</span>L<span class="op">/</span><span class="dv">2</span>, L<span class="op">/</span><span class="dv">2</span>], <span class="op">-</span><span class="dv">12</span>, <span class="dv">12</span>, color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(E0_boite[<span class="dv">0</span>], color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">E_1</span><span class="dv">^</span><span class="vs">{</span><span class="kw">(</span><span class="vs">0</span><span class="kw">)</span><span class="vs">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x/L$"</span>, ylabel<span class="op">=</span><span class="st">"énergie"</span>, title<span class="op">=</span><span class="st">"Situation physique"</span>,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, np.<span class="bu">abs</span>(base[<span class="dv">0</span>])<span class="op">**</span><span class="dv">2</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"sans champ"</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, np.<span class="bu">abs</span>(psi_pert)<span class="op">**</span><span class="dv">2</span>, color<span class="op">=</span>ORANGE, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"ordre 1"</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, np.<span class="bu">abs</span>(psi_exacte)<span class="op">**</span><span class="dv">2</span>, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"exact"</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x/L$"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="cf">|</span><span class="er">\</span><span class="vs">psi</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="cf">|</span><span class="dv">^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Polarisation de l'état"</span>)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(Fs, Efond, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="fl">2.3</span>, label<span class="op">=</span><span class="st">"diagonalisation"</span>)</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(Fs, E_pert2, color<span class="op">=</span>ORANGE, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"jusqu'à l'ordre 2"</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"force $F$"</span>, ylabel<span class="op">=</span><span class="st">"$E_1$"</span>,</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Décalage quadratique"</span>)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-boite-inclinee" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boite-inclinee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-boite-inclinee-output-1.png" width="1138" height="377" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boite-inclinee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Boîte quantique inclinée : potentiel, déformation de l’état fondamental et correction quadratique de l’énergie.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="oscillateur-harmonique-faiblement-anharmonique" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="oscillateur-harmonique-faiblement-anharmonique"><span class="header-section-number">3.2</span> Oscillateur harmonique faiblement anharmonique</h3>
+<p>Un potentiel réel n’est parabolique qu’au voisinage de son minimum. Le premier terme correctif compatible avec une symétrie <span class="math inline">\(x\mapsto-x\)</span> est souvent quartique :</p>
+<p><span id="eq-quartic-oscillator"><span class="math display">\[
+\widehat H
+=\underbrace{\frac{\widehat p^2}{2m}
++\frac12m\omega^2\widehat x^2}_{\widehat H_0}
++\lambda\widehat x^4.
+\tag{17}\]</span></span></p>
+<p>Les énergies non perturbées sont</p>
+<p><span class="math display">\[
+E_n^{(0)}=\hbar\omega\left(n+\frac12\right).
+\]</span></p>
+<p>Introduisons les opérateurs d’échelle</p>
+<p><span class="math display">\[
+\widehat x=x_0(\widehat a+\widehat a^\dagger),
+\qquad
+x_0=\sqrt{\frac{\hbar}{2m\omega}}.
+\]</span></p>
+<p>Pour calculer <span class="math inline">\(\langle n|x^4|n\rangle\)</span>, appliquons deux fois <span class="math inline">\(\widehat a+\widehat a^\dagger\)</span>. On trouve</p>
+<p><span class="math display">\[
+(\widehat a+\widehat a^\dagger)^2|n\rangle
+=\sqrt{n(n-1)}|n-2\rangle
++(2n+1)|n\rangle
++\sqrt{(n+1)(n+2)}|n+2\rangle.
+\]</span></p>
+<p>La norme carrée de ce vecteur est précisément l’élément diagonal de la quatrième puissance :</p>
+<p><span class="math display">\[
+\begin{aligned}
+\langle n|(\widehat a+\widehat a^\dagger)^4|n\rangle
+&amp;=n(n-1)+(2n+1)^2+(n+1)(n+2)\\
+&amp;=3(2n^2+2n+1).
+\end{aligned}
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span id="eq-quartic-first-order"><span class="math display">\[
+\boxed{
+E_n^{(1)}
+=3\left(\frac{\hbar}{2m\omega}\right)^2
+(2n^2+2n+1).
+}
+\tag{18}\]</span></span></p>
+<p>Le déplacement physique au premier ordre est <span class="math inline">\(\lambda E_n^{(1)}\)</span>. Il croît comme <span class="math inline">\(n^2\)</span>, alors que l’espacement harmonique est constant. L’approximation finit donc par se dégrader pour les états très excités, même si <span class="math inline">\(\lambda\)</span> est faible.</p>
+<p>Pour atteindre l’ordre deux, il ne faut conserver que les états reliés à <span class="math inline">\(|n\rangle\)</span> par <span class="math inline">\(x^4\)</span>. Dans les unités <span class="math inline">\(m=\omega=\hbar=1\)</span>, les éléments non diagonaux sont</p>
+<p><span class="math display">\[
+\langle n+2|x^4|n\rangle
+=\frac{2n+3}{2}\sqrt{(n+1)(n+2)},
+\]</span></p>
+<p><span class="math display">\[
+\langle n-2|x^4|n\rangle
+=\frac{2n-1}{2}\sqrt{n(n-1)},
+\]</span></p>
+<p><span class="math display">\[
+\langle n+4|x^4|n\rangle
+=\frac14\sqrt{(n+1)(n+2)(n+3)(n+4)},
+\]</span></p>
+<p><span class="math display">\[
+\langle n-4|x^4|n\rangle
+=\frac14\sqrt{n(n-1)(n-2)(n-3)}.
+\]</span></p>
+<p>Les termes dont l’indice devient négatif sont absents. Les quatre dénominateurs correspondants dans <a href="#eq-second-order-energy" class="quarto-xref">Equation&nbsp;10</a> valent respectivement <span class="math inline">\(-2\)</span>, <span class="math inline">\(+2\)</span>, <span class="math inline">\(-4\)</span> et <span class="math inline">\(+4\)</span>. Après élévation au carré et simplification, le développement dans ces mêmes unités devient</p>
+<p><span id="eq-quartic-second-order"><span class="math display">\[
+E_n=
+n+\frac12
++\frac{3\lambda}{4}(2n^2+2n+1)
+-\frac{\lambda^2}{8}
+(34n^3+51n^2+59n+21)
++O(\lambda^3).
+\tag{19}\]</span></span></p>
+<p>Pour <span class="math inline">\(n=0\)</span>,</p>
+<p><span class="math display">\[
+E_0=\frac12+\frac34\lambda-\frac{21}{8}\lambda^2+O(\lambda^3).
+\]</span></p>
+<p>Le signe négatif du deuxième ordre est conforme à <a href="#eq-ground-second-order-negative" class="quarto-xref">Equation&nbsp;11</a>.</p>
+<div id="cell-fig-oscillateur-anharmonique" class="cell" data-fig-height="4.4" data-fig-width="10" data-execution_count="4">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base des états harmoniques, avec m = omega = hbar = 1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">48</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.zeros((N, N))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, N):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    a[n<span class="op">-</span><span class="dv">1</span>, n] <span class="op">=</span> np.sqrt(n)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>adag <span class="op">=</span> a.T</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> (a <span class="op">+</span> adag) <span class="op">/</span> np.sqrt(<span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>X4 <span class="op">=</span> X <span class="op">@</span> X <span class="op">@</span> X <span class="op">@</span> X</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>H0_osc <span class="op">=</span> np.diag(np.arange(N) <span class="op">+</span> <span class="fl">0.5</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energie_quartique_exacte(lam, niveau<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.linalg.eigvalsh(H0_osc <span class="op">+</span> lam <span class="op">*</span> X4)[niveau]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energie_quartique_ordre1(lam, n):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n <span class="op">+</span> <span class="fl">0.5</span> <span class="op">+</span> <span class="fl">0.75</span> <span class="op">*</span> lam <span class="op">*</span> (<span class="dv">2</span><span class="op">*</span>n<span class="op">*</span>n <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energie_quartique_ordre2(lam, n):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    polynome <span class="op">=</span> <span class="dv">34</span><span class="op">*</span>n<span class="op">**</span><span class="dv">3</span> <span class="op">+</span> <span class="dv">51</span><span class="op">*</span>n<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">59</span><span class="op">*</span>n <span class="op">+</span> <span class="dv">21</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> energie_quartique_ordre1(lam, n) <span class="op">-</span> lam<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> polynome <span class="op">/</span> <span class="dv">8</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>lambda_vue <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>x_vue <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="dv">700</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>V_harm <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> x_vue<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>V_quart <span class="op">=</span> V_harm <span class="op">+</span> lambda_vue <span class="op">*</span> x_vue<span class="op">**</span><span class="dv">4</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>lams <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">0.35</span>, <span class="dv">150</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>E_exact <span class="op">=</span> np.array([energie_quartique_exacte(lam, <span class="dv">0</span>) <span class="cf">for</span> lam <span class="kw">in</span> lams])</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>E_ord1 <span class="op">=</span> np.array([energie_quartique_ordre1(lam, <span class="dv">0</span>) <span class="cf">for</span> lam <span class="kw">in</span> lams])</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>E_ord2 <span class="op">=</span> np.array([energie_quartique_ordre2(lam, <span class="dv">0</span>) <span class="cf">for</span> lam <span class="kw">in</span> lams])</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.2</span>))</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x_vue, V_harm, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"harmonique"</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x_vue, V_quart, color<span class="op">=</span>VIOLET, lw<span class="op">=</span><span class="fl">2.3</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda=</span><span class="sc">{</span>lambda_vue<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$x$"</span>, ylabel<span class="op">=</span><span class="st">"$V(x)$"</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Durcissement du potentiel"</span>, ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">6</span>))</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(lams, E_exact, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="fl">2.4</span>,</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"diagonalisation"</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(lams, E_ord1, color<span class="op">=</span>ORANGE, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"ordre 1"</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(lams, E_ord2, color<span class="op">=</span>VERT, ls<span class="op">=</span><span class="st">":"</span>, lw<span class="op">=</span><span class="fl">2.5</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"ordre 2"</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"couplage </span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"$E_0$"</span>,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Énergie fondamentale"</span>)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-oscillateur-anharmonique" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillateur-anharmonique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-oscillateur-anharmonique-output-1.png" width="992" height="387" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillateur-anharmonique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Oscillateur quartique : déformation du potentiel et domaine de validité des premiers ordres perturbatifs.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La figure montre un point subtil : près de <span class="math inline">\(\lambda=0\)</span>, l’ordre deux est meilleur que l’ordre un. Plus loin, le terme négatif en <span class="math inline">\(\lambda^2\)</span> finit par courber excessivement l’approximation. Ajouter un ordre ne garantit donc une amélioration que dans le régime perturbatif.</p>
+</section>
+<section id="perturbation-diagonale-un-cas-exactement-sommable" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="perturbation-diagonale-un-cas-exactement-sommable"><span class="header-section-number">3.3</span> Perturbation diagonale : un cas exactement sommable</h3>
+<p>Supposons enfin que <span class="math inline">\(\widehat W\)</span> soit diagonale dans la base de <span class="math inline">\(\widehat H_0\)</span> :</p>
+<p><span class="math display">\[
+\widehat W|n^{(0)}\rangle=w_n|n^{(0)}\rangle.
+\]</span></p>
+<p>Alors <span class="math inline">\(W_{mn}=0\)</span> pour <span class="math inline">\(m\ne n\)</span>. Les formules précédentes donnent</p>
+<p><span class="math display">\[
+E_n^{(1)}=w_n,
+\qquad
+|n^{(1)}\rangle=0,
+\qquad
+E_n^{(2)}=0.
+\]</span></p>
+<p>Mais ce n’est pas seulement une approximation :</p>
+<p><span class="math display">\[
+(\widehat H_0+\lambda\widehat W)|n^{(0)}\rangle
+=(E_n^{(0)}+\lambda w_n)|n^{(0)}\rangle.
+\]</span></p>
+<p>Les états sont inchangés et l’énergie au premier ordre est exacte pour toute valeur de <span class="math inline">\(\lambda\)</span>. Ce cas constitue un contrôle simple de toute implémentation numérique.</p>
+</section>
+</section>
+<section id="perturbations-stationnaires-avec-dégénérescence" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="perturbations-stationnaires-avec-dégénérescence"><span class="header-section-number">4</span> Perturbations stationnaires avec dégénérescence</h2>
+<p>Supposons que plusieurs états orthonormés possèdent la même énergie non perturbée <span class="math inline">\(E_D^{(0)}\)</span>. Nous les notons</p>
+<p><span class="math display">\[
+|1^{(0)}\rangle,\ldots,|g^{(0)}\rangle,
+\qquad
+\widehat H_0|\alpha^{(0)}\rangle
+=E_D^{(0)}|\alpha^{(0)}\rangle.
+\]</span></p>
+<p>La difficulté apparaît immédiatement dans <a href="#eq-first-order-state" class="quarto-xref">Equation&nbsp;9</a> : si <span class="math inline">\(m\)</span> et <span class="math inline">\(n\)</span> appartiennent au même sous-espace dégénéré, le dénominateur <span class="math inline">\(E_n^{(0)}-E_m^{(0)}\)</span> est nul. Ce n’est pas une divergence physique. Cela signifie que la perturbation peut mélanger ces états avec une amplitude d’ordre un, et que la base choisie dans le sous-espace dégénéré n’est pas encore la bonne.</p>
+<section id="diagonaliser-la-perturbation-dans-le-sous-espace-dégénéré" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="diagonaliser-la-perturbation-dans-le-sous-espace-dégénéré"><span class="header-section-number">4.1</span> Diagonaliser la perturbation dans le sous-espace dégénéré</h3>
+<p>À l’ordre zéro, l’état qui se prolongera en un état propre de <span class="math inline">\(\widehat H\)</span> est a priori une combinaison</p>
+<p><span id="eq-degenerate-combination"><span class="math display">\[
+|\psi^{(0)}\rangle
+=\sum_{\alpha=1}^{g}c_\alpha|\alpha^{(0)}\rangle.
+\tag{20}\]</span></span></p>
+<p>L’équation d’ordre un est</p>
+<p><span class="math display">\[
+(\widehat H_0-E_D^{(0)})|\psi^{(1)}\rangle
+=-(\widehat W-E^{(1)})|\psi^{(0)}\rangle.
+\]</span></p>
+<p>Projetons sur un bra <span class="math inline">\(\langle\beta^{(0)}|\)</span> du même sous-espace. Le membre de gauche s’annule et il reste</p>
+<p><span class="math display">\[
+\sum_{\alpha=1}^{g}
+\langle\beta^{(0)}|\widehat W|\alpha^{(0)}\rangle c_\alpha
+=E^{(1)}c_\beta.
+\]</span></p>
+<p>En définissant la matrice restreinte</p>
+<p><span class="math display">\[
+W^{(D)}_{\beta\alpha}
+=\langle\beta^{(0)}|\widehat W|\alpha^{(0)}\rangle,
+\]</span></p>
+<p>nous obtenons un problème aux valeurs propres de dimension <span class="math inline">\(g\)</span> :</p>
+<p><span id="eq-degenerate-secular-equation"><span class="math display">\[
+\boxed{
+\mathbf W^{(D)}\mathbf c=E^{(1)}\mathbf c.
+}
+\tag{21}\]</span></span></p>
+<p>La procédure est donc la suivante :</p>
+<ol type="1">
+<li>repérer chaque sous-espace dégénéré de <span class="math inline">\(\widehat H_0\)</span> ;</li>
+<li>calculer la matrice de <span class="math inline">\(\widehat W\)</span> à l’intérieur de ce sous-espace ;</li>
+<li>diagonaliser cette matrice ;</li>
+<li>utiliser ses vecteurs propres comme nouveaux états d’ordre zéro ;</li>
+<li>traiter ensuite le couplage avec les états extérieurs par les formules ordinaires.</li>
+</ol>
+<p>Pour un état <span class="math inline">\(|a^{(0)}\rangle\)</span> ainsi sélectionné, la composante extérieure de la correction vaut</p>
+<p><span id="eq-degenerate-external-correction"><span class="math display">\[
+|a^{(1)}\rangle_{\perp}
+=\sum_{m\notin D}
+\frac{\langle m^{(0)}|\widehat W|a^{(0)}\rangle}
+{E_D^{(0)}-E_m^{(0)}}|m^{(0)}\rangle.
+\tag{22}\]</span></span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="La bonne base est déterminée par la perturbation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>La bonne base est déterminée par la perturbation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans un sous-espace dégénéré, toutes les combinaisons linéaires sont des états propres de <span class="math inline">\(\widehat H_0\)</span>. La nature de la perturbation sélectionne les combinaisons qui restent des états stationnaires lorsque le couplage est allumé. Appliquer seulement <span class="math inline">\(\langle\alpha|W|\alpha\rangle\)</span> dans une base arbitraire peut donc donner un résultat faux.</p>
+</div>
+</div>
+<p>Si la dégénérescence n’est pas levée au premier ordre, on construit à l’ordre suivant l’opérateur effectif</p>
+<p><span id="eq-second-order-effective-hamiltonian"><span class="math display">\[
+\widehat H_{\mathrm{eff}}^{(2)}
+=\widehat P\widehat W\widehat Q
+\frac{1}{E_D^{(0)}-\widehat H_0}
+\widehat Q\widehat W\widehat P,
+\tag{23}\]</span></span></p>
+<p>où <span class="math inline">\(\widehat P\)</span> projette sur le sous-espace dégénéré et <span class="math inline">\(\widehat Q=\widehat I-\widehat P\)</span>. L’inverse n’agit que dans <span class="math inline">\(Q\)</span>, où aucun dénominateur n’est nul. Il faut alors diagonaliser <span class="math inline">\(\widehat H_{\mathrm{eff}}^{(2)}\)</span> dans les directions encore dégénérées.</p>
+</section>
+<section id="deux-niveaux-couplés-et-croisement-évité" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="deux-niveaux-couplés-et-croisement-évité"><span class="header-section-number">4.2</span> Deux niveaux couplés et croisement évité</h3>
+<p>Le mécanisme universel d’un croisement évité apparaît dans une matrice <span class="math inline">\(2\times2\)</span> :</p>
+<p><span id="eq-two-level-static"><span class="math display">\[
+\mathbf H=
+\begin{pmatrix}
+\overline E+\delta/2 &amp; \lambda v\\
+\lambda v^* &amp; \overline E-\delta/2
+\end{pmatrix}.
+\tag{24}\]</span></span></p>
+<p>Ici, <span class="math inline">\(\delta\)</span> mesure l’écart des niveaux non couplés et <span class="math inline">\(v\)</span> leur couplage. Le polynôme caractéristique donne</p>
+<p><span class="math display">\[
+\det(\mathbf H-E\mathbf I)
+=(\overline E-E)^2-\frac{\delta^2}{4}-\lambda^2|v|^2=0.
+\]</span></p>
+<p>Les énergies exactes sont donc</p>
+<p><span id="eq-avoided-crossing-energies"><span class="math display">\[
+\boxed{
+E_\pm=\overline E
+\pm\sqrt{\frac{\delta^2}{4}+\lambda^2|v|^2}.
+}
+\tag{25}\]</span></span></p>
+<p>Au point de dégénérescence <span class="math inline">\(\delta=0\)</span>, l’écart minimal vaut</p>
+<p><span class="math display">\[
+E_+-E_-=2|\lambda v|.
+\]</span></p>
+<p>Si <span class="math inline">\(v\)</span> est réel et positif, les états propres à <span class="math inline">\(\delta=0\)</span> sont</p>
+<p><span class="math display">\[
+|+\rangle=\frac{|1\rangle+|2\rangle}{\sqrt{2}},
+\qquad
+|-\rangle=\frac{|1\rangle-|2\rangle}{\sqrt{2}}.
+\]</span></p>
+<p>L’angle de mélange <span class="math inline">\(\theta\)</span> peut être défini par</p>
+<p><span id="eq-mixing-angle"><span class="math display">\[
+\tan(2\theta)=\frac{2\lambda|v|}{\delta}.
+\tag{26}\]</span></span></p>
+<p>Loin du croisement, <span class="math inline">\(|\delta|\gg2|\lambda v|\)</span>, chaque état propre ressemble à un état non couplé. Près du croisement, les deux composantes deviennent comparables.</p>
+<div id="cell-fig-croisement-evite" class="cell" data-fig-height="4.4" data-fig-width="10" data-execution_count="5">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>deltas <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">500</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fl">0.55</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>E_plus <span class="op">=</span> np.sqrt((deltas<span class="op">/</span><span class="dv">2</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> v<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>E_moins <span class="op">=</span> <span class="op">-</span>E_plus</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilité de trouver |1&gt; dans l'état propre supérieur</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>poids_1_plus <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> deltas <span class="op">/</span> np.sqrt(deltas<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>v<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.2</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(deltas, deltas<span class="op">/</span><span class="dv">2</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">"niveaux non couplés"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(deltas, <span class="op">-</span>deltas<span class="op">/</span><span class="dv">2</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(deltas, E_plus, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="fl">2.4</span>, label<span class="op">=</span><span class="st">"$E_+$"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(deltas, E_moins, color<span class="op">=</span>ORANGE, lw<span class="op">=</span><span class="fl">2.4</span>, label<span class="op">=</span><span class="st">"$E_-$"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].annotate(<span class="vs">r"écart </span><span class="dv">$</span><span class="vs">2</span><span class="cf">|</span><span class="vs">v</span><span class="cf">|</span><span class="dv">$</span><span class="vs">"</span>, xy<span class="op">=</span>(<span class="dv">0</span>, v), xytext<span class="op">=</span>(<span class="fl">0.7</span>, <span class="fl">1.35</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                 arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span>ROUGE), color<span class="op">=</span>ROUGE)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"désaccord </span><span class="dv">$\d</span><span class="vs">elta</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"énergie"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Répulsion des niveaux"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(deltas, poids_1_plus, color<span class="op">=</span>VIOLET, lw<span class="op">=</span><span class="fl">2.4</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="cf">|</span><span class="er">\</span><span class="vs">langle1</span><span class="cf">|</span><span class="op">+</span><span class="ch">\r</span><span class="vs">angle</span><span class="cf">|</span><span class="dv">^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(deltas, <span class="dv">1</span><span class="op">-</span>poids_1_plus, color<span class="op">=</span>VERT, lw<span class="op">=</span><span class="fl">2.4</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="cf">|</span><span class="er">\</span><span class="vs">langle2</span><span class="cf">|</span><span class="op">+</span><span class="ch">\r</span><span class="vs">angle</span><span class="cf">|</span><span class="dv">^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(<span class="dv">0</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"désaccord </span><span class="dv">$\d</span><span class="vs">elta</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"poids dans l'état supérieur"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Mélange des états"</span>, ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-croisement-evite" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-croisement-evite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-croisement-evite-output-1.png" width="994" height="386" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-croisement-evite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Croisement évité et échange progressif du caractère des deux états propres.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="effet-stark-linéaire-de-latome-dhydrogène" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="effet-stark-linéaire-de-latome-dhydrogène"><span class="header-section-number">4.3</span> Effet Stark linéaire de l’atome d’hydrogène</h3>
+<p>Plaçons l’atome d’hydrogène dans un champ électrique uniforme <span class="math inline">\(\mathcal{E}\)</span> dirigé suivant <span class="math inline">\(z\)</span>. En choisissant le potentiel électrostatique <span class="math inline">\(\phi=-\mathcal{E}z\)</span>, l’énergie potentielle de l’électron est</p>
+<p><span id="eq-stark-perturbation"><span class="math display">\[
+\widehat W=q\phi=e\mathcal{E}\widehat z,
+\tag{27}\]</span></span></p>
+<p>où <span class="math inline">\(e&gt;0\)</span> désigne la charge élémentaire.</p>
+<p>Le niveau <span class="math inline">\(n=2\)</span> est quatre fois dégénéré si l’on néglige le spin et la structure fine :</p>
+<p><span class="math display">\[
+|200\rangle,\quad |210\rangle,\quad |211\rangle,\quad |21{-1}\rangle.
+\]</span></p>
+<p>Les éléments diagonaux de <span class="math inline">\(z\)</span> sont nuls par parité. De plus, <span class="math inline">\(z=r\cos\theta\)</span> ne couple que les états vérifiant les règles de sélection</p>
+<p><span id="eq-stark-selection-rules"><span class="math display">\[
+\Delta\ell=\pm1,
+\qquad
+\Delta m=0.
+\tag{28}\]</span></span></p>
+<p>Dans le sous-espace <span class="math inline">\(n=2\)</span>, le seul élément non nul, à une convention de phase près, est</p>
+<p><span class="math display">\[
+\langle200|z|210\rangle=-3a_0.
+\]</span></p>
+<p>Ce facteur se sépare en une intégrale radiale et une intégrale angulaire :</p>
+<p><span class="math display">\[
+\begin{aligned}
+\langle200|z|210\rangle
+&amp;=\left(\int_0^\infty R_{20}(r)R_{21}(r)r^3\,\mathrm dr\right)
+\left(\int Y_{00}^*(\theta,\varphi)\cos\theta\,
+Y_{10}(\theta,\varphi)\,\mathrm d\Omega\right)\\
+&amp;=(-3\sqrt{3}\,a_0)\left(\frac{1}{\sqrt{3}}\right)\\
+&amp;=-3a_0.
+\end{aligned}
+\]</span></p>
+<p>Dans la base ordonnée <span class="math inline">\((|200\rangle,|210\rangle,|211\rangle,|21{-1}\rangle)\)</span>, la perturbation restreinte vaut donc</p>
+<p><span id="eq-stark-matrix-n2"><span class="math display">\[
+\mathbf W^{(2)}
+=e\mathcal{E}a_0
+\begin{pmatrix}
+0&amp;-3&amp;0&amp;0\\
+-3&amp;0&amp;0&amp;0\\
+0&amp;0&amp;0&amp;0\\
+0&amp;0&amp;0&amp;0
+\end{pmatrix}.
+\tag{29}\]</span></span></p>
+<p>La diagonalisation du bloc <span class="math inline">\(2\times2\)</span> donne les états</p>
+<p><span class="math display">\[
+|\psi_+\rangle=\frac{|200\rangle-|210\rangle}{\sqrt{2}},
+\qquad E_+^{(1)}=+3ea_0\mathcal{E},
+\]</span></p>
+<p><span class="math display">\[
+|\psi_-\rangle=\frac{|200\rangle+|210\rangle}{\sqrt{2}},
+\qquad E_-^{(1)}=-3ea_0\mathcal{E}.
+\]</span></p>
+<p>Les deux états <span class="math inline">\(m=\pm1\)</span> restent non déplacés au premier ordre. Les combinaisons <span class="math inline">\(|\psi_\pm\rangle\)</span> ne sont plus de parité définie : elles possèdent un dipôle permanent orienté ou anti-orienté par rapport au champ.</p>
+<div id="cell-fig-effet-stark" class="cell" data-fig-height="4.8" data-fig-width="9" data-execution_count="6">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">4.2</span>, <span class="fl">4.2</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Niveau sans champ</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ax.hlines(<span class="dv">0</span>, <span class="fl">0.7</span>, <span class="fl">3.0</span>, color<span class="op">=</span>GRIS, lw<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">1.85</span>, <span class="fl">0.35</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">n=2</span><span class="dv">$</span><span class="vs"> : dégénérescence quadruple"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>GRIS)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Connexions schématiques</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> y <span class="kw">in</span> [<span class="op">-</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">3</span>]:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    ax.plot([<span class="fl">3.0</span>, <span class="fl">6.6</span>], [<span class="dv">0</span>, y], color<span class="op">=</span>GRIS, lw<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.55</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Niveaux perturbés</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>ax.hlines(<span class="dv">3</span>, <span class="fl">6.6</span>, <span class="fl">9.1</span>, color<span class="op">=</span>ROUGE, lw<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ax.hlines(<span class="dv">0</span>, <span class="fl">6.6</span>, <span class="fl">9.1</span>, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax.hlines(<span class="op">-</span><span class="dv">3</span>, <span class="fl">6.6</span>, <span class="fl">9.1</span>, color<span class="op">=</span>VERT, lw<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.85</span>, <span class="fl">3.35</span>, <span class="vs">r"</span><span class="dv">$</span><span class="kw">(</span><span class="cf">|</span><span class="vs">200</span><span class="ch">\r</span><span class="vs">angle-</span><span class="cf">|</span><span class="vs">210</span><span class="ch">\r</span><span class="vs">angle</span><span class="kw">)</span><span class="vs">/</span><span class="dv">\s</span><span class="vs">qrt</span><span class="op">{2}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.85</span>, <span class="fl">0.35</span>, <span class="vs">r"</span><span class="dv">$</span><span class="cf">|</span><span class="vs">211</span><span class="ch">\r</span><span class="vs">angle,</span><span class="ch">\ </span><span class="cf">|</span><span class="vs">21{-1}</span><span class="ch">\r</span><span class="vs">angle</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.85</span>, <span class="op">-</span><span class="fl">2.65</span>, <span class="vs">r"</span><span class="dv">$</span><span class="kw">(</span><span class="cf">|</span><span class="vs">200</span><span class="ch">\r</span><span class="vs">angle</span><span class="op">+</span><span class="cf">|</span><span class="vs">210</span><span class="ch">\r</span><span class="vs">angle</span><span class="kw">)</span><span class="vs">/</span><span class="dv">\s</span><span class="vs">qrt</span><span class="op">{2}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">9.25</span>, <span class="dv">3</span>, <span class="vs">r"</span><span class="dv">$</span><span class="op">+</span><span class="vs">3ea_0</span><span class="dv">\m</span><span class="vs">athcal{E}</span><span class="dv">$</span><span class="vs">"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>ROUGE)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">9.25</span>, <span class="dv">0</span>, <span class="st">"$0$"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>BLEU)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">9.25</span>, <span class="op">-</span><span class="dv">3</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">-3ea_0</span><span class="dv">\m</span><span class="vs">athcal{E}</span><span class="dv">$</span><span class="vs">"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>VERT)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">1.85</span>, <span class="op">-</span><span class="fl">3.9</span>, <span class="st">"champ nul"</span>, ha<span class="op">=</span><span class="st">"center"</span>, weight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">7.85</span>, <span class="op">-</span><span class="fl">3.9</span>, <span class="vs">r"champ </span><span class="dv">$\m</span><span class="vs">athcal{E}</span><span class="ch">\n</span><span class="vs">e0</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, weight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Le champ sélectionne des combinaisons orientées"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-effet-stark" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effet-stark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-effet-stark-output-1.png" width="697" height="381" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effet-stark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Schéma de la levée partielle de dégénérescence du niveau n=2 par l’effet Stark linéaire.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère historique : l'effet Stark">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère historique : l’effet Stark
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Johannes Stark observe en 1913 la séparation de raies spectrales sous l’action d’un champ électrique. L’ancienne théorie quantique peinait à en rendre compte de façon générale. La mécanique matricielle et la théorie des perturbations dégénérées ont ensuite montré que la séparation provient de la diagonalisation de l’interaction dipolaire dans chaque sous-espace d’énergie.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="quasi-dégénérescence" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="quasi-dégénérescence"><span class="header-section-number">4.4</span> Quasi-dégénérescence</h3>
+<p>Deux niveaux ne sont pas toujours exactement dégénérés, mais leur séparation peut être comparable au couplage. Si</p>
+<p><span class="math display">\[
+|E_1^{(0)}-E_2^{(0)}|\lesssim2|\lambda W_{12}|,
+\]</span></p>
+<p>les dénominateurs de la méthode non dégénérée deviennent grands et le développement perd sa hiérarchie. Il faut alors diagonaliser exactement le petit bloc contenant ces niveaux, comme dans <a href="#eq-two-level-static" class="quarto-xref">Equation&nbsp;24</a>, tout en traitant perturbativement leur couplage avec le reste du spectre. Cette stratégie porte le nom de perturbation <strong>quasi dégénérée</strong>.</p>
+</section>
+</section>
+<section id="perturbations-dépendant-du-temps" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="perturbations-dépendant-du-temps"><span class="header-section-number">5</span> Perturbations dépendant du temps</h2>
+<p>Une perturbation temporelle ne cherche plus seulement à déformer un état propre : elle peut transférer de l’énergie et provoquer des transitions. Considérons</p>
+<p><span id="eq-time-dependent-hamiltonian"><span class="math display">\[
+\widehat H(t)=\widehat H_0+\lambda\widehat W(t),
+\tag{30}\]</span></span></p>
+<p>avec <span class="math inline">\(\widehat H_0|n\rangle=E_n|n\rangle\)</span>. Développons l’état exact dans la base stationnaire de <span class="math inline">\(\widehat H_0\)</span> :</p>
+<p><span id="eq-time-dependent-expansion"><span class="math display">\[
+|\Psi(t)\rangle
+=\sum_n c_n(t)e^{-iE_nt/\hbar}|n\rangle.
+\tag{31}\]</span></span></p>
+<p>Les phases libres ont été extraites ; toute transition est contenue dans les coefficients <span class="math inline">\(c_n(t)\)</span>.</p>
+<section id="équations-dévolution-des-amplitudes" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="équations-dévolution-des-amplitudes"><span class="header-section-number">5.1</span> Équations d’évolution des amplitudes</h3>
+<p>Dérivons <a href="#eq-time-dependent-expansion" class="quarto-xref">Equation&nbsp;31</a> :</p>
+<p><span class="math display">\[
+i\hbar\frac{\mathrm d}{\mathrm dt}|\Psi(t)\rangle
+=\sum_n
+\left(i\hbar\dot c_n(t)+E_nc_n(t)\right)
+e^{-iE_nt/\hbar}|n\rangle.
+\]</span></p>
+<p>Le terme en <span class="math inline">\(E_n\)</span> est exactement reproduit par <span class="math inline">\(\widehat H_0|\Psi\rangle\)</span> et s’annule des deux côtés de l’équation de Schrödinger. Il reste</p>
+<p><span class="math display">\[
+\sum_n i\hbar\dot c_n e^{-iE_nt/\hbar}|n\rangle
+=\lambda\sum_n c_n e^{-iE_nt/\hbar}\widehat W(t)|n\rangle.
+\]</span></p>
+<p>Projetons sur <span class="math inline">\(\langle f|\)</span> puis multiplions par <span class="math inline">\(e^{iE_ft/\hbar}\)</span>. Nous obtenons le système exact</p>
+<p><span id="eq-exact-amplitude-equations"><span class="math display">\[
+\boxed{
+i\hbar\dot c_f(t)
+=\lambda\sum_n W_{fn}(t)e^{i\omega_{fn}t}c_n(t),
+}
+\tag{32}\]</span></span></p>
+<p>avec</p>
+<p><span class="math display">\[
+W_{fn}(t)=\langle f|\widehat W(t)|n\rangle,
+\qquad
+\omega_{fn}=\frac{E_f-E_n}{\hbar}.
+\]</span></p>
+<p>La même construction s’exprime avec l’opérateur d’évolution dans la représentation d’interaction. En posant</p>
+<p><span class="math display">\[
+\widehat W_I(t)
+=e^{i\widehat H_0t/\hbar}\widehat W(t)
+e^{-i\widehat H_0t/\hbar},
+\]</span></p>
+<p>l’équation intégrale est</p>
+<p><span class="math display">\[
+\widehat U_I(t)
+=\widehat I-\frac{i\lambda}{\hbar}
+\int_0^t\widehat W_I(t_1)\widehat U_I(t_1)\,\mathrm dt_1.
+\]</span></p>
+<p>En réinjectant cette équation dans elle-même, on obtient la série de Dyson :</p>
+<p><span id="eq-dyson-series"><span class="math display">\[
+\begin{aligned}
+\widehat U_I(t)
+&amp;=\widehat I
+-\frac{i\lambda}{\hbar}\int_0^t\widehat W_I(t_1)\,\mathrm dt_1\\
+&amp;\quad+\left(-\frac{i\lambda}{\hbar}\right)^2
+\int_0^t\mathrm dt_1\int_0^{t_1}\mathrm dt_2\,
+\widehat W_I(t_1)\widehat W_I(t_2)+\cdots.
+\end{aligned}
+\tag{33}\]</span></span></p>
+<p>La borne <span class="math inline">\(t_2&lt;t_1\)</span> impose l’ordre chronologique des opérateurs. Cette précaution est indispensable lorsque <span class="math inline">\([\widehat W_I(t_1),\widehat W_I(t_2)]\ne0\)</span>.</p>
+<p>Supposons que le système soit initialement dans <span class="math inline">\(|i\rangle\)</span> :</p>
+<p><span class="math display">\[
+c_n(0)=\delta_{ni}.
+\]</span></p>
+<p>Au premier ordre, on remplace dans le membre de droite <span class="math inline">\(c_n(t)\)</span> par sa valeur d’ordre zéro <span class="math inline">\(\delta_{ni}\)</span>. Pour <span class="math inline">\(f\ne i\)</span>,</p>
+<p><span class="math display">\[
+i\hbar\dot c_f^{(1)}(t)
+=\lambda W_{fi}(t)e^{i\omega_{fi}t}.
+\]</span></p>
+<p>En intégrant de <span class="math inline">\(0\)</span> à <span class="math inline">\(t\)</span>,</p>
+<p><span id="eq-first-order-transition-amplitude"><span class="math display">\[
+\boxed{
+c_{f\leftarrow i}^{(1)}(t)
+=-\frac{i\lambda}{\hbar}
+\int_0^t W_{fi}(t')e^{i\omega_{fi}t'}\,\mathrm dt'.
+}
+\tag{34}\]</span></span></p>
+<p>Ici, l’exposant <span class="math inline">\((1)\)</span> désigne l’amplitude tronquée au premier ordre ; le facteur <span class="math inline">\(\lambda\)</span> y est donc déjà inclus.</p>
+<p>La probabilité de transition au premier ordre non nul est alors</p>
+<p><span id="eq-first-order-transition-probability"><span class="math display">\[
+P_{i\to f}(t)
+=|c_{f\leftarrow i}^{(1)}(t)|^2+O(\lambda^3).
+\tag{35}\]</span></span></p>
+<p>Cette formule révèle une idée centrale : le système répond à la composante de Fourier de <span class="math inline">\(W_{fi}(t)\)</span> à la pulsation de Bohr <span class="math inline">\(\omega_{fi}\)</span>. Une transition est efficace si l’excitation contient la bonne fréquence et si l’élément de matrice n’est pas annulé par une symétrie.</p>
+</section>
+<section id="impulsion-rectangulaire-et-largeur-spectrale" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="impulsion-rectangulaire-et-largeur-spectrale"><span class="header-section-number">5.2</span> Impulsion rectangulaire et largeur spectrale</h3>
+<p>Prenons un couplage constant <span class="math inline">\(W_{fi}\)</span> appliqué entre <span class="math inline">\(0\)</span> et <span class="math inline">\(\tau\)</span>, puis coupé. Pour <span class="math inline">\(t\ge\tau\)</span>,</p>
+<p><span class="math display">\[
+c_{f\leftarrow i}^{(1)}
+=-\frac{i\lambda W_{fi}}{\hbar}
+\int_0^\tau e^{i\omega_{fi}t'}\,\mathrm dt'.
+\]</span></p>
+<p>En centrant l’exponentielle autour de <span class="math inline">\(\tau/2\)</span>,</p>
+<p><span class="math display">\[
+\int_0^\tau e^{i\omega t'}\,\mathrm dt'
+=e^{i\omega\tau/2}
+\frac{2\sin(\omega\tau/2)}{\omega}.
+\]</span></p>
+<p>La probabilité devient</p>
+<p><span id="eq-rectangular-pulse-probability"><span class="math display">\[
+\boxed{
+P_{i\to f}
+=\frac{\lambda^2|W_{fi}|^2\tau^2}{\hbar^2}
+\operatorname{sinc}^2\!\left(\frac{\omega_{fi}\tau}{2}\right),
+}
+\tag{36}\]</span></span></p>
+<p>où <span class="math inline">\(\operatorname{sinc}(u)=\sin u/u\)</span>. Une impulsion longue produit un pic étroit autour de la conservation de l’énergie ; une impulsion courte excite une bande de fréquences plus large. C’est la relation temps–fréquence, et non une violation de la conservation de l’énergie.</p>
+<div id="cell-fig-impulsion-spectre" class="cell" data-fig-height="4.3" data-fig-width="10" data-execution_count="7">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="dv">1200</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>detuning <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">1600</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.1</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tau, couleur <span class="kw">in</span> [(<span class="fl">1.0</span>, ORANGE), (<span class="fl">4.0</span>, BLEU), (<span class="fl">9.0</span>, VIOLET)]:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    pulse <span class="op">=</span> ((t <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="op">&amp;</span> (t <span class="op">&lt;=</span> tau)).astype(<span class="bu">float</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># np.sinc(z) = sin(pi*z)/(pi*z)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    spectre <span class="op">=</span> np.sinc(detuning <span class="op">*</span> tau <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi))<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(t, pulse <span class="op">+</span> <span class="fl">0.08</span><span class="op">*</span>(tau<span class="op">-</span><span class="dv">1</span>), color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">au=</span><span class="sc">{</span>tau<span class="sc">:g}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(detuning, spectre, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">au=</span><span class="sc">{</span>tau<span class="sc">:g}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$t$"</span>, ylabel<span class="op">=</span><span class="st">"$W(t)$ (décalé)"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Excitations rectangulaires"</span>, ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">1.8</span>))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"désaccord </span><span class="dv">$</span><span class="er">\</span><span class="vs">omega_{fi}</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"profil normalisé"</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athrm{sinc}</span><span class="dv">^</span><span class="vs">2</span><span class="kw">(</span><span class="er">\</span><span class="vs">omega_{fi}</span><span class="ch">\t</span><span class="vs">au/2</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-impulsion-spectre" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-impulsion-spectre-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-impulsion-spectre-output-1.png" width="992" height="376" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-impulsion-spectre-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Une impulsion plus longue possède un spectre de transition plus étroit.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="excitation-sinusoïdale-et-résonance" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="excitation-sinusoïdale-et-résonance"><span class="header-section-number">5.3</span> Excitation sinusoïdale et résonance</h3>
+<p>Considérons</p>
+<p><span id="eq-harmonic-drive"><span class="math display">\[
+\widehat W(t)=\widehat A F_0\cos(\omega t)
+=\frac{F_0\widehat A}{2}
+\left(e^{i\omega t}+e^{-i\omega t}\right).
+\tag{37}\]</span></span></p>
+<p>L’amplitude <a href="#eq-first-order-transition-amplitude" class="quarto-xref">Equation&nbsp;34</a> contient alors deux intégrales oscillant respectivement aux pulsations <span class="math inline">\(\omega_{fi}+\omega\)</span> et <span class="math inline">\(\omega_{fi}-\omega\)</span>. Si <span class="math inline">\(E_f&gt;E_i\)</span> et <span class="math inline">\(\omega\simeq\omega_{fi}\)</span>, le second terme varie lentement et s’accumule de façon cohérente : c’est la <strong>résonance d’absorption</strong>. Le terme à <span class="math inline">\(\omega_{fi}+\omega\)</span> oscille rapidement et se moyenne presque à zéro.</p>
+<p>Le facteur spatial</p>
+<p><span class="math display">\[
+A_{fi}=\langle f|\widehat A|i\rangle
+\]</span></p>
+<p>détermine les règles de sélection. Par exemple, une interaction dipolaire électrique est proportionnelle à <span class="math inline">\(\widehat{\mathbf r}\cdot\boldsymbol{\mathcal{E}}\)</span> et ne couple que les états dont les symétries rendent cet élément de matrice non nul.</p>
+</section>
+<section id="règle-dor-de-fermi" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="règle-dor-de-fermi"><span class="header-section-number">5.4</span> Règle d’or de Fermi</h3>
+<p>Pour un état final discret exactement résonant, la théorie au premier ordre prédit d’abord une croissance proportionnelle à <span class="math inline">\(t^2\)</span>. Dans un continuum, il faut sommer sur un grand nombre d’états finaux. Le pic de largeur <span class="math inline">\(1/t\)</span> devient plus étroit tandis que sa hauteur croît comme <span class="math inline">\(t^2\)</span> ; son aire croît donc comme <span class="math inline">\(t\)</span>.</p>
+<p>Si <span class="math inline">\(\rho(E_f)\)</span> est la densité d’états finaux et <span class="math inline">\(V_{fi}\)</span> l’élément de matrice de la composante résonante de la perturbation, on obtient un taux de transition constant</p>
+<p><span id="eq-fermi-golden-rule"><span class="math display">\[
+\boxed{
+\Gamma_{i\to f}
+=\frac{2\pi}{\hbar}|V_{fi}|^2\rho(E_f)
+\bigg|_{E_f=E_i+\hbar\omega}.
+}
+\tag{38}\]</span></span></p>
+<p>La règle d’or combine donc trois ingrédients :</p>
+<ul>
+<li>l’intensité du couplage <span class="math inline">\(|V_{fi}|^2\)</span> ;</li>
+<li>le nombre d’états accessibles <span class="math inline">\(\rho(E_f)\)</span> ;</li>
+<li>la conservation de l’énergie à long temps.</li>
+</ul>
+<p>Elle décrit notamment l’absorption, l’émission, les transitions induites et de nombreuses désintégrations. Elle cesse d’être valable lorsque la probabilité de quitter l’état initial n’est plus petite ou lorsque le continuum présente une structure très rapide à l’échelle de la largeur spectrale.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère historique : la règle d'or">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère historique : la règle d’or
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La formule est associée à Enrico Fermi, qui l’utilisait comme outil standard pour relier un hamiltonien d’interaction aux taux de transition observables. Le qualificatif « d’or » souligne son efficacité exceptionnelle : une grande variété de phénomènes spectroscopiques et de désintégrations se réduit au produit d’un élément de matrice et d’une densité d’états.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="système-à-deux-niveaux-et-oscillations-de-rabi" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="système-à-deux-niveaux-et-oscillations-de-rabi"><span class="header-section-number">5.5</span> Système à deux niveaux et oscillations de Rabi</h3>
+<p>Lorsque le système ne possède que deux niveaux pertinents, la transition résonante peut être traitée au-delà du premier ordre. Notons <span class="math inline">\(|g\rangle\)</span> l’état fondamental, <span class="math inline">\(|e\rangle\)</span> l’état excité et</p>
+<p><span class="math display">\[
+E_e-E_g=\hbar\omega_0.
+\]</span></p>
+<p>Après passage dans un repère tournant et approximation des ondes tournantes, l’hamiltonien effectif s’écrit</p>
+<p><span id="eq-rwa-hamiltonian"><span class="math display">\[
+\widehat H_{\mathrm{RWA}}
+=\frac{\hbar}{2}
+\begin{pmatrix}
+-\Delta&amp;\Omega\\
+\Omega&amp;\Delta
+\end{pmatrix},
+\qquad
+\Delta=\omega-\omega_0.
+\tag{39}\]</span></span></p>
+<p>La quantité <span class="math inline">\(\Omega\)</span> est la pulsation de Rabi résonante, proportionnelle à l’amplitude du champ et à l’élément de matrice de transition. Les valeurs propres de cette matrice sont</p>
+<p><span class="math display">\[
+\varepsilon_\pm
+=\pm\frac{\hbar}{2}\sqrt{\Omega^2+\Delta^2}.
+\]</span></p>
+<p>Définissons <span class="math inline">\(\Omega_{\mathrm{eff}}=\sqrt{\Omega^2+\Delta^2}\)</span>. Comme</p>
+<p><span class="math display">\[
+\widehat H_{\mathrm{RWA}}^2
+=\frac{\hbar^2\Omega_{\mathrm{eff}}^2}{4}\widehat I,
+\]</span></p>
+<p>les puissances paires et impaires de l’hamiltonien se regroupent dans l’exponentielle d’évolution :</p>
+<p><span class="math display">\[
+e^{-i\widehat H_{\mathrm{RWA}}t/\hbar}
+=\widehat I\cos\left(\frac{\Omega_{\mathrm{eff}}t}{2}\right)
+-\frac{2i\widehat H_{\mathrm{RWA}}}{\hbar\Omega_{\mathrm{eff}}}
+\sin\left(\frac{\Omega_{\mathrm{eff}}t}{2}\right).
+\]</span></p>
+<p>En appliquant cet opérateur à <span class="math inline">\(|g\rangle\)</span>, la composante suivant <span class="math inline">\(|e\rangle\)</span> vaut</p>
+<p><span class="math display">\[
+\langle e|\Psi(t)\rangle
+=-i\frac{\Omega}{\Omega_{\mathrm{eff}}}
+\sin\left(\frac{\Omega_{\mathrm{eff}}t}{2}\right).
+\]</span></p>
+<p>Si le système part de <span class="math inline">\(|g\rangle\)</span>, la probabilité d’occupation de l’état excité est</p>
+<p><span id="eq-rabi-probability"><span class="math display">\[
+\boxed{
+P_e(t)=
+\frac{\Omega^2}{\Omega^2+\Delta^2}
+\sin^2\!\left(
+\frac{t}{2}\sqrt{\Omega^2+\Delta^2}
+\right).
+}
+\tag{40}\]</span></span></p>
+<p>À résonance, <span class="math inline">\(\Delta=0\)</span>,</p>
+<p><span class="math display">\[
+P_e(t)=\sin^2\left(\frac{\Omega t}{2}\right).
+\]</span></p>
+<p>Une impulsion de durée <span class="math inline">\(t_\pi=\pi/\Omega\)</span> inverse complètement la population : c’est une <strong>impulsion <span class="math inline">\(\pi\)</span></strong>. Une impulsion de durée <span class="math inline">\(t_{\pi/2}=\pi/(2\Omega)\)</span> crée une superposition équiprobable.</p>
+<p>Hors résonance, deux changements se produisent simultanément : l’oscillation devient plus rapide, à la pulsation généralisée <span class="math inline">\(\sqrt{\Omega^2+\Delta^2}\)</span>, mais son amplitude maximale diminue jusqu’à</p>
+<p><span id="eq-rabi-contrast"><span class="math display">\[
+P_e^{\max}=\frac{\Omega^2}{\Omega^2+\Delta^2}.
+\tag{41}\]</span></span></p>
+<div id="cell-fig-oscillations-rabi" class="cell" data-fig-height="4.4" data-fig-width="10" data-execution_count="8">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Omega <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">8</span><span class="op">*</span>np.pi, <span class="dv">1200</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.2</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Delta, couleur <span class="kw">in</span> [(<span class="fl">0.0</span>, BLEU), (<span class="fl">0.6</span>, ORANGE), (<span class="fl">1.5</span>, VIOLET)]:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    Omega_eff <span class="op">=</span> np.sqrt(Omega<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> Delta<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    Pe <span class="op">=</span> Omega<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> Omega_eff<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.sin(Omega_eff<span class="op">*</span>t<span class="op">/</span><span class="dv">2</span>)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(t<span class="op">/</span>np.pi, Pe, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$\D</span><span class="vs">elta/</span><span class="er">\</span><span class="vs">Omega=</span><span class="sc">{</span>Delta<span class="sc">:g}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>dets <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1000</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> duree, couleur <span class="kw">in</span> [(np.pi, BLEU), (<span class="dv">3</span><span class="op">*</span>np.pi, ORANGE), (<span class="dv">7</span><span class="op">*</span>np.pi, VIOLET)]:</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    Om_eff <span class="op">=</span> np.sqrt(Omega<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> dets<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    Pe_fin <span class="op">=</span> Omega<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> Om_eff<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.sin(Om_eff<span class="op">*</span>duree<span class="op">/</span><span class="dv">2</span>)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(dets<span class="op">/</span>Omega, Pe_fin, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="vs">t=</span><span class="sc">{</span>duree<span class="op">/</span>np<span class="sc">.</span>pi<span class="sc">:g}</span><span class="er">\</span><span class="vs">pi/</span><span class="er">\</span><span class="vs">Omega</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"temps </span><span class="dv">$</span><span class="er">\</span><span class="vs">Omega t/</span><span class="er">\</span><span class="vs">pi</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Échange cohérent de population"</span>, ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>))</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"désaccord </span><span class="dv">$\D</span><span class="vs">elta/</span><span class="er">\</span><span class="vs">Omega</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t_{</span><span class="ch">\r</span><span class="vs">m fin}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Sélectivité fréquentielle"</span>, ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>))</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-oscillations-rabi" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillations-rabi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Théorie des perturbations_files/figure-html/fig-oscillations-rabi-output-1.png" width="992" height="386" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillations-rabi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Oscillations de Rabi : dynamique temporelle et profil de résonance d’une impulsion.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="représentation-sur-la-sphère-de-bloch" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="représentation-sur-la-sphère-de-bloch"><span class="header-section-number">5.6</span> Représentation sur la sphère de Bloch</h3>
+<p>Un état pur à deux niveaux peut s’écrire</p>
+<p><span class="math display">\[
+|\psi\rangle
+=\cos\frac{\vartheta}{2}|g\rangle
++e^{i\varphi}\sin\frac{\vartheta}{2}|e\rangle.
+\]</span></p>
+<p>On lui associe le vecteur de Bloch</p>
+<p><span class="math display">\[
+\mathbf r=
+(\sin\vartheta\cos\varphi,
+\sin\vartheta\sin\varphi,
+\cos\vartheta).
+\]</span></p>
+<p>L’hamiltonien <a href="#eq-rwa-hamiltonian" class="quarto-xref">Equation&nbsp;39</a> correspond à un champ effectif proportionnel à</p>
+<p><span class="math display">\[
+\boldsymbol\Omega_{\mathrm{eff}}=(\Omega,0,-\Delta).
+\]</span></p>
+<p>Le vecteur de Bloch précesse autour de cet axe à la pulsation <span class="math inline">\(\sqrt{\Omega^2+\Delta^2}\)</span>. À résonance, l’axe est équatorial et la trajectoire peut relier les deux pôles : l’inversion est complète. Lorsque <span class="math inline">\(|\Delta|\)</span> augmente, l’axe s’incline vers l’axe vertical et la trajectoire n’atteint plus le pôle opposé.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Domaine de l'approximation des ondes tournantes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Domaine de l’approximation des ondes tournantes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’hamiltonien <a href="#eq-rwa-hamiltonian" class="quarto-xref">Equation&nbsp;39</a> suppose une excitation proche de la résonance et un couplage lent devant la fréquence porteuse :</p>
+<p><span class="math display">\[
+|\Delta|\ll\omega_0,
+\qquad
+\Omega\ll\omega_0.
+\]</span></p>
+<p>En couplage très fort ou très loin de la résonance, les termes contre-rotatifs ne peuvent plus être négligés. Ils produisent notamment le déplacement de Bloch–Siegert.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="choisir-lapproximation-adaptée" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="choisir-lapproximation-adaptée"><span class="header-section-number">6</span> Choisir l’approximation adaptée</h2>
+<p>La théorie des perturbations n’est pas une formule unique, mais une famille de stratégies. Avant tout calcul, il faut comparer les échelles d’énergie et de temps du problème.</p>
+<section id="diagnostic-pour-une-perturbation-stationnaire" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="diagnostic-pour-une-perturbation-stationnaire"><span class="header-section-number">6.1</span> Diagnostic pour une perturbation stationnaire</h3>
+<p>Pour un niveau isolé <span class="math inline">\(n\)</span>, on examine les rapports</p>
+<p><span class="math display">\[
+\eta_{mn}
+=\left|
+\frac{\lambda W_{mn}}{E_n^{(0)}-E_m^{(0)}}
+\right|.
+\]</span></p>
+<p>Si tous les <span class="math inline">\(\eta_{mn}\)</span> pertinents sont petits, la méthode non dégénérée est adaptée. On vérifie ensuite que</p>
+<p><span class="math display">\[
+|\lambda^2E_n^{(2)}|ll|\lambda E_n^{(1)}|
+\]</span></p>
+<p>lorsque le premier ordre ne s’annule pas. Si un niveau est dégénéré ou quasi dégénéré, il faut d’abord diagonaliser le bloc correspondant. Enfin, une diagonalisation numérique dans une base tronquée fournit un contrôle indépendant lorsque le système s’y prête.</p>
+</section>
+<section id="diagnostic-pour-une-perturbation-temporelle" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="diagnostic-pour-une-perturbation-temporelle"><span class="header-section-number">6.2</span> Diagnostic pour une perturbation temporelle</h3>
+<p>Au premier ordre, la somme des probabilités de transition doit rester faible :</p>
+<p><span id="eq-time-perturbation-validity"><span class="math display">\[
+\sum_{f\ne i}P_{i\to f}(t)\ll1.
+\tag{42}\]</span></span></p>
+<p>Si cette somme devient comparable à un, la déplétion de l’état initial ne peut plus être négligée. Pour deux niveaux proches de la résonance, la solution de Rabi est alors préférable, car elle conserve exactement <span class="math inline">\(P_g+P_e=1\)</span>.</p>
+<p>Deux limites temporelles complètent ce diagnostic.</p>
+<p><strong>Variation soudaine.</strong> Si l’hamiltonien change pendant un temps <span class="math inline">\(\tau\)</span> beaucoup plus court que les temps internes,</p>
+<p><span class="math display">\[
+\tau\ll\frac{\hbar}{|E_m-E_n|},
+\]</span></p>
+<p>l’état n’a pratiquement pas le temps d’évoluer pendant le changement. Juste après la commutation, le vecteur d’état est le même, mais il doit être redéveloppé dans la nouvelle base propre.</p>
+<p><strong>Variation adiabatique.</strong> Si l’hamiltonien varie lentement et qu’un niveau reste séparé des autres par un écart non nul, un état initialement propre suit l’état propre instantané. Un critère local est</p>
+<p><span id="eq-adiabatic-criterion"><span class="math display">\[
+\boxed{
+\hbar\frac{|\langle m(t)|\dot H(t)|n(t)\rangle|}
+{|E_n(t)-E_m(t)|^2}\ll1
+\qquad(m\ne n).
+}
+\tag{43}\]</span></span></p>
+<p>Entre les limites soudaine et adiabatique, il faut résoudre la dynamique, analytiquement dans un modèle réduit ou numériquement.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation physique</th>
+<th>Méthode à privilégier</th>
+<th>Quantité principale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Niveau isolé, perturbation statique faible</td>
+<td>Rayleigh–Schrödinger non dégénérée</td>
+<td><span class="math inline">\(E_n^{(1)}\)</span>, <span class="math inline">\(E_n^{(2)}\)</span>, <span class="math inline">\(|n^{(1)}\rangle\)</span></td>
+</tr>
+<tr class="even">
+<td>Dégénérescence exacte</td>
+<td>Diagonalisation de <span class="math inline">\(PWP\)</span></td>
+<td>Levée de dégénérescence</td>
+</tr>
+<tr class="odd">
+<td>Quelques niveaux presque dégénérés</td>
+<td>Hamiltonien effectif, diagonalisation du petit bloc</td>
+<td>Croisement évité, mélange</td>
+</tr>
+<tr class="even">
+<td>Excitation faible et de durée finie</td>
+<td>Perturbation dépendant du temps au premier ordre</td>
+<td>Amplitude de transition</td>
+</tr>
+<tr class="odd">
+<td>Couplage à un continuum</td>
+<td>Règle d’or de Fermi</td>
+<td>Taux <span class="math inline">\(\Gamma\)</span></td>
+</tr>
+<tr class="even">
+<td>Deux niveaux entraînés près de la résonance</td>
+<td>Modèle de Rabi</td>
+<td>Populations cohérentes</td>
+</tr>
+<tr class="odd">
+<td>Changement extrêmement rapide</td>
+<td>Approximation soudaine</td>
+<td>Projection sur la nouvelle base</td>
+</tr>
+<tr class="even">
+<td>Changement extrêmement lent et spectre gappé</td>
+<td>Approximation adiabatique</td>
+<td>Suivi d’un état instantané</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="une-fonction-python-générale-pour-les-premiers-ordres" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="une-fonction-python-générale-pour-les-premiers-ordres"><span class="header-section-number">6.3</span> Une fonction Python générale pour les premiers ordres</h3>
+<p>Lorsque <span class="math inline">\(\widehat H_0\)</span> est diagonal dans la base utilisée, les corrections se calculent directement à partir de ses énergies et de la matrice de la perturbation.</p>
+<div id="code-perturbation-stationnaire-generale" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Afficher la fonction de calcul des corrections</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> corrections_non_degenerees(energies0, W, n):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Renvoie E^(1), E^(2) et les coefficients de |n^(1)&gt;."""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    energies0 <span class="op">=</span> np.asarray(energies0, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> np.asarray(W, dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> W.shape <span class="op">!=</span> (<span class="bu">len</span>(energies0), <span class="bu">len</span>(energies0)):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Dimensions incompatibles entre les énergies et W."</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> np.allclose(W, W.conj().T):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"La perturbation W doit être hermitienne."</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ecarts <span class="op">=</span> energies0[n] <span class="op">-</span> energies0</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    masque <span class="op">=</span> np.arange(<span class="bu">len</span>(energies0)) <span class="op">!=</span> n</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">any</span>(np.isclose(ecarts[masque], <span class="fl">0.0</span>)):</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Le niveau est dégénéré : diagonaliser d'abord le bloc PWP."</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    coefficients <span class="op">=</span> np.zeros(<span class="bu">len</span>(energies0), dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    coefficients[masque] <span class="op">=</span> W[masque, n] <span class="op">/</span> ecarts[masque]</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    E1 <span class="op">=</span> np.real_if_close(W[n, n])</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    E2 <span class="op">=</span> np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(W[masque, n])<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> ecarts[masque])</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(np.real(E1)), <span class="bu">float</span>(np.real(E2)), coefficients</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemple : les trois niveaux utilisés dans le premier schéma</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>E1, E2, etat1 <span class="op">=</span> corrections_non_degenerees(np.diag(H0), W, n<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"État fondamental : E^(1) = </span><span class="sc">{</span>E1<span class="sc">:.4f}</span><span class="ss">, E^(2) = </span><span class="sc">{</span>E2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>État fondamental : E^(1) = 0.2000, E^(2) = -0.1156</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="simulations-interactives" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="simulations-interactives"><span class="header-section-number">7</span> Simulations interactives</h2>
+<p>Les deux simulations suivantes réagissent immédiatement aux paramètres choisis. La première compare les approximations perturbatives à une diagonalisation de référence pour l’oscillateur quartique. La seconde représente une transition de Rabi dans le temps, en fréquence et sur la sphère de Bloch.</p>
+<style>
+.pt-sim {
+  --pt-blue: #2563eb;
+  --pt-orange: #ea580c;
+  --pt-green: #059669;
+  --pt-red: #dc2626;
+  --pt-purple: #7c3aed;
+  margin: 1.4rem 0 2.2rem;
+  padding: clamp(0.9rem, 2vw, 1.35rem);
+  border: 1px solid rgba(127, 127, 127, 0.30);
+  border-radius: 16px;
+  background: var(--bs-body-bg, white);
+  background: color-mix(in srgb, var(--bs-body-bg, white) 96%, var(--pt-blue) 4%);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+}
+.pt-sim * { box-sizing: border-box; }
+.pt-sim .pt-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.pt-sim .pt-heading h3 { margin: 0; font-size: 1.2rem; }
+.pt-sim .pt-heading p { margin: 0; opacity: 0.78; font-size: 0.91rem; }
+.pt-sim .pt-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 0.75rem 1rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  background: rgba(127, 127, 127, 0.075);
+}
+.pt-sim .pt-control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-bottom: 0.18rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.pt-sim .pt-control output {
+  color: var(--pt-blue);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pt-sim input[type="range"] {
+  width: 100%;
+  accent-color: var(--pt-blue);
+}
+.pt-sim .pt-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin: 0.85rem 0;
+}
+.pt-sim button {
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  border-radius: 8px;
+  padding: 0.42rem 0.78rem;
+  color: inherit;
+  background: var(--bs-body-bg, white);
+  cursor: pointer;
+  font-weight: 600;
+}
+.pt-sim button.primary {
+  color: white;
+  border-color: var(--pt-blue);
+  background: var(--pt-blue);
+}
+.pt-sim button:hover { filter: brightness(0.96); transform: translateY(-1px); }
+.pt-sim button:focus-visible,
+.pt-sim input:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+}
+.pt-sim .pt-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 0.55rem;
+  margin: 0.85rem 0;
+}
+.pt-sim .pt-readout {
+  padding: 0.55rem 0.7rem;
+  border-left: 3px solid var(--pt-blue);
+  border-radius: 6px;
+  background: rgba(127, 127, 127, 0.075);
+  font-size: 0.86rem;
+}
+.pt-sim .pt-readout span {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.pt-sim .pt-canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+.pt-sim .pt-canvas-card {
+  min-width: 0;
+  padding: 0.55rem;
+  border: 1px solid rgba(127, 127, 127, 0.24);
+  border-radius: 11px;
+  background: var(--bs-body-bg, white);
+}
+.pt-sim .pt-canvas-card.wide { grid-column: 1 / -1; }
+.pt-sim .pt-canvas-title {
+  margin: 0 0 0.25rem 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  opacity: 0.82;
+}
+.pt-sim canvas {
+  display: block;
+  width: 100%;
+  height: 260px;
+}
+.pt-sim .pt-canvas-card.wide canvas { height: 290px; }
+.pt-sim .pt-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.4rem 0.2rem 0;
+  font-size: 0.78rem;
+  opacity: 0.86;
+}
+.pt-sim .legend-line::before {
+  content: "";
+  display: inline-block;
+  width: 1.3rem;
+  height: 3px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+  border-radius: 2px;
+  background: var(--legend-color);
+}
+.pt-sim .pt-help { margin: 0.75rem 0 0; font-size: 0.83rem; opacity: 0.78; }
+@media (max-width: 760px) {
+  .pt-sim .pt-canvas-grid { grid-template-columns: 1fr; }
+  .pt-sim .pt-canvas-card.wide { grid-column: auto; }
+  .pt-sim canvas, .pt-sim .pt-canvas-card.wide canvas { height: 240px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pt-sim button:hover { transform: none; }
+}
+</style>
+<script>
+window.PerturbCanvas = window.PerturbCanvas || (() => {
+  "use strict";
+
+  function palette(root) {
+    const style = getComputedStyle(root);
+    return {
+      text: style.color || "#20242a",
+      grid: "rgba(127,127,127,0.25)",
+      blue: style.getPropertyValue("--pt-blue").trim() || "#2563eb",
+      orange: style.getPropertyValue("--pt-orange").trim() || "#ea580c",
+      green: style.getPropertyValue("--pt-green").trim() || "#059669",
+      red: style.getPropertyValue("--pt-red").trim() || "#dc2626",
+      purple: style.getPropertyValue("--pt-purple").trim() || "#7c3aed",
+    };
+  }
+
+  function context(canvas, fallbackHeight = 260) {
+    const width = Math.max(280, canvas.clientWidth || 600);
+    const height = canvas.clientHeight || fallbackHeight;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    const pixelWidth = Math.round(width * ratio);
+    const pixelHeight = Math.round(height * ratio);
+    if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+      canvas.width = pixelWidth;
+      canvas.height = pixelHeight;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    return { ctx, width, height };
+  }
+
+  function tick(value) {
+    const a = Math.abs(value);
+    if (a >= 100) return value.toFixed(0);
+    if (a >= 10) return value.toFixed(1);
+    if (a >= 1) return value.toFixed(2).replace(/\.00$/, "");
+    if (a === 0) return "0";
+    return value.toFixed(2);
+  }
+
+  function axes(root, canvas, bounds, labels) {
+    const { ctx, width, height } = context(canvas);
+    const colors = palette(root);
+    const margin = { left: 54, right: 18, top: 15, bottom: 41 };
+    const plotWidth = Math.max(1, width - margin.left - margin.right);
+    const plotHeight = Math.max(1, height - margin.top - margin.bottom);
+    const X = value => margin.left + (value - bounds.xMin) /
+      (bounds.xMax - bounds.xMin) * plotWidth;
+    const Y = value => margin.top + (bounds.yMax - value) /
+      (bounds.yMax - bounds.yMin) * plotHeight;
+
+    ctx.font = "11px system-ui, sans-serif";
+    ctx.fillStyle = colors.text;
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const gx = margin.left + i * plotWidth / 5;
+      const gy = margin.top + i * plotHeight / 5;
+      ctx.beginPath(); ctx.moveTo(gx, margin.top); ctx.lineTo(gx, margin.top + plotHeight); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(margin.left, gy); ctx.lineTo(margin.left + plotWidth, gy); ctx.stroke();
+
+      const xv = bounds.xMin + i * (bounds.xMax - bounds.xMin) / 5;
+      const yv = bounds.yMax - i * (bounds.yMax - bounds.yMin) / 5;
+      ctx.textAlign = "center"; ctx.textBaseline = "top";
+      ctx.fillText(tick(xv), gx, margin.top + plotHeight + 5);
+      ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      ctx.fillText(tick(yv), margin.left - 7, gy);
+    }
+
+    ctx.strokeStyle = colors.text;
+    ctx.globalAlpha = 0.55;
+    ctx.strokeRect(margin.left, margin.top, plotWidth, plotHeight);
+    ctx.globalAlpha = 1;
+    ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+    ctx.fillText(labels.x || "", margin.left + plotWidth / 2, height - 2);
+    ctx.save();
+    ctx.translate(13, margin.top + plotHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(labels.y || "", 0, 0);
+    ctx.restore();
+
+    return { ctx, width, height, margin, plotWidth, plotHeight, X, Y, colors };
+  }
+
+  function path(plot, points, color, width = 2, dash = []) {
+    if (points.length < 2) return;
+    const { ctx, X, Y, margin, plotWidth, plotHeight } = plot;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(margin.left, margin.top, plotWidth, plotHeight); ctx.clip();
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      if (index === 0) ctx.moveTo(X(point[0]), Y(point[1]));
+      else ctx.lineTo(X(point[0]), Y(point[1]));
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function point(plot, x, y, color, radius = 4) {
+    const px = plot.X(x), py = plot.Y(y);
+    plot.ctx.beginPath();
+    plot.ctx.arc(px, py, radius, 0, 2 * Math.PI);
+    plot.ctx.fillStyle = color;
+    plot.ctx.fill();
+    plot.ctx.strokeStyle = "white";
+    plot.ctx.lineWidth = 1.2;
+    plot.ctx.stroke();
+  }
+
+  return { palette, context, axes, path, point };
+})();
+</script>
+<section id="simulation-oscillateur-anharmonique" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="simulation-oscillateur-anharmonique"><span class="header-section-number">7.1</span> Simulation — Oscillateur anharmonique</h3>
+<p>La simulation utilise <span class="math inline">\(m=\omega=\hbar=1\)</span> et compare trois niveaux d’approximation. La diagonalisation dans une base harmonique sert de référence ; les courbes perturbatives sont celles de <a href="#eq-quartic-first-order" class="quarto-xref">Equation&nbsp;18</a> et <a href="#eq-quartic-second-order" class="quarto-xref">Equation&nbsp;19</a>. Le graphe spatial superpose les fonctions d’onde au niveau de leur énergie afin de montrer simultanément le potentiel, le déplacement énergétique et la déformation de l’état.</p>
+<div id="quartic-sim" class="pt-sim">
+  <div class="pt-heading">
+    <h3 class="anchored">Oscillateur quartique</h3>
+    <p>Énergies et fonctions d'onde dans V(x) = x²/2 + λx⁴</p>
+  </div>
+
+  <div class="pt-controls">
+    <div class="pt-control">
+      <label for="quartic-lambda">Couplage λ <output id="quartic-lambda-out"></output></label>
+      <input id="quartic-lambda" type="range" min="0" max="0.45" step="0.005" value="0.08">
+    </div>
+    <div class="pt-control">
+      <label for="quartic-level">Niveau n <output id="quartic-level-out"></output></label>
+      <input id="quartic-level" type="range" min="0" max="4" step="1" value="0">
+    </div>
+  </div>
+
+  <div class="pt-actions">
+    <button type="button" id="quartic-reset">↺ Réinitialiser</button>
+  </div>
+
+  <div class="pt-readouts" aria-live="polite">
+    <div class="pt-readout">Énergie de référence <span id="quartic-exact"></span></div>
+    <div class="pt-readout">Approximation d'ordre 1 <span id="quartic-first"></span></div>
+    <div class="pt-readout">Approximation d'ordre 2 <span id="quartic-second"></span></div>
+    <div class="pt-readout">Fidélité de l'état perturbé <span id="quartic-fidelity"></span></div>
+  </div>
+
+  <div class="pt-canvas-grid">
+    <div class="pt-canvas-card">
+      <div class="pt-canvas-title">Potentiel et état propre sélectionné</div>
+      <canvas id="quartic-wave" aria-label="Potentiel quartique et fonctions d'onde"></canvas>
+      <div class="pt-legend">
+        <span class="legend-line" style="--legend-color:#7c3aed">V(x)</span>
+        <span class="legend-line" style="--legend-color:#2563eb">état de référence</span>
+        <span class="legend-line" style="--legend-color:#ea580c">état perturbé</span>
+      </div>
+    </div>
+    <div class="pt-canvas-card">
+      <div class="pt-canvas-title">Énergie en fonction du couplage</div>
+      <canvas id="quartic-energy" aria-label="Énergie exacte et perturbative"></canvas>
+      <div class="pt-legend">
+        <span class="legend-line" style="--legend-color:#2563eb">référence</span>
+        <span class="legend-line" style="--legend-color:#ea580c">ordre 1</span>
+        <span class="legend-line" style="--legend-color:#059669">ordre 2</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pt-help">À explorer : augmentez λ progressivement. L'ordre deux améliore d'abord l'énergie, puis finit par s'écarter lorsque le développement sort de son domaine utile. Comparez aussi la dégradation plus rapide pour les niveaux excités.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("quartic-sim");
+  if (!root) return;
+  const PC = window.PerturbCanvas;
+
+  const controls = {
+    lambda: root.querySelector("#quartic-lambda"),
+    level: root.querySelector("#quartic-level"),
+  };
+  const outputs = {
+    lambda: root.querySelector("#quartic-lambda-out"),
+    level: root.querySelector("#quartic-level-out"),
+    exact: root.querySelector("#quartic-exact"),
+    first: root.querySelector("#quartic-first"),
+    second: root.querySelector("#quartic-second"),
+    fidelity: root.querySelector("#quartic-fidelity"),
+  };
+  const waveCanvas = root.querySelector("#quartic-wave");
+  const energyCanvas = root.querySelector("#quartic-energy");
+
+  const N = 26;
+
+  function zeros(n) {
+    return Array.from({ length: n }, () => Array(n).fill(0));
+  }
+
+  function identity(n) {
+    const M = zeros(n);
+    for (let i = 0; i < n; i++) M[i][i] = 1;
+    return M;
+  }
+
+  function multiply(A, B) {
+    const n = A.length;
+    const C = zeros(n);
+    for (let i = 0; i < n; i++) {
+      for (let k = 0; k < n; k++) {
+        const aik = A[i][k];
+        if (aik === 0) continue;
+        for (let j = 0; j < n; j++) C[i][j] += aik * B[k][j];
+      }
+    }
+    return C;
+  }
+
+  const X = zeros(N);
+  for (let n = 0; n < N - 1; n++) {
+    const value = Math.sqrt((n + 1) / 2);
+    X[n][n + 1] = value;
+    X[n + 1][n] = value;
+  }
+  const X2 = multiply(X, X);
+  const X4 = multiply(X2, X2);
+
+  function hamiltonian(lambda) {
+    const H = zeros(N);
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) H[i][j] = lambda * X4[i][j];
+      H[i][i] += i + 0.5;
+    }
+    return H;
+  }
+
+  function jacobiEigen(matrix) {
+    const n = matrix.length;
+    const A = matrix.map(row => row.slice());
+    const V = identity(n);
+    const maxIterations = 45 * n * n;
+
+    for (let iteration = 0; iteration < maxIterations; iteration++) {
+      let p = 0, q = 1, largest = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          const value = Math.abs(A[i][j]);
+          if (value > largest) { largest = value; p = i; q = j; }
+        }
+      }
+      if (largest < 1e-10) break;
+
+      const app = A[p][p], aqq = A[q][q], apq = A[p][q];
+      const angle = 0.5 * Math.atan2(2 * apq, aqq - app);
+      const c = Math.cos(angle), s = Math.sin(angle);
+
+      for (let k = 0; k < n; k++) {
+        if (k === p || k === q) continue;
+        const akp = A[k][p], akq = A[k][q];
+        A[k][p] = A[p][k] = c * akp - s * akq;
+        A[k][q] = A[q][k] = s * akp + c * akq;
+      }
+      A[p][p] = c*c*app - 2*s*c*apq + s*s*aqq;
+      A[q][q] = s*s*app + 2*s*c*apq + c*c*aqq;
+      A[p][q] = A[q][p] = 0;
+
+      for (let k = 0; k < n; k++) {
+        const vkp = V[k][p], vkq = V[k][q];
+        V[k][p] = c * vkp - s * vkq;
+        V[k][q] = s * vkp + c * vkq;
+      }
+    }
+
+    const order = Array.from({ length: n }, (_, i) => i)
+      .sort((i, j) => A[i][i] - A[j][j]);
+    return {
+      values: order.map(i => A[i][i]),
+      vectors: V.map(row => order.map(i => row[i])),
+    };
+  }
+
+  function perturbativeEnergies(lambda, n) {
+    const first = n + 0.5 + 0.75 * lambda * (2*n*n + 2*n + 1);
+    const polynomial = 34*n*n*n + 51*n*n + 59*n + 21;
+    const second = first - lambda*lambda * polynomial / 8;
+    return { first, second };
+  }
+
+  function perturbativeVector(lambda, n) {
+    const vector = Array(N).fill(0);
+    vector[n] = 1;
+    for (let m = 0; m < N; m++) {
+      if (m !== n) vector[m] += lambda * X4[m][n] / (n - m);
+    }
+    const norm = Math.sqrt(vector.reduce((sum, value) => sum + value*value, 0));
+    return vector.map(value => value / norm);
+  }
+
+  function harmonicValues(x) {
+    const values = Array(N).fill(0);
+    values[0] = Math.pow(Math.PI, -0.25) * Math.exp(-x*x/2);
+    if (N > 1) values[1] = Math.sqrt(2) * x * values[0];
+    for (let n = 1; n < N - 1; n++) {
+      values[n + 1] = Math.sqrt(2/(n + 1)) * x * values[n]
+        - Math.sqrt(n/(n + 1)) * values[n - 1];
+    }
+    return values;
+  }
+
+  function waveFromCoefficients(coefficients, x) {
+    const basis = harmonicValues(x);
+    let value = 0;
+    for (let n = 0; n < N; n++) value += coefficients[n] * basis[n];
+    return value;
+  }
+
+  const curveCache = new Map();
+  function exactCurve(n) {
+    if (curveCache.has(n)) return curveCache.get(n);
+    const points = [];
+    for (let i = 0; i <= 30; i++) {
+      const lambda = 0.45 * i / 30;
+      const eig = jacobiEigen(hamiltonian(lambda));
+      points.push([lambda, eig.values[n]]);
+    }
+    curveCache.set(n, points);
+    return points;
+  }
+
+  let scheduled = false;
+  function requestDraw() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => { scheduled = false; draw(); });
+  }
+
+  function draw() {
+    const lambda = Number(controls.lambda.value);
+    const n = Number(controls.level.value);
+    outputs.lambda.value = lambda.toFixed(3);
+    outputs.level.value = String(n);
+
+    const eig = jacobiEigen(hamiltonian(lambda));
+    const exactEnergy = eig.values[n];
+    let exactVector = eig.vectors.map(row => row[n]);
+    if (exactVector[n] < 0) exactVector = exactVector.map(value => -value);
+    let pertVector = perturbativeVector(lambda, n);
+    if (pertVector[n] < 0) pertVector = pertVector.map(value => -value);
+
+    const approximations = perturbativeEnergies(lambda, n);
+    const overlap = exactVector.reduce(
+      (sum, value, i) => sum + value * pertVector[i], 0
+    );
+    const fidelity = Math.min(1, overlap * overlap);
+
+    outputs.exact.textContent = exactEnergy.toFixed(6);
+    outputs.first.textContent = `${approximations.first.toFixed(6)}  (écart ${(approximations.first-exactEnergy).toExponential(2)})`;
+    outputs.second.textContent = `${approximations.second.toFixed(6)}  (écart ${(approximations.second-exactEnergy).toExponential(2)})`;
+    outputs.fidelity.textContent = `${(100*fidelity).toFixed(3)} %`;
+
+    const yMax = Math.max(5.2, exactEnergy + 2.0);
+    const wavePlot = PC.axes(root, waveCanvas,
+      { xMin: -3.1, xMax: 3.1, yMin: -0.25, yMax },
+      { x: "x", y: "énergie / onde décalée" });
+    const potential = [], exactWave = [], pertWave = [];
+    const scale = 0.78;
+    for (let i = 0; i <= 420; i++) {
+      const x = -3.1 + 6.2 * i / 420;
+      potential.push([x, 0.5*x*x + lambda*x*x*x*x]);
+      exactWave.push([x, exactEnergy + scale*waveFromCoefficients(exactVector, x)]);
+      pertWave.push([x, approximations.first + scale*waveFromCoefficients(pertVector, x)]);
+    }
+    PC.path(wavePlot, potential, wavePlot.colors.purple, 2.3);
+    PC.path(wavePlot, exactWave, wavePlot.colors.blue, 2.2);
+    PC.path(wavePlot, pertWave, wavePlot.colors.orange, 2.0, [6, 4]);
+    PC.path(wavePlot, [[-3.1, exactEnergy], [3.1, exactEnergy]],
+      wavePlot.colors.blue, 1, [3, 5]);
+
+    const exactPoints = exactCurve(n);
+    const firstPoints = [], secondPoints = [];
+    let curveMax = 0;
+    for (let i = 0; i <= 150; i++) {
+      const lam = 0.45 * i / 150;
+      const values = perturbativeEnergies(lam, n);
+      firstPoints.push([lam, values.first]);
+      secondPoints.push([lam, values.second]);
+      curveMax = Math.max(curveMax, values.first, values.second);
+    }
+    exactPoints.forEach(point => { curveMax = Math.max(curveMax, point[1]); });
+    const base = n + 0.5;
+    const curveMin = Math.min(base - 0.12, ...secondPoints.map(p => p[1])) ;
+    const energyPlot = PC.axes(root, energyCanvas,
+      { xMin: 0, xMax: 0.45, yMin: curveMin, yMax: curveMax + 0.2 },
+      { x: "λ", y: `E${n}` });
+    PC.path(energyPlot, exactPoints, energyPlot.colors.blue, 2.4);
+    PC.path(energyPlot, firstPoints, energyPlot.colors.orange, 2, [7, 4]);
+    PC.path(energyPlot, secondPoints, energyPlot.colors.green, 2, [2, 4]);
+    PC.point(energyPlot, lambda, exactEnergy, energyPlot.colors.red, 4.5);
+  }
+
+  Object.values(controls).forEach(control => control.addEventListener("input", requestDraw));
+  root.querySelector("#quartic-reset").addEventListener("click", () => {
+    controls.lambda.value = "0.08";
+    controls.level.value = "0";
+    requestDraw();
+  });
+  new ResizeObserver(requestDraw).observe(root);
+  new MutationObserver(requestDraw).observe(document.documentElement,
+    { attributes: true, attributeFilter: ["data-bs-theme"] });
+  draw();
+})();
+</script>
+</section>
+<section id="simulation-transition-cohérente-à-deux-niveaux" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="simulation-transition-cohérente-à-deux-niveaux"><span class="header-section-number">7.2</span> Simulation — Transition cohérente à deux niveaux</h3>
+<p>Cette simulation représente la solution de Rabi <a href="#eq-rabi-probability" class="quarto-xref">Equation&nbsp;40</a>. Le curseur temporel est à la fois la date d’observation et la durée de l’impulsion. Le profil fréquentiel montre donc la probabilité finale obtenue si l’on applique une impulsion de cette durée avec différents désaccords.</p>
+<div id="rabi-sim" class="pt-sim">
+  <div class="pt-heading">
+    <h3 class="anchored">Oscillations de Rabi</h3>
+    <p>Population, résonance et trajectoire sur la sphère de Bloch</p>
+  </div>
+
+  <div class="pt-controls">
+    <div class="pt-control">
+      <label for="rabi-omega">Couplage Ω <output id="rabi-omega-out"></output></label>
+      <input id="rabi-omega" type="range" min="0.20" max="3" step="0.02" value="1">
+    </div>
+    <div class="pt-control">
+      <label for="rabi-delta">Désaccord Δ <output id="rabi-delta-out"></output></label>
+      <input id="rabi-delta" type="range" min="-4" max="4" step="0.02" value="0">
+    </div>
+    <div class="pt-control">
+      <label for="rabi-time">Temps t <output id="rabi-time-out"></output></label>
+      <input id="rabi-time" type="range" min="0" max="20" step="0.01" value="3.14">
+    </div>
+  </div>
+
+  <div class="pt-actions">
+    <button type="button" class="primary" id="rabi-play">▶ Animer</button>
+    <button type="button" id="rabi-pause">Ⅱ Pause</button>
+    <button type="button" id="rabi-reset">↺ Réinitialiser</button>
+  </div>
+
+  <div class="pt-readouts" aria-live="polite">
+    <div class="pt-readout">Population excitée <span id="rabi-population"></span></div>
+    <div class="pt-readout">Contraste maximal <span id="rabi-contrast"></span></div>
+    <div class="pt-readout">Pulsation généralisée <span id="rabi-effective"></span></div>
+    <div class="pt-readout">Type d'impulsion à résonance <span id="rabi-pulse"></span></div>
+  </div>
+
+  <div class="pt-canvas-grid">
+    <div class="pt-canvas-card">
+      <div class="pt-canvas-title">Évolution des populations</div>
+      <canvas id="rabi-populations" aria-label="Populations du système à deux niveaux"></canvas>
+      <div class="pt-legend">
+        <span class="legend-line" style="--legend-color:#2563eb">Pₑ</span>
+        <span class="legend-line" style="--legend-color:#ea580c">Pᵍ</span>
+      </div>
+    </div>
+    <div class="pt-canvas-card">
+      <div class="pt-canvas-title">Profil de résonance à la date sélectionnée</div>
+      <canvas id="rabi-resonance" aria-label="Probabilité finale en fonction du désaccord"></canvas>
+    </div>
+    <div class="pt-canvas-card wide">
+      <div class="pt-canvas-title">Trajectoire du vecteur de Bloch</div>
+      <canvas id="rabi-bloch" aria-label="Trajectoire sur la sphère de Bloch"></canvas>
+    </div>
+  </div>
+
+  <p class="pt-help">À explorer : choisissez Δ = 0 et t = π/Ω pour réaliser une inversion complète. Éloignez ensuite la fréquence de la résonance : l'axe de précession s'incline et la trajectoire n'atteint plus l'état excité.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("rabi-sim");
+  if (!root) return;
+  const PC = window.PerturbCanvas;
+
+  const controls = {
+    omega: root.querySelector("#rabi-omega"),
+    delta: root.querySelector("#rabi-delta"),
+    time: root.querySelector("#rabi-time"),
+  };
+  const outputs = {
+    omega: root.querySelector("#rabi-omega-out"),
+    delta: root.querySelector("#rabi-delta-out"),
+    time: root.querySelector("#rabi-time-out"),
+    population: root.querySelector("#rabi-population"),
+    contrast: root.querySelector("#rabi-contrast"),
+    effective: root.querySelector("#rabi-effective"),
+    pulse: root.querySelector("#rabi-pulse"),
+  };
+  const populationCanvas = root.querySelector("#rabi-populations");
+  const resonanceCanvas = root.querySelector("#rabi-resonance");
+  const blochCanvas = root.querySelector("#rabi-bloch");
+
+  let running = false;
+  let previousTimestamp = null;
+  let scheduled = false;
+
+  function stateAt(t, omega, delta) {
+    const effective = Math.hypot(omega, delta);
+    const angle = effective * t;
+    const ux = omega / effective;
+    const uz = -delta / effective;
+    const c = Math.cos(angle), s = Math.sin(angle);
+    const x = ux * uz * (1 - c);
+    const y = -ux * s;
+    const z = c + uz * uz * (1 - c);
+    return { x, y, z, Pe: (1 - z) / 2, effective };
+  }
+
+  function requestDraw() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => { scheduled = false; draw(); });
+  }
+
+  function drawBloch(omega, delta, time) {
+    const { ctx, width, height } = PC.context(blochCanvas, 290);
+    const colors = PC.palette(root);
+    const radius = Math.min(width * 0.27, height * 0.39);
+    const cx = width * 0.5, cy = height * 0.51;
+    const az = 0.62, el = 0.28;
+
+    function project(point) {
+      const [x, y, z] = point;
+      const x1 = Math.cos(az)*x - Math.sin(az)*y;
+      const y1 = Math.sin(az)*x + Math.cos(az)*y;
+      const screenX = x1;
+      const screenY = Math.sin(el)*y1 + Math.cos(el)*z;
+      return [cx + radius*screenX, cy - radius*screenY];
+    }
+
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(cx, cy, radius, 0, 2*Math.PI); ctx.stroke();
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.ellipse(cx, cy, radius, radius*Math.sin(el), 0, 0, 2*Math.PI); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const axes = [
+      { p: [1, 0, 0], label: "x", color: colors.red },
+      { p: [0, 1, 0], label: "y", color: colors.green },
+      { p: [0, 0, 1], label: "z", color: colors.blue },
+    ];
+    ctx.font = "12px system-ui, sans-serif";
+    axes.forEach(axis => {
+      const minus = project(axis.p.map(value => -value));
+      const plus = project(axis.p);
+      ctx.beginPath(); ctx.moveTo(minus[0], minus[1]); ctx.lineTo(plus[0], plus[1]);
+      ctx.strokeStyle = axis.color; ctx.globalAlpha = 0.65; ctx.stroke();
+      ctx.globalAlpha = 1; ctx.fillStyle = axis.color;
+      ctx.fillText(axis.label, plus[0] + 5, plus[1] - 3);
+    });
+
+    const trajectory = [];
+    const samples = Math.max(2, Math.ceil(180 * time / 20));
+    for (let i = 0; i <= samples; i++) {
+      const state = stateAt(time * i / samples, omega, delta);
+      trajectory.push(project([state.x, state.y, state.z]));
+    }
+    ctx.beginPath();
+    trajectory.forEach((point, i) => {
+      if (i === 0) ctx.moveTo(point[0], point[1]);
+      else ctx.lineTo(point[0], point[1]);
+    });
+    ctx.strokeStyle = colors.purple; ctx.lineWidth = 2.5; ctx.stroke();
+
+    const end = trajectory[trajectory.length - 1];
+    ctx.beginPath(); ctx.arc(end[0], end[1], 5.2, 0, 2*Math.PI);
+    ctx.fillStyle = colors.red; ctx.fill();
+    ctx.strokeStyle = "white"; ctx.lineWidth = 1.4; ctx.stroke();
+
+    const north = project([0, 0, 1]);
+    const south = project([0, 0, -1]);
+    ctx.fillStyle = colors.text; ctx.textAlign = "center";
+    ctx.fillText("|g⟩", north[0], north[1] - 10);
+    ctx.fillText("|e⟩", south[0], south[1] + 18);
+
+    const effective = Math.hypot(omega, delta);
+    const axisEnd = project([omega/effective, 0, -delta/effective]);
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(axisEnd[0], axisEnd[1]);
+    ctx.strokeStyle = colors.orange; ctx.lineWidth = 2; ctx.setLineDash([7, 4]); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = colors.orange; ctx.textAlign = "left";
+    ctx.fillText("Ωeff", axisEnd[0] + 5, axisEnd[1]);
+  }
+
+  function draw() {
+    const omega = Number(controls.omega.value);
+    const delta = Number(controls.delta.value);
+    const time = Number(controls.time.value);
+    const state = stateAt(time, omega, delta);
+    const contrast = omega*omega / (omega*omega + delta*delta);
+
+    outputs.omega.value = omega.toFixed(2);
+    outputs.delta.value = delta.toFixed(2);
+    outputs.time.value = time.toFixed(2);
+    outputs.population.textContent = `${(100*state.Pe).toFixed(2)} %`;
+    outputs.contrast.textContent = `${(100*contrast).toFixed(2)} %`;
+    outputs.effective.textContent = state.effective.toFixed(3);
+
+    const area = omega * time;
+    const nearestHalfPi = Math.round(area / (Math.PI/2));
+    const distance = Math.abs(area - nearestHalfPi*Math.PI/2);
+    if (distance < 0.055) {
+      if (nearestHalfPi % 4 === 0) outputs.pulse.textContent = "2π × entier";
+      else if (nearestHalfPi % 2 === 0) outputs.pulse.textContent = "impulsion π";
+      else outputs.pulse.textContent = "impulsion π/2";
+    } else {
+      outputs.pulse.textContent = `aire Ωt = ${area.toFixed(2)}`;
+    }
+
+    const popPlot = PC.axes(root, populationCanvas,
+      { xMin: 0, xMax: 20, yMin: 0, yMax: 1 },
+      { x: "t", y: "population" });
+    const excited = [], ground = [];
+    for (let i = 0; i <= 500; i++) {
+      const ti = 20 * i / 500;
+      const pe = stateAt(ti, omega, delta).Pe;
+      excited.push([ti, pe]);
+      ground.push([ti, 1-pe]);
+    }
+    PC.path(popPlot, excited, popPlot.colors.blue, 2.3);
+    PC.path(popPlot, ground, popPlot.colors.orange, 2, [7, 4]);
+    PC.path(popPlot, [[time, 0], [time, 1]], popPlot.colors.red, 1.5, [4, 4]);
+    PC.point(popPlot, time, state.Pe, popPlot.colors.red, 4.5);
+
+    const resPlot = PC.axes(root, resonanceCanvas,
+      { xMin: -6, xMax: 6, yMin: 0, yMax: 1 },
+      { x: "Δ", y: "Pe(t)" });
+    const resonance = [];
+    for (let i = 0; i <= 600; i++) {
+      const det = -6 + 12*i/600;
+      resonance.push([det, stateAt(time, omega, det).Pe]);
+    }
+    PC.path(resPlot, resonance, resPlot.colors.purple, 2.3);
+    PC.point(resPlot, delta, state.Pe, resPlot.colors.red, 4.5);
+
+    drawBloch(omega, delta, time);
+  }
+
+  function animate(timestamp) {
+    if (!running) return;
+    if (previousTimestamp === null) previousTimestamp = timestamp;
+    const elapsed = Math.min((timestamp - previousTimestamp) / 1000, 0.1);
+    previousTimestamp = timestamp;
+    let time = Number(controls.time.value) + elapsed * 1.5;
+    if (time > 20) time = 0;
+    controls.time.value = time.toFixed(2);
+    draw();
+    requestAnimationFrame(animate);
+  }
+
+  Object.values(controls).forEach(control => control.addEventListener("input", requestDraw));
+  root.querySelector("#rabi-play").addEventListener("click", () => {
+    if (running) return;
+    running = true; previousTimestamp = null; requestAnimationFrame(animate);
+  });
+  root.querySelector("#rabi-pause").addEventListener("click", () => {
+    running = false; previousTimestamp = null;
+  });
+  root.querySelector("#rabi-reset").addEventListener("click", () => {
+    running = false; previousTimestamp = null;
+    controls.omega.value = "1";
+    controls.delta.value = "0";
+    controls.time.value = Math.PI.toFixed(2);
+    requestDraw();
+  });
+  new ResizeObserver(requestDraw).observe(root);
+  new MutationObserver(requestDraw).observe(document.documentElement,
+    { attributes: true, attributeFilter: ["data-bs-theme"] });
+  draw();
+})();
+</script>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8</span> Conclusion</h2>
+<p>La théorie des perturbations transforme un problème presque soluble en une hiérarchie de corrections contrôlables. Ses résultats essentiels peuvent se résumer ainsi.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problème</th>
+<th>Résultat central</th>
+<th>Interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Niveau stationnaire non dégénéré</td>
+<td><span class="math inline">\(E_n^{(1)}=\langle n|W|n\rangle\)</span></td>
+<td>Valeur moyenne de la perturbation</td>
+</tr>
+<tr class="even">
+<td>Correction de l’état</td>
+<td><span class="math inline">\(|n^{(1)}\rangle=\sum_{m\ne n}\dfrac{W_{mn}}{E_n-E_m}|m\rangle\)</span></td>
+<td>Mélange avec les autres niveaux</td>
+</tr>
+<tr class="odd">
+<td>Énergie au deuxième ordre</td>
+<td><span class="math inline">\(E_n^{(2)}=\sum_{m\ne n}\dfrac{|W_{mn}|^2}{E_n-E_m}\)</span></td>
+<td>Répulsion des niveaux</td>
+</tr>
+<tr class="even">
+<td>Sous-espace dégénéré</td>
+<td><span class="math inline">\(PWP\,\mathbf c=E^{(1)}\mathbf c\)</span></td>
+<td>La perturbation sélectionne la bonne base</td>
+</tr>
+<tr class="odd">
+<td>Perturbation temporelle faible</td>
+<td><span class="math inline">\(c_{f\leftarrow i}^{(1)}=-\dfrac{i}{\hbar}\int W_{fi}(t)e^{i\omega_{fi}t}\,dt\)</span></td>
+<td>Sélection de la fréquence de Bohr</td>
+</tr>
+<tr class="even">
+<td>Continuum d’états finaux</td>
+<td><span class="math inline">\(\Gamma=\dfrac{2\pi}{\hbar}|V_{fi}|^2\rho(E_f)\)</span></td>
+<td>Taux de transition irréversible</td>
+</tr>
+<tr class="odd">
+<td>Deux niveaux résonants</td>
+<td><span class="math inline">\(P_e=\dfrac{\Omega^2}{\Omega^2+\Delta^2}\sin^2\!\left(\dfrac{t}{2}\sqrt{\Omega^2+\Delta^2}\right)\)</span></td>
+<td>Échange cohérent de population</td>
+</tr>
+</tbody>
+</table>
+<p>Le point le plus important n’est pas de mémoriser séparément ces expressions, mais de reconnaître leur structure commune. Une perturbation agit par ses <strong>éléments de matrice</strong> ; son effet est renforcé par les faibles écarts d’énergie ; les symétries imposent des règles de sélection ; et tout développement doit être comparé à un paramètre sans dimension réellement petit.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Méthode de résolution en cinq questions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Méthode de résolution en cinq questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avant de commencer un calcul perturbatif, demander systématiquement :</p>
+<ol type="1">
+<li>Quel est le système exactement soluble <span class="math inline">\(\widehat H_0\)</span> ?</li>
+<li>Quels éléments de matrice de <span class="math inline">\(\widehat W\)</span> sont autorisés par les symétries ?</li>
+<li>Le niveau étudié est-il isolé, dégénéré ou quasi dégénéré ?</li>
+<li>Quel rapport sans dimension contrôle l’approximation ?</li>
+<li>Quel cas limite ou calcul numérique permettra de vérifier le résultat ?</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

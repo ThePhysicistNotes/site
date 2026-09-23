@@ -1,0 +1,3090 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mohammed Reguig">
+<meta name="description" content="Un cours progressif et rigoureux sur la représentation d’interaction, la matrice S, le théorème de Wick, les diagrammes de Feynman, la réduction LSZ, les observables de diffusion et l’intégrale de chemin.">
+
+<title>Interactions, matrice S et diagrammes de Feynman – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sommaire</h2>
+   
+  <ul class="collapse">
+  <li><a href="#des-champs-libres-à-la-matrice-s" id="toc-des-champs-libres-à-la-matrice-s" class="nav-link active" data-scroll-target="#des-champs-libres-à-la-matrice-s"><span class="header-section-number">1</span> Des champs libres à la matrice <span class="math inline">\(S\)</span></a></li>
+  <li><a href="#de-la-série-de-dyson-au-théorème-de-wick" id="toc-de-la-série-de-dyson-au-théorème-de-wick" class="nav-link" data-scroll-target="#de-la-série-de-dyson-au-théorème-de-wick"><span class="header-section-number">2</span> De la série de Dyson au théorème de Wick</a></li>
+  <li><a href="#des-contractions-aux-règles-de-feynman" id="toc-des-contractions-aux-règles-de-feynman" class="nav-link" data-scroll-target="#des-contractions-aux-règles-de-feynman"><span class="header-section-number">3</span> Des contractions aux règles de Feynman</a></li>
+  <li><a href="#deux-tests-perturbatifs" id="toc-deux-tests-perturbatifs" class="nav-link" data-scroll-target="#deux-tests-perturbatifs"><span class="header-section-number">4</span> Deux tests perturbatifs</a></li>
+  <li><a href="#des-corrélateurs-aux-observables" id="toc-des-corrélateurs-aux-observables" class="nav-link" data-scroll-target="#des-corrélateurs-aux-observables"><span class="header-section-number">5</span> Des corrélateurs aux observables</a></li>
+  <li><a href="#la-formulation-par-lintégrale-de-chemin" id="toc-la-formulation-par-lintégrale-de-chemin" class="nav-link" data-scroll-target="#la-formulation-par-lintégrale-de-chemin"><span class="header-section-number">6</span> La formulation par l’intégrale de chemin</a></li>
+  <li><a href="#méthode-de-calcul-et-synthèse" id="toc-méthode-de-calcul-et-synthèse" class="nav-link" data-scroll-target="#méthode-de-calcul-et-synthèse"><span class="header-section-number">7</span> Méthode de calcul et synthèse</a></li>
+  <li><a href="#repères-bibliographiques" id="toc-repères-bibliographiques" class="nav-link" data-scroll-target="#repères-bibliographiques"><span class="header-section-number">8</span> Repères bibliographiques</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Interactions, matrice S et diagrammes de Feynman</h1>
+<p class="subtitle lead">De la série de Dyson aux amplitudes de diffusion</p>
+</div>
+
+<div>
+  <div class="description">
+    Un cours progressif et rigoureux sur la représentation d’interaction, la matrice S, le théorème de Wick, les diagrammes de Feynman, la réduction LSZ, les observables de diffusion et l’intégrale de chemin.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mohammed Reguig </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../cours.html">← Retour à la liste des cours</a></p>
+<p>Le chapitre précédent a construit les champs libres et montré comment leurs modes deviennent, après quantification, des particules de masse et de spin définis. Cette construction fournit des états à une particule, un espace de Fock, des propagateurs et des opérateurs de création et d’annihilation. Pourtant, une théorie strictement libre ne décrit encore presque aucune expérience : les particules s’y propagent sans jamais se rencontrer, sans se diffuser, sans se désintégrer et sans en créer de nouvelles.</p>
+<p>Ajouter une interaction paraît d’abord simple. On décompose un lagrangien en</p>
+<p><span class="math display">\[
+\mathcal L=\mathcal L_0+\mathcal L_{\mathrm{int}},
+\]</span></p>
+<p>où <span class="math inline">\(\mathcal L_0\)</span> est exactement soluble et où <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span> couple les champs. Mais cette addition change profondément le problème. Les modes d’ondes planes de la théorie libre ne sont plus des solutions exactes de l’équation non linéaire, le nombre de particules n’est plus nécessairement conservé et l’espace de Fock libre ne diagonalise plus le hamiltonien complet.</p>
+<p>La stratégie perturbative consiste à ne pas abandonner les résultats du chapitre précédent. Au contraire, on les utilise comme base de calcul. Les champs libres décrivent les particules très éloignées les unes des autres, avant et après une collision ; l’interaction est ensuite développée en puissances d’un petit couplage. La matrice <span class="math inline">\(S\)</span> organise cette évolution, la série de Dyson classe les puissances de l’interaction, le théorème de Wick transforme les produits d’opérateurs en propagateurs, et les diagrammes de Feynman condensent cette combinatoire sous une forme graphique.</p>
+<p>Le fil directeur du chapitre sera</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal L_{\mathrm{int}}
+\longrightarrow S
+\longrightarrow \text{série de Dyson}
+\longrightarrow \text{contractions de Wick}
+\longrightarrow \text{diagrammes}
+\longrightarrow i\mathcal M
+\longrightarrow |\mathcal M|^2
+\longrightarrow d\sigma\ \text{ou}\ d\Gamma .
+}
+\]</span></p>
+<p>L’enjeu principal est de comprendre chaque flèche. Une règle de Feynman ne sera donc pas introduite comme une recette tombée du ciel : elle sera reliée au terme précis du développement perturbatif dont elle résume le calcul.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Objectifs du chapitre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Objectifs du chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, on saura :</p>
+<ul>
+<li>distinguer les représentations de Schrödinger, de Heisenberg et d’interaction ;</li>
+<li>construire l’opérateur d’évolution dans la représentation d’interaction ;</li>
+<li>dériver la série de Dyson et expliquer le rôle de l’ordre chronologique ;</li>
+<li>définir les états asymptotiques, la matrice <span class="math inline">\(S\)</span> et l’amplitude invariante <span class="math inline">\(\mathcal M\)</span> ;</li>
+<li>calculer des corrélateurs perturbativement grâce au théorème de Wick ;</li>
+<li>expliquer pourquoi une contraction est un propagateur de Feynman ;</li>
+<li>dériver les règles de Feynman des théories <span class="math inline">\(\phi^4\)</span> et de Yukawa ;</li>
+<li>distinguer lignes externes, lignes internes, arbres, boucles et bulles de vide ;</li>
+<li>déterminer les facteurs combinatoires et les signes fermioniques ;</li>
+<li>comprendre conceptuellement la réduction LSZ et l’amputation des lignes externes ;</li>
+<li>passer de <span class="math inline">\(\mathcal M\)</span> à une largeur de désintégration ou à une section efficace ;</li>
+<li>effectuer les sommes et moyennes sur les spins à l’aide des traces de matrices gamma ;</li>
+<li>interpréter les variables de Mandelstam, les particules identiques et le croisement ;</li>
+<li>retrouver les corrélateurs et les règles diagrammatiques à partir d’une intégrale de chemin et d’une fonctionnelle génératrice.</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Conventions et périmètre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Conventions et périmètre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On conserve les conventions du chapitre précédent :</p>
+<p><span class="math display">\[
+\hbar=c=1,
+\qquad
+\eta_{\mu\nu}=\operatorname{diag}(1,-1,-1,-1),
+\qquad
+\varepsilon^{0123}=+1.
+\]</span></p>
+<p>Les états à une particule sont normalisés relativistement,</p>
+<p><span class="math display">\[
+\langle\mathbf q|\mathbf p\rangle
+=2E_{\mathbf p}(2\pi)^3\delta^{(3)}(\mathbf p-\mathbf q).
+\]</span></p>
+<p>Le propagateur scalaire contient le facteur <span class="math inline">\(i\)</span> :</p>
+<p><span class="math display">\[
+\Delta_F(x-y)
+=\int\frac{d^4p}{(2\pi)^4}
+\frac{i\,e^{-ip\cdot(x-y)}}{p^2-m^2+i\epsilon}.
+\]</span></p>
+<p>On adopte</p>
+<p><span class="math display">\[
+S=\mathbf1+iT,
+\]</span></p>
+<p>et l’amplitude invariante est définie par</p>
+<p><span class="math display">\[
+\langle f|iT|i\rangle
+=i(2\pi)^4\delta^{(4)}(P_f-P_i)\,\mathcal M_{i\to f}.
+\]</span></p>
+<p>Le présent chapitre développe la théorie perturbative générale avec des champs scalaires et des fermions. Les subtilités propres aux champs de jauge, les calculs complets de QED et la renormalisation seront traités dans les chapitres suivants.</p>
+</div>
+</div>
+<section id="des-champs-libres-à-la-matrice-s" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="des-champs-libres-à-la-matrice-s"><span class="header-section-number">1</span> Des champs libres à la matrice <span class="math inline">\(S\)</span></h2>
+<section id="pourquoi-les-interactions-changent-le-problème" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="pourquoi-les-interactions-changent-le-problème"><span class="header-section-number">1.1</span> Pourquoi les interactions changent le problème</h3>
+<p><strong>Théorie libre et diffusion triviale.</strong></p>
+<p>Dans une théorie libre, le hamiltonien ordonné normalement possède la forme</p>
+<p><span class="math display">\[
+H_0
+=\sum_a\int\frac{d^3\mathbf p}{(2\pi)^3}
+E_{a,\mathbf p}\,
+a_a^\dagger(\mathbf p)a_a(\mathbf p),
+\]</span></p>
+<p>où l’indice <span class="math inline">\(a\)</span> rassemble l’espèce, le spin ou la polarisation. Les opérateurs nombres commutent avec <span class="math inline">\(H_0\)</span>. Un état composé de plusieurs particules conserve donc exactement son contenu et chacune de ses impulsions :</p>
+<p><span class="math display">\[
+e^{-iH_0t}
+|\mathbf p_1,a_1;\ldots;\mathbf p_n,a_n\rangle
+=e^{-i(E_1+\cdots+E_n)t}
+|\mathbf p_1,a_1;\ldots;\mathbf p_n,a_n\rangle.
+\]</span></p>
+<p>La phase globale évolue, mais aucune redistribution d’impulsion et aucune transformation d’espèces ne se produit. La « diffusion » libre est donc l’identité : les particules entrantes ressortent sans avoir interagi.</p>
+<p>Une interaction ajoute au hamiltonien des produits d’opérateurs de création et d’annihilation. Par exemple, un terme <span class="math inline">\(\phi^4\)</span> contient, après développement du champ,</p>
+<p><span class="math display">\[
+(a+a^\dagger)^4.
+\]</span></p>
+<p>Parmi les nombreux termes obtenus figurent schématiquement</p>
+<p><span class="math display">\[
+a^\dagger a^\dagger aa,
+\qquad
+a^\dagger a^\dagger a^\dagger a,
+\qquad
+(a^\dagger)^4,
+\]</span></p>
+<p>qui peuvent respectivement redistribuer deux particules, transformer le nombre de quanta ou créer plusieurs excitations lorsque la cinématique l’autorise. Le nombre de particules n’est donc plus un invariant général ; seules les charges imposées par les symétries le sont nécessairement.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Une interaction ne signifie pas nécessairement une force classique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Une interaction ne signifie pas nécessairement une force classique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans une théorie quantique des champs, l’objet fondamental est le terme local <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span>. Selon les champs qu’il couple, il peut produire une diffusion, une désintégration, une annihilation, une création de paires ou une correction quantique. La notion de potentiel ou de force n’émerge que dans certaines limites, par exemple pour des sources lentes échangeant un médiateur.</p>
+</div>
+</div>
+<p><strong>Quels termes d’interaction peut-on écrire ?</strong></p>
+<p>Une interaction acceptable doit d’abord être un scalaire de Lorentz local. Elle doit aussi respecter les symétries que l’on souhaite imposer. Les dimensions canoniques en quatre dimensions sont</p>
+<p><span class="math display">\[
+[\phi]=1,
+\qquad
+[\psi]=\frac32,
+\qquad
+[A_\mu]=1,
+\qquad
+[\mathcal L]=4.
+\]</span></p>
+<p>On peut ainsi considérer les lagrangiens suivants :</p>
+<p><span class="math display">\[
+\mathcal L_{\phi^4}
+=\frac12(\partial\phi)^2-\frac12m^2\phi^2
+-\frac{\lambda}{4!}\phi^4,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\mathcal L_{\mathrm Y}
+=\frac12(\partial\phi)^2-\frac12\mu^2\phi^2
++\overline\psi(i\not\!\partial-m)\psi
+-g\,\overline\psi\psi\phi.
+\]</span></p>
+<p>Dans les deux cas,</p>
+<p><span class="math display">\[
+[\lambda]=0,
+\qquad
+[g]=0.
+\]</span></p>
+<p>Les couplages sont sans dimension en quatre dimensions. Cela ne garantit pas que toute série perturbative converge, mais cela permet au moins d’espérer qu’un développement en petites puissances de <span class="math inline">\(\lambda\)</span> ou de <span class="math inline">\(g\)</span> soit utile.</p>
+<p>Le facteur <span class="math inline">\(1/4!\)</span> du couplage scalaire n’est pas une convention esthétique. Il compense les <span class="math inline">\(4!\)</span> façons de relier les quatre champs identiques du vertex à quatre lignes étiquetées. De même, le terme de Yukawa ne contient pas de factorielle, car les trois facteurs <span class="math inline">\(\overline\psi\)</span>, <span class="math inline">\(\psi\)</span> et <span class="math inline">\(\phi\)</span> sont distingués par leur nature.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ce que l'analyse dimensionnelle dit — et ne dit pas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Ce que l’analyse dimensionnelle dit — et ne dit pas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La dimension d’un couplage annonce la sensibilité probable d’une interaction aux échelles d’énergie et prépare la notion de renormalisabilité. Elle ne remplace ni les symétries ni un calcul d’amplitude. Deux opérateurs de même dimension peuvent produire des dépendances angulaires, des règles de sélection et des contenus en spin très différents.</p>
+</div>
+</div>
+</section>
+<section id="états-asymptotiques-et-matrice-s" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="états-asymptotiques-et-matrice-s"><span class="header-section-number">1.2</span> États asymptotiques et matrice <span class="math inline">\(S\)</span></h3>
+<p>Une expérience de diffusion ne prépare pas des particules éternellement superposées. Elle prépare des paquets d’ondes très éloignés dans le passé, les laisse se rencontrer dans une région finie, puis détecte des paquets à nouveau séparés dans le futur. Cette séparation motive l’hypothèse asymptotique :</p>
+<p><span class="math display">\[
+t\to-\infty:
+\quad \text{états entrants }|i\rangle_{\mathrm{in}},
+\]</span></p>
+<p><span class="math display">\[
+t\to+\infty:
+\quad \text{états sortants }|f\rangle_{\mathrm{out}}.
+\]</span></p>
+<p>À ces temps asymptotiques, les particules stables sont assez éloignées pour être décrites par des états de Fock libres, mais avec leurs masses physiques. L’interaction n’est pas réellement absente : chaque particule est entourée de ses fluctuations quantiques. L’affirmation utile est plus subtile : lorsque les paquets se séparent, les interactions responsables de la <strong>collision entre particules distinctes</strong> deviennent négligeables.</p>
+<p>Pour rendre cette identification précise, partons d’états de Fock libres <span class="math inline">\(|i\rangle\)</span> et <span class="math inline">\(|f\rangle\)</span>. Les opérateurs d’onde <span class="math inline">\(\Omega_-\)</span> et <span class="math inline">\(\Omega_+\)</span> les habillent respectivement dans le passé et dans le futur :</p>
+<p><span class="math display">\[
+|i,\mathrm{in}\rangle=\Omega_-|i\rangle,
+\qquad
+|f,\mathrm{out}\rangle=\Omega_+|f\rangle.
+\]</span></p>
+<p>L’amplitude de transition s’écrit alors</p>
+<p><span class="math display">\[
+\langle f,\mathrm{out}|i,\mathrm{in}\rangle
+=\langle f|\Omega_+^\dagger\Omega_-|i\rangle.
+\]</span></p>
+<p>On définit donc, sur l’espace de Fock asymptotique,</p>
+<p><span class="math display">\[
+\boxed{
+S\equiv\Omega_+^\dagger\Omega_-,
+\qquad
+S_{fi}=\langle f|S|i\rangle.
+}
+\]</span></p>
+<p>Cette convention fixe sans ambiguïté le sens de <span class="math inline">\(S\)</span> et évite de déplacer artificiellement une dague d’une formule à l’autre.</p>
+<p><strong>Matrice <span class="math inline">\(S\)</span>, matrice <span class="math inline">\(T\)</span> et amplitude invariante.</strong></p>
+<p>Si aucune interaction effective ne se produit, l’état final est identique à l’état initial. On sépare donc</p>
+<p><span class="math display">\[
+\boxed{S=\mathbf1+iT.}
+\]</span></p>
+<p>Le terme identité décrit la propagation sans diffusion ; <span class="math inline">\(T\)</span> contient les transitions non triviales. L’invariance par translation impose la conservation du quadrivecteur total. On factorise donc</p>
+<p><span class="math display">\[
+\boxed{
+\langle f|iT|i\rangle
+=i(2\pi)^4\delta^{(4)}(P_f-P_i)\,
+\mathcal M_{i\to f}.
+}
+\]</span></p>
+<p>La distribution delta est cinématique : elle serait présente quelle que soit la forme précise de l’interaction, tant que celle-ci est invariante par translation. Toute la dynamique non triviale est contenue dans <span class="math inline">\(\mathcal M\)</span>.</p>
+<p>Il faut soigneusement distinguer trois objets :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objet</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(S\)</span></td>
+<td>opérateur unitaire agissant sur l’espace des états asymptotiques</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T\)</span></td>
+<td>partie de <span class="math inline">\(S\)</span> qui diffère de l’identité</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal M\)</span></td>
+<td>amplitude invariante après extraction de la conservation globale de l’impulsion</td>
+</tr>
+</tbody>
+</table>
+<p>La probabilité ne s’obtient pas en lisant directement <span class="math inline">\(|\mathcal M|^2\)</span> : il faut encore tenir compte de la normalisation des états, du flux incident et de l’espace de phase final. Cette dernière étape sera construite plus loin.</p>
+<p><strong>Unitarité et conservation de la probabilité.</strong></p>
+<p>L’évolution quantique doit conserver les produits scalaires, donc</p>
+<p><span class="math display">\[
+S^\dagger S=SS^\dagger=\mathbf1.
+\]</span></p>
+<p>En insérant <span class="math inline">\(S=1+iT\)</span>,</p>
+<p><span class="math display">\[
+(1-iT^\dagger)(1+iT)=1,
+\]</span></p>
+<p>d’où</p>
+<p><span class="math display">\[
+i(T-T^\dagger)+T^\dagger T=0.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{-i(T-T^\dagger)=T^\dagger T.}
+\]</span></p>
+<p>Prenons l’élément diagonal dans un état initial <span class="math inline">\(|i\rangle\)</span> et insérons une base complète entre <span class="math inline">\(T^\dagger\)</span> et <span class="math inline">\(T\)</span> :</p>
+<p><span class="math display">\[
+2\,\operatorname{Im}\langle i|T|i\rangle
+=\sum_f\langle i|T^\dagger|f\rangle
+\langle f|T|i\rangle.
+\]</span></p>
+<p>Le membre de droite est une somme de probabilités de transition vers tous les états possibles. Après extraction des deltas et des facteurs cinématiques, cette relation conduit au <strong>théorème optique</strong> : la partie imaginaire de l’amplitude de diffusion vers l’avant est reliée à la section efficace totale.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Première contrainte sur les calculs perturbatifs">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Première contrainte sur les calculs perturbatifs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’unitarité relie des ordres différents de la perturbation. Une partie imaginaire apparaissant dans un diagramme de boucle n’est pas un détail mathématique : elle encode la possibilité que les lignes internes deviennent simultanément des états intermédiaires physiques. Cette idée sera centrale plus tard, mais elle montre déjà qu’une amplitude ne peut pas être choisie arbitrairement.</p>
+</div>
+</div>
+</section>
+<section id="la-représentation-dinteraction" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="la-représentation-dinteraction"><span class="header-section-number">1.3</span> La représentation d’interaction</h3>
+<p><strong>Une même physique, trois répartitions du temps.</strong></p>
+<p>Considérons un opérateur sans dépendance temporelle explicite et un hamiltonien complet</p>
+<p><span class="math display">\[
+H=H_0+H_{\mathrm{int}}.
+\]</span></p>
+<p>Les représentations usuelles distribuent l’évolution temporelle différemment :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Représentation</th>
+<th>États</th>
+<th>Opérateurs</th>
+<th>Générateur principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Schrödinger</td>
+<td>évoluent avec <span class="math inline">\(H\)</span></td>
+<td>fixes</td>
+<td><span class="math inline">\(H\)</span> agit sur les états</td>
+</tr>
+<tr class="even">
+<td>Heisenberg</td>
+<td>fixes</td>
+<td>évoluent avec <span class="math inline">\(H\)</span></td>
+<td><span class="math inline">\(H\)</span> agit sur les opérateurs</td>
+</tr>
+<tr class="odd">
+<td>interaction</td>
+<td>évoluent avec <span class="math inline">\(H_I(t)\)</span></td>
+<td>évoluent avec <span class="math inline">\(H_0\)</span></td>
+<td>séparation entre libre et interaction</td>
+</tr>
+</tbody>
+</table>
+<p>La représentation d’interaction est spécialement adaptée aux perturbations : les opérateurs de champ y sont des champs libres, dont on connaît déjà les développements en modes et les propagateurs, tandis que l’interaction fait évoluer les états.</p>
+<p><strong>De Schrödinger à la représentation d’interaction.</strong></p>
+<p>Fixons un temps de référence <span class="math inline">\(t_0\)</span>. Dans la représentation de Schrödinger,</p>
+<p><span class="math display">\[
+i\frac{d}{dt}|\Psi_S(t)\rangle=H|\Psi_S(t)\rangle.
+\]</span></p>
+<p>On définit l’état d’interaction par</p>
+<p><span class="math display">\[
+\boxed{
+|\Psi_I(t)\rangle
+=e^{+iH_0(t-t_0)}|\Psi_S(t)\rangle.
+}
+\]</span></p>
+<p>Dérivons cette relation au lieu d’annoncer le résultat :</p>
+<p><span class="math display">\[
+\begin{aligned}
+i\frac{d}{dt}|\Psi_I(t)\rangle
+={}&amp;-H_0e^{iH_0(t-t_0)}|\Psi_S(t)\rangle
++e^{iH_0(t-t_0)}H|\Psi_S(t)\rangle\\
+={}&amp;e^{iH_0(t-t_0)}(H-H_0)|\Psi_S(t)\rangle.
+\end{aligned}
+\]</span></p>
+<p>En réinsérant <span class="math inline">\(|\Psi_S\rangle=e^{-iH_0(t-t_0)}|\Psi_I\rangle\)</span>, on obtient</p>
+<p><span class="math display">\[
+\boxed{
+i\frac{d}{dt}|\Psi_I(t)\rangle
+=H_I(t)|\Psi_I(t)\rangle,
+}
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\boxed{
+H_I(t)
+=e^{+iH_0(t-t_0)}H_{\mathrm{int}}
+e^{-iH_0(t-t_0)}.
+}
+\]</span></p>
+<p>Ce hamiltonien dépend du temps même si <span class="math inline">\(H_{\mathrm{int}}\)</span> n’en dépendait pas explicitement en représentation de Schrödinger. Cette dépendance vient de l’évolution libre des champs qui le composent.</p>
+<p>Un opérateur devient quant à lui</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal O_I(t)
+=e^{+iH_0(t-t_0)}\mathcal O_S
+e^{-iH_0(t-t_0)}.
+}
+\]</span></p>
+<p>Il satisfait</p>
+<p><span class="math display">\[
+i\frac{d\mathcal O_I}{dt}
+=[\mathcal O_I,H_0]
+\]</span></p>
+<p>en l’absence de dépendance explicite. Pour le champ scalaire, cette équation implique exactement</p>
+<p><span class="math display">\[
+(\Box+m^2)\phi_I=0.
+\]</span></p>
+<p>Le champ <span class="math inline">\(\phi_I\)</span> est donc libre en tant qu’opérateur, même si les états sur lesquels il agit évoluent à cause de l’interaction.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Le mot « libre » change de place">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Le mot « libre » change de place
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans la représentation d’interaction, le champ satisfait l’équation libre, mais la théorie n’est pas devenue libre. L’information d’interaction a été transférée dans l’évolution des états par <span class="math inline">\(H_I(t)\)</span>. Une représentation change la répartition de la dépendance temporelle ; elle ne change aucune prédiction physique.</p>
+</div>
+</div>
+<p><strong>L’opérateur d’évolution d’interaction.</strong></p>
+<p>On définit <span class="math inline">\(U_I(t,t_0)\)</span> par</p>
+<p><span class="math display">\[
+|\Psi_I(t)\rangle
+=U_I(t,t_0)|\Psi_I(t_0)\rangle.
+\]</span></p>
+<p>Il vérifie</p>
+<p><span class="math display">\[
+\boxed{
+i\frac{\partial}{\partial t}U_I(t,t_0)
+=H_I(t)U_I(t,t_0),
+\qquad
+U_I(t_0,t_0)=\mathbf1.
+}
+\]</span></p>
+<p>Lorsque <span class="math inline">\(H\)</span> et <span class="math inline">\(H_0\)</span> ne dépendent pas explicitement du temps,</p>
+<p><span class="math display">\[
+U_I(t,t_0)
+=e^{+iH_0(t-t_0)}e^{-iH(t-t_0)}.
+\]</span></p>
+<p>Cette écriture permet de vérifier directement</p>
+<p><span class="math display">\[
+U_I(t_2,t_1)U_I(t_1,t_0)=U_I(t_2,t_0),
+\]</span></p>
+<p>et, puisque <span class="math inline">\(H_I\)</span> est hermitien,</p>
+<p><span class="math display">\[
+U_I^\dagger(t,t_0)=U_I(t_0,t)=U_I^{-1}(t,t_0).
+\]</span></p>
+<p><strong>Pourquoi une exponentielle ordinaire ne suffit pas.</strong></p>
+<p>Si <span class="math inline">\(H_I\)</span> était constant et commutait avec lui-même à tous les temps, on écrirait simplement</p>
+<p><span class="math display">\[
+U_I(t,t_0)=\exp[-iH_I(t-t_0)].
+\]</span></p>
+<p>Mais en général,</p>
+<p><span class="math display">\[
+[H_I(t_1),H_I(t_2)]\neq0.
+\]</span></p>
+<p>Une exponentielle naïve de <span class="math inline">\(\int dt\,H_I(t)\)</span> mélange alors les opérateurs dans un ordre incorrect. La solution doit se souvenir de l’ordre dans lequel les interactions agissent. C’est précisément le rôle de la série de Dyson.</p>
+</section>
+</section>
+<section id="de-la-série-de-dyson-au-théorème-de-wick" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="de-la-série-de-dyson-au-théorème-de-wick"><span class="header-section-number">2</span> De la série de Dyson au théorème de Wick</h2>
+<section id="la-série-de-dyson" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="la-série-de-dyson"><span class="header-section-number">2.1</span> La série de Dyson</h3>
+<p><strong>De l’équation différentielle à l’équation intégrale.</strong></p>
+<p>Intégrons l’équation d’évolution entre <span class="math inline">\(t_0\)</span> et <span class="math inline">\(t\)</span> :</p>
+<p><span class="math display">\[
+U_I(t,t_0)
+=\mathbf1-i\int_{t_0}^{t}dt_1\,
+H_I(t_1)U_I(t_1,t_0).
+\]</span></p>
+<p>Cette relation est exacte, mais <span class="math inline">\(U_I\)</span> apparaît encore dans le membre de droite. On l’insère donc récursivement. À la première itération,</p>
+<p><span class="math display">\[
+U_I(t,t_0)
+=1-i\int_{t_0}^{t}dt_1H_I(t_1)+O(H_I^2).
+\]</span></p>
+<p>À la seconde,</p>
+<p><span class="math display">\[
+\begin{aligned}
+U_I(t,t_0)
+={}&amp;1-i\int_{t_0}^{t}dt_1H_I(t_1)\\
+&amp;+(-i)^2
+\int_{t_0}^{t}dt_1
+\int_{t_0}^{t_1}dt_2\,
+H_I(t_1)H_I(t_2)+O(H_I^3).
+\end{aligned}
+\]</span></p>
+<p>Le domaine imbriqué impose <span class="math inline">\(t_1&gt;t_2\)</span>. Au troisième ordre apparaîtrait <span class="math inline">\(t_1&gt;t_2&gt;t_3\)</span>, et ainsi de suite :</p>
+<p><span class="math display">\[
+U_I(t,t_0)
+=\sum_{n=0}^{\infty}(-i)^n
+\int_{t_0}^{t}dt_1
+\int_{t_0}^{t_1}dt_2\cdots
+\int_{t_0}^{t_{n-1}}dt_n\,
+H_I(t_1)\cdots H_I(t_n).
+\]</span></p>
+<p><strong>L’ordre chronologique reconstruit le domaine d’intégration.</strong></p>
+<p>Pour deux opérateurs bosoniques, on définit</p>
+<p><span class="math display">\[
+T\{H_I(t_1)H_I(t_2)\}
+=\theta(t_1-t_2)H_I(t_1)H_I(t_2)
++\theta(t_2-t_1)H_I(t_2)H_I(t_1).
+\]</span></p>
+<p>Le carré <span class="math inline">\([t_0,t]^2\)</span> se décompose en deux triangles. Dans chacun, le produit chronologique remet l’opérateur le plus tardif à gauche. Les deux triangles donnent la même intégrale ordonnée, donc</p>
+<p><span class="math display">\[
+\int_{t_0}^{t}dt_1
+\int_{t_0}^{t_1}dt_2\,
+H_I(t_1)H_I(t_2)
+=\frac1{2!}
+\int_{t_0}^{t}dt_1dt_2\,
+T\{H_I(t_1)H_I(t_2)\}.
+\]</span></p>
+<p>À l’ordre <span class="math inline">\(n\)</span>, l’hypercube se partage en <span class="math inline">\(n!\)</span> régions correspondant aux <span class="math inline">\(n!\)</span> ordres temporels possibles. On obtient</p>
+<p><span class="math display">\[
+\boxed{
+U_I(t,t_0)
+=\sum_{n=0}^{\infty}
+\frac{(-i)^n}{n!}
+\int_{t_0}^{t}dt_1\cdots dt_n\,
+T\{H_I(t_1)\cdots H_I(t_n)\}.
+}
+\]</span></p>
+<p>La notation compacte est</p>
+<p><span class="math display">\[
+\boxed{
+U_I(t,t_0)
+=T\exp\left[-i\int_{t_0}^{t}dt'\,H_I(t')\right].
+}
+\]</span></p>
+<p>Le symbole <span class="math inline">\(T\)</span> agit sur chaque terme de la série de Taylor. Il ne faut pas lire cette formule comme une exponentielle ordinaire suivie d’un rangement a posteriori.</p>
+<p><strong>La matrice <span class="math inline">\(S\)</span> comme évolution de <span class="math inline">\(-\infty\)</span> à <span class="math inline">\(+\infty\)</span>.</strong></p>
+<p>La matrice de diffusion est la limite asymptotique de l’évolution d’interaction :</p>
+<p><span class="math display">\[
+\boxed{
+S=U_I(+\infty,-\infty)
+=T\exp\left[-i\int_{-\infty}^{+\infty}dt\,H_I(t)\right].
+}
+\]</span></p>
+<p>Pour une interaction sans dérivée, les moments conjugués ne sont pas modifiés et</p>
+<p><span class="math display">\[
+\mathcal H_{\mathrm{int}}=-\mathcal L_{\mathrm{int}}.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+\boxed{
+S=T\exp\left[i\int d^4x\,\mathcal L_{\mathrm{int}}(x)\right].
+}
+\]</span></p>
+<p>Par exemple, pour <span class="math inline">\(\mathcal L_{\mathrm{int}}=-\lambda\phi^4/4!\)</span>,</p>
+<p><span class="math display">\[
+S
+=T\exp\left[-i\frac{\lambda}{4!}
+\int d^4x\,\phi_I^4(x)\right].
+\]</span></p>
+<p>Ses premiers termes sont</p>
+<p><span class="math display">\[
+\begin{aligned}
+S={}&amp;1
+-i\frac{\lambda}{4!}\int d^4x\,\phi^4(x)\\
+&amp;+\frac1{2!}\left(-i\frac{\lambda}{4!}\right)^2
+\int d^4x\,d^4y\,
+T\{\phi^4(x)\phi^4(y)\}
++O(\lambda^3).
+\end{aligned}
+\]</span></p>
+<p>Chaque puissance de <span class="math inline">\(\lambda\)</span> compte donc le nombre de vertex d’interaction.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Quand $\mathcal H_{\mathrm{int}}\neq-\mathcal L_{\mathrm{int}}$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Quand <span class="math inline">\(\mathcal H_{\mathrm{int}}\neq-\mathcal L_{\mathrm{int}}\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’égalité est immédiate lorsque l’interaction ne contient aucune dérivée temporelle. Avec des interactions dérivées, les moments conjugués changent et la transformation de Legendre doit être refaite : remplacer aveuglément <span class="math inline">\(H_{\mathrm{int}}\)</span> par <span class="math inline">\(-L_{\mathrm{int}}\)</span> peut manquer des termes. Les tests <span class="math inline">\(\phi^4\)</span> et Yukawa évitent cette difficulté.</p>
+</div>
+</div>
+<p><strong>Branchement adiabatique et prescription <span class="math inline">\(i\epsilon\)</span>.</strong></p>
+<p>L’écriture <span class="math inline">\(S=U_I(+\infty,-\infty)\)</span> suppose que l’on peut relier les états libres au vide et aux particules physiques de la théorie complète. Une manière de contrôler cette limite consiste à remplacer formellement</p>
+<p><span class="math display">\[
+H_I(t)\longrightarrow e^{-\epsilon|t|}H_I(t),
+\qquad
+\epsilon&gt;0,
+\]</span></p>
+<p>puis à envoyer <span class="math inline">\(\epsilon\to0^+\)</span> à la fin. L’interaction est ainsi branchée et débranchée très lentement loin de la collision.</p>
+<p>Ce procédé projette aussi le vide libre <span class="math inline">\(|0\rangle\)</span> vers le vide exact <span class="math inline">\(|\Omega\rangle\)</span>, sous l’hypothèse que leur recouvrement n’est pas nul. Légèrement incliner les temps asymptotiques dans le plan complexe amortit les états excités :</p>
+<p><span class="math display">\[
+T\to\infty(1-i\epsilon).
+\]</span></p>
+<p>La même prescription réapparaît dans les propagateurs sous la forme</p>
+<p><span class="math display">\[
+\frac{i}{p^2-m^2+i\epsilon}.
+\]</span></p>
+<p>Le <span class="math inline">\(i\epsilon\)</span> n’est donc pas une correction ajoutée au hasard à un dénominateur singulier. Il encode le choix du vide et les conditions aux limites de Feynman compatibles avec la matrice <span class="math inline">\(S\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère historique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère historique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin des années 1940, Tomonaga, Schwinger et Feynman développèrent des formulations apparemment différentes de l’électrodynamique quantique. Dyson montra leur équivalence et donna à l’expansion covariante de la matrice <span class="math inline">\(S\)</span> sa forme systématique. Les diagrammes ne remplacent donc pas le formalisme opératoriel : ils en sont une organisation extrêmement efficace.</p>
+</div>
+</div>
+</section>
+<section id="produits-chronologiques-et-fonctions-de-corrélation" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="produits-chronologiques-et-fonctions-de-corrélation"><span class="header-section-number">2.2</span> Produits chronologiques et fonctions de corrélation</h3>
+<p><strong>Ordonner des opérateurs qui ne commutent pas.</strong></p>
+<p>Le produit chronologique place les opérateurs évalués au temps le plus tardif à gauche. Pour deux champs bosoniques,</p>
+<p><span class="math display">\[
+\boxed{
+T\{\phi(x)\phi(y)\}
+=\theta(x^0-y^0)\phi(x)\phi(y)
++\theta(y^0-x^0)\phi(y)\phi(x).
+}
+\]</span></p>
+<p>Pour deux champs fermioniques, l’échange nécessaire lorsque <span class="math inline">\(y^0&gt;x^0\)</span> produit un signe moins :</p>
+<p><span class="math display">\[
+\boxed{
+T\{\psi_\alpha(x)\overline\psi_\beta(y)\}
+=\theta(x^0-y^0)\psi_\alpha(x)\overline\psi_\beta(y)
+-\theta(y^0-x^0)\overline\psi_\beta(y)\psi_\alpha(x).
+}
+\]</span></p>
+<p>Pour <span class="math inline">\(n\)</span> opérateurs fermioniques, chaque permutation est multipliée par la signature de la permutation des facteurs fermioniques. Les champs bosoniques ne produisent pas ce signe.</p>
+<p>Cette règle n’est pas indépendante de Dyson. Elle est exactement ce qui permet de remplacer les domaines imbriqués</p>
+<p><span class="math display">\[
+t_1&gt;t_2&gt;\cdots&gt;t_n
+\]</span></p>
+<p>par une intégration symétrique sur tous les temps accompagnée du facteur <span class="math inline">\(1/n!\)</span>.</p>
+<p><strong>Corrélateurs de la théorie libre.</strong></p>
+<p>Le corrélateur chronologique à <span class="math inline">\(n\)</span> points du champ scalaire libre est</p>
+<p><span class="math display">\[
+G_0^{(n)}(x_1,\ldots,x_n)
+=\langle0|T\{\phi(x_1)\cdots\phi(x_n)\}|0\rangle.
+\]</span></p>
+<p>Pour <span class="math inline">\(n=2\)</span>, il s’agit précisément du propagateur de Feynman :</p>
+<p><span class="math display">\[
+G_0^{(2)}(x,y)=\Delta_F(x-y).
+\]</span></p>
+<p>Le mot <em>propagateur</em> ne doit pas faire oublier qu’il s’agit avant tout d’une fonction de corrélation. Il mesure l’amplitude avec laquelle une excitation créée par un champ en un point est absorbée par un autre champ, avec l’ordre temporel adapté à la théorie perturbative.</p>
+<p>Pour le champ de Dirac,</p>
+<p><span class="math display">\[
+S_{F,\alpha\beta}(x-y)
+=\langle0|T\{\psi_\alpha(x)\overline\psi_\beta(y)\}|0\rangle
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+S_F(p)=\frac{i(\not\! p+m)}{p^2-m^2+i\epsilon}.
+\]</span></p>
+<p>Les corrélateurs à plus de deux points contiennent l’information nécessaire pour décrire les interactions. Le problème est qu’un produit de nombreux champs libres représente une somme rapidement énorme de produits d’opérateurs de création et d’annihilation. Le théorème de Wick résout exactement ce problème combinatoire.</p>
+<p><strong>Corrélateurs de la théorie complète.</strong></p>
+<p>Notons <span class="math inline">\(|\Omega\rangle\)</span> le vrai vide de la théorie en interaction et <span class="math inline">\(\Phi_H\)</span> le champ de Heisenberg complet. On définit</p>
+<p><span class="math display">\[
+\boxed{
+G^{(n)}(x_1,\ldots,x_n)
+=\langle\Omega|
+T\{\Phi_H(x_1)\cdots\Phi_H(x_n)\}
+|\Omega\rangle.
+}
+\]</span></p>
+<p>Ce sont les fonctions de Green complètes. Elles contiennent davantage que des amplitudes de collision : elles décrivent la réponse de la théorie à des sources et donnent accès, selon le contexte, à des spectres, des susceptibilités ou des propriétés de transport.</p>
+<p>Pour les calculer, il faut les exprimer avec les champs libres de la représentation d’interaction. La projection adiabatique du vide et les propriétés de composition de <span class="math inline">\(U_I\)</span> conduisent à la formule de Gell-Mann–Low :</p>
+<p><span class="math display">\[
+\boxed{
+G^{(n)}(x_1,\ldots,x_n)
+=
+\frac{
+\langle0|T\left\{
+\phi_I(x_1)\cdots\phi_I(x_n)
+\exp\left[i\int d^4x\,\mathcal L_{\mathrm{int}}(x)\right]
+\right\}|0\rangle
+}{
+\langle0|T\left\{
+\exp\left[i\int d^4x\,\mathcal L_{\mathrm{int}}(x)\right]
+\right\}|0\rangle
+}.
+}
+\]</span></p>
+<p>La prescription adiabatique ou <span class="math inline">\(i\epsilon\)</span> est sous-entendue. Cette formule accomplit une étape conceptuelle décisive : elle transforme un corrélateur du vide exact, inconnu, en une série de valeurs moyennes dans le vide libre, calculables avec les opérateurs du chapitre précédent.</p>
+<p>Le dénominateur normalise le vide. Sans lui, le numérateur contiendrait des processus durant lesquels le vide crée puis réabsorbe des fluctuations sans connexion avec les points <span class="math inline">\(x_i\)</span>. On verra que ces <strong>bulles de vide</strong> s’annulent entre numérateur et dénominateur.</p>
+</section>
+<section id="ordre-normal-et-théorème-de-wick" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="ordre-normal-et-théorème-de-wick"><span class="header-section-number">2.3</span> Ordre normal et théorème de Wick</h3>
+<p><strong>Décomposition en fréquences.</strong></p>
+<p>Pour un scalaire réel libre, écrivons</p>
+<p><span class="math display">\[
+\phi(x)=\phi^+(x)+\phi^-(x),
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\phi^+(x)
+=\int\frac{d^3\mathbf p}{(2\pi)^3\sqrt{2E_{\mathbf p}}}
+a(\mathbf p)e^{-ipx},
+\]</span></p>
+<p><span class="math display">\[
+\phi^-(x)
+=\int\frac{d^3\mathbf p}{(2\pi)^3\sqrt{2E_{\mathbf p}}}
+a^\dagger(\mathbf p)e^{ipx}.
+\]</span></p>
+<p>La partie de fréquence positive <span class="math inline">\(\phi^+\)</span> contient les annihilateurs ; la partie de fréquence négative <span class="math inline">\(\phi^-\)</span> contient les créateurs. Cette terminologie porte sur le facteur temporel <span class="math inline">\(e^{\mp iEt}\)</span>, non sur le signe de l’énergie physique des quanta.</p>
+<p><strong>Ordre normal.</strong></p>
+<p>L’ordre normal, noté par deux-points, déplace tous les opérateurs de création vers la gauche des opérateurs d’annihilation :</p>
+<p><span class="math display">\[
+:a(\mathbf p)a^\dagger(\mathbf q):
+=a^\dagger(\mathbf q)a(\mathbf p).
+\]</span></p>
+<p>Pour des opérateurs fermioniques, chaque échange ajoute un signe moins :</p>
+<p><span class="math display">\[
+:b_r(\mathbf p)b_s^\dagger(\mathbf q):
+=-b_s^\dagger(\mathbf q)b_r(\mathbf p).
+\]</span></p>
+<p>Un produit normalement ordonné a une valeur moyenne nulle dans le vide libre dès qu’il contient au moins un opérateur :</p>
+<p><span class="math display">\[
+\langle0|:\mathcal O:|0\rangle=0.
+\]</span></p>
+<p>En effet, l’annihilateur le plus à droite tue <span class="math inline">\(|0\rangle\)</span>, ou le créateur le plus à gauche tue <span class="math inline">\(\langle0|\)</span>.</p>
+<p><strong>La contraction de deux champs.</strong></p>
+<p>On définit la contraction de deux champs libres <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> par la notation</p>
+<p><span class="math display">\[
+[AB]_{\mathrm c}\equiv T\{AB\}-:AB:.
+\]</span></p>
+<p>Pour le scalaire, montrons qu’il s’agit d’un nombre complexe et non d’un nouvel opérateur. Supposons d’abord <span class="math inline">\(x^0&gt;y^0\)</span>. Alors</p>
+<p><span class="math display">\[
+T\{\phi(x)\phi(y)\}=\phi(x)\phi(y).
+\]</span></p>
+<p>En développant en parties positives et négatives, le seul terme dont l’ordre change lors du passage à l’ordre normal est</p>
+<p><span class="math display">\[
+\phi^+(x)\phi^-(y)
+=\phi^-(y)\phi^+(x)
++[\phi^+(x),\phi^-(y)].
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+[\phi(x)\phi(y)]_{\mathrm c}
+=[\phi^+(x),\phi^-(y)].
+\]</span></p>
+<p>Or le commutateur des modes est un nombre multipliant l’identité :</p>
+<p><span class="math display">\[
+[\phi^+(x),\phi^-(y)]
+=\int\frac{d^3\mathbf p}{(2\pi)^3\,2E_{\mathbf p}}
+e^{-ip\cdot(x-y)}.
+\]</span></p>
+<p>Pour <span class="math inline">\(y^0&gt;x^0\)</span>, on obtient l’autre ordre temporel. Les deux cas se combinent en</p>
+<p><span class="math display">\[
+\boxed{
+[\phi(x)\phi(y)]_{\mathrm c}
+=\langle0|T\{\phi(x)\phi(y)\}|0\rangle
+=\Delta_F(x-y).
+}
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+T\{\phi(x)\phi(y)\}
+=:\phi(x)\phi(y):+\Delta_F(x-y).
+}
+\]</span></p>
+<p>Le propagateur apparaît donc parce qu’il mesure exactement la différence entre ordre chronologique et ordre normal.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pourquoi une ligne interne est une contraction">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pourquoi une ligne interne est une contraction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans un élément de matrice, les champs non contractés peuvent annihiler les particules initiales ou créer les particules finales. Une paire contractée, elle, crée puis réabsorbe une excitation intermédiaire et fournit un propagateur. La distinction graphique entre ligne externe et ligne interne traduit directement cette distinction algébrique.</p>
+</div>
+</div>
+<p><strong>Le théorème de Wick.</strong></p>
+<p>Pour des champs libres, le théorème de Wick affirme que tout produit chronologique est la somme de :</p>
+<ul>
+<li>son produit normalement ordonné ;</li>
+<li>tous les produits normalement ordonnés comportant une contraction ;</li>
+<li>tous ceux comportant deux contractions disjointes ;</li>
+<li>et ainsi de suite jusqu’aux contractions complètes.</li>
+</ul>
+<p>Pour quatre champs scalaires <span class="math inline">\(\phi_i\equiv\phi(x_i)\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+T\{\phi_1\phi_2\phi_3\phi_4\}
+={}&amp;:\phi_1\phi_2\phi_3\phi_4:\\
+&amp;+\Delta_{12}:\phi_3\phi_4:
++\Delta_{13}:\phi_2\phi_4:
++\Delta_{14}:\phi_2\phi_3:\\
+&amp;+\Delta_{23}:\phi_1\phi_4:
++\Delta_{24}:\phi_1\phi_3:
++\Delta_{34}:\phi_1\phi_2:\\
+&amp;+\Delta_{12}\Delta_{34}
++\Delta_{13}\Delta_{24}
++\Delta_{14}\Delta_{23},
+\end{aligned}
+\]</span></p>
+<p>où <span class="math inline">\(\Delta_{ij}=\Delta_F(x_i-x_j)\)</span>. En prenant la valeur moyenne dans le vide, tous les termes comportant encore un produit normalement ordonné disparaissent. Il reste</p>
+<p><span class="math display">\[
+\boxed{
+\langle0|T\{\phi_1\phi_2\phi_3\phi_4\}|0\rangle
+=\Delta_{12}\Delta_{34}
++\Delta_{13}\Delta_{24}
++\Delta_{14}\Delta_{23}.
+}
+\]</span></p>
+<p>Les trois termes sont exactement les trois façons d’apparier quatre objets. Pour <span class="math inline">\(2n\)</span> champs scalaires, le nombre de contractions complètes est</p>
+<p><span class="math display">\[
+(2n-1)!!=\frac{(2n)!}{2^n n!}.
+\]</span></p>
+<p>Les corrélateurs impairs du vide libre sont nuls, car il est impossible d’apparier un nombre impair de champs.</p>
+<p><strong>Pourquoi le théorème fonctionne.</strong></p>
+<p>L’idée de la démonstration est simple, même si sa combinatoire devient longue. On déplace successivement les parties annihilatrices vers la droite afin d’obtenir l’ordre normal. Chaque fois qu’une partie annihilatrice franchit une partie créatrice, on utilise</p>
+<p><span class="math display">\[
+AB=\pm BA+[A,B]_{\mp},
+\]</span></p>
+<p>où le signe et le crochet sont choisis selon la statistique. Le premier terme poursuit le réordonnement ; le second est précisément une contraction. En répétant l’opération, toutes les possibilités de contractions disjointes sont produites une fois.</p>
+<p>Le théorème dépend crucialement du caractère <strong>libre</strong> des champs employés : leurs commutateurs ou anticommutateurs sont des distributions numériques. Pour des champs de Heisenberg pleinement interagissants, la même manipulation ne se ferme pas de cette façon. C’est pourquoi la représentation d’interaction était indispensable.</p>
+<p><strong>Signes fermioniques.</strong></p>
+<p>Pour les champs de Dirac, une contraction non nulle est</p>
+<p><span class="math display">\[
+\boxed{
+[\psi_\alpha(x)\overline\psi_\beta(y)]_{\mathrm c}
+=S_{F,\alpha\beta}(x-y).
+}
+\]</span></p>
+<p>En revanche,</p>
+<p><span class="math display">\[
+[\psi(x)\psi(y)]_{\mathrm c}=0,
+\qquad
+[\overline\psi(x)\overline\psi(y)]_{\mathrm c}=0
+\]</span></p>
+<p>pour un champ de Dirac chargé. Chaque terme de Wick reçoit le signe de la permutation nécessaire pour rapprocher les champs contractés et ordonner les facteurs fermioniques restants.</p>
+<p>Deux conséquences pratiques en découlent :</p>
+<ol type="1">
+<li>l’échange de deux fermions externes identiques change le signe de l’amplitude ;</li>
+<li>chaque boucle fermionique fermée apporte un facteur supplémentaire <span class="math inline">\(-1\)</span>.</li>
+</ol>
+<p>Le second signe peut être compris en « ouvrant » mentalement la boucle : refermer la chaîne de contractions nécessite une permutation cyclique des opérateurs de Grassmann, dont le signe subsiste dans la trace sur les indices spinoriels.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Les signes ne se lisent pas uniquement sur la géométrie">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Les signes ne se lisent pas uniquement sur la géométrie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Deux diagrammes ayant la même forme non orientée peuvent différer par un signe fermionique. Il faut conserver un ordre de référence pour les opérateurs ou suivre continûment les flèches des lignes de fermions. Le dessin organise l’algèbre ; il ne dispense pas de ses règles.</p>
+</div>
+</div>
+<p><strong>Exemple combinatoire : six champs scalaires.</strong></p>
+<p>Considérons</p>
+<p><span class="math display">\[
+\langle0|T\{\phi(x_1)\phi(x_2)\phi^4(z)\}|0\rangle.
+\]</span></p>
+<p>Il contient six champs. Pour obtenir un terme où <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span> sont chacun reliés au vertex <span class="math inline">\(z\)</span>, on choisit d’abord l’un des quatre champs en <span class="math inline">\(z\)</span> pour contracter <span class="math inline">\(\phi(x_1)\)</span>, puis l’un des trois restants pour <span class="math inline">\(\phi(x_2)\)</span>. Les deux derniers champs en <span class="math inline">\(z\)</span> se contractent entre eux. Il existe donc</p>
+<p><span class="math display">\[
+4\times3=12
+\]</span></p>
+<p>contractions de même valeur. Le facteur du vertex est <span class="math inline">\(-i\lambda/4!\)</span>, donc</p>
+<p><span class="math display">\[
+\frac{-i\lambda}{4!}\times12
+=\frac{-i\lambda}{2}.
+\]</span></p>
+<p>La contribution correspondante au corrélateur à deux points est</p>
+<p><span class="math display">\[
+\boxed{
+G^{(2)}(x_1,x_2)\supset
+\frac{-i\lambda}{2}
+\int d^4z\,
+\Delta_F(x_1-z)\Delta_F(0)
+\Delta_F(z-x_2).
+}
+\]</span></p>
+<p>Le facteur <span class="math inline">\(1/2\)</span> est le facteur de symétrie du diagramme en « têtard ». Il n’a pas été deviné sur le dessin : il vient du rapport entre les contractions équivalentes et le <span class="math inline">\(4!\)</span> du lagrangien.</p>
+<p>Cette intégrale contient <span class="math inline">\(\Delta_F(0)\)</span>, donc une intégrale sur une impulsion interne non contrainte. Elle est divergente en quatre dimensions. Nous la conserverons formellement : son traitement appartient au chapitre consacré à la régularisation et à la renormalisation.</p>
+</section>
+</section>
+<section id="des-contractions-aux-règles-de-feynman" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="des-contractions-aux-règles-de-feynman"><span class="header-section-number">3</span> Des contractions aux règles de Feynman</h2>
+<section id="lire-un-diagramme-comme-un-terme-algébrique" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="lire-un-diagramme-comme-un-terme-algébrique"><span class="header-section-number">3.1</span> Lire un diagramme comme un terme algébrique</h3>
+<p><strong>Un diagramme est un terme du développement.</strong></p>
+<p>Un diagramme de Feynman représente une classe de contractions de Wick donnant la même expression analytique. Son dictionnaire élémentaire est :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément algébrique</th>
+<th>Élément graphique</th>
+<th>Signification calculatoire</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>champ non contracté</td>
+<td>ligne externe</td>
+<td>état préparé ou détecté</td>
+</tr>
+<tr class="even">
+<td>contraction de deux champs</td>
+<td>ligne interne</td>
+<td>propagateur</td>
+</tr>
+<tr class="odd">
+<td>insertion de <span class="math inline">\(\mathcal L_{\mathrm{int}}(z)\)</span></td>
+<td>vertex</td>
+<td>interaction locale intégrée sur <span class="math inline">\(z\)</span></td>
+</tr>
+<tr class="even">
+<td>impulsion non fixée</td>
+<td>boucle</td>
+<td>intégrale <span class="math inline">\(d^4k/(2\pi)^4\)</span></td>
+</tr>
+<tr class="odd">
+<td>contractions équivalentes</td>
+<td>automorphismes du graphe</td>
+<td>facteur de symétrie</td>
+</tr>
+</tbody>
+</table>
+<p>Le diagramme n’est pas une photographie de particules suivant des trajectoires définies. Les positions des vertex sont intégrées sur tout l’espace-temps et les impulsions internes sont intégrées sur toutes les valeurs. Le dessin code une contribution à une amplitude.</p>
+<p><strong>Règles en espace des positions.</strong></p>
+<p>Dans une théorie <span class="math inline">\(\phi^4\)</span>, un corrélateur se construit perturbativement ainsi :</p>
+<ol type="1">
+<li>placer les points externes <span class="math inline">\(x_1,\ldots,x_n\)</span> ;</li>
+<li>introduire <span class="math inline">\(V\)</span> vertex d’interaction aux positions <span class="math inline">\(z_1,\ldots,z_V\)</span> ;</li>
+<li>relier les champs par toutes les contractions compatibles ;</li>
+<li>associer une fonction <span class="math inline">\(\Delta_F(x-y)\)</span> à chaque ligne reliant <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span> ;</li>
+<li>associer à chaque vertex</li>
+</ol>
+<p><span class="math display">\[
+(-i\lambda)\int d^4z ;
+\]</span></p>
+<ol start="6" type="1">
+<li>multiplier par l’inverse du facteur de symétrie du graphe ;</li>
+<li>sommer les graphes distincts à l’ordre considéré.</li>
+</ol>
+<p>Le facteur <span class="math inline">\(-i\lambda\)</span> rassemble le <span class="math inline">\(i\)</span> de Dyson, le signe de <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span> et les <span class="math inline">\(4!\)</span> contractions locales compensant le <span class="math inline">\(1/4!\)</span>.</p>
+<p><strong>Bulles de vide et normalisation.</strong></p>
+<p>Une bulle de vide est une composante d’un diagramme qui n’est reliée à aucun point externe. Ces graphes apparaissent dans le numérateur de Gell-Mann–Low, mais aussi dans</p>
+<p><span class="math display">\[
+\langle0|S|0\rangle
+=\left\langle0\left|T\exp\left[i\int d^4x\,
+\mathcal L_{\mathrm{int}}\right]\right|0\right\rangle.
+\]</span></p>
+<p>La combinatoire exponentielle des composantes déconnectées donne schématiquement</p>
+<p><span class="math display">\[
+\langle0|S|0\rangle
+=\exp\left(\sum\text{bulles de vide connexes}\right).
+\]</span></p>
+<p>Le même facteur multiplie le numérateur de chaque corrélateur. Le rapport de Gell-Mann–Low l’annule exactement. On peut donc omettre les composantes qui ne touchent aucun point externe.</p>
+<p>Il faut distinguer cette annulation de la connexité complète. Un corrélateur à quatre points peut encore se factoriser en deux propagateurs reliant <span class="math inline">\((x_1,x_2)\)</span> et <span class="math inline">\((x_3,x_4)\)</span> : aucune composante n’est une bulle de vide, mais le graphe n’est pas connecté entre les quatre points. La partie <strong>connexe</strong> <span class="math inline">\(G_c^{(n)}\)</span> ne garde que les graphes dans lesquels tous les points externes appartiennent à une même composante.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Trois suppressions différentes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Trois suppressions différentes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On rencontre souvent trois opérations qu’il ne faut pas confondre :</p>
+<ul>
+<li>diviser par <span class="math inline">\(\langle0|S|0\rangle\)</span> supprime les bulles de vide ;</li>
+<li>prendre le corrélateur connexe supprime les produits de sous-corrélateurs indépendants ;</li>
+<li>appliquer LSZ ampute les propagateurs attachés aux lignes externes et place leurs impulsions sur la couche de masse.</li>
+</ul>
+</div>
+</div>
+<p><strong>Arbres, boucles et ordre perturbatif.</strong></p>
+<p>Un graphe connecté comportant <span class="math inline">\(I\)</span> lignes internes et <span class="math inline">\(V\)</span> vertex possède</p>
+<p><span class="math display">\[
+\boxed{L=I-V+1}
+\]</span></p>
+<p>boucles indépendantes. Cette relation peut se comprendre en choisissant un arbre couvrant : relier <span class="math inline">\(V\)</span> vertex sans cycle demande <span class="math inline">\(V-1\)</span> lignes. Chaque ligne interne supplémentaire crée alors une boucle indépendante,</p>
+<p><span class="math display">\[
+L=I-(V-1).
+\]</span></p>
+<p>En espace des impulsions, chaque boucle correspond à une impulsion quadridimensionnelle non fixée par les deltas de conservation, donc à une intégrale</p>
+<p><span class="math display">\[
+\int\frac{d^4k}{(2\pi)^4}.
+\]</span></p>
+<p>Un diagramme en arbre a <span class="math inline">\(L=0\)</span>. Il représente le premier niveau, souvent qualifié de « classique », de l’expansion perturbative. Une boucle est une correction quantique. Cela ne signifie pas qu’un arbre décrit des trajectoires classiques : il reste une amplitude quantique et les différentes topologies interfèrent.</p>
+<p><strong>Lignes internes et particules virtuelles.</strong></p>
+<p>Une particule externe est un état asymptotique et satisfait</p>
+<p><span class="math display">\[
+p^2=m^2,
+\qquad
+p^0&gt;0.
+\]</span></p>
+<p>Pour une ligne interne, le quadrivecteur <span class="math inline">\(k\)</span> est intégré :</p>
+<p><span class="math display">\[
+\int\frac{d^4k}{(2\pi)^4}
+\frac{i}{k^2-m^2+i\epsilon}.
+\]</span></p>
+<p>Il n’est généralement pas sur la couche de masse. Dire qu’une particule interne est <em>virtuelle</em> signifie seulement qu’elle correspond à un propagateur interne hors couche dans un terme perturbatif. On ne peut ni l’isoler ni la détecter, et sa « durée de vie » ne se déduit pas d’une violation temporaire de la conservation de l’énergie : l’énergie-impulsion est exactement conservée à chaque vertex après transformation de Fourier.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="À éviter : l'argument naïf énergie–temps">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>À éviter : l’argument naïf énergie–temps
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La relation d’incertitude énergie–temps n’autorise pas à emprunter une énergie <span class="math inline">\(\Delta E\)</span> pendant un temps <span class="math inline">\(\Delta t\)</span>. Dans les diagrammes, les lignes internes peuvent être hors couche parce qu’elles ne représentent pas des états asymptotiques, non parce que la conservation de l’énergie serait momentanément suspendue.</p>
+</div>
+</div>
+</section>
+<section id="les-règles-de-feynman-dans-lespace-des-impulsions" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="les-règles-de-feynman-dans-lespace-des-impulsions"><span class="header-section-number">3.2</span> Les règles de Feynman dans l’espace des impulsions</h3>
+<p><strong>Transformer une ligne.</strong></p>
+<p>Écrivons chaque propagateur scalaire sous forme de Fourier :</p>
+<p><span class="math display">\[
+\Delta_F(x-y)
+=\int\frac{d^4p}{(2\pi)^4}
+e^{-ip\cdot(x-y)}\widetilde\Delta_F(p),
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\boxed{
+\widetilde\Delta_F(p)=\frac{i}{p^2-m^2+i\epsilon}.
+}
+\]</span></p>
+<p>Une ligne interne porte donc un quadrivecteur orienté arbitrairement et apporte ce facteur. Pour un scalaire réel, changer <span class="math inline">\(p\to-p\)</span> ne change rien puisque le propagateur dépend de <span class="math inline">\(p^2\)</span>.</p>
+<p>Pour un fermion,</p>
+<p><span class="math display">\[
+\boxed{
+\widetilde S_F(p)
+=\frac{i(\not\! p+m)}{p^2-m^2+i\epsilon}
+=\frac{i}{\not\! p-m+i\epsilon}.
+}
+\]</span></p>
+<p>La seconde écriture est symbolique : la prescription précise est celle du dénominateur quadratique de la première expression. Contrairement au propagateur scalaire, le numérateur dépend de l’orientation choisie pour <span class="math inline">\(p\)</span>. Cette orientation est liée au flux de nombre fermionique indiqué par les flèches.</p>
+<p><strong>Transformer un vertex.</strong></p>
+<p>Considérons un vertex scalaire en <span class="math inline">\(z\)</span> relié à quatre lignes de moments entrants <span class="math inline">\(k_1,k_2,k_3,k_4\)</span>. Les exponentielles provenant des propagateurs produisent</p>
+<p><span class="math display">\[
+\int d^4z\,
+e^{-i(k_1+k_2+k_3+k_4)\cdot z}
+=(2\pi)^4
+\delta^{(4)}(k_1+k_2+k_3+k_4).
+\]</span></p>
+<p>L’intégration sur la position du vertex impose donc</p>
+<p><span class="math display">\[
+\boxed{k_1+k_2+k_3+k_4=0.}
+\]</span></p>
+<p>La conservation de l’énergie-impulsion à chaque vertex n’est pas une règle graphique supplémentaire. Elle est la transformée de Fourier de la localité et, plus profondément, une conséquence de l’invariance par translation.</p>
+<p>Pour <span class="math inline">\(V\)</span> vertex, on obtient <span class="math inline">\(V\)</span> deltas. L’un d’eux demeure sous la forme de la conservation globale</p>
+<p><span class="math display">\[
+(2\pi)^4\delta^{(4)}(P_f-P_i).
+\]</span></p>
+<p>Les <span class="math inline">\(V-1\)</span> autres éliminent autant d’intégrales internes. Le nombre d’impulsions indépendantes restant à intégrer est précisément le nombre de boucles <span class="math inline">\(L=I-V+1\)</span>.</p>
+<p><strong>Algorithme général.</strong></p>
+<p>Pour calculer <span class="math inline">\(i\mathcal M\)</span> dans une théorie scalaire :</p>
+<ol type="1">
+<li>fixer les particules externes et l’ordre du couplage ;</li>
+<li>dessiner tous les graphes <strong>connexes et amputés</strong> compatibles ;</li>
+<li>attribuer un quadrivecteur à chaque ligne interne ;</li>
+<li>imposer la conservation à chaque vertex ;</li>
+<li>écrire un propagateur pour chaque ligne interne ;</li>
+<li>écrire le facteur de vertex fourni par <span class="math inline">\(i\mathcal L_{\mathrm{int}}\)</span> ;</li>
+<li>intégrer chaque impulsion de boucle indépendante avec <span class="math inline">\(d^4k/(2\pi)^4\)</span> ;</li>
+<li>diviser par le facteur de symétrie ;</li>
+<li>sommer les graphes, qui sont des amplitudes et peuvent interférer.</li>
+</ol>
+<p>Le delta global n’est généralement pas inclus dans <span class="math inline">\(i\mathcal M\)</span>, puisqu’il a déjà été extrait dans la définition de l’amplitude.</p>
+<p><strong>Compter l’ordre en couplage et les puissances de <span class="math inline">\(\hbar\)</span>.</strong></p>
+<p>Dans <span class="math inline">\(\phi^4\)</span>, un graphe comportant <span class="math inline">\(V\)</span> vertex est proportionnel à <span class="math inline">\(\lambda^V\)</span>. Dans la théorie de Yukawa, il est proportionnel à <span class="math inline">\(g^V\)</span>. À couplage faible, on cherche donc d’abord le plus petit nombre de vertex compatible avec les lignes externes.</p>
+<p>La classification par boucles et la classification par puissance du couplage sont liées, mais ne sont pas identiques. Pour un même processus, des graphes différents au même ordre en couplage peuvent avoir des nombres de boucles différents si des contre-termes ou plusieurs types de vertex sont présents. Dans les exemples simples du présent chapitre, l’ordre des boucles fournira néanmoins une bonne hiérarchie des corrections quantiques.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Convention : tous les moments entrants">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Convention : tous les moments entrants
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une convention très efficace consiste à orienter <strong>tous</strong> les quadrivecteurs externes vers le vertex ou le graphe. Une particule physique sortante d’impulsion <span class="math inline">\(p'\)</span> est alors représentée dans les deltas par le moment entrant <span class="math inline">\(-p'\)</span>. La conservation globale devient simplement</p>
+<p><span class="math display">\[
+\sum_{i=1}^n k_i=0.
+\]</span></p>
+<p>Cette convention facilite le croisement entre processus, à condition de ne pas confondre le moment graphique <span class="math inline">\(-p'\)</span> avec une énergie physique négative.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="deux-tests-perturbatifs" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="deux-tests-perturbatifs"><span class="header-section-number">4</span> Deux tests perturbatifs</h2>
+<section id="premier-test-la-théorie-phi4" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="premier-test-la-théorie-phi4"><span class="header-section-number">4.1</span> Premier test : la théorie <span class="math inline">\(\phi^4\)</span></h3>
+<p><strong>Action et symétrie.</strong></p>
+<p>Considérons un champ scalaire réel,</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal L
+=\frac12\partial_\mu\phi\partial^\mu\phi
+-\frac12m^2\phi^2
+-\frac{\lambda}{4!}\phi^4.
+}
+\]</span></p>
+<p>La théorie est invariante sous la symétrie discrète</p>
+<p><span class="math display">\[
+\phi\longrightarrow-\phi.
+\]</span></p>
+<p>Tout corrélateur contenant un nombre impair de champs s’annule si le vide respecte cette symétrie. Au niveau perturbatif autour de <span class="math inline">\(\phi=0\)</span>, chaque vertex possède quatre lignes et le nombre total de lignes externes d’un graphe est pair.</p>
+<p>Pour <span class="math inline">\(\lambda&gt;0\)</span>, le potentiel</p>
+<p><span class="math display">\[
+V(\phi)=\frac12m^2\phi^2+\frac{\lambda}{4!}\phi^4
+\]</span></p>
+<p>est borné inférieurement lorsque <span class="math inline">\(m^2\geq0\)</span>. Nous resterons dans ce régime simple ; la brisure spontanée de symétrie sera étudiée plus loin dans le parcours.</p>
+<p><strong>Fonction à quatre points au premier ordre.</strong></p>
+<p>La première contribution interactive au corrélateur à quatre points est</p>
+<p><span class="math display">\[
+G^{(4)}(x_1,x_2,x_3,x_4)
+\supset
+\frac{-i\lambda}{4!}
+\int d^4z\,
+\langle0|T\{\phi_1\phi_2\phi_3\phi_4\phi^4(z)\}|0\rangle.
+\]</span></p>
+<p>Nous cherchons la partie connexe en arbre. Chacun des quatre champs externes doit être contracté avec un champ situé au vertex <span class="math inline">\(z\)</span>. Le premier champ externe dispose de quatre choix, le deuxième de trois, le troisième de deux et le dernier d’un seul :</p>
+<p><span class="math display">\[
+N_{\mathrm{contractions}}=4\times3\times2\times1=4!.
+\]</span></p>
+<p>Toutes ces contractions ont la même valeur,</p>
+<p><span class="math display">\[
+\Delta_F(x_1-z)
+\Delta_F(x_2-z)
+\Delta_F(x_3-z)
+\Delta_F(x_4-z).
+\]</span></p>
+<p>Le <span class="math inline">\(4!\)</span> combinatoire annule exactement celui du lagrangien. On obtient</p>
+<p><span class="math display">\[
+\boxed{
+G_{\mathrm{arbre}}^{(4)}(x_1,x_2,x_3,x_4)
+=-i\lambda\int d^4z
+\prod_{j=1}^{4}\Delta_F(x_j-z).
+}
+\]</span></p>
+<p>Cette équation est la dérivation complète du facteur de vertex <span class="math inline">\(-i\lambda\)</span>.</p>
+<p><strong>Passage en espace des impulsions.</strong></p>
+<p>Insérons quatre représentations de Fourier :</p>
+<p><span class="math display">\[
+\Delta_F(x_j-z)
+=\int\frac{d^4p_j}{(2\pi)^4}
+\frac{i\,e^{-ip_j\cdot(x_j-z)}}{p_j^2-m^2+i\epsilon}.
+\]</span></p>
+<p>L’intégrale sur <span class="math inline">\(z\)</span> donne</p>
+<p><span class="math display">\[
+(2\pi)^4\delta^{(4)}(p_1+p_2+p_3+p_4).
+\]</span></p>
+<p>La transformée du corrélateur est donc</p>
+<p><span class="math display">\[
+\begin{aligned}
+\widetilde G_{\mathrm{arbre}}^{(4)}(p_1,p_2,p_3,p_4)
+={}&amp;(2\pi)^4\delta^{(4)}\!\left(\sum_{j=1}^4p_j\right)\\
+&amp;\times(-i\lambda)
+\prod_{j=1}^{4}
+\frac{i}{p_j^2-m^2+i\epsilon}.
+\end{aligned}
+\]</span></p>
+<p>Les quatre propagateurs visibles sont attachés aux points externes. La réduction LSZ les supprimera et imposera <span class="math inline">\(p_j^2=m^2\)</span>. La partie restante est</p>
+<p><span class="math display">\[
+\boxed{i\mathcal M(\phi\phi\to\phi\phi)=-i\lambda,}
+\]</span></p>
+<p>soit</p>
+<p><span class="math display">\[
+\boxed{\mathcal M=-\lambda.}
+\]</span></p>
+<p>À cet ordre, l’amplitude ne dépend pas de l’angle : le vertex est ponctuel et ne contient aucune dérivée.</p>
+<p><strong>Variables de Mandelstam.</strong></p>
+<p>Pour un processus</p>
+<p><span class="math display">\[
+1(p_1)+2(p_2)\longrightarrow3(p_3)+4(p_4),
+\]</span></p>
+<p>on définit</p>
+<p><span class="math display">\[
+\boxed{
+s=(p_1+p_2)^2,
+\qquad
+t=(p_1-p_3)^2,
+\qquad
+u=(p_1-p_4)^2.
+}
+\]</span></p>
+<p>En utilisant <span class="math inline">\(p_1+p_2=p_3+p_4\)</span> et <span class="math inline">\(p_i^2=m_i^2\)</span>, développons leur somme :</p>
+<p><span class="math display">\[
+\begin{aligned}
+s+t+u
+={}&amp;(p_1+p_2)^2+(p_1-p_3)^2+(p_1-p_4)^2\\
+={}&amp;3p_1^2+p_2^2+p_3^2+p_4^2
++2p_1\cdot(p_2-p_3-p_4).
+\end{aligned}
+\]</span></p>
+<p>Or <span class="math inline">\(p_2-p_3-p_4=-p_1\)</span>, donc</p>
+<p><span class="math display">\[
+\boxed{s+t+u=m_1^2+m_2^2+m_3^2+m_4^2.}
+\]</span></p>
+<p>Pour quatre scalaires identiques de masse <span class="math inline">\(m\)</span>,</p>
+<p><span class="math display">\[
+s+t+u=4m^2.
+\]</span></p>
+<p><span class="math inline">\(s\)</span> mesure le carré de l’énergie totale dans le centre de masse. Les variables <span class="math inline">\(t\)</span> et <span class="math inline">\(u\)</span> décrivent les transferts d’impulsion associés aux deux appariements possibles des particules finales.</p>
+<p><strong>Une boucle à l’ordre <span class="math inline">\(\lambda^2\)</span>.</strong></p>
+<p>À l’ordre suivant, deux vertex <span class="math inline">\(\phi^4\)</span> peuvent former un diagramme à une boucle contribuant à la diffusion <span class="math inline">\(2\to2\)</span>. Dans le canal <span class="math inline">\(s\)</span>, une attribution cohérente des impulsions donne</p>
+<p><span class="math display">\[
+\boxed{
+i\mathcal M_s^{(1)}
+=\frac{(-i\lambda)^2}{2}
+\int\frac{d^4k}{(2\pi)^4}
+\frac{i}{k^2-m^2+i\epsilon}
+\frac{i}{(k+p_1+p_2)^2-m^2+i\epsilon}.
+}
+\]</span></p>
+<p>Le facteur <span class="math inline">\(1/2\)</span> vient de l’échange des deux lignes internes identiques, qui laisse le graphe inchangé. Les canaux <span class="math inline">\(t\)</span> et <span class="math inline">\(u\)</span> s’obtiennent en remplaçant l’impulsion externe injectée dans la boucle :</p>
+<p><span class="math display">\[
+p_1+p_2
+\longrightarrow
+p_1-p_3
+\quad\text{ou}\quad
+p_1-p_4.
+\]</span></p>
+<p>L’amplitude à une boucle est la somme</p>
+<p><span class="math display">\[
+i\mathcal M^{(1)}
+=i\mathcal M_s^{(1)}
++i\mathcal M_t^{(1)}
++i\mathcal M_u^{(1)}.
+\]</span></p>
+<p>Pour <span class="math inline">\(|k|\to\infty\)</span>, l’intégrande se comporte comme</p>
+<p><span class="math display">\[
+d^4k\,\frac1{k^2}\frac1{k^2}
+\sim\frac{dk}{k}.
+\]</span></p>
+<p>L’intégrale est logarithmiquement divergente. Nous ne tenterons pas de lui attribuer ici une valeur : il faudra d’abord la régulariser puis absorber sa dépendance non physique dans les paramètres renormalisés. Le chapitre 8 sera consacré à cette opération.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Ce que la boucle nous apprend déjà">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Ce que la boucle nous apprend déjà
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Même sans l’évaluer, on peut lire trois informations :</p>
+<ul>
+<li>elle est d’ordre <span class="math inline">\(\lambda^2\)</span> ;</li>
+<li>elle dépend des invariants <span class="math inline">\(s\)</span>, <span class="math inline">\(t\)</span> ou <span class="math inline">\(u\)</span> plutôt que des composantes séparées des impulsions ;</li>
+<li>elle contient une divergence ultraviolette, signalant que les paramètres du lagrangien doivent être reliés avec soin aux masses et couplages mesurés.</li>
+</ul>
+</div>
+</div>
+<p><strong>Interlude : pourquoi <span class="math inline">\(\phi^3\)</span> montre mieux un échange.</strong></p>
+<p>La théorie <span class="math inline">\(\phi^4\)</span> donne au plus bas ordre un vertex de contact sans ligne interne. Pour voir naître un propagateur d’échange en arbre, considérons temporairement</p>
+<p><span class="math display">\[
+\mathcal L_{\mathrm{int}}=-\frac{\kappa}{3!}\phi^3.
+\]</span></p>
+<p>Deux vertex sont nécessaires pour une diffusion <span class="math inline">\(2\to2\)</span>. Les trois appariements donnent</p>
+<p><span class="math display">\[
+\boxed{
+i\mathcal M
+=(-i\kappa)^2
+\left[
+\frac{i}{s-m^2+i\epsilon}
++\frac{i}{t-m^2+i\epsilon}
++\frac{i}{u-m^2+i\epsilon}
+\right].
+}
+\]</span></p>
+<p>Chaque dénominateur correspond à une impulsion interne différente. Un pôle en <span class="math inline">\(s=m^2\)</span>, par exemple, révèle l’état à une particule que le champ peut propager. Il ne devient une résonance physique que si la région cinématique et les nombres quantiques permettent d’atteindre ce pôle. Dans ce jouet précis, avec quatre particules externes identiques de masse <span class="math inline">\(m&gt;0\)</span>, la région physique vérifie <span class="math inline">\(s\geq4m^2\)</span> : le pôle <span class="math inline">\(s=m^2\)</span> n’est donc pas accessible dans ce canal.</p>
+<p>Une interaction cubique réelle seule rend le potentiel non borné d’un côté. Nous l’utilisons ici comme test combinatoire ou comme terme d’une théorie effective stabilisée par d’autres interactions, non comme modèle fondamental complet du vide.</p>
+<p><strong>Facteurs de symétrie.</strong></p>
+<p>Le facteur de symétrie <span class="math inline">\(S_G\)</span> d’un graphe compte les permutations de champs et de lignes internes qui laissent inchangés ses vertex et ses lignes externes étiquetées. La contribution porte le facteur</p>
+<p><span class="math display">\[
+\frac1{S_G}.
+\]</span></p>
+<p>Pour le vertex de contact à quatre points, <span class="math inline">\(S_G=1\)</span> : les <span class="math inline">\(4!\)</span> contractions compensent déjà le <span class="math inline">\(4!\)</span> du lagrangien. Pour la bulle à une boucle de la diffusion <span class="math inline">\(2\to2\)</span>, les deux lignes internes peuvent être échangées, donc <span class="math inline">\(S_G=2\)</span>.</p>
+<p>Il est dangereux d’apprendre une liste de facteurs sans comprendre leur origine. La méthode sûre est toujours :</p>
+<ol type="1">
+<li>repartir du coefficient <span class="math inline">\(1/V!\)</span> de Dyson ;</li>
+<li>inclure les factorielles présentes dans <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span> ;</li>
+<li>compter les contractions donnant le graphe étiqueté considéré ;</li>
+<li>simplifier le rapport.</li>
+</ol>
+<p>Pour les graphes simples, cette méthode est plus longue que la règle graphique, mais elle permet de reconstruire la règle en cas de doute.</p>
+</section>
+<section id="second-test-la-théorie-de-yukawa" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="second-test-la-théorie-de-yukawa"><span class="header-section-number">4.2</span> Second test : la théorie de Yukawa</h3>
+<p><strong>Le modèle et son contenu.</strong></p>
+<p>La théorie de Yukawa couple un champ scalaire réel <span class="math inline">\(\phi\)</span> à un champ de Dirac <span class="math inline">\(\psi\)</span> :</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal L
+=\frac12(\partial_\mu\phi)^2
+-\frac12\mu^2\phi^2
++\overline\psi(i\not\!\partial-m)\psi
+-g\overline\psi\psi\phi.
+}
+\]</span></p>
+<p>Le bilinéaire <span class="math inline">\(\overline\psi\psi\)</span> est un scalaire de Lorentz ; le produit <span class="math inline">\(\overline\psi\psi\phi\)</span> l’est donc aussi. Le terme est hermitien si <span class="math inline">\(g\)</span> est réel.</p>
+<p>Sous la symétrie de phase</p>
+<p><span class="math display">\[
+\psi\to e^{-iq\alpha}\psi,
+\qquad
+\overline\psi\to\overline\psi e^{iq\alpha},
+\]</span></p>
+<p>le produit <span class="math inline">\(\overline\psi\psi\)</span> est invariant. La charge fermionique est conservée : un vertex de Yukawa comporte toujours une ligne fermionique entrante et une ligne fermionique sortante, ainsi qu’une ligne scalaire.</p>
+<p>L’équation classique du scalaire devient</p>
+<p><span class="math display">\[
+(\Box+\mu^2)\phi=-g\overline\psi\psi,
+\]</span></p>
+<p>tandis que l’équation de Dirac est</p>
+<p><span class="math display">\[
+(i\not\!\partial-m-g\phi)\psi=0.
+\]</span></p>
+<p>Le scalaire est donc sourcé par la densité <span class="math inline">\(\overline\psi\psi\)</span>, et le champ scalaire agit comme une masse locale supplémentaire pour le fermion.</p>
+<p><strong>Origine du facteur de vertex.</strong></p>
+<p>Le premier terme de Dyson est</p>
+<p><span class="math display">\[
+i\int d^4x\,\mathcal L_{\mathrm{int}}(x)
+=-ig\int d^4x\,
+\overline\psi(x)\psi(x)\phi(x).
+\]</span></p>
+<p>Comme les trois champs du vertex sont distingués, aucune factorielle n’est à compenser. Le facteur de vertex est donc</p>
+<p><span class="math display">\[
+\boxed{-ig.}
+\]</span></p>
+<p>La contraction <span class="math inline">\(\psi(x)\overline\psi(y)\)</span> donne le propagateur de Dirac. L’ordre des matrices le long d’une ligne fermionique est imposé : on multiplie les facteurs en suivant la ligne à l’envers du flux algébrique, de sorte que le spineur colonne initial soit à droite et le spineur ligne final à gauche.</p>
+<p><strong>Dictionnaire de Yukawa.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Facteur en espace des impulsions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>scalaire interne de moment <span class="math inline">\(k\)</span></td>
+<td><span class="math inline">\(\displaystyle \frac{i}{k^2-\mu^2+i\epsilon}\)</span></td>
+</tr>
+<tr class="even">
+<td>fermion interne de moment <span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(\displaystyle \frac{i(\not\! p+m)}{p^2-m^2+i\epsilon}\)</span></td>
+</tr>
+<tr class="odd">
+<td>vertex <span class="math inline">\(\overline\psi\psi\phi\)</span></td>
+<td><span class="math inline">\(-ig\)</span></td>
+</tr>
+<tr class="even">
+<td>fermion initial</td>
+<td><span class="math inline">\(u_s(p)\)</span></td>
+</tr>
+<tr class="odd">
+<td>fermion final</td>
+<td><span class="math inline">\(\overline u_s(p)\)</span></td>
+</tr>
+<tr class="even">
+<td>antifermion initial</td>
+<td><span class="math inline">\(\overline v_s(p)\)</span></td>
+</tr>
+<tr class="odd">
+<td>antifermion final</td>
+<td><span class="math inline">\(v_s(p)\)</span></td>
+</tr>
+<tr class="even">
+<td>boucle fermionique fermée</td>
+<td>facteur <span class="math inline">\(-1\)</span> et trace spinorielle</td>
+</tr>
+</tbody>
+</table>
+<p>Les conventions des spineurs externes suivent directement les termes de l’expansion du champ qui annihilent ou créent l’état correspondant. Elles ne sont pas des décorations attachées aux extrémités d’un dessin.</p>
+<p><strong>Diffusion fermion–scalaire.</strong></p>
+<p>Considérons</p>
+<p><span class="math display">\[
+\psi(p)+\phi(k)\longrightarrow\psi(p')+\phi(k').
+\]</span></p>
+<p>Au plus bas ordre non nul, il faut deux vertex, donc l’amplitude est d’ordre <span class="math inline">\(g^2\)</span>. Deux ordres d’absorption et d’émission du scalaire sont possibles le long de la ligne fermionique.</p>
+<p>Dans le premier, le fermion interne porte <span class="math inline">\(p+k\)</span>. La contribution est</p>
+<p><span class="math display">\[
+\boxed{
+i\mathcal M_s
+=\overline u_{s'}(p')(-ig)
+\frac{i(\not\! p+\not\! k+m)}{(p+k)^2-m^2+i\epsilon}
+(-ig)u_s(p).
+}
+\]</span></p>
+<p>Dans le second, il porte <span class="math inline">\(p-k'\)</span>. On trouve</p>
+<p><span class="math display">\[
+\boxed{
+i\mathcal M_u
+=\overline u_{s'}(p')(-ig)
+\frac{i(\not\! p-\not\! k'+m)}{(p-k')^2-m^2+i\epsilon}
+(-ig)u_s(p).
+}
+\]</span></p>
+<p>L’amplitude totale est la somme cohérente</p>
+<p><span class="math display">\[
+i\mathcal M=i\mathcal M_s+i\mathcal M_u.
+\]</span></p>
+<p>Les indices <span class="math inline">\(s\)</span> et <span class="math inline">\(u\)</span> signalent les invariants associés aux deux propagateurs. Les deux contributions doivent être additionnées avant de prendre le module carré : leur terme d’interférence est observable.</p>
+<p><strong>Diffusion de deux fermions identiques.</strong></p>
+<p>Étudions</p>
+<p><span class="math display">\[
+\psi(p_1)+\psi(p_2)\longrightarrow
+\psi(p_3)+\psi(p_4)
+\]</span></p>
+<p>par échange d’un scalaire. L’appariement direct donne un transfert</p>
+<p><span class="math display">\[
+q_t=p_1-p_3,
+\qquad q_t^2=t,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+i\mathcal M_t
+=\left[\overline u_3(-ig)u_1\right]
+\frac{i}{t-\mu^2+i\epsilon}
+\left[\overline u_4(-ig)u_2\right].
+\]</span></p>
+<p>Mais les fermions finaux sont identiques. Il existe un second appariement, <span class="math inline">\(p_3\leftrightarrow p_4\)</span>, avec <span class="math inline">\(q_u=p_1-p_4\)</span>. Échanger les deux fermions externes produit un signe moins :</p>
+<p><span class="math display">\[
+i\mathcal M_u
+=-\left[\overline u_4(-ig)u_1\right]
+\frac{i}{u-\mu^2+i\epsilon}
+\left[\overline u_3(-ig)u_2\right].
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{i\mathcal M=i\mathcal M_t+i\mathcal M_u.}
+\]</span></p>
+<p>Le signe relatif est la manifestation de l’antisymétrie de l’état à deux fermions. Même si les deux particules ne sont pas individuellement étiquetables, les deux alternatives quantiques interfèrent.</p>
+<p><strong>Boucle fermionique.</strong></p>
+<p>Une correction à deux points du scalaire peut contenir une boucle fermionique. À l’ordre <span class="math inline">\(g^2\)</span>, sa structure est</p>
+<p><span class="math display">\[
+\boxed{
+i\Pi(p^2)
+=-(-ig)^2
+\int\frac{d^4k}{(2\pi)^4}
+\operatorname{tr}\left[
+\frac{i(\not\! k+m)}{k^2-m^2+i\epsilon}
+\frac{i(\not\! k+\not\! p+m)}{(k+p)^2-m^2+i\epsilon}
+\right].
+}
+\]</span></p>
+<p>Le premier signe moins est celui de la boucle fermionique fermée. La trace apparaît parce que les indices spinoriels sont contractés cycliquement. Cette expression est également ultraviolette divergente ; nous l’utilisons seulement pour identifier les règles et reporterons son évaluation renormalisée.</p>
+<p><strong>Pourquoi les flèches ne sont pas des vitesses.</strong></p>
+<p>La flèche sur une ligne de Dirac indique le flux de charge ou de nombre fermionique et fixe l’ordre des indices spinoriels. Elle ne représente pas nécessairement le sens de l’impulsion ni celui du temps sur la page. Une ligne d’antiparticule externe possède une flèche opposée à son impulsion physique dans les conventions usuelles, sans que l’antiparticule « remonte réellement le temps ».</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi commencer par Yukawa plutôt que par la QED">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi commencer par Yukawa plutôt que par la QED
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Yukawa contient déjà les difficultés essentielles liées aux fermions : spineurs externes, propagateur matriciel, ordre des matrices, antiparticules, signe d’échange et boucles fermioniques. Le vertex ne porte cependant ni indice vectoriel ni redondance de jauge. On peut donc isoler la logique perturbative avant d’ajouter, dans les chapitres suivants, les contraintes propres aux théories de jauge.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="des-corrélateurs-aux-observables" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="des-corrélateurs-aux-observables"><span class="header-section-number">5</span> Des corrélateurs aux observables</h2>
+<section id="des-corrélateurs-à-la-matrice-s-lidée-de-lsz" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="des-corrélateurs-à-la-matrice-s-lidée-de-lsz"><span class="header-section-number">5.1</span> Des corrélateurs à la matrice <span class="math inline">\(S\)</span> : l’idée de LSZ</h3>
+<p><strong>Le problème des lignes externes.</strong></p>
+<p>Les règles de Wick calculent naturellement des corrélateurs</p>
+<p><span class="math display">\[
+G^{(n)}(x_1,\ldots,x_n)
+=\langle\Omega|T\{\Phi(x_1)\cdots\Phi(x_n)\}|\Omega\rangle.
+\]</span></p>
+<p>Après transformée de Fourier, leurs impulsions externes sont arbitraires et chaque point externe est relié au reste du graphe par un propagateur. Une amplitude de diffusion décrit au contraire des particules externes réelles :</p>
+<p><span class="math display">\[
+p_i^2=m_{\mathrm{phys}}^2,
+\qquad
+p_i^0&gt;0.
+\]</span></p>
+<p>Il faut donc accomplir deux opérations :</p>
+<ol type="1">
+<li>supprimer les propagateurs attachés aux points externes ;</li>
+<li>prendre la limite dans laquelle les impulsions externes atteignent leur couche de masse.</li>
+</ol>
+<p>C’est le contenu de la formule de réduction de Lehmann, Symanzik et Zimmermann, appelée <strong>formule LSZ</strong>.</p>
+<p><strong>Le pôle à une particule.</strong></p>
+<p>Dans la théorie complète, le propagateur exact n’est plus simplement <span class="math inline">\(i/(p^2-m^2+i\epsilon)\)</span>. Insérons une base d’états entre les deux champs. Si <span class="math inline">\(\Phi\)</span> possède un recouvrement non nul avec un état stable à une particule,</p>
+<p><span class="math display">\[
+\langle\Omega|\Phi(0)|\mathbf p\rangle=\sqrt Z,
+\]</span></p>
+<p>alors la transformée du propagateur possède, au voisinage de la masse physique, la structure</p>
+<p><span class="math display">\[
+\boxed{
+\widetilde G^{(2)}(p)
+\underset{p^2\to m_{\mathrm{phys}}^2}{\sim}
+\frac{iZ}{p^2-m_{\mathrm{phys}}^2+i\epsilon}
++\text{termes réguliers}.
+}
+\]</span></p>
+<p>La position du pôle définit la masse physique ; son résidu <span class="math inline">\(Z\)</span> mesure la force avec laquelle le champ interpolant crée l’état à une particule. Dans une théorie libre avec la normalisation canonique, <span class="math inline">\(Z=1\)</span>. Dans une théorie en interaction, <span class="math inline">\(Z\)</span> reçoit des corrections ; leur calcul systématique sera reporté au chapitre de renormalisation.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Un champ n'est pas une particule">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Un champ n’est pas une particule
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plusieurs opérateurs locaux peuvent avoir les mêmes nombres quantiques et créer le même état à une particule avec des valeurs différentes de <span class="math inline">\(Z\)</span>. La particule est identifiée par le pôle commun des corrélateurs, non par un choix unique de champ fondamental.</p>
+</div>
+</div>
+<p><strong>Comment l’amputation fonctionne.</strong></p>
+<p>Le pôle du corrélateur à deux points porte le résidu <span class="math inline">\(Z\)</span>, car ses deux extrémités fournissent chacune un recouvrement <span class="math inline">\(\sqrt Z\)</span>. Dans un corrélateur à plusieurs points, la factorisation près du pôle d’une jambe externe fait donc apparaître le facteur</p>
+<p><span class="math display">\[
+\frac{i\sqrt Z}{p^2-m^2+i\epsilon}
+\]</span></p>
+<p>sur cette jambe, multiplié par l’élément de matrice restant.</p>
+<p>Dans l’espace des positions, l’opérateur <span class="math inline">\(\Box+m^2\)</span> devient après Fourier le facteur</p>
+<p><span class="math display">\[
+-(p^2-m^2).
+\]</span></p>
+<p>La multiplication par <span class="math inline">\(p^2-m^2\)</span> annule donc le pôle externe. La limite <span class="math inline">\(p^2\to m^2\)</span> supprime ensuite les termes réguliers, qui sont multipliés par un facteur tendant vers zéro. Enfin, le facteur LSZ <span class="math inline">\(i/\sqrt Z\)</span> compense exactement <span class="math inline">\(-i\sqrt Z\)</span> laissé par l’opérateur cinétique. Il ne reste que l’élément de matrice associé à la particule physique.</p>
+<p>Pour un champ scalaire réel, une forme de LSZ est</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;{}_{\mathrm{out}}\langle p'_1,\ldots,p'_m
+|p_1,\ldots,p_n\rangle_{\mathrm{in},c}\\
+&amp;=\left(\frac{i}{\sqrt Z}\right)^{m+n}
+\prod_{a=1}^{m}\int d^4y_a\,
+e^{+ip'_a\cdot y_a}(\Box_{y_a}+m^2)\\
+&amp;\qquad\times
+\prod_{b=1}^{n}\int d^4x_b\,
+e^{-ip_b\cdot x_b}(\Box_{x_b}+m^2)
+G_c^{(m+n)}(y_1,\ldots,y_m,x_1,\ldots,x_n),
+\end{aligned}
+\]</span></p>
+<p>où toutes les impulsions physiques sont prises sur la couche de masse après l’action des opérateurs différentiels. Les facteurs de <span class="math inline">\(i\)</span> peuvent être redistribués selon la convention choisie pour les propagateurs et <span class="math inline">\(S\)</span> ; le contenu invariant est :</p>
+<p><span class="math display">\[
+\boxed{
+\text{partie connexe du corrélateur}
+\xrightarrow{\text{amputation}}
+\text{limite sur couche}
+\xrightarrow{Z^{-1/2}\text{ par jambe}}
+\text{élément de matrice }S.
+}
+\]</span></p>
+<p><strong>Pourquoi seules les parties connexes contribuent à une collision.</strong></p>
+<p>Un corrélateur déconnecté peut décrire, par exemple, la propagation indépendante de deux particules sans interaction entre elles. Après LSZ, ces composantes reconstruisent des produits de deltas correspondant à l’identité ou à plusieurs processus indépendants. La partie de collision élémentaire est fournie par les diagrammes dans lesquels toutes les jambes externes sont reliées dans une même composante.</p>
+<p>On retient donc la prescription pratique : pour calculer <span class="math inline">\(i\mathcal M\)</span>, on dessine directement les graphes</p>
+<p><span class="math display">\[
+\boxed{\text{connexes, amputés et compatibles avec les états externes}.}
+\]</span></p>
+<p>Les propagateurs ne sont associés qu’aux lignes <strong>internes</strong>. Les lignes externes scalaires ne portent plus <span class="math inline">\(i/(p^2-m^2+i\epsilon)\)</span> ; elles indiquent seulement les états et leurs moments sur couche.</p>
+<p><strong>Extension aux fermions.</strong></p>
+<p>Pour une ligne fermionique externe, l’inverse du propagateur est <span class="math inline">\(\not\! p-m\)</span>. Après amputation et limite sur couche, le résidu est projeté sur les solutions libres :</p>
+<p><span class="math display">\[
+(\not\! p-m)u_s(p)=0,
+\qquad
+(\not\! p+m)v_s(p)=0.
+\]</span></p>
+<p>Les facteurs restants sont donc</p>
+<p><span class="math display">\[
+u_s(p),\quad \overline u_s(p),\quad
+v_s(p),\quad \overline v_s(p),
+\]</span></p>
+<p>selon que la jambe représente un fermion ou un antifermion entrant ou sortant. Autrement dit, les règles des lignes externes sont la version spinorielle du résidu LSZ.</p>
+<p>Une dérivation complète de LSZ demande une analyse précise des champs asymptotiques et des paquets d’ondes. Pour ce chapitre, le point essentiel est son mécanisme : les pôles isolent les particules stables, les opérateurs cinétiques amputent les propagateurs externes et les résidus normalisent correctement les états.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Limite de la matrice $S$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Limite de la matrice <span class="math inline">\(S\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le formalisme asymptotique est directement adapté aux particules stables. Une particule instable n’est pas un état entrant ou sortant exact : elle apparaît comme une résonance, c’est-à-dire comme une structure de pôle déplacée dans une amplitude entre états stables. Les états liés et les théories avec interactions de très longue portée demandent également des précautions supplémentaires.</p>
+</div>
+</div>
+</section>
+<section id="de-lamplitude-aux-observables" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="de-lamplitude-aux-observables"><span class="header-section-number">5.2</span> De l’amplitude aux observables</h3>
+<p><strong>L’espace de phase invariant.</strong></p>
+<p>Considérons une impulsion totale initiale <span class="math inline">\(P\)</span> et <span class="math inline">\(n\)</span> particules finales de moments <span class="math inline">\(k_f\)</span>. Chaque particule finale doit être sur sa couche de masse et d’énergie positive. La mesure élémentaire invariante est</p>
+<p><span class="math display">\[
+\frac{d^3\mathbf k_f}{(2\pi)^3\,2E_f}.
+\]</span></p>
+<p>La conservation totale est imposée par un delta. On définit</p>
+<p><span class="math display">\[
+\boxed{
+d\Phi_n(P;k_1,\ldots,k_n)
+=(2\pi)^4\delta^{(4)}\!\left(P-\sum_{f=1}^nk_f\right)
+\prod_{f=1}^{n}
+\frac{d^3\mathbf k_f}{(2\pi)^3\,2E_f}.
+}
+\]</span></p>
+<p>Cette mesure est invariante de Lorentz. Elle sépare proprement la cinématique, contenue dans <span class="math inline">\(d\Phi_n\)</span>, de la dynamique, contenue dans <span class="math inline">\(\mathcal M\)</span>.</p>
+<p><strong>Sommes et moyennes sur les états internes.</strong></p>
+<p>Une amplitude dépend en général des spins ou polarisations externes. Si ces états finaux ne sont pas mesurés, leurs probabilités doivent être additionnées. Si les états initiaux sont préparés sans polarisation, on moyenne sur toutes les configurations équiprobables :</p>
+<p><span class="math display">\[
+\boxed{
+\overline{|\mathcal M|^2}
+=\frac1{N_{\mathrm{spin,in}}}
+\sum_{\text{spins initiaux}}
+\sum_{\text{spins finaux}}
+|\mathcal M|^2.
+}
+\]</span></p>
+<p>Pour deux fermions de spin <span class="math inline">\(1/2\)</span> initiaux non polarisés,</p>
+<p><span class="math display">\[
+N_{\mathrm{spin,in}}=2\times2=4.
+\]</span></p>
+<p>La barre au-dessus de <span class="math inline">\(|\mathcal M|^2\)</span> désignera dans la suite cette somme-moyenne, et non une conjugaison complexe.</p>
+<p><strong>Largeur de désintégration.</strong></p>
+<p>Pour une particule initiale de quadrivecteur <span class="math inline">\(P\)</span>, la probabilité de transition par unité de temps conduit à</p>
+<p><span class="math display">\[
+\boxed{
+d\Gamma
+=\frac1{2E_P}\,
+\frac1{S_f}\,
+\overline{|\mathcal M|^2}\,d\Phi_n.
+}
+\]</span></p>
+<p><span class="math inline">\(S_f\)</span> est le facteur de symétrie de l’état final : pour <span class="math inline">\(r\)</span> particules finales identiques d’une même espèce, il contient un facteur <span class="math inline">\(r!\)</span>. Ce facteur empêche de compter plusieurs fois le même point physique de l’espace de phase lorsque l’on permute des particules indiscernables.</p>
+<p>Dans le référentiel de repos de la particule qui se désintègre,</p>
+<p><span class="math display">\[
+P^\mu=(M,\mathbf0),
+\]</span></p>
+<p>et <span class="math inline">\(E_P=M\)</span>. Pour une désintégration à deux corps dont l’amplitude ne dépend pas des angles,</p>
+<p><span class="math display">\[
+\boxed{
+\Gamma_{1\to2}
+=\frac1{S_f}
+\frac{|\mathbf k|}{8\pi M^2}
+\overline{|\mathcal M|^2},
+}
+\]</span></p>
+<p>où</p>
+<p><span class="math display">\[
+|\mathbf k|
+=\frac{\sqrt{\lambda_{\mathrm K}(M^2,m_1^2,m_2^2)}}{2M}
+\]</span></p>
+<p>et la fonction triangulaire de Källén est</p>
+<p><span class="math display">\[
+\lambda_{\mathrm K}(x,y,z)
+=x^2+y^2+z^2-2xy-2xz-2yz.
+\]</span></p>
+<p>La largeur totale <span class="math inline">\(\Gamma\)</span> a la dimension d’une énergie. La durée de vie dans le référentiel propre est</p>
+<p><span class="math display">\[
+\tau=\frac1\Gamma.
+\]</span></p>
+<p><strong>Section efficace.</strong></p>
+<p>Pour une collision</p>
+<p><span class="math display">\[
+1(p_1)+2(p_2)\longrightarrow f,
+\]</span></p>
+<p>le facteur de flux invariant est</p>
+<p><span class="math display">\[
+F=4\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}.
+\]</span></p>
+<p>On obtient</p>
+<p><span class="math display">\[
+\boxed{
+d\sigma
+=\frac1{4\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}}
+\frac1{S_f}\,
+\overline{|\mathcal M|^2}\,d\Phi_n.
+}
+\]</span></p>
+<p>Dans un référentiel quelconque,</p>
+<p><span class="math display">\[
+F=4E_1E_2v_{\mathrm M},
+\qquad
+v_{\mathrm M}
+=\sqrt{(\mathbf v_1-\mathbf v_2)^2
+-(\mathbf v_1\times\mathbf v_2)^2},
+\]</span></p>
+<p>où <span class="math inline">\(v_{\mathrm M}\)</span> est la vitesse de Møller. Pour deux faisceaux colinéaires, elle se réduit à <span class="math inline">\(|\mathbf v_1-\mathbf v_2|\)</span>. La forme covariante reste la définition générale sûre.</p>
+<p>Pour une diffusion <span class="math inline">\(2\to2\)</span> dans le référentiel du centre de masse,</p>
+<p><span class="math display">\[
+\boxed{
+\frac{d\sigma}{d\Omega}
+=\frac1{S_f}
+\frac1{64\pi^2s}
+\frac{|\mathbf p_f|}{|\mathbf p_i|}
+\overline{|\mathcal M|^2}.
+}
+\]</span></p>
+<p>Si la collision est élastique entre particules de mêmes masses, <span class="math inline">\(|\mathbf p_f|=|\mathbf p_i|\)</span>.</p>
+<p><strong>Exemple : diffusion dans <span class="math inline">\(\phi^4\)</span>.</strong></p>
+<p>Au niveau arbre,</p>
+<p><span class="math display">\[
+\mathcal M=-\lambda,
+\qquad
+|\mathcal M|^2=\lambda^2.
+\]</span></p>
+<p>Pour deux scalaires identiques dans l’état final, <span class="math inline">\(S_f=2!\)</span>. Dans le centre de masse,</p>
+<p><span class="math display">\[
+\boxed{
+\frac{d\sigma}{d\Omega}
+=\frac{\lambda^2}{128\pi^2s}.
+}
+\]</span></p>
+<p>La distribution est isotrope. En intégrant sur tout l’angle solide,</p>
+<p><span class="math display">\[
+\sigma=4\pi\frac{\lambda^2}{128\pi^2s}
+=\boxed{\frac{\lambda^2}{32\pi s}}.
+\]</span></p>
+<p>On aurait obtenu le même résultat en omettant <span class="math inline">\(1/2!\)</span> mais en intégrant seulement sur une moitié de l’espace angulaire, afin de ne pas distinguer artificiellement les deux particules finales.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Deux facteurs de symétrie de nature différente">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Deux facteurs de symétrie de nature différente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le facteur <span class="math inline">\(1/S_G\)</span> d’un <strong>diagramme</strong> compte les contractions donnant le même graphe. Le facteur <span class="math inline">\(1/S_f\)</span> de l’<strong>espace de phase</strong> évite de compter plusieurs fois un même état final de particules identiques. Ils ont parfois la même valeur numérique, mais ils interviennent à des étapes différentes et ne doivent pas être confondus.</p>
+</div>
+</div>
+<p><strong>Vérification dimensionnelle.</strong></p>
+<p>Dans les unités naturelles,</p>
+<p><span class="math display">\[
+[d\sigma]=-2,
+\qquad
+[d\Gamma]=1.
+\]</span></p>
+<p>La mesure à <span class="math inline">\(n\)</span> corps a la dimension</p>
+<p><span class="math display">\[
+[d\Phi_n]=2n-4,
+\]</span></p>
+<p>car chaque facteur <span class="math inline">\(d^3k/(2E)\)</span> a la dimension <span class="math inline">\(2\)</span> et le delta quadridimensionnel la dimension <span class="math inline">\(-4\)</span>. Pour un processus ayant <span class="math inline">\(N=n_{\mathrm{in}}+n_{\mathrm{out}}\)</span> jambes scalaires externes,</p>
+<p><span class="math display">\[
+[\mathcal M]=4-N.
+\]</span></p>
+<p>Pour une diffusion <span class="math inline">\(2\to2\)</span>, <span class="math inline">\([\mathcal M]=0\)</span> et la formule de section efficace possède bien la dimension <span class="math inline">\(-2\)</span>. Pour une désintégration <span class="math inline">\(1\to2\)</span>, <span class="math inline">\([\mathcal M]=1\)</span>, ce qui donne <span class="math inline">\([\Gamma]=1\)</span>.</p>
+</section>
+<section id="sommes-de-spins-et-traces-de-matrices-gamma" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="sommes-de-spins-et-traces-de-matrices-gamma"><span class="header-section-number">5.3</span> Sommes de spins et traces de matrices gamma</h3>
+<p><strong>Transformer un module carré en trace.</strong></p>
+<p>Supposons qu’une partie de l’amplitude fermionique soit</p>
+<p><span class="math display">\[
+\mathcal M_{s's}
+=\overline u_{s'}(p')A\,u_s(p),
+\]</span></p>
+<p>où <span class="math inline">\(A\)</span> est une chaîne de matrices gamma et de propagateurs. Sa conjugaison complexe vaut</p>
+<p><span class="math display">\[
+\mathcal M_{s's}^*
+=\overline u_s(p)\,\overline A\,u_{s'}(p'),
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\boxed{\overline A=\gamma^0A^\dagger\gamma^0.}
+\]</span></p>
+<p>Le module carré sommé sur les spins devient</p>
+<p><span class="math display">\[
+\sum_{s,s'}|\mathcal M_{s's}|^2
+=\sum_{s,s'}
+\overline u_{s'}(p')A u_s(p)
+\overline u_s(p)\overline A u_{s'}(p').
+\]</span></p>
+<p>On regroupe les produits extérieurs grâce aux relations de complétude,</p>
+<p><span class="math display">\[
+\sum_su_s(p)\overline u_s(p)=\not\! p+m.
+\]</span></p>
+<p>Puis on utilise l’identité</p>
+<p><span class="math display">\[
+\overline u M u=\operatorname{tr}(u\overline u M).
+\]</span></p>
+<p>Il vient</p>
+<p><span class="math display">\[
+\boxed{
+\sum_{s,s'}|\mathcal M_{s's}|^2
+=\operatorname{tr}\left[
+(\not\! p'+m)A
+(\not\! p+m)\overline A
+\right].
+}
+\]</span></p>
+<p>Pour des antifermions,</p>
+<p><span class="math display">\[
+\sum_sv_s(p)\overline v_s(p)=\not\! p-m.
+\]</span></p>
+<p>Le calcul d’une probabilité non polarisée est ainsi transformé en algèbre de traces covariantes.</p>
+<p><strong>Identités de traces essentielles.</strong></p>
+<p>Les relations de Clifford donnent</p>
+<p><span class="math display">\[
+\operatorname{tr}(\mathbf1_4)=4,
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\operatorname{tr}(\gamma^\mu\gamma^\nu)=4\eta^{\mu\nu},}
+\]</span></p>
+<p>et la trace d’un nombre impair de matrices gamma sans <span class="math inline">\(\gamma^5\)</span> est nulle. Pour quatre matrices,</p>
+<p><span class="math display">\[
+\boxed{
+\operatorname{tr}(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma)
+=4\left(
+\eta^{\mu\nu}\eta^{\rho\sigma}
+-\eta^{\mu\rho}\eta^{\nu\sigma}
++\eta^{\mu\sigma}\eta^{\nu\rho}
+\right).
+}
+\]</span></p>
+<p>Avec nos conventions,</p>
+<p><span class="math display">\[
+\boxed{
+\operatorname{tr}(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma^5)
+=-4i\varepsilon^{\mu\nu\rho\sigma}.
+}
+\]</span></p>
+<p>Par exemple,</p>
+<p><span class="math display">\[
+\operatorname{tr}
+[(\not\! a+m)\gamma^\mu(\not\! b+m)\gamma^\nu]
+\]</span></p>
+<p>se développe en</p>
+<p><span class="math display">\[
+a_\rho b_\sigma
+\operatorname{tr}(\gamma^\rho\gamma^\mu\gamma^\sigma\gamma^\nu)
++m^2\operatorname{tr}(\gamma^\mu\gamma^\nu),
+\]</span></p>
+<p>car les termes contenant trois matrices gamma sont nuls. On trouve</p>
+<p><span class="math display">\[
+\boxed{
+4\left[
+a^\mu b^\nu+a^\nu b^\mu
+-(a\cdot b-m^2)\eta^{\mu\nu}
+\right].
+}
+\]</span></p>
+<p>Cette étape sera omniprésente dans les calculs de QED, mais sa logique est déjà entièrement visible dans Yukawa.</p>
+<p><strong>État polarisé ou non polarisé.</strong></p>
+<p>Utiliser immédiatement les relations de complétude revient à perdre l’information sur le spin individuel. Si l’expérience mesure une polarisation, il faut conserver le spineur correspondant ou utiliser un projecteur polarisé, par exemple</p>
+<p><span class="math display">\[
+u(p,s)\overline u(p,s)
+=\frac12(\not\! p+m)(1+\gamma^5\not\! s),
+\]</span></p>
+<p>où le quadrivecteur de spin vérifie</p>
+<p><span class="math display">\[
+s\cdot p=0,
+\qquad
+s^2=-1.
+\]</span></p>
+<p>Les sommes de spin ne sont donc pas une simplification toujours obligatoire ; elles traduisent une information expérimentale non résolue.</p>
+</section>
+<section id="particules-identiques-et-croisement" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="particules-identiques-et-croisement"><span class="header-section-number">5.4</span> Particules identiques et croisement</h3>
+<p><strong>Additionner les alternatives avant de prendre le carré.</strong></p>
+<p>Lorsque plusieurs graphes relient les mêmes états initial et final,</p>
+<p><span class="math display">\[
+\mathcal M=\sum_r\mathcal M_r.
+\]</span></p>
+<p>La probabilité contient</p>
+<p><span class="math display">\[
+|\mathcal M|^2
+=\sum_r|\mathcal M_r|^2
++\sum_{r\neq s}\mathcal M_r\mathcal M_s^*.
+\]</span></p>
+<p>Les derniers termes sont les interférences. Ils peuvent renforcer ou supprimer certaines régions cinématiques. Calculer séparément les probabilités de chaque diagramme puis les additionner serait donc incorrect, sauf si les états finaux sont physiquement distinguables ou si une moyenne détruit effectivement l’interférence.</p>
+<p>Pour des bosons identiques, l’amplitude est symétrique sous leur échange. Pour des fermions identiques, elle est antisymétrique. Dans l’exemple Yukawa,</p>
+<p><span class="math display">\[
+\mathcal M_{ff\to ff}
+=\mathcal M_t-\mathcal M_u
+\]</span></p>
+<p>à la convention globale de phase près. Le signe relatif est mesurable par l’interférence.</p>
+<p><strong>Principe du croisement.</strong></p>
+<p>Une même fonction analytique des moments externes peut décrire plusieurs processus obtenus en déplaçant une particule d’un côté à l’autre de la réaction. Schématiquement,</p>
+<p><span class="math display">\[
+a+b\to c+d
+\]</span></p>
+<p>est relié à</p>
+<p><span class="math display">\[
+a+\overline c\to\overline b+d
+\]</span></p>
+<p>en croisant les jambes <span class="math inline">\(b\)</span> et <span class="math inline">\(c\)</span>. Dans la convention où tous les moments entrent dans le diagramme, chaque croisement inverse le quadrivecteur physique de la jambe concernée :</p>
+<p><span class="math display">\[
+p_b\longrightarrow-p_{\overline b},
+\qquad
+p_c\longrightarrow-p_{\overline c}.
+\]</span></p>
+<p>Ici, les symboles <span class="math inline">\(p_{\overline b}\)</span> et <span class="math inline">\(p_{\overline c}\)</span> désignent les moments physiques, d’énergie positive, des antiparticules dans le nouveau processus. Pour un scalaire neutre, particule et antiparticule coïncident et seule la continuation du moment intervient. Pour un champ chargé, une particule sortante devient son antiparticule entrante. Pour un fermion, il faut en plus remplacer les facteurs <span class="math inline">\(u,\overline u\)</span> par <span class="math inline">\(v,\overline v\)</span> selon la jambe considérée.</p>
+<p>Les trois canaux <span class="math inline">\(s,t,u\)</span> de la diffusion scalaire sont ainsi différentes régions cinématiques d’une même structure analytique. Le croisement n’affirme pas que les sections efficaces sont numériquement identiques : les domaines physiques, les flux, les espaces de phase et les facteurs de spin changent.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Le bon ordre de calcul">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Le bon ordre de calcul
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour un processus donné :</p>
+<p><span class="math display">\[
+\boxed{
+\text{identifier les états}
+\to
+\text{sommer les amplitudes}
+\to
+|\mathcal M|^2
+\to
+\text{somme/moyenne des spins}
+\to
+\text{espace de phase et flux}.
+}
+\]</span></p>
+<p>Inverser deux de ces étapes est une source fréquente d’erreurs, notamment pour les interférences et les particules identiques.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="la-formulation-par-lintégrale-de-chemin" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-formulation-par-lintégrale-de-chemin"><span class="header-section-number">6</span> La formulation par l’intégrale de chemin</h2>
+<section id="du-noyau-quantique-à-la-somme-sur-les-champs" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="du-noyau-quantique-à-la-somme-sur-les-champs"><span class="header-section-number">6.1</span> Du noyau quantique à la somme sur les champs</h3>
+<p>La quantification canonique part des champs et de leurs moments conjugués, impose des commutateurs ou anticommutateurs et construit un espace de Fock. L’intégrale de chemin adopte un point de vue différent : elle somme les amplitudes associées à toutes les histoires du champ entre des configurations limites.</p>
+<p>Pour une particule en mécanique quantique,</p>
+<p><span class="math display">\[
+K(q_f,t_f;q_i,t_i)
+=\langle q_f|e^{-iH(t_f-t_i)}|q_i\rangle.
+\]</span></p>
+<p>Découpons l’intervalle temporel en <span class="math inline">\(N\)</span> pas de taille <span class="math inline">\(\delta t\)</span>. En insérant <span class="math inline">\(N-1\)</span> relations de fermeture dans la base des positions et des impulsions, chaque petit facteur d’évolution prend la forme</p>
+<p><span class="math display">\[
+\langle q_{r+1}|e^{-iH\delta t}|q_r\rangle
+\simeq
+\int\frac{dp_r}{2\pi}
+\exp\left\{i\delta t
+\left[p_r\frac{q_{r+1}-q_r}{\delta t}
+-H(p_r,q_r)\right]\right\}.
+\]</span></p>
+<p>Pour un hamiltonien quadratique en <span class="math inline">\(p_r\)</span>, l’intégrale gaussienne sur les impulsions produit le lagrangien. Dans la limite continue,</p>
+<p><span class="math display">\[
+\boxed{
+K(q_f,t_f;q_i,t_i)
+=\mathcal N
+\int_{q(t_i)=q_i}^{q(t_f)=q_f}
+\mathcal Dq\,e^{iS[q]}.
+}
+\]</span></p>
+<p>Il ne s’agit pas d’une somme de probabilités classiques. Chaque trajectoire contribue avec une <strong>phase</strong> <span class="math inline">\(e^{iS}\)</span> ; les trajectoires interfèrent avant que le module carré soit pris.</p>
+<p>Un champ peut être vu comme une infinité continue de coordonnées <span class="math inline">\(\phi(\mathbf x)\)</span>, une pour chaque point de l’espace. La généralisation est alors</p>
+<p><span class="math display">\[
+\boxed{
+\int\mathcal D\phi\,e^{iS[\phi]},
+}
+\]</span></p>
+<p>où l’intégration porte sur toutes les configurations de champ dans l’espace-temps.</p>
+<p><strong>Que signifie réellement <span class="math inline">\(\mathcal D\phi\)</span> ?</strong></p>
+<p>La mesure fonctionnelle est formellement</p>
+<p><span class="math display">\[
+\mathcal D\phi=\prod_xd\phi(x).
+\]</span></p>
+<p>Cette expression n’est pas une mesure ordinaire déjà définie dans le continuum. Une définition opérationnelle consiste à discrétiser l’espace-temps sur un réseau fini de points <span class="math inline">\(x_n\)</span> :</p>
+<p><span class="math display">\[
+\int\mathcal D\phi
+\quad\longrightarrow\quad
+\prod_{n=1}^{N}\int_{-\infty}^{+\infty}d\phi_n.
+\]</span></p>
+<p>On obtient alors une intégrale multiple ordinaire, puis on étudie la limite où le pas du réseau tend vers zéro et le volume vers l’infini. En perturbation, on traite souvent l’intégrale de chemin comme une série formelle d’intégrales gaussiennes ; sa définition non perturbative exige davantage de soin.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="L'intégrale de chemin de Minkowski est oscillante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>L’intégrale de chemin de Minkowski est oscillante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le poids <span class="math inline">\(e^{iS}\)</span> n’est ni positif ni amorti. Il ne définit donc pas directement une distribution de probabilité. La prescription <span class="math inline">\(i\epsilon\)</span>, ou une rotation vers le temps euclidien, fournit le contrôle de convergence nécessaire. Le langage « somme sur tous les chemins » est utile, mais ne remplace pas cette définition limite.</p>
+</div>
+</div>
+</section>
+<section id="introduire-une-source" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="introduire-une-source"><span class="header-section-number">6.2</span> Introduire une source</h3>
+<p>Pour extraire systématiquement les corrélateurs, on couple le champ à une source classique <span class="math inline">\(J(x)\)</span> :</p>
+<p><span class="math display">\[
+S[\phi;J]
+=S[\phi]+\int d^4x\,J(x)\phi(x).
+\]</span></p>
+<p>La fonctionnelle génératrice normalisée est</p>
+<p><span class="math display">\[
+\boxed{
+Z[J]
+=\frac{
+\displaystyle\int\mathcal D\phi\,
+\exp\left\{iS[\phi]+i\int d^4x\,J(x)\phi(x)\right\}
+}{
+\displaystyle\int\mathcal D\phi\,e^{iS[\phi]}
+},
+\qquad
+Z[0]=1.
+}
+\]</span></p>
+<p>Pourquoi une dérivée par rapport à <span class="math inline">\(J\)</span> insère-t-elle un champ ? Parce que</p>
+<p><span class="math display">\[
+\frac{\delta}{\delta J(x)}
+e^{i\int J\phi}
+=i\phi(x)e^{i\int J\phi}.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+G^{(n)}(x_1,\ldots,x_n)
+=\left.
+\frac1{i^n}
+\frac{\delta^nZ[J]}
+{\delta J(x_1)\cdots\delta J(x_n)}
+\right|_{J=0}.
+}
+\]</span></p>
+<p>La prescription des limites temporelles dans l’intégrale fonctionnelle sélectionne les corrélateurs chronologiques du vide. La fonctionnelle <span class="math inline">\(Z[J]\)</span> contient donc simultanément tous les <span class="math inline">\(G^{(n)}\)</span>.</p>
+</section>
+<section id="lintégrale-gaussienne-libre" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="lintégrale-gaussienne-libre"><span class="header-section-number">6.3</span> L’intégrale gaussienne libre</h3>
+<p>Pour le scalaire libre,</p>
+<p><span class="math display">\[
+S_0[\phi]
+=\int d^4x\left[
+\frac12\partial_\mu\phi\partial^\mu\phi
+-\frac12m^2\phi^2
+\right].
+\]</span></p>
+<p>Après une intégration par parties,</p>
+<p><span class="math display">\[
+S_0[\phi]
+=\frac12\int d^4x\,
+\phi(x)K\phi(x),
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+K=-(\Box+m^2)
+\]</span></p>
+<p>et la prescription de Feynman sous-entendue. En notation condensée,</p>
+<p><span class="math display">\[
+S_0[\phi;J]
+=\frac12\phi K\phi+J\phi.
+\]</span></p>
+<p>Complétons le carré. Posons</p>
+<p><span class="math display">\[
+\phi'=\phi+K^{-1}J.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac12\phi K\phi+J\phi
+&amp;=\frac12(\phi+K^{-1}J)K(\phi+K^{-1}J)
+-\frac12JK^{-1}J\\
+&amp;=\frac12\phi'K\phi'-\frac12JK^{-1}J.
+\end{aligned}
+\]</span></p>
+<p>La translation de la variable d’intégration ne change que la partie gaussienne commune à <span class="math inline">\(Z_0[J]\)</span> et <span class="math inline">\(Z_0[0]\)</span>, qui s’annule dans le rapport. On obtient</p>
+<p><span class="math display">\[
+Z_0[J]
+=\exp\left[-\frac i2JK^{-1}J\right].
+\]</span></p>
+<p>Avec notre convention</p>
+<p><span class="math display">\[
+\Delta_F=iK^{-1},
+\]</span></p>
+<p>la formule devient</p>
+<p><span class="math display">\[
+\boxed{
+Z_0[J]
+=\exp\left[-\frac12
+\int d^4x\,d^4y\,
+J(x)\Delta_F(x-y)J(y)
+\right].
+}
+\]</span></p>
+<p>Vérifions les facteurs de <span class="math inline">\(i\)</span>. La première dérivée s’annule à <span class="math inline">\(J=0\)</span>, donc</p>
+<p><span class="math display">\[
+G_0^{(1)}(x)=0.
+\]</span></p>
+<p>La seconde donne</p>
+<p><span class="math display">\[
+\left.
+\frac{\delta^2Z_0}{\delta J(x)\delta J(y)}
+\right|_{J=0}
+=-\Delta_F(x-y).
+\]</span></p>
+<p>Comme <span class="math inline">\(1/i^2=-1\)</span>,</p>
+<p><span class="math display">\[
+\boxed{G_0^{(2)}(x,y)=\Delta_F(x-y),}
+\]</span></p>
+<p>ce qui confirme la convention.</p>
+<p><strong>Wick comme propriété d’une gaussienne.</strong></p>
+<p>La fonctionnelle libre est l’exponentielle d’une forme quadratique en <span class="math inline">\(J\)</span>. Toute dérivée d’ordre impair s’annule à <span class="math inline">\(J=0\)</span>. Quatre dérivées doivent agir deux par deux sur cette forme quadratique et donnent</p>
+<p><span class="math display">\[
+\boxed{
+G_0^{(4)}(x_1,x_2,x_3,x_4)
+=\Delta_{12}\Delta_{34}
++\Delta_{13}\Delta_{24}
++\Delta_{14}\Delta_{23}.
+}
+\]</span></p>
+<p>On retrouve exactement les trois contractions complètes du théorème de Wick. Dans la formulation canonique, Wick résulte du réordonnement des créateurs et annihilateurs. Dans la formulation fonctionnelle, il résulte de la dérivation d’une gaussienne. Ces deux mécanismes sont deux expressions de la même structure libre.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pourquoi les propagateurs sont les briques de la perturbation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pourquoi les propagateurs sont les briques de la perturbation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une théorie libre est gaussienne. Or tous les moments d’une gaussienne sont entièrement déterminés par son moment à deux points. C’est pourquoi chaque corrélateur libre se décompose en produits de propagateurs et pourquoi les interactions peuvent être organisées en graphes faits de lignes à deux extrémités.</p>
+</div>
+</div>
+</section>
+<section id="ajouter-linteraction-phi4" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="ajouter-linteraction-phi4"><span class="header-section-number">6.4</span> Ajouter l’interaction <span class="math inline">\(\phi^4\)</span></h3>
+<p>Écrivons</p>
+<p><span class="math display">\[
+S[\phi]=S_0[\phi]+S_{\mathrm{int}}[\phi],
+\qquad
+S_{\mathrm{int}}=-\frac{\lambda}{4!}\int d^4x\,\phi^4(x).
+\]</span></p>
+<p>Dans l’intégrale fonctionnelle, chaque facteur <span class="math inline">\(\phi(x)\)</span> peut être remplacé par</p>
+<p><span class="math display">\[
+\phi(x)
+\longrightarrow
+\frac1i\frac{\delta}{\delta J(x)}
+\]</span></p>
+<p>lorsqu’il agit sur <span class="math inline">\(e^{i\int J\phi}\)</span>. Par conséquent,</p>
+<p><span class="math display">\[
+\boxed{
+Z[J]
+=\frac{
+\displaystyle
+\exp\left[-i\frac{\lambda}{4!}
+\int d^4x
+\left(\frac1i\frac{\delta}{\delta J(x)}\right)^4
+\right]Z_0[J]
+}{
+\displaystyle
+\left.
+\exp\left[-i\frac{\lambda}{4!}
+\int d^4x
+\left(\frac1i\frac{\delta}{\delta J(x)}\right)^4
+\right]Z_0[J]
+\right|_{J=0}
+}.
+}
+\]</span></p>
+<p>Développer l’exponentielle en puissances de <span class="math inline">\(\lambda\)</span> reproduit la série de Dyson. Les dérivées fonctionnelles de <span class="math inline">\(Z_0[J]\)</span> produisent toutes les contractions de Wick. Le dénominateur retire les bulles de vide. Les règles diagrammatiques sont donc contenues dans une seule identité fonctionnelle.</p>
+<p>Au premier ordre, la contribution au corrélateur à quatre points contient huit dérivées par rapport à <span class="math inline">\(J\)</span> : quatre provenant des points externes et quatre du vertex. Les termes qui relient chaque point externe au vertex sont au nombre de <span class="math inline">\(4!\)</span>, ce qui redonne</p>
+<p><span class="math display">\[
+-i\lambda\int d^4z\prod_{j=1}^{4}\Delta_F(x_j-z).
+\]</span></p>
+<p>La factorielle du vertex et le facteur de symétrie ont ainsi la même origine combinatoire dans les deux formulations.</p>
+<p><strong>Génératrice des corrélateurs connexes.</strong></p>
+<p>On définit</p>
+<p><span class="math display">\[
+\boxed{Z[J]=e^{iW[J]},}
+\]</span></p>
+<p>soit</p>
+<p><span class="math display">\[
+W[J]=-i\ln Z[J].
+\]</span></p>
+<p>Le logarithme sélectionne les graphes connexes. Cela suit de la propriété combinatoire selon laquelle l’exponentielle d’une somme de composantes connexes génère tous les ensembles, connexes ou non, de ces composantes.</p>
+<p>Les dérivées de <span class="math inline">\(W\)</span> produisent donc les corrélateurs connexes, avec les facteurs de <span class="math inline">\(i\)</span> compatibles avec la convention choisie :</p>
+<p><span class="math display">\[
+G_c^{(n)}(x_1,\ldots,x_n)
+=\left.
+\frac1{i^{n-1}}
+\frac{\delta^nW[J]}
+{\delta J(x_1)\cdots\delta J(x_n)}
+\right|_{J=0}.
+\]</span></p>
+<p>Vérifions <span class="math inline">\(n=2\)</span> dans la théorie libre. Comme</p>
+<p><span class="math display">\[
+W_0[J]=\frac i2J\Delta_FJ,
+\]</span></p>
+<p>on trouve</p>
+<p><span class="math display">\[
+\frac1i\frac{\delta^2W_0}{\delta J(x)\delta J(y)}
+=\Delta_F(x-y).
+\]</span></p>
+<p>La transformation de Legendre de <span class="math inline">\(W[J]\)</span> conduira plus tard à l’action effective et aux vertex irréductibles à une particule. Cette structure sera utile pour la renormalisation et la brisure spontanée, mais elle n’est pas nécessaire aux calculs d’arbre du présent chapitre.</p>
+</section>
+<section id="fermions-et-variables-de-grassmann" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="fermions-et-variables-de-grassmann"><span class="header-section-number">6.5</span> Fermions et variables de Grassmann</h3>
+<p>Une intégrale ordinaire sur des nombres complexes ne peut pas reproduire les signes d’anticommutation. On introduit donc des champs et des sources de <strong>Grassmann</strong> :</p>
+<p><span class="math display">\[
+\psi_\alpha\psi_\beta=-\psi_\beta\psi_\alpha,
+\qquad
+\eta_\alpha\eta_\beta=-\eta_\beta\eta_\alpha.
+\]</span></p>
+<p>En particulier,</p>
+<p><span class="math display">\[
+\eta_\alpha^2=0.
+\]</span></p>
+<p>L’intégration de Berezin est définie algébriquement par</p>
+<p><span class="math display">\[
+\int d\eta\,1=0,
+\qquad
+\int d\eta\,\eta=1.
+\]</span></p>
+<p>Pour un champ de Dirac, la fonctionnelle génératrice prend la forme</p>
+<p><span class="math display">\[
+\boxed{
+Z[\eta,\overline\eta]
+=\frac{
+\displaystyle
+\int\mathcal D\psi\,\mathcal D\overline\psi\,
+\exp\left\{iS[\psi,\overline\psi]
++i\int d^4x
+(\overline\eta\psi+\overline\psi\eta)
+\right\}
+}{
+\displaystyle
+\int\mathcal D\psi\,\mathcal D\overline\psi\,
+e^{iS[\psi,\overline\psi]}
+},
+\qquad Z[0,0]=1.
+}
+\]</span></p>
+<p>Les dérivées fonctionnelles par rapport à <span class="math inline">\(\eta\)</span> et <span class="math inline">\(\overline\eta\)</span> doivent être définies à gauche ou à droite, car leur ordre importe. L’intégrale gaussienne fermionique produit l’inverse de l’opérateur de Dirac, donc le propagateur <span class="math inline">\(S_F\)</span>, et ses dérivées reconstruisent le théorème de Wick fermionique avec les bons signes.</p>
+<p>Pour Yukawa, on introduit simultanément la source bosonique <span class="math inline">\(J\)</span> et les sources de Grassmann :</p>
+<p><span class="math display">\[
+Z[J,\eta,\overline\eta]
+=\frac1{\mathcal N}
+\int\mathcal D\phi\,
+\mathcal D\psi\,
+\mathcal D\overline\psi\,
+e^{iS+i\int(J\phi+\overline\eta\psi+\overline\psi\eta)},
+\qquad
+\mathcal N
+=\int\mathcal D\phi\,\mathcal D\psi\,
+\mathcal D\overline\psi\,e^{iS}.
+\]</span></p>
+<p>Le terme <span class="math inline">\(-g\overline\psi\psi\phi\)</span> devient un opérateur de trois dérivées fonctionnelles agissant sur les génératrices libres scalaire et fermionique. L’ordre de ces dérivées de Grassmann produit automatiquement les signes d’échange et le facteur <span class="math inline">\(-1\)</span> des boucles fermioniques.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Déterminants fermioniques">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Déterminants fermioniques
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une intégrale gaussienne bosonique produit schématiquement <span class="math inline">\((\det K)^{-1/2}\)</span>, tandis qu’une intégrale gaussienne de Grassmann produit <span class="math inline">\(\det K_D\)</span>. Cette inversion de puissance est une autre manifestation du contraste entre statistiques bosonique et fermionique. Elle deviendra particulièrement importante lors de la quantification des théories de jauge.</p>
+</div>
+</div>
+</section>
+<section id="rotation-de-wick-et-temps-euclidien" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="rotation-de-wick-et-temps-euclidien"><span class="header-section-number">6.6</span> Rotation de Wick et temps euclidien</h3>
+<p>L’intégrale de Minkowski contient le poids oscillant <span class="math inline">\(e^{iS}\)</span>. En effectuant formellement</p>
+<p><span class="math display">\[
+t=-i\tau,
+\]</span></p>
+<p>on passe à une action euclidienne <span class="math inline">\(S_E\)</span> et</p>
+<p><span class="math display">\[
+e^{iS}\longrightarrow e^{-S_E}.
+\]</span></p>
+<p>Pour un scalaire stable,</p>
+<p><span class="math display">\[
+S_E
+=\int d^4x_E\left[
+\frac12(\partial_E\phi)^2
++\frac12m^2\phi^2
++\frac{\lambda}{4!}\phi^4
+\right],
+\]</span></p>
+<p>qui est positive pour <span class="math inline">\(m^2\geq0\)</span> et <span class="math inline">\(\lambda&gt;0\)</span>. Le poids <span class="math inline">\(e^{-S_E}\)</span> est alors amorti et ressemble à un poids de mécanique statistique.</p>
+<p>La rotation de Wick n’est pas une simple substitution typographique. Elle suppose que les fonctions de corrélation peuvent être prolongées analytiquement sans traverser les singularités fixées par le <span class="math inline">\(i\epsilon\)</span>. Le retour vers le temps réel restitue les prescriptions causales appropriées.</p>
+<p><strong>Approximation de phase stationnaire et limite classique.</strong></p>
+<p>Rétablissons momentanément <span class="math inline">\(\hbar\)</span> :</p>
+<p><span class="math display">\[
+Z\sim\int\mathcal D\phi\,e^{iS[\phi]/\hbar}.
+\]</span></p>
+<p>Lorsque <span class="math inline">\(\hbar\to0\)</span>, les phases de configurations voisines s’annulent rapidement sauf près des configurations stationnaires,</p>
+<p><span class="math display">\[
+\delta S[\phi_{\mathrm{cl}}]=0.
+\]</span></p>
+<p>Ce sont précisément les solutions des équations classiques. En développant</p>
+<p><span class="math display">\[
+\phi=\phi_{\mathrm{cl}}+\sqrt\hbar\,\eta,
+\]</span></p>
+<p>le terme quadratique en <span class="math inline">\(\eta\)</span> donne les propagateurs sur le fond classique et les termes supérieurs donnent les vertex. L’expansion en boucles est ainsi aussi une expansion en puissances de <span class="math inline">\(\hbar\)</span> : les arbres constituent l’ordre dominant autour de la trajectoire stationnaire et chaque boucle ajoute une puissance quantique.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Arbre ne signifie pas automatiquement basse énergie">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Arbre ne signifie pas automatiquement basse énergie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’approximation en boucles est contrôlée par les couplages et par les paramètres cinématiques, pas uniquement par <span class="math inline">\(\hbar\)</span> écrit formellement. À haute énergie, de grands logarithmes ou un couplage effectif croissant peuvent rendre des corrections de boucle importantes même lorsque le couplage mesuré à une autre échelle semblait petit.</p>
+</div>
+</div>
+</section>
+<section id="deux-formulations-un-même-dictionnaire" class="level3" data-number="6.7">
+<h3 data-number="6.7" class="anchored" data-anchor-id="deux-formulations-un-même-dictionnaire"><span class="header-section-number">6.7</span> Deux formulations, un même dictionnaire</h3>
+<p>La quantification canonique et l’intégrale de chemin ne décrivent pas deux théories différentes. Elles organisent les mêmes prédictions selon deux langages complémentaires.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Formulation canonique</th>
+<th>Formulation fonctionnelle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>États physiques</td>
+<td>espace de Fock, créateurs et annihilateurs</td>
+<td>conditions aux limites et pôles des corrélateurs</td>
+</tr>
+<tr class="even">
+<td>Évolution</td>
+<td>opérateur <span class="math inline">\(U_I\)</span> et série de Dyson</td>
+<td>poids <span class="math inline">\(e^{iS}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Propagateur</td>
+<td>contraction d’opérateurs</td>
+<td>inverse de l’opérateur quadratique</td>
+</tr>
+<tr class="even">
+<td>Théorème de Wick</td>
+<td>réordonnement des modes</td>
+<td>moments d’une gaussienne</td>
+</tr>
+<tr class="odd">
+<td>Vertex</td>
+<td>insertion de <span class="math inline">\(H_I\)</span> ou <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span></td>
+<td>dérivées fonctionnelles de <span class="math inline">\(S_{\mathrm{int}}\)</span></td>
+</tr>
+<tr class="even">
+<td>Bulles de vide</td>
+<td>dénominateur de Gell-Mann–Low</td>
+<td>normalisation <span class="math inline">\(Z[0]=1\)</span></td>
+</tr>
+<tr class="odd">
+<td>Graphes connexes</td>
+<td>sélection combinatoire</td>
+<td>logarithme <span class="math inline">\(W=-i\ln Z\)</span></td>
+</tr>
+<tr class="even">
+<td>Fermions</td>
+<td>anticommutateurs</td>
+<td>variables de Grassmann</td>
+</tr>
+</tbody>
+</table>
+<p>La formulation canonique rend particulièrement clairs les états, l’unitarité et l’origine des signes. L’intégrale de chemin rend particulièrement claires la covariance, la combinatoire des graphes et la généralisation aux symétries de jauge. Les chapitres suivants utiliseront les deux points de vue.</p>
+</section>
+</section>
+<section id="méthode-de-calcul-et-synthèse" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="méthode-de-calcul-et-synthèse"><span class="header-section-number">7</span> Méthode de calcul et synthèse</h2>
+<section id="une-procédure-pratique-pour-un-calcul-darbre" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="une-procédure-pratique-pour-un-calcul-darbre"><span class="header-section-number">7.1</span> Une procédure pratique pour un calcul d’arbre</h3>
+<p>Face à un nouveau processus, on peut suivre la procédure suivante.</p>
+<p><strong>Étape 1 — Identifier le modèle et les symétries.</strong></p>
+<p>Écrire explicitement</p>
+<p><span class="math display">\[
+\mathcal L=\mathcal L_0+\mathcal L_{\mathrm{int}}.
+\]</span></p>
+<p>Vérifier la covariance, l’hermiticité et les charges conservées. Les symétries disent immédiatement quels processus sont interdits. Par exemple, Yukawa conserve le nombre fermionique, tandis que la symétrie <span class="math inline">\(\phi\to-\phi\)</span> de <span class="math inline">\(\phi^4\)</span> interdit les corrélateurs impairs.</p>
+<p><strong>Étape 2 — Fixer l’ordre minimal.</strong></p>
+<p>Compter le nombre et le type de lignes attachées à chaque vertex. Une diffusion <span class="math inline">\(\phi\phi\to\phi\phi\)</span> nécessite un vertex <span class="math inline">\(\phi^4\)</span>, donc commence à <span class="math inline">\(O(\lambda)\)</span>. Une diffusion fermion–scalaire nécessite deux vertex Yukawa, donc commence à <span class="math inline">\(O(g^2)\)</span>.</p>
+<p><strong>Étape 3 — Dessiner toutes les topologies.</strong></p>
+<p>Construire tous les graphes connexes amputés compatibles avec les états. Pour des particules identiques, inclure tous les appariements. Pour des fermions, fixer un ordre de référence et suivre les flèches.</p>
+<p><strong>Étape 4 — Traduire le graphe.</strong></p>
+<p>Associer à chaque élément son facteur analytique, imposer la conservation des moments et multiplier dans l’ordre correct le long des lignes fermioniques. Vérifier que chaque dénominateur correspond bien au carré de l’impulsion portée par la ligne interne.</p>
+<p><strong>Étape 5 — Contrôler l’amplitude.</strong></p>
+<p>Avant tout calcul de trace, vérifier :</p>
+<ul>
+<li>la dimension de <span class="math inline">\(\mathcal M\)</span> ;</li>
+<li>les charges à chaque vertex ;</li>
+<li>la covariance de Lorentz ;</li>
+<li>la symétrie ou l’antisymétrie sous échange de particules identiques ;</li>
+<li>les limites cinématiques simples ;</li>
+<li>les pôles attendus dans les canaux <span class="math inline">\(s,t,u\)</span>.</li>
+</ul>
+<p><strong>Étape 6 — Construire l’observable.</strong></p>
+<p>Additionner les amplitudes, prendre le module carré, sommer les états finaux, moyenner les états initiaux non préparés, puis intégrer sur l’espace de phase avec le flux et les facteurs d’identité corrects.</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal L
+\to
+\{\text{graphes}\}
+\to
+\mathcal M
+\to
+\overline{|\mathcal M|^2}
+\to
+d\Phi_n
+\to
+d\sigma\ \text{ou}\ d\Gamma.
+}
+\]</span></p>
+</section>
+<section id="pièges-conceptuels-fréquents" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="pièges-conceptuels-fréquents"><span class="header-section-number">7.2</span> Pièges conceptuels fréquents</h3>
+<p><strong>Confondre le diagramme avec un événement.</strong></p>
+<p>Un détecteur enregistre un état final, pas un diagramme particulier. Lorsque plusieurs diagrammes conduisent au même état, ils sont des alternatives indiscernables et leurs amplitudes interfèrent.</p>
+<p><strong>Mettre les lignes internes sur couche.</strong></p>
+<p>Une ligne interne est intégrée sur <span class="math inline">\(d^4k\)</span> et n’obéit pas en général à <span class="math inline">\(k^2=m^2\)</span>. Imposer cette condition supprimerait une partie essentielle de la fonction de Green. Seules certaines singularités permettent à plusieurs lignes internes de devenir simultanément physiques ; elles sont alors reliées à l’unitarité.</p>
+<p><strong>Conserver les propagateurs externes dans <span class="math inline">\(\mathcal M\)</span>.</strong></p>
+<p>Les propagateurs attachés aux points externes appartiennent au corrélateur. LSZ les ampute. Les règles directement destinées à <span class="math inline">\(i\mathcal M\)</span> ne leur associent donc pas de dénominateur ; elles leur associent seulement une fonction d’onde externe, comme <span class="math inline">\(u_s(p)\)</span> pour un fermion initial.</p>
+<p><strong>Oublier les graphes d’échange.</strong></p>
+<p>Des particules finales identiques ne portent pas d’étiquettes physiques. Tous les appariements compatibles doivent figurer dans l’amplitude. Le facteur <span class="math inline">\(1/S_f\)</span> de l’espace de phase ne remplace pas ces graphes : il corrige seulement le surcomptage des états finaux après le module carré.</p>
+<p><strong>Confondre ordre en couplage et probabilité.</strong></p>
+<p>Si</p>
+<p><span class="math display">\[
+\mathcal M=O(g^n),
+\]</span></p>
+<p>alors le terme diagonal <span class="math inline">\(|\mathcal M|^2\)</span> est <span class="math inline">\(O(g^{2n})\)</span>. Mais l’interférence avec une correction <span class="math inline">\(O(g^{n+2})\)</span> produit déjà une correction de probabilité <span class="math inline">\(O(g^{2n+2})\)</span>. Il faut donc développer l’amplitude avant de tronquer systématiquement le module carré.</p>
+<p><strong>Prendre une divergence pour une prédiction infinie.</strong></p>
+<p>Une intégrale de boucle divergente indique que les paramètres nus du lagrangien ne sont pas directement les paramètres mesurés. La régularisation et la renormalisation réorganisent la série en termes de quantités physiques. Conclure immédiatement qu’une observable est infinie serait prématuré ; ignorer la divergence le serait tout autant.</p>
+</section>
+<section id="bilan-conceptuel" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="bilan-conceptuel"><span class="header-section-number">7.3</span> Bilan conceptuel</h3>
+<p>Le chapitre précédent avait établi que les propagateurs sont les fonctions de Green des opérateurs cinétiques libres. Le présent chapitre montre pourquoi ces mêmes propagateurs deviennent les lignes des diagrammes : ils sont les contractions produites lorsqu’on réordonne les champs libres dans la série de Dyson, ou les inverses de la partie quadratique dans l’intégrale de chemin.</p>
+<p>Les vertex proviennent des insertions locales de <span class="math inline">\(\mathcal L_{\mathrm{int}}\)</span>. Les deltas de conservation proviennent de l’intégration sur leurs positions. Les impulsions de boucle sont les variables internes que ces deltas ne suffisent pas à fixer. Les facteurs de symétrie comptent les contractions équivalentes. Les signes fermioniques proviennent de l’anticommutation ou, de manière équivalente, des variables de Grassmann.</p>
+<p>Enfin, un corrélateur n’est pas encore une amplitude de diffusion. La réduction LSZ isole les pôles des particules stables, ampute les lignes externes et place leurs impulsions sur la couche de masse. L’amplitude <span class="math inline">\(\mathcal M\)</span> doit encore être mise au carré, sommée ou moyennée sur les états internes, puis combinée au flux et à l’espace de phase pour produire <span class="math inline">\(d\sigma\)</span> ou <span class="math inline">\(d\Gamma\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="La lecture unifiée du chapitre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>La lecture unifiée du chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les règles de Feynman ne constituent pas un nouveau postulat ajouté à la théorie. Elles condensent la chaîne suivante :</p>
+<p><span class="math display">\[
+\boxed{
+\begin{array}{c}
+\text{action locale et champs libres}\\
+\downarrow\\
+\text{représentation d'interaction et série de Dyson}\\
+\downarrow\\
+\text{ordre chronologique et théorème de Wick}\\
+\downarrow\\
+\text{propagateurs, vertex et facteurs combinatoires}\\
+\downarrow\\
+\text{corrélateurs connexes}\\
+\downarrow\ \mathrm{LSZ}\\
+\text{amplitudes entre particules asymptotiques}\\
+\downarrow\\
+\text{sections efficaces et largeurs de désintégration}
+\end{array}
+}
+\]</span></p>
+<p>Le diagramme est le langage compact de cette dérivation, pas une image littérale du phénomène microscopique.</p>
+</div>
+</div>
+<p><strong>Ce que ce chapitre prépare.</strong></p>
+<p>Nous savons désormais transformer un terme d’interaction en une amplitude perturbative. Il reste cependant à comprendre pourquoi les interactions fondamentales prennent des formes aussi contraintes.</p>
+<p>Le chapitre suivant introduira les symétries de jauge locales et les théories de Yang–Mills. Il expliquera pourquoi un champ vectoriel médiateur accompagne une symétrie locale, pourquoi les dérivées deviennent covariantes et pourquoi les théories non abéliennes possèdent des auto-interactions. Le chapitre consacré à la QED appliquera ensuite les règles présentes ici aux photons et aux fermions chargés. Enfin, le chapitre de renormalisation donnera un sens systématique aux intégrales de boucle divergentes seulement identifiées dans ce cours.</p>
+</section>
+</section>
+<section id="repères-bibliographiques" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="repères-bibliographiques"><span class="header-section-number">8</span> Repères bibliographiques</h2>
+<p>Pour prolonger ce chapitre, on pourra consulter :</p>
+<ul>
+<li>F. Piazza, <em>Théorie quantique des champs</em>, notes du programme de Master 2 de l’Université d’Aix-Marseille, en particulier les chapitres sur la matrice <span class="math inline">\(S\)</span>, la représentation d’interaction, Dyson, Wick, les diagrammes et LSZ ;</li>
+<li>F. Mandl et G. Shaw, <em>Quantum Field Theory</em>, chapitres 6 et 7, pour l’expansion de la matrice <span class="math inline">\(S\)</span>, le théorème de Wick et la dérivation opératorielle des règles de Feynman ;</li>
+<li>M. E. Peskin et D. V. Schroeder, <em>An Introduction to Quantum Field Theory</em>, chapitres 4 et 9, pour LSZ, les règles diagrammatiques et l’intégrale fonctionnelle ;</li>
+<li>D. Tong, <a href="https://davidtong.org/pdfs/teaching/quantum-field-theory/qft3.pdf"><em>Quantum Field Theory — Interacting Fields</em></a>, pour une présentation pédagogique de Dyson, Wick, des amplitudes, des corrélateurs et de la réduction ;</li>
+<li>H. Liu, <a href="https://ocw.mit.edu/courses/8-323-relativistic-quantum-field-theory-i-spring-2023/"><em>Relativistic Quantum Field Theory I</em></a>, MIT OpenCourseWare, notamment les cours sur l’intégrale de chemin, la fonctionnelle génératrice, les corrélateurs, les sections efficaces et les largeurs ;</li>
+<li>R. P. Feynman, <a href="https://link.aps.org/doi/10.1103/PhysRev.76.769"><em>Space-Time Approach to Quantum Electrodynamics</em></a>, pour l’article fondateur de 1949 sur la formulation espace-temps et les règles graphiques ;</li>
+<li>F. J. Dyson, <em>The Radiation Theories of Tomonaga, Schwinger, and Feynman</em> et <em>The S Matrix in Quantum Electrodynamics</em>, pour l’organisation covariante de la théorie perturbative ;</li>
+<li>G. C. Wick, <em>The Evaluation of the Collision Matrix</em>, pour le théorème de 1950 qui systématise les contractions ;</li>
+<li>H. Lehmann, K. Symanzik et W. Zimmermann, <em>Zur Formulierung quantisierter Feldtheorien</em>, pour la formule de réduction reliant corrélateurs et matrice <span class="math inline">\(S\)</span>.</li>
+</ul>
+<p><a href="../cours.html">← Retour à la liste des cours</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,3645 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Un cours sur l’écriture géométrique de l’électromagnétisme, accompagné d’exercices corrigés.">
+
+<title>Électromagnétisme théorique – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#objectifs-et-conventions" id="toc-objectifs-et-conventions" class="nav-link active" data-scroll-target="#objectifs-et-conventions"><span class="header-section-number">1</span> Objectifs et conventions</a>
+  <ul class="collapse">
+  <li><a href="#conventions-utilisées" id="toc-conventions-utilisées" class="nav-link" data-scroll-target="#conventions-utilisées"><span class="header-section-number">1.1</span> Conventions utilisées</a></li>
+  </ul></li>
+  <li><a href="#de-lalgèbre-linéaire-à-lalgèbre-extérieure" id="toc-de-lalgèbre-linéaire-à-lalgèbre-extérieure" class="nav-link" data-scroll-target="#de-lalgèbre-linéaire-à-lalgèbre-extérieure"><span class="header-section-number">2</span> De l’algèbre linéaire à l’algèbre extérieure</a>
+  <ul class="collapse">
+  <li><a href="#vecteurs-covecteurs-et-dualité" id="toc-vecteurs-covecteurs-et-dualité" class="nav-link" data-scroll-target="#vecteurs-covecteurs-et-dualité"><span class="header-section-number">2.1</span> Vecteurs, covecteurs et dualité</a></li>
+  <li><a href="#formes-multilinéaires-alternées" id="toc-formes-multilinéaires-alternées" class="nav-link" data-scroll-target="#formes-multilinéaires-alternées"><span class="header-section-number">2.2</span> Formes multilinéaires alternées</a></li>
+  <li><a href="#le-produit-extérieur" id="toc-le-produit-extérieur" class="nav-link" data-scroll-target="#le-produit-extérieur"><span class="header-section-number">2.3</span> Le produit extérieur</a></li>
+  <li><a href="#interprétation-géométrique" id="toc-interprétation-géométrique" class="nav-link" data-scroll-target="#interprétation-géométrique"><span class="header-section-number">2.4</span> Interprétation géométrique</a></li>
+  <li><a href="#lalgèbre-extérieure-ou-algèbre-de-grassmann" id="toc-lalgèbre-extérieure-ou-algèbre-de-grassmann" class="nav-link" data-scroll-target="#lalgèbre-extérieure-ou-algèbre-de-grassmann"><span class="header-section-number">2.5</span> L’algèbre extérieure ou algèbre de Grassmann</a></li>
+  </ul></li>
+  <li><a href="#formes-différentielles-et-calcul-extérieur" id="toc-formes-différentielles-et-calcul-extérieur" class="nav-link" data-scroll-target="#formes-différentielles-et-calcul-extérieur"><span class="header-section-number">3</span> Formes différentielles et calcul extérieur</a>
+  <ul class="collapse">
+  <li><a href="#des-formes-algébriques-aux-champs-de-formes" id="toc-des-formes-algébriques-aux-champs-de-formes" class="nav-link" data-scroll-target="#des-formes-algébriques-aux-champs-de-formes"><span class="header-section-number">3.1</span> Des formes algébriques aux champs de formes</a></li>
+  <li><a href="#la-dérivée-extérieure" id="toc-la-dérivée-extérieure" class="nav-link" data-scroll-target="#la-dérivée-extérieure"><span class="header-section-number">3.2</span> La dérivée extérieure</a></li>
+  <li><a href="#tiré-en-arrière-et-invariance-par-changement-de-coordonnées" id="toc-tiré-en-arrière-et-invariance-par-changement-de-coordonnées" class="nav-link" data-scroll-target="#tiré-en-arrière-et-invariance-par-changement-de-coordonnées"><span class="header-section-number">3.3</span> Tiré en arrière et invariance par changement de coordonnées</a></li>
+  <li><a href="#intégration-et-théorème-de-stokes-généralisé" id="toc-intégration-et-théorème-de-stokes-généralisé" class="nav-link" data-scroll-target="#intégration-et-théorème-de-stokes-généralisé"><span class="header-section-number">3.4</span> Intégration et théorème de Stokes généralisé</a></li>
+  <li><a href="#produit-intérieur-et-dérivée-de-lie" id="toc-produit-intérieur-et-dérivée-de-lie" class="nav-link" data-scroll-target="#produit-intérieur-et-dérivée-de-lie"><span class="header-section-number">3.5</span> Produit intérieur et dérivée de Lie</a></li>
+  <li><a href="#lopérateur-de-hodge" id="toc-lopérateur-de-hodge" class="nav-link" data-scroll-target="#lopérateur-de-hodge"><span class="header-section-number">3.6</span> L’opérateur de Hodge</a></li>
+  <li><a href="#codifférentielle" id="toc-codifférentielle" class="nav-link" data-scroll-target="#codifférentielle"><span class="header-section-number">3.7</span> Codifférentielle</a></li>
+  <li><a href="#dictionnaire-avec-lanalyse-vectorielle-en-dimension-trois" id="toc-dictionnaire-avec-lanalyse-vectorielle-en-dimension-trois" class="nav-link" data-scroll-target="#dictionnaire-avec-lanalyse-vectorielle-en-dimension-trois"><span class="header-section-number">3.8</span> Dictionnaire avec l’analyse vectorielle en dimension trois</a></li>
+  </ul></li>
+  <li><a href="#le-champ-électromagnétique-sur-lespace-temps" id="toc-le-champ-électromagnétique-sur-lespace-temps" class="nav-link" data-scroll-target="#le-champ-électromagnétique-sur-lespace-temps"><span class="header-section-number">4</span> Le champ électromagnétique sur l’espace-temps</a>
+  <ul class="collapse">
+  <li><a href="#le-potentiel-comme-1-forme" id="toc-le-potentiel-comme-1-forme" class="nav-link" data-scroll-target="#le-potentiel-comme-1-forme"><span class="header-section-number">4.1</span> Le potentiel comme 1-forme</a></li>
+  <li><a href="#dépendance-à-lobservateur" id="toc-dépendance-à-lobservateur" class="nav-link" data-scroll-target="#dépendance-à-lobservateur"><span class="header-section-number">4.2</span> Dépendance à l’observateur</a></li>
+  <li><a href="#dual-de-hodge-du-champ" id="toc-dual-de-hodge-du-champ" class="nav-link" data-scroll-target="#dual-de-hodge-du-champ"><span class="header-section-number">4.3</span> Dual de Hodge du champ</a></li>
+  <li><a href="#le-courant-électrique-comme-3-forme" id="toc-le-courant-électrique-comme-3-forme" class="nav-link" data-scroll-target="#le-courant-électrique-comme-3-forme"><span class="header-section-number">4.4</span> Le courant électrique comme 3-forme</a></li>
+  <li><a href="#les-deux-équations-de-maxwell" id="toc-les-deux-équations-de-maxwell" class="nav-link" data-scroll-target="#les-deux-équations-de-maxwell"><span class="header-section-number">4.5</span> Les deux équations de Maxwell</a></li>
+  <li><a href="#conservation-de-la-charge" id="toc-conservation-de-la-charge" class="nav-link" data-scroll-target="#conservation-de-la-charge"><span class="header-section-number">4.6</span> Conservation de la charge</a></li>
+  <li><a href="#potentiel-lemme-de-poincaré-et-liberté-de-jauge" id="toc-potentiel-lemme-de-poincaré-et-liberté-de-jauge" class="nav-link" data-scroll-target="#potentiel-lemme-de-poincaré-et-liberté-de-jauge"><span class="header-section-number">4.7</span> Potentiel, lemme de Poincaré et liberté de jauge</a></li>
+  <li><a href="#la-jauge-de-lorenz-et-léquation-donde" id="toc-la-jauge-de-lorenz-et-léquation-donde" class="nav-link" data-scroll-target="#la-jauge-de-lorenz-et-léquation-donde"><span class="header-section-number">4.8</span> La jauge de Lorenz et l’équation d’onde</a></li>
+  </ul></li>
+  <li><a href="#dynamique-symétries-et-structure-géométrique" id="toc-dynamique-symétries-et-structure-géométrique" class="nav-link" data-scroll-target="#dynamique-symétries-et-structure-géométrique"><span class="header-section-number">5</span> Dynamique, symétries et structure géométrique</a>
+  <ul class="collapse">
+  <li><a href="#force-de-lorentz" id="toc-force-de-lorentz" class="nav-link" data-scroll-target="#force-de-lorentz"><span class="header-section-number">5.1</span> Force de Lorentz</a></li>
+  <li><a href="#principe-daction" id="toc-principe-daction" class="nav-link" data-scroll-target="#principe-daction"><span class="header-section-number">5.2</span> Principe d’action</a></li>
+  <li><a href="#jauge-et-conservation-du-courant" id="toc-jauge-et-conservation-du-courant" class="nav-link" data-scroll-target="#jauge-et-conservation-du-courant"><span class="header-section-number">5.3</span> Jauge et conservation du courant</a></li>
+  <li><a href="#invariants-de-lorentz" id="toc-invariants-de-lorentz" class="nav-link" data-scroll-target="#invariants-de-lorentz"><span class="header-section-number">5.4</span> Invariants de Lorentz</a></li>
+  <li><a href="#dualité-électrique-magnétique" id="toc-dualité-électrique-magnétique" class="nav-link" data-scroll-target="#dualité-électrique-magnétique"><span class="header-section-number">5.5</span> Dualité électrique-magnétique</a></li>
+  <li><a href="#énergie-et-impulsion-du-champ" id="toc-énergie-et-impulsion-du-champ" class="nav-link" data-scroll-target="#énergie-et-impulsion-du-champ"><span class="header-section-number">5.6</span> Énergie et impulsion du champ</a></li>
+  <li><a href="#formulation-pré-métrique-et-milieux-matériels" id="toc-formulation-pré-métrique-et-milieux-matériels" class="nav-link" data-scroll-target="#formulation-pré-métrique-et-milieux-matériels"><span class="header-section-number">5.7</span> Formulation pré-métrique et milieux matériels</a></li>
+  <li><a href="#topologie-fermé-ne-signifie-pas-toujours-exact" id="toc-topologie-fermé-ne-signifie-pas-toujours-exact" class="nav-link" data-scroll-target="#topologie-fermé-ne-signifie-pas-toujours-exact"><span class="header-section-number">5.8</span> Topologie : fermé ne signifie pas toujours exact</a></li>
+  </ul></li>
+  <li><a href="#synthèse" id="toc-synthèse" class="nav-link" data-scroll-target="#synthèse"><span class="header-section-number">6</span> Synthèse</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication"><span class="header-section-number">7</span> Exercices d’application</a>
+  <ul class="collapse">
+  <li><a href="#exercice-1-calculs-de-produits-extérieurs" id="toc-exercice-1-calculs-de-produits-extérieurs" class="nav-link" data-scroll-target="#exercice-1-calculs-de-produits-extérieurs"><span class="header-section-number">7.1</span> Exercice 1 — Calculs de produits extérieurs</a></li>
+  <li><a href="#exercice-2-structure-dune-algèbre-de-grassmann" id="toc-exercice-2-structure-dune-algèbre-de-grassmann" class="nav-link" data-scroll-target="#exercice-2-structure-dune-algèbre-de-grassmann"><span class="header-section-number">7.2</span> Exercice 2 — Structure d’une algèbre de Grassmann</a></li>
+  <li><a href="#exercice-3-décomposabilité-dune-2-forme" id="toc-exercice-3-décomposabilité-dune-2-forme" class="nav-link" data-scroll-target="#exercice-3-décomposabilité-dune-2-forme"><span class="header-section-number">7.3</span> Exercice 3 — Décomposabilité d’une 2-forme</a></li>
+  <li><a href="#exercice-4-dérivée-extérieure-et-nilpotence" id="toc-exercice-4-dérivée-extérieure-et-nilpotence" class="nav-link" data-scroll-target="#exercice-4-dérivée-extérieure-et-nilpotence"><span class="header-section-number">7.4</span> Exercice 4 — Dérivée extérieure et nilpotence</a></li>
+  <li><a href="#exercice-5-théorème-de-stokes-sur-un-disque" id="toc-exercice-5-théorème-de-stokes-sur-un-disque" class="nav-link" data-scroll-target="#exercice-5-théorème-de-stokes-sur-un-disque"><span class="header-section-number">7.5</span> Exercice 5 — Théorème de Stokes sur un disque</a></li>
+  <li><a href="#exercice-6-formule-de-cartan" id="toc-exercice-6-formule-de-cartan" class="nav-link" data-scroll-target="#exercice-6-formule-de-cartan"><span class="header-section-number">7.6</span> Exercice 6 — Formule de Cartan</a></li>
+  <li><a href="#exercice-7-retrouver-rotationnel-et-divergence" id="toc-exercice-7-retrouver-rotationnel-et-divergence" class="nav-link" data-scroll-target="#exercice-7-retrouver-rotationnel-et-divergence"><span class="header-section-number">7.7</span> Exercice 7 — Retrouver rotationnel et divergence</a></li>
+  <li><a href="#exercice-8-dual-de-hodge-en-espace-temps" id="toc-exercice-8-dual-de-hodge-en-espace-temps" class="nav-link" data-scroll-target="#exercice-8-dual-de-hodge-en-espace-temps"><span class="header-section-number">7.8</span> Exercice 8 — Dual de Hodge en espace-temps</a></li>
+  <li><a href="#exercice-9-vérification-complète-des-équations-de-maxwell" id="toc-exercice-9-vérification-complète-des-équations-de-maxwell" class="nav-link" data-scroll-target="#exercice-9-vérification-complète-des-équations-de-maxwell"><span class="header-section-number">7.9</span> Exercice 9 — Vérification complète des équations de Maxwell</a></li>
+  <li><a href="#exercice-10-deux-potentiels-pour-un-même-champ" id="toc-exercice-10-deux-potentiels-pour-un-même-champ" class="nav-link" data-scroll-target="#exercice-10-deux-potentiels-pour-un-même-champ"><span class="header-section-number">7.10</span> Exercice 10 — Deux potentiels pour un même champ</a></li>
+  <li><a href="#exercice-11-classification-dun-champ-par-ses-invariants" id="toc-exercice-11-classification-dun-champ-par-ses-invariants" class="nav-link" data-scroll-target="#exercice-11-classification-dun-champ-par-ses-invariants"><span class="header-section-number">7.11</span> Exercice 11 — Classification d’un champ par ses invariants</a></li>
+  <li><a href="#exercice-12-variation-de-laction-et-courant-conservé" id="toc-exercice-12-variation-de-laction-et-courant-conservé" class="nav-link" data-scroll-target="#exercice-12-variation-de-laction-et-courant-conservé"><span class="header-section-number">7.12</span> Exercice 12 — Variation de l’action et courant conservé</a></li>
+  </ul></li>
+  <li><a href="#problèmes-de-synthèse-et-prolongements" id="toc-problèmes-de-synthèse-et-prolongements" class="nav-link" data-scroll-target="#problèmes-de-synthèse-et-prolongements"><span class="header-section-number">8</span> Problèmes de synthèse et prolongements</a>
+  <ul class="collapse">
+  <li><a href="#problème-1-onde-plane-et-caractère-nul-du-champ" id="toc-problème-1-onde-plane-et-caractère-nul-du-champ" class="nav-link" data-scroll-target="#problème-1-onde-plane-et-caractère-nul-du-champ"><span class="header-section-number">8.1</span> Problème 1 — Onde plane et caractère nul du champ</a></li>
+  <li><a href="#problème-2-dualité-et-décomposition-auto-duale" id="toc-problème-2-dualité-et-décomposition-auto-duale" class="nav-link" data-scroll-target="#problème-2-dualité-et-décomposition-auto-duale"><span class="header-section-number">8.2</span> Problème 2 — Dualité et décomposition auto-duale</a></li>
+  <li><a href="#méga-problème-monopôle-magnétique-potentiels-locaux-et-quantification-de-dirac" id="toc-méga-problème-monopôle-magnétique-potentiels-locaux-et-quantification-de-dirac" class="nav-link" data-scroll-target="#méga-problème-monopôle-magnétique-potentiels-locaux-et-quantification-de-dirac"><span class="header-section-number">8.3</span> Méga-problème — Monopôle magnétique, potentiels locaux et quantification de Dirac</a></li>
+  </ul></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin"><span class="header-section-number">9</span> Pour aller plus loin</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Électromagnétisme théorique</h1>
+<p class="subtitle lead">Algèbre extérieure, formes différentielles, jauge et structure géométrique des équations de Maxwell</p>
+</div>
+
+<div>
+  <div class="description">
+    Un cours sur l’écriture géométrique de l’électromagnétisme, accompagné d’exercices corrigés.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="Idée directrice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Idée directrice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’électromagnétisme n’est pas seulement une théorie de deux champs vectoriels, <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span>. Ces deux champs sont les composantes, dépendantes de l’observateur, d’un objet géométrique unique : une <strong>2-forme</strong> <span class="math inline">\(F\)</span> définie sur l’espace-temps.</p>
+<p>Dans ce langage, les quatre équations de Maxwell se condensent en deux équations :</p>
+<p><span class="math display">\[
+\boxed{dF=0},
+\qquad
+\boxed{d\star F=J}.
+\]</span></p>
+<p>La première ne dépend que de la structure différentielle de l’espace-temps. La seconde fait intervenir la métrique, par l’intermédiaire de l’opérateur de Hodge <span class="math inline">\(\star\)</span>. Cette séparation révèle ce qui, dans l’électromagnétisme, relève de la topologie et ce qui relève de la géométrie métrique.</p>
+</div>
+</div>
+<section id="objectifs-et-conventions" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objectifs-et-conventions"><span class="header-section-number">1</span> Objectifs et conventions</h2>
+<p>À l’issue de ce chapitre, on saura :</p>
+<ul>
+<li>construire l’algèbre extérieure d’un espace vectoriel ;</li>
+<li>manipuler le produit extérieur, les formes différentielles et la dérivée extérieure ;</li>
+<li>distinguer les structures qui exigent une métrique de celles qui n’en exigent pas ;</li>
+<li>reformuler les équations de Maxwell sous la forme <span class="math inline">\(dF=0\)</span> et <span class="math inline">\(d\star F=J\)</span> ;</li>
+<li>comprendre le potentiel électromagnétique comme une connexion de jauge ;</li>
+<li>dériver les équations du champ à partir d’une action ;</li>
+<li>interpréter les invariants de Lorentz, la dualité électrique-magnétique et certains effets topologiques.</li>
+</ul>
+<section id="conventions-utilisées" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="conventions-utilisées"><span class="header-section-number">1.1</span> Conventions utilisées</h3>
+<p>Nous travaillons principalement en unités de Heaviside–Lorentz avec</p>
+<p><span class="math display">\[
+c=\varepsilon_0=\mu_0=1.
+\]</span></p>
+<p>Les coordonnées de l’espace-temps de Minkowski sont</p>
+<p><span class="math display">\[
+(x^0,x^1,x^2,x^3)=(t,x,y,z),
+\]</span></p>
+<p>et la métrique a pour signature</p>
+<p><span class="math display">\[
+\eta=\operatorname{diag}(-1,+1,+1,+1).
+\]</span></p>
+<p>L’orientation est fixée par la forme volume</p>
+<p><span class="math display">\[
+\operatorname{vol}=dt\wedge dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Ces choix ne sont pas universels. Une autre signature ou une autre convention pour le potentiel peut modifier certains signes intermédiaires, mais jamais les prédictions physiques. Toutes les formules de ce chapitre sont cohérentes avec les conventions ci-dessus.</p>
+</section>
+</section>
+<section id="de-lalgèbre-linéaire-à-lalgèbre-extérieure" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="de-lalgèbre-linéaire-à-lalgèbre-extérieure"><span class="header-section-number">2</span> De l’algèbre linéaire à l’algèbre extérieure</h2>
+<section id="vecteurs-covecteurs-et-dualité" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="vecteurs-covecteurs-et-dualité"><span class="header-section-number">2.1</span> Vecteurs, covecteurs et dualité</h3>
+<p>Soit <span class="math inline">\(V\)</span> un espace vectoriel réel de dimension <span class="math inline">\(n\)</span>. Un vecteur <span class="math inline">\(v\in V\)</span> est un objet sur lequel on peut effectuer des combinaisons linéaires. Un <strong>covecteur</strong> est une application linéaire</p>
+<p><span class="math display">\[
+\alpha:V\longrightarrow\mathbb R.
+\]</span></p>
+<p>L’ensemble des covecteurs constitue l’espace dual <span class="math inline">\(V^\ast\)</span>. Si <span class="math inline">\((e_1,\ldots,e_n)\)</span> est une base de <span class="math inline">\(V\)</span>, sa base duale <span class="math inline">\((e^1,\ldots,e^n)\)</span> est définie par</p>
+<p><span class="math display">\[
+e^i(e_j)=\delta^i{}_j.
+\]</span></p>
+<p>Ainsi, pour</p>
+<p><span class="math display">\[
+v=v^i e_i,
+\qquad
+\alpha=\alpha_i e^i,
+\]</span></p>
+<p>on a</p>
+<p><span class="math display">\[
+\alpha(v)=\alpha_i v^i.
+\]</span></p>
+<p>Dans ces expressions et dans la suite, tout indice répété une fois en position haute et une fois en position basse est sommé.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Un vecteur n’est pas naturellement un covecteur">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Un vecteur n’est pas naturellement un covecteur
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sans structure supplémentaire, <span class="math inline">\(V\)</span> et <span class="math inline">\(V^\ast\)</span> sont deux espaces distincts. Une métrique non dégénérée <span class="math inline">\(g\)</span> permet de les identifier grâce aux applications musicales</p>
+<p><span class="math display">\[
+\flat:V\to V^\ast,
+\qquad
+v^\flat=g(v,\,cdot),
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\sharp:V^\ast\to V,
+\qquad
+\alpha^\sharp\ \text{tel que}\ g(\alpha^\sharp,\cdot)=\alpha.
+\]</span></p>
+<p>Cette identification dépend de <span class="math inline">\(g\)</span>. En géométrie différentielle, il est donc important de ne pas confondre trop tôt vecteurs et covecteurs.</p>
+</div>
+</div>
+</section>
+<section id="formes-multilinéaires-alternées" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="formes-multilinéaires-alternées"><span class="header-section-number">2.2</span> Formes multilinéaires alternées</h3>
+<p>Une <span class="math inline">\(p\)</span>-forme sur <span class="math inline">\(V\)</span> est une application multilinéaire alternée</p>
+<p><span class="math display">\[
+\omega:\underbrace{V\times\cdots\times V}_{p\text{ fois}}\longrightarrow\mathbb R.
+\]</span></p>
+<p>Le mot « alternée » signifie que l’échange de deux arguments change le signe :</p>
+<p><span class="math display">\[
+\omega(\ldots,v_i,\ldots,v_j,\ldots)
+=
+-\omega(\ldots,v_j,\ldots,v_i,\ldots).
+\]</span></p>
+<p>En particulier, si deux arguments sont égaux, alors</p>
+<p><span class="math display">\[
+\omega(\ldots,v,\ldots,v,\ldots)=0.
+\]</span></p>
+<p>L’espace des <span class="math inline">\(p\)</span>-formes est noté <span class="math inline">\(\Lambda^p(V^\ast)\)</span>. On pose</p>
+<p><span class="math display">\[
+\Lambda^0(V^\ast)=\mathbb R,
+\qquad
+\Lambda^1(V^\ast)=V^\ast.
+\]</span></p>
+<p>Pour <span class="math inline">\(p&gt;n\)</span>, toute <span class="math inline">\(p\)</span>-forme est nulle, car parmi <span class="math inline">\(p\)</span> vecteurs d’un espace de dimension <span class="math inline">\(n\)</span>, il existe nécessairement une dépendance linéaire.</p>
+<p>Une base de <span class="math inline">\(\Lambda^p(V^\ast)\)</span> est donnée par</p>
+<p><span class="math display">\[
+e^{i_1}\wedge\cdots\wedge e^{i_p},
+\qquad
+1\leq i_1&lt;\cdots&lt;i_p\leq n.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\boxed{\dim\Lambda^p(V^\ast)=\binom np}.
+\]</span></p>
+</section>
+<section id="le-produit-extérieur" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="le-produit-extérieur"><span class="header-section-number">2.3</span> Le produit extérieur</h3>
+<p>Le produit extérieur, ou produit wedge, combine une <span class="math inline">\(p\)</span>-forme <span class="math inline">\(\alpha\)</span> et une <span class="math inline">\(q\)</span>-forme <span class="math inline">\(\beta\)</span> pour produire une <span class="math inline">\((p+q)\)</span>-forme :</p>
+<p><span class="math display">\[
+\wedge:\Lambda^p(V^\ast)\times\Lambda^q(V^\ast)
+\longrightarrow\Lambda^{p+q}(V^\ast).
+\]</span></p>
+<p>Il est obtenu en antisymétrisant le produit tensoriel. Avec une antisymétrisation normalisée, ses composantes sont</p>
+<p><span class="math display">\[
+(\alpha\wedge\beta)_{i_1\ldots i_{p+q}}
+=
+\frac{(p+q)!}{p!q!}
+\alpha_{[i_1\ldots i_p}\beta_{i_{p+1}\ldots i_{p+q}]}.
+\]</span></p>
+<p>Pour deux 1-formes, la définition prend la forme particulièrement simple</p>
+<p><span class="math display">\[
+(\alpha\wedge\beta)(u,v)
+=
+\alpha(u)\beta(v)-\alpha(v)\beta(u).
+\]</span></p>
+<p>Si</p>
+<p><span class="math display">\[
+\alpha=\alpha_i e^i,
+\qquad
+\beta=\beta_j e^j,
+\]</span></p>
+<p>alors</p>
+<p><span class="math display">\[
+\alpha\wedge\beta
+=
+\sum_{i&lt;j}(\alpha_i\beta_j-\alpha_j\beta_i)e^i\wedge e^j.
+\]</span></p>
+<p>Le produit extérieur vérifie trois propriétés fondamentales :</p>
+<p><span class="math display">\[
+(\alpha+\alpha')\wedge\beta
+=
+\alpha\wedge\beta+\alpha'\wedge\beta,
+\]</span></p>
+<p><span class="math display">\[
+(\alpha\wedge\beta)\wedge\gamma
+=
+\alpha\wedge(\beta\wedge\gamma),
+\]</span></p>
+<p>et, si <span class="math inline">\(\deg\alpha=p\)</span> et <span class="math inline">\(\deg\beta=q\)</span>,</p>
+<p><span class="math display">\[
+\boxed{\alpha\wedge\beta=(-1)^{pq}\beta\wedge\alpha.}
+\]</span></p>
+<p>Cette dernière relation est appelée <strong>commutativité graduée</strong>.</p>
+<p>Pour une 1-forme <span class="math inline">\(\alpha\)</span>,</p>
+<p><span class="math display">\[
+\alpha\wedge\alpha=-\alpha\wedge\alpha,
+\]</span></p>
+<p>donc, sur <span class="math inline">\(\mathbb R\)</span> ou <span class="math inline">\(\mathbb C\)</span>,</p>
+<p><span class="math display">\[
+\alpha\wedge\alpha=0.
+\]</span></p>
+<p>Plus généralement, toute forme de degré impair vérifie</p>
+<p><span class="math display">\[
+\omega\wedge\omega=0.
+\]</span></p>
+<p>En revanche, une forme de degré pair peut avoir un carré extérieur non nul. Par exemple, dans un espace de dimension quatre,</p>
+<p><span class="math display">\[
+\omega=e^1\wedge e^2+e^3\wedge e^4
+\]</span></p>
+<p>donne</p>
+<p><span class="math display">\[
+\omega\wedge\omega
+=2e^1\wedge e^2\wedge e^3\wedge e^4\neq0.
+\]</span></p>
+<p>Le facteur <span class="math inline">\(2\)</span> provient du fait que deux 2-formes commutent au sens gradué.</p>
+</section>
+<section id="interprétation-géométrique" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="interprétation-géométrique"><span class="header-section-number">2.4</span> Interprétation géométrique</h3>
+<p>Une 1-forme mesure une composante orientée le long d’une direction. Une 2-forme mesure un élément de surface orienté, une 3-forme un élément de volume orienté, et ainsi de suite.</p>
+<p>Pour deux covecteurs <span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span>, la quantité</p>
+<p><span class="math display">\[
+(\alpha\wedge\beta)(u,v)
+\]</span></p>
+<p>est l’aire orientée du parallélogramme formé par les couples de nombres</p>
+<p><span class="math display">\[
+(\alpha(u),\beta(u)),
+\qquad
+(\alpha(v),\beta(v)).
+\]</span></p>
+<p>Elle s’annule si <span class="math inline">\(u\)</span> et <span class="math inline">\(v\)</span> sont linéairement dépendants, ce qui explique naturellement l’antisymétrie.</p>
+</section>
+<section id="lalgèbre-extérieure-ou-algèbre-de-grassmann" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="lalgèbre-extérieure-ou-algèbre-de-grassmann"><span class="header-section-number">2.5</span> L’algèbre extérieure ou algèbre de Grassmann</h3>
+<p>La somme directe</p>
+<p><span class="math display">\[
+\boxed{
+\Lambda(V^\ast)
+=
+\bigoplus_{p=0}^{n}\Lambda^p(V^\ast)
+}
+\]</span></p>
+<p>munie du produit extérieur est appelée <strong>algèbre extérieure</strong>, ou <strong>algèbre de Grassmann</strong>. Sa dimension totale vaut</p>
+<p><span class="math display">\[
+\dim\Lambda(V^\ast)
+=
+\sum_{p=0}^n\binom np
+=2^n.
+\]</span></p>
+<p>Si l’on note <span class="math inline">\(\theta^1,\ldots,\theta^n\)</span> ses générateurs de degré un, leurs relations caractéristiques sont</p>
+<p><span class="math display">\[
+\theta^i\theta^j=-\theta^j\theta^i,
+\qquad
+(\theta^i)^2=0.
+\]</span></p>
+<p>Tout élément de l’algèbre s’écrit donc sous la forme finie</p>
+<p><span class="math display">\[
+f
+=
+f_0
++f_i\theta^i
++\frac1{2!}f_{ij}\theta^i\theta^j
++\cdots
++f_{12\ldots n}\theta^1\cdots\theta^n,
+\]</span></p>
+<p>où les coefficients <span class="math inline">\(f_{ij\ldots}\)</span> sont antisymétriques.</p>
+<p>Cette structure apparaît ici parce que les différentielles de coordonnées anticommutent :</p>
+<p><span class="math display">\[
+dx^\mu\wedge dx^\nu=-dx^\nu\wedge dx^\mu.
+\]</span></p>
+<p>Elle intervient aussi en théorie quantique des champs pour décrire les variables fermioniques. Dans ce dernier contexte, on introduit une intégration algébrique, dite intégration de Berezin, définie dans le cas d’une variable par</p>
+<p><span class="math display">\[
+\int d\theta\,1=0,
+\qquad
+\int d\theta\,\theta=1.
+\]</span></p>
+<p>Cette intégration n’est pas nécessaire pour l’électromagnétisme classique, mais elle montre que l’algèbre de Grassmann dépasse largement le seul calcul des formes différentielles.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Algèbre extérieure et algèbre de Clifford">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Algèbre extérieure et algèbre de Clifford
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ces deux algèbres ne doivent pas être confondues. Dans l’algèbre extérieure,</p>
+<p><span class="math display">\[
+v\wedge v=0.
+\]</span></p>
+<p>Dans l’algèbre de Clifford associée à une métrique <span class="math inline">\(g\)</span>, le produit de Clifford satisfait au contraire</p>
+<p><span class="math display">\[
+vv=g(v,v)\,1.
+\]</span></p>
+<p>L’algèbre extérieure existe sans métrique ; l’algèbre de Clifford encode explicitement la métrique.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Repère historique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Repère historique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hermann Grassmann introduit au XIXe siècle une algèbre des grandeurs extensives dont l’importance ne sera pleinement reconnue que plus tard. Élie Cartan en fait ensuite l’un des langages centraux de la géométrie différentielle. La formulation moderne de l’électromagnétisme par les formes différentielles est l’un des lieux où cette idée révèle toute sa puissance.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="formes-différentielles-et-calcul-extérieur" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="formes-différentielles-et-calcul-extérieur"><span class="header-section-number">3</span> Formes différentielles et calcul extérieur</h2>
+<section id="des-formes-algébriques-aux-champs-de-formes" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="des-formes-algébriques-aux-champs-de-formes"><span class="header-section-number">3.1</span> Des formes algébriques aux champs de formes</h3>
+<p>Soit <span class="math inline">\(M\)</span> une variété différentiable de dimension <span class="math inline">\(n\)</span>. En chaque point <span class="math inline">\(p\in M\)</span>, l’espace tangent <span class="math inline">\(T_pM\)</span> joue le rôle de l’espace vectoriel des directions possibles, tandis que son dual <span class="math inline">\(T_p^\ast M\)</span> est l’espace cotangent.</p>
+<p>Une <span class="math inline">\(p\)</span>-forme différentielle <span class="math inline">\(\omega\)</span> associe de manière lisse à chaque point <span class="math inline">\(p\)</span> une forme alternée</p>
+<p><span class="math display">\[
+\omega_p\in\Lambda^p(T_p^\ast M).
+\]</span></p>
+<p>Dans un système de coordonnées locales <span class="math inline">\((x^1,\ldots,x^n)\)</span>, elle s’écrit</p>
+<p><span class="math display">\[
+\boxed{
+\omega
+=
+\frac1{p!}\omega_{i_1\ldots i_p}(x)
+\,dx^{i_1}\wedge\cdots\wedge dx^{i_p}
+}
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\omega_{i_1\ldots i_p}
+=
+\omega_{[i_1\ldots i_p]}.
+\]</span></p>
+<p>Le facteur <span class="math inline">\(1/p!\)</span> compense le fait que la somme porte sur tous les indices, alors que les composantes sont antisymétriques. On peut tout aussi bien sommer uniquement sur</p>
+<p><span class="math display">\[
+i_1&lt;\cdots&lt;i_p
+\]</span></p>
+<p>et omettre ce facteur.</p>
+</section>
+<section id="la-dérivée-extérieure" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="la-dérivée-extérieure"><span class="header-section-number">3.2</span> La dérivée extérieure</h3>
+<p>La dérivée extérieure transforme une <span class="math inline">\(p\)</span>-forme en une <span class="math inline">\((p+1)\)</span>-forme :</p>
+<p><span class="math display">\[
+d:\Omega^p(M)\longrightarrow\Omega^{p+1}(M).
+\]</span></p>
+<p>En coordonnées,</p>
+<p><span class="math display">\[
+d\omega
+=
+\frac1{p!}
+\partial_j\omega_{i_1\ldots i_p}
+\,dx^j\wedge dx^{i_1}\wedge\cdots\wedge dx^{i_p}.
+\]</span></p>
+<p>De manière équivalente,</p>
+<p><span class="math display">\[
+\boxed{
+(d\omega)_{i_0i_1\ldots i_p}
+=(p+1)\partial_{[i_0}\omega_{i_1\ldots i_p]}.
+}
+\]</span></p>
+<p>Pour une fonction <span class="math inline">\(f\)</span>, c’est-à-dire une 0-forme,</p>
+<p><span class="math display">\[
+df=\partial_i f\,dx^i.
+\]</span></p>
+<p>Pour une 1-forme <span class="math inline">\(\alpha=\alpha_i dx^i\)</span>,</p>
+<p><span class="math display">\[
+d\alpha
+=
+\frac12(\partial_i\alpha_j-\partial_j\alpha_i)
+dx^i\wedge dx^j.
+\]</span></p>
+<p>La dérivée extérieure possède deux propriétés structurantes. Premièrement, elle satisfait une règle de Leibniz graduée : si <span class="math inline">\(\alpha\)</span> est de degré <span class="math inline">\(p\)</span>,</p>
+<p><span class="math display">\[
+\boxed{
+d(\alpha\wedge\beta)
+=d\alpha\wedge\beta+(-1)^p\alpha\wedge d\beta.
+}
+\]</span></p>
+<p>Deuxièmement,</p>
+<p><span class="math display">\[
+\boxed{d^2=0.}
+\]</span></p>
+<p>En effet, pour une fonction,</p>
+<p><span class="math display">\[
+d(df)
+=
+\partial_j\partial_i f\,dx^j\wedge dx^i.
+\]</span></p>
+<p>Les dérivées secondes sont symétriques en <span class="math inline">\(i\)</span> et <span class="math inline">\(j\)</span>, tandis que le produit extérieur est antisymétrique. Leur contraction est donc nulle. Le même mécanisme vaut pour toute forme.</p>
+<p>Une forme <span class="math inline">\(\omega\)</span> est dite <strong>fermée</strong> si</p>
+<p><span class="math display">\[
+d\omega=0,
+\]</span></p>
+<p>et <strong>exacte</strong> s’il existe une forme <span class="math inline">\(\alpha\)</span> telle que</p>
+<p><span class="math display">\[
+\omega=d\alpha.
+\]</span></p>
+<p>Puisque <span class="math inline">\(d^2=0\)</span>, toute forme exacte est fermée. La réciproque est vraie localement sur un ouvert contractile : c’est le <strong>lemme de Poincaré</strong>. Elle peut être fausse globalement lorsque la topologie de l’espace est non triviale.</p>
+</section>
+<section id="tiré-en-arrière-et-invariance-par-changement-de-coordonnées" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="tiré-en-arrière-et-invariance-par-changement-de-coordonnées"><span class="header-section-number">3.3</span> Tiré en arrière et invariance par changement de coordonnées</h3>
+<p>Soit une application lisse</p>
+<p><span class="math display">\[
+\Phi:M\longrightarrow N.
+\]</span></p>
+<p>Une forme <span class="math inline">\(\omega\)</span> sur <span class="math inline">\(N\)</span> peut être ramenée sur <span class="math inline">\(M\)</span> par le <strong>tiré en arrière</strong> <span class="math inline">\(\Phi^\ast\omega\)</span>. Il est défini par</p>
+<p><span class="math display">\[
+(\Phi^\ast\omega)_p(v_1,\ldots,v_k)
+=
+\omega_{\Phi(p)}(d\Phi_pv_1,\ldots,d\Phi_pv_k).
+\]</span></p>
+<p>Le tiré en arrière respecte le produit extérieur et la dérivée extérieure :</p>
+<p><span class="math display">\[
+\Phi^\ast(\alpha\wedge\beta)
+=
+\Phi^\ast\alpha\wedge\Phi^\ast\beta,
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\Phi^\ast(d\omega)=d(\Phi^\ast\omega).}
+\]</span></p>
+<p>Cette identité exprime le caractère intrinsèque de <span class="math inline">\(d\)</span> : la dérivée extérieure ne dépend pas d’un choix particulier de coordonnées.</p>
+</section>
+<section id="intégration-et-théorème-de-stokes-généralisé" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="intégration-et-théorème-de-stokes-généralisé"><span class="header-section-number">3.4</span> Intégration et théorème de Stokes généralisé</h3>
+<p>Une <span class="math inline">\(p\)</span>-forme s’intègre naturellement sur une sous-variété orientée de dimension <span class="math inline">\(p\)</span>. Si</p>
+<p><span class="math display">\[
+\Phi:U\subset\mathbb R^p\longrightarrow M
+\]</span></p>
+<p>paramètre une sous-variété <span class="math inline">\(\Sigma\)</span>, on définit</p>
+<p><span class="math display">\[
+\int_\Sigma\omega
+=
+\int_U\Phi^\ast\omega.
+\]</span></p>
+<p>Le grand théorème unificateur du calcul extérieur est</p>
+<p><span class="math display">\[
+\boxed{
+\int_\Sigma d\omega
+=
+\int_{\partial\Sigma}\omega.
+}
+\]</span></p>
+<p>Il contient comme cas particuliers :</p>
+<ul>
+<li>le théorème fondamental de l’analyse ;</li>
+<li>le théorème de Green dans le plan ;</li>
+<li>le théorème de Stokes pour le rotationnel ;</li>
+<li>le théorème de Gauss–Ostrogradski pour la divergence.</li>
+</ul>
+<p>Les signes supposent que l’orientation de <span class="math inline">\(\partial\Sigma\)</span> est celle induite par l’orientation de <span class="math inline">\(\Sigma\)</span>.</p>
+</section>
+<section id="produit-intérieur-et-dérivée-de-lie" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="produit-intérieur-et-dérivée-de-lie"><span class="header-section-number">3.5</span> Produit intérieur et dérivée de Lie</h3>
+<p>Pour un champ de vecteurs <span class="math inline">\(X\)</span>, le produit intérieur</p>
+<p><span class="math display">\[
+\iota_X:\Omega^p(M)\longrightarrow\Omega^{p-1}(M)
+\]</span></p>
+<p>est défini par insertion de <span class="math inline">\(X\)</span> dans le premier argument :</p>
+<p><span class="math display">\[
+(\iota_X\omega)(v_2,\ldots,v_p)
+=
+\omega(X,v_2,\ldots,v_p).
+\]</span></p>
+<p>Il satisfait</p>
+<p><span class="math display">\[
+\iota_X(\alpha\wedge\beta)
+=
+\iota_X\alpha\wedge\beta
++(-1)^p\alpha\wedge\iota_X\beta,
+\]</span></p>
+<p>où <span class="math inline">\(p=\deg\alpha\)</span>.</p>
+<p>La dérivée de Lie <span class="math inline">\(\mathcal L_X\)</span> mesure la variation d’un champ tensoriel le long du flot engendré par <span class="math inline">\(X\)</span>. Sur les formes différentielles, l’identité de Cartan donne</p>
+<p><span class="math display">\[
+\boxed{
+\mathcal L_X
+=d\iota_X+\iota_Xd.
+}
+\]</span></p>
+<p>Cette formule relie trois opérations de nature différente : le flot géométrique, la dérivation extérieure et la contraction.</p>
+</section>
+<section id="lopérateur-de-hodge" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="lopérateur-de-hodge"><span class="header-section-number">3.6</span> L’opérateur de Hodge</h3>
+<p>Jusqu’ici, aucune métrique n’a été nécessaire. Pour comparer des formes de même degré ou transformer une <span class="math inline">\(p\)</span>-forme en une <span class="math inline">\((n-p)\)</span>-forme, il faut maintenant munir <span class="math inline">\(M\)</span> d’une métrique non dégénérée <span class="math inline">\(g\)</span> et choisir une orientation.</p>
+<p>L’opérateur de Hodge</p>
+<p><span class="math display">\[
+\star:\Omega^p(M)\longrightarrow\Omega^{n-p}(M)
+\]</span></p>
+<p>est défini par la relation</p>
+<p><span class="math display">\[
+\boxed{
+\alpha\wedge\star\beta
+=
+\langle\alpha,\beta\rangle_g\operatorname{vol}_g.
+}
+\]</span></p>
+<p>Le produit scalaire induit sur les <span class="math inline">\(p\)</span>-formes vaut, en composantes,</p>
+<p><span class="math display">\[
+\langle\alpha,\beta\rangle_g
+=
+\frac1{p!}\alpha_{i_1\ldots i_p}\beta^{i_1\ldots i_p}.
+\]</span></p>
+<p>Si la métrique possède <span class="math inline">\(s\)</span> directions de carré négatif, alors</p>
+<p><span class="math display">\[
+\boxed{
+\star^2\big|_{\Omega^p}
+=(-1)^{p(n-p)+s}\operatorname{id}.
+}
+\]</span></p>
+<p>Dans l’espace-temps de Minkowski de signature <span class="math inline">\((-,+,+,+)\)</span>, on a <span class="math inline">\(n=4\)</span> et <span class="math inline">\(s=1\)</span>. Sur les 2-formes,</p>
+<p><span class="math display">\[
+\star^2=-\operatorname{id}.
+\]</span></p>
+<p>Cette propriété sera à l’origine de la rotation de dualité électrique-magnétique.</p>
+</section>
+<section id="codifférentielle" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="codifférentielle"><span class="header-section-number">3.7</span> Codifférentielle</h3>
+<p>La dérivée extérieure augmente le degré. Son adjointe formelle, appelée <strong>codifférentielle</strong>, le diminue :</p>
+<p><span class="math display">\[
+\delta:\Omega^p(M)\longrightarrow\Omega^{p-1}(M).
+\]</span></p>
+<p>Avec nos conventions lorentziennes, sa définition composante est sans ambiguïté :</p>
+<p><span class="math display">\[
+\boxed{
+(\delta\omega)_{\mu_2\ldots\mu_p}
+=
+-\nabla^{\mu_1}\omega_{\mu_1\mu_2\ldots\mu_p}.
+}
+\]</span></p>
+<p>On peut également écrire <span class="math inline">\(\delta\)</span> à l’aide de <span class="math inline">\(\star\)</span>, mais le signe global dépend de la dimension, du degré et de la signature adoptée. La formule en composantes permet donc de vérifier les conventions avant tout calcul.</p>
+<p>L’opérateur de Laplace–de Rham est</p>
+<p><span class="math display">\[
+\Delta_{\mathrm{dR}}=d\delta+\delta d.
+\]</span></p>
+<p>Sur l’espace-temps plat, il est étroitement relié à l’opérateur d’onde.</p>
+</section>
+<section id="dictionnaire-avec-lanalyse-vectorielle-en-dimension-trois" class="level3" data-number="3.8">
+<h3 data-number="3.8" class="anchored" data-anchor-id="dictionnaire-avec-lanalyse-vectorielle-en-dimension-trois"><span class="header-section-number">3.8</span> Dictionnaire avec l’analyse vectorielle en dimension trois</h3>
+<p>Dans l’espace euclidien orienté <span class="math inline">\(\mathbb R^3\)</span>, un champ vectoriel <span class="math inline">\(\mathbf a\)</span> est associé à la 1-forme</p>
+<p><span class="math display">\[
+a^\flat=a_xdx+a_ydy+a_zdz.
+\]</span></p>
+<p>On obtient alors</p>
+<p><span class="math display">\[
+df=(\nabla f)^\flat,
+\]</span></p>
+<p><span class="math display">\[
+\star d(a^\flat)=(\nabla\times\mathbf a)^\flat,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\star d\star(a^\flat)=\nabla\cdot\mathbf a.
+\]</span></p>
+<p>Le gradient, le rotationnel et la divergence ne sont donc pas trois opérations sans lien : ils proviennent tous de <span class="math inline">\(d\)</span>, combiné lorsque nécessaire à la métrique par <span class="math inline">\(\star\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="La séparation essentielle">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>La séparation essentielle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le produit extérieur, la dérivée extérieure, le tiré en arrière et le théorème de Stokes sont définis sans métrique. L’opérateur de Hodge, la codifférentielle et les notions de norme ou d’orthogonalité dépendent de la métrique.</p>
+<p>Cette distinction devient physique dans les équations de Maxwell : <span class="math inline">\(dF=0\)</span> est métriquement indépendant, tandis que <span class="math inline">\(d\star F=J\)</span> contient la géométrie de l’espace-temps.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="le-champ-électromagnétique-sur-lespace-temps" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="le-champ-électromagnétique-sur-lespace-temps"><span class="header-section-number">4</span> Le champ électromagnétique sur l’espace-temps</h2>
+<section id="le-potentiel-comme-1-forme" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="le-potentiel-comme-1-forme"><span class="header-section-number">4.1</span> Le potentiel comme 1-forme</h3>
+<p>Le potentiel scalaire <span class="math inline">\(\phi\)</span> et le potentiel vecteur <span class="math inline">\(\mathbf A\)</span> se réunissent en une 1-forme sur l’espace-temps :</p>
+<p><span class="math display">\[
+\boxed{
+A=-\phi\,dt+A_xdx+A_ydy+A_zdz.
+}
+\]</span></p>
+<p>Le champ électromagnétique est la 2-forme</p>
+<p><span class="math display">\[
+\boxed{F=dA.}
+\]</span></p>
+<p>Cette écriture est toujours valable localement. Globalement, elle suppose que l’on se trouve dans un secteur topologiquement trivial ; dans le cas contraire, plusieurs potentiels définis sur des ouverts différents doivent être raccordés par des transformations de jauge.</p>
+<p>Calculons-la explicitement. D’une part,</p>
+<p><span class="math display">\[
+d(-\phi\,dt)
+=
+-d\phi\wedge dt
+=
+\partial_i\phi\,dt\wedge dx^i.
+\]</span></p>
+<p>D’autre part,</p>
+<p><span class="math display">\[
+d(A_i dx^i)
+=
+\partial_tA_i\,dt\wedge dx^i
++\partial_jA_i\,dx^j\wedge dx^i.
+\]</span></p>
+<p>En regroupant les termes temporels et spatiaux,</p>
+<p><span class="math display">\[
+F
+=
+(\partial_i\phi+\partial_tA_i)dt\wedge dx^i
++\frac12(\partial_iA_j-\partial_jA_i)dx^i\wedge dx^j.
+\]</span></p>
+<p>Avec</p>
+<p><span class="math display">\[
+\mathbf E=-\nabla\phi-\frac{\partial\mathbf A}{\partial t},
+\qquad
+\mathbf B=\nabla\times\mathbf A,
+\]</span></p>
+<p>on obtient</p>
+<p><span class="math display">\[
+\boxed{
+\begin{aligned}
+F={}&amp;-E_x\,dt\wedge dx-E_y\,dt\wedge dy-E_z\,dt\wedge dz\\
+&amp;+B_x\,dy\wedge dz+B_y\,dz\wedge dx+B_z\,dx\wedge dy.
+\end{aligned}
+}
+\]</span></p>
+<p>Les champs électrique et magnétique apparaissent donc comme deux parties d’un même objet : la partie espace-temps et la partie purement spatiale d’une 2-forme.</p>
+<p>En écriture indicielle,</p>
+<p><span class="math display">\[
+F=\frac12F_{\mu\nu}dx^\mu\wedge dx^\nu,
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+(F_{\mu\nu})=
+\begin{pmatrix}
+0&amp;-E_x&amp;-E_y&amp;-E_z\\
+E_x&amp;0&amp;B_z&amp;-B_y\\
+E_y&amp;-B_z&amp;0&amp;B_x\\
+E_z&amp;B_y&amp;-B_x&amp;0
+\end{pmatrix}.
+\]</span></p>
+<p>L’antisymétrie de <span class="math inline">\(F_{\mu\nu}\)</span> laisse six composantes indépendantes : trois pour <span class="math inline">\(\mathbf E\)</span> et trois pour <span class="math inline">\(\mathbf B\)</span>.</p>
+</section>
+<section id="dépendance-à-lobservateur" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="dépendance-à-lobservateur"><span class="header-section-number">4.2</span> Dépendance à l’observateur</h3>
+<p>La 2-forme <span class="math inline">\(F\)</span> est l’objet relativiste fondamental. La séparation en <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span> suppose le choix d’un observateur, donc d’une direction temporelle unitaire <span class="math inline">\(u\)</span>.</p>
+<p>À partir de <span class="math inline">\(u\)</span>, le champ électrique mesuré est, à un signe dépendant des conventions d’insertion,</p>
+<p><span class="math display">\[
+E_u=-\iota_uF,
+\]</span></p>
+<p>tandis que le champ magnétique est contenu dans</p>
+<p><span class="math display">\[
+B_u=\iota_u\star F.
+\]</span></p>
+<p>Pour l’observateur inertiel <span class="math inline">\(u=\partial_t\)</span>, ces expressions redonnent les composantes utilisées ci-dessus. Un autre observateur, relié au premier par une transformation de Lorentz, décompose le même <span class="math inline">\(F\)</span> en un autre couple <span class="math inline">\((\mathbf E',\mathbf B')\)</span>. Le mélange relativiste de <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span> n’est donc pas une coïncidence algébrique : il résulte du changement de décomposition d’une même 2-forme.</p>
+</section>
+<section id="dual-de-hodge-du-champ" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="dual-de-hodge-du-champ"><span class="header-section-number">4.3</span> Dual de Hodge du champ</h3>
+<p>Avec la métrique <span class="math inline">\((-,+,+,+)\)</span> et l’orientation choisie,</p>
+<p><span class="math display">\[
+\star(dt\wedge dx)=-dy\wedge dz,
+\]</span></p>
+<p><span class="math display">\[
+\star(dt\wedge dy)=-dz\wedge dx,
+\]</span></p>
+<p><span class="math display">\[
+\star(dt\wedge dz)=-dx\wedge dy,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\star(dy\wedge dz)=dt\wedge dx,
+\]</span></p>
+<p><span class="math display">\[
+\star(dz\wedge dx)=dt\wedge dy,
+\]</span></p>
+<p><span class="math display">\[
+\star(dx\wedge dy)=dt\wedge dz.
+\]</span></p>
+<p>Il en résulte</p>
+<p><span class="math display">\[
+\boxed{
+\begin{aligned}
+\star F={}&amp;B_x\,dt\wedge dx+B_y\,dt\wedge dy+B_z\,dt\wedge dz\\
+&amp;+E_x\,dy\wedge dz+E_y\,dz\wedge dx+E_z\,dx\wedge dy.
+\end{aligned}
+}
+\]</span></p>
+<p>Sur les 2-formes, <span class="math inline">\(\star^2=-1\)</span>. L’opérateur <span class="math inline">\(\star\)</span> échange donc les rôles électrique et magnétique, puis introduit un signe lors d’une seconde application.</p>
+</section>
+<section id="le-courant-électrique-comme-3-forme" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="le-courant-électrique-comme-3-forme"><span class="header-section-number">4.4</span> Le courant électrique comme 3-forme</h3>
+<p>Le quadrivecteur courant est</p>
+<p><span class="math display">\[
+j=\rho\,\partial_t+j_x\partial_x+j_y\partial_y+j_z\partial_z.
+\]</span></p>
+<p>La métrique lui associe la 1-forme</p>
+<p><span class="math display">\[
+j^\flat=-\rho\,dt+j_xdx+j_ydy+j_zdz.
+\]</span></p>
+<p>La 3-forme courant est définie par</p>
+<p><span class="math display">\[
+J=\star j^\flat.
+\]</span></p>
+<p>Explicitement,</p>
+<p><span class="math display">\[
+\boxed{
+\begin{aligned}
+J={}&amp;\rho\,dx\wedge dy\wedge dz
+-j_x\,dt\wedge dy\wedge dz\\
+&amp;-j_y\,dt\wedge dz\wedge dx
+-j_z\,dt\wedge dx\wedge dy.
+\end{aligned}
+}
+\]</span></p>
+<p>Pourquoi une 3-forme ? Parce qu’une charge se calcule en intégrant <span class="math inline">\(J\)</span> sur une hypersurface tridimensionnelle orientée <span class="math inline">\(\Sigma\)</span> :</p>
+<p><span class="math display">\[
+Q_\Sigma=\int_\Sigma J.
+\]</span></p>
+<p>Sur une tranche d’espace <span class="math inline">\(t=\text{constante}\)</span>, le tiré en arrière annule tous les termes contenant <span class="math inline">\(dt\)</span> et l’on retrouve</p>
+<p><span class="math display">\[
+Q=\int\rho\,dx\,dy\,dz.
+\]</span></p>
+</section>
+<section id="les-deux-équations-de-maxwell" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="les-deux-équations-de-maxwell"><span class="header-section-number">4.5</span> Les deux équations de Maxwell</h3>
+<p>Dans le vide, avec des sources électriques mais sans monopôle magnétique, les équations de Maxwell prennent la forme</p>
+<p><span class="math display">\[
+\boxed{dF=0,}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{d\star F=J.}
+\]</span></p>
+<p>La première équation contient la loi de Gauss magnétique et la loi de Faraday. La seconde contient la loi de Gauss électrique et la loi d’Ampère–Maxwell.</p>
+<section id="développement-de-df0" class="level4" data-number="4.5.1">
+<h4 data-number="4.5.1" class="anchored" data-anchor-id="développement-de-df0"><span class="header-section-number">4.5.1</span> Développement de <span class="math inline">\(dF=0\)</span></h4>
+<p>La partie purement spatiale de <span class="math inline">\(dF\)</span> est</p>
+<p><span class="math display">\[
+(\nabla\cdot\mathbf B)\,dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Les composantes contenant <span class="math inline">\(dt\)</span> se regroupent sous la forme</p>
+<p><span class="math display">\[
+dt\wedge
+\left(
+\frac{\partial\mathbf B}{\partial t}
++\nabla\times\mathbf E
+\right)\cdot d\mathbf S,
+\]</span></p>
+<p>où</p>
+<p><span class="math display">\[
+\mathbf C\cdot d\mathbf S
+=C_xdy\wedge dz+C_ydz\wedge dx+C_zdx\wedge dy.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+dF=0
+\quad\Longleftrightarrow\quad
+\begin{cases}
+\nabla\cdot\mathbf B=0,\\[2mm]
+\displaystyle \nabla\times\mathbf E+\frac{\partial\mathbf B}{\partial t}=0.
+\end{cases}
+}
+\]</span></p>
+</section>
+<section id="développement-de-dstar-fj" class="level4" data-number="4.5.2">
+<h4 data-number="4.5.2" class="anchored" data-anchor-id="développement-de-dstar-fj"><span class="header-section-number">4.5.2</span> Développement de <span class="math inline">\(d\star F=J\)</span></h4>
+<p>De même, la composante spatiale donne</p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf E=\rho,
+\]</span></p>
+<p>et les composantes temporelles donnent</p>
+<p><span class="math display">\[
+\nabla\times\mathbf B-\frac{\partial\mathbf E}{\partial t}=\mathbf j.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\boxed{
+d\star F=J
+\quad\Longleftrightarrow\quad
+\begin{cases}
+\nabla\cdot\mathbf E=\rho,\\[2mm]
+\displaystyle \nabla\times\mathbf B-\frac{\partial\mathbf E}{\partial t}=\mathbf j.
+\end{cases}
+}
+\]</span></p>
+<p>Sous forme tensorielle, ces équations s’écrivent, avec nos conventions,</p>
+<p><span class="math display">\[
+\partial_{[\lambda}F_{\mu\nu]}=0,
+\qquad
+\partial_\mu F^{\mu\nu}=-j^\nu.
+\]</span></p>
+<p>Le signe de la seconde formule varie dans les ouvrages selon la signature, la définition de <span class="math inline">\(F\)</span> et la position des indices. Les équations différentielles <span class="math inline">\(dF=0\)</span> et <span class="math inline">\(d\star F=J\)</span>, une fois les conventions annoncées, évitent une grande partie de ces ambiguïtés.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Retour aux unités SI">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Retour aux unités SI
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En unités SI, les quatre équations vectorielles sont</p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf B=0,
+\qquad
+\nabla\times\mathbf E+\frac{\partial\mathbf B}{\partial t}=0,
+\]</span></p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf E=\frac{\rho}{\varepsilon_0},
+\qquad
+\nabla\times\mathbf B-\frac1{c^2}\frac{\partial\mathbf E}{\partial t}
+=\mu_0\mathbf j.
+\]</span></p>
+<p>Les facteurs <span class="math inline">\(c\)</span>, <span class="math inline">\(\varepsilon_0\)</span> et <span class="math inline">\(\mu_0\)</span> peuvent aussi être incorporés dans les définitions covariantes de <span class="math inline">\(F\)</span>, de <span class="math inline">\(J\)</span> et de l’opérateur constitutif. Il faut alors annoncer précisément la convention retenue.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="conservation-de-la-charge" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="conservation-de-la-charge"><span class="header-section-number">4.6</span> Conservation de la charge</h3>
+<p>Appliquons <span class="math inline">\(d\)</span> à l’équation <span class="math inline">\(d\star F=J\)</span> :</p>
+<p><span class="math display">\[
+dJ=d^2\star F=0.
+\]</span></p>
+<p>On obtient donc immédiatement</p>
+<p><span class="math display">\[
+\boxed{dJ=0.}
+\]</span></p>
+<p>En développant cette équation,</p>
+<p><span class="math display">\[
+dJ
+=
+\left(
+\frac{\partial\rho}{\partial t}
++\nabla\cdot\mathbf j
+\right)
+dt\wedge dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+\frac{\partial\rho}{\partial t}+\nabla\cdot\mathbf j=0.
+}
+\]</span></p>
+<p>La conservation locale de la charge n’est donc pas une condition indépendante ajoutée aux équations de Maxwell : elle est une condition de compatibilité de l’équation inhomogène.</p>
+<p>En intégrant <span class="math inline">\(dJ=0\)</span> sur un domaine quadridimensionnel <span class="math inline">\(\mathcal U\)</span> et en appliquant Stokes,</p>
+<p><span class="math display">\[
+0=\int_\mathcal U dJ=\int_{\partial\mathcal U}J.
+\]</span></p>
+<p>La frontière comprend deux tranches d’espace et la paroi latérale. Cette identité affirme que la variation de la charge contenue entre les deux tranches est exactement compensée par le flux de courant à travers la paroi.</p>
+</section>
+<section id="potentiel-lemme-de-poincaré-et-liberté-de-jauge" class="level3" data-number="4.7">
+<h3 data-number="4.7" class="anchored" data-anchor-id="potentiel-lemme-de-poincaré-et-liberté-de-jauge"><span class="header-section-number">4.7</span> Potentiel, lemme de Poincaré et liberté de jauge</h3>
+<p>Puisque <span class="math inline">\(F=dA\)</span>, l’identité <span class="math inline">\(dF=0\)</span> est automatique :</p>
+<p><span class="math display">\[
+dF=d^2A=0.
+\]</span></p>
+<p>Réciproquement, le lemme de Poincaré affirme que si <span class="math inline">\(dF=0\)</span>, alors, <strong>localement</strong>, il existe une 1-forme <span class="math inline">\(A\)</span> telle que</p>
+<p><span class="math display">\[
+F=dA.
+\]</span></p>
+<p>Le potentiel n’est pas unique. Pour toute fonction lisse <span class="math inline">\(\chi\)</span>,</p>
+<p><span class="math display">\[
+A'=A+d\chi
+\]</span></p>
+<p>produit le même champ :</p>
+<p><span class="math display">\[
+F'=dA'=dA+d^2\chi=F.
+\]</span></p>
+<p>En composantes,</p>
+<p><span class="math display">\[
+\boxed{
+\phi'=\phi-\partial_t\chi,
+\qquad
+\mathbf A'=\mathbf A+\nabla\chi.
+}
+\]</span></p>
+<p>Cette transformation est une <strong>transformation de jauge</strong>. Elle ne correspond pas à une symétrie ordinaire entre deux états physiquement différents : elle exprime une redondance de la description par le potentiel.</p>
+</section>
+<section id="la-jauge-de-lorenz-et-léquation-donde" class="level3" data-number="4.8">
+<h3 data-number="4.8" class="anchored" data-anchor-id="la-jauge-de-lorenz-et-léquation-donde"><span class="header-section-number">4.8</span> La jauge de Lorenz et l’équation d’onde</h3>
+<p>On peut utiliser la liberté de jauge pour imposer</p>
+<p><span class="math display">\[
+\boxed{\delta A=0.}
+\]</span></p>
+<p>Dans les coordonnées de Minkowski, cela équivaut à</p>
+<p><span class="math display">\[
+\partial_\mu A^\mu=0,
+\]</span></p>
+<p>soit</p>
+<p><span class="math display">\[
+\frac{\partial\phi}{\partial t}+\nabla\cdot\mathbf A=0.
+\]</span></p>
+<p>Cette condition est appelée <strong>jauge de Lorenz</strong>, du nom de Ludvig Lorenz.</p>
+<p>En utilisant <span class="math inline">\(F=dA\)</span>, l’équation inhomogène devient une équation d’onde pour le potentiel. Avec</p>
+<p><span class="math display">\[
+\Box=-\partial_t^2+\nabla^2,
+\]</span></p>
+<p>on obtient</p>
+<p><span class="math display">\[
+\boxed{\Box A^\mu=-j^\mu.}
+\]</span></p>
+<p>La jauge de Lorenz ne fixe pas complètement la jauge. Une transformation <span class="math inline">\(A\mapsto A+d\chi\)</span> la préserve si</p>
+<p><span class="math display">\[
+\Box\chi=0.
+\]</span></p>
+<p>Il subsiste donc une liberté de jauge résiduelle.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pourquoi le potentiel est-il plus qu’un artifice ?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Pourquoi le potentiel est-il plus qu’un artifice ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Classiquement, <span class="math inline">\(F\)</span> contient les champs mesurables localement. Pourtant, le potentiel <span class="math inline">\(A\)</span> porte l’information de jauge et la structure globale de la théorie. En mécanique quantique, la phase d’une particule chargée dépend de l’intégrale <span class="math inline">\(\int A\)</span>, et l’effet Aharonov–Bohm montre qu’une région où <span class="math inline">\(F=0\)</span> peut néanmoins présenter une holonomie physiquement observable.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="dynamique-symétries-et-structure-géométrique" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="dynamique-symétries-et-structure-géométrique"><span class="header-section-number">5</span> Dynamique, symétries et structure géométrique</h2>
+<section id="force-de-lorentz" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="force-de-lorentz"><span class="header-section-number">5.1</span> Force de Lorentz</h3>
+<p>Soit une particule de charge <span class="math inline">\(q\)</span>, de masse <span class="math inline">\(m\)</span> et de quadrivitesse <span class="math inline">\(u\)</span>. L’équation du mouvement est</p>
+<p><span class="math display">\[
+\boxed{
+m\frac{Du^\mu}{d\tau}
+=qF^\mu{}_{\nu}u^\nu.
+}
+\]</span></p>
+<p>Dans le langage des formes, avec la convention</p>
+<p><span class="math display">\[
+(\iota_uF)(v)=F(u,v),
+\]</span></p>
+<p>elle s’écrit</p>
+<p><span class="math display">\[
+\boxed{
+m\nabla_u u=-q(\iota_uF)^\sharp.
+}
+\]</span></p>
+<p>Le signe moins provient de l’ordre des indices dans l’insertion. En séparant le temps et l’espace, on retrouve</p>
+<p><span class="math display">\[
+\frac{d\mathbf p}{dt}
+=q(\mathbf E+\mathbf v\times\mathbf B),
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\frac{d\mathcal E}{dt}
+=q\mathbf E\cdot\mathbf v.
+\]</span></p>
+<p>Le champ magnétique dévie l’impulsion sans fournir de travail, car</p>
+<p><span class="math display">\[
+\mathbf v\cdot(\mathbf v\times\mathbf B)=0.
+\]</span></p>
+</section>
+<section id="principe-daction" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="principe-daction"><span class="header-section-number">5.2</span> Principe d’action</h3>
+<p>La dynamique du champ libre couplé à un courant prescrit est décrite par l’action</p>
+<p><span class="math display">\[
+\boxed{
+S[A]
+=
+-\frac12\int_M F\wedge\star F
++\int_M A\wedge J,
+\qquad F=dA.
+}
+\]</span></p>
+<p>Faisons varier le potentiel :</p>
+<p><span class="math display">\[
+A\longmapsto A+\varepsilon\,\delta A.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+\delta F=d(\delta A).
+\]</span></p>
+<p>Comme <span class="math inline">\(F\)</span> et <span class="math inline">\(\delta F\)</span> sont des 2-formes,</p>
+<p><span class="math display">\[
+\delta\left(\frac12F\wedge\star F\right)
+=
+\delta F\wedge\star F.
+\]</span></p>
+<p>La variation de l’action est donc</p>
+<p><span class="math display">\[
+\delta S
+=
+-\int_M d(\delta A)\wedge\star F
++\int_M\delta A\wedge J.
+\]</span></p>
+<p>Or la règle de Leibniz graduée donne</p>
+<p><span class="math display">\[
+d(\delta A\wedge\star F)
+=
+d(\delta A)\wedge\star F
+-\delta A\wedge d\star F.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\delta S
+=
+-\int_{\partial M}\delta A\wedge\star F
++\int_M\delta A\wedge(J-d\star F).
+\]</span></p>
+<p>Si <span class="math inline">\(\delta A\)</span> s’annule au bord, ou si les conditions au bord annulent le premier terme, la stationnarité pour toute variation impose</p>
+<p><span class="math display">\[
+\boxed{d\star F=J.}
+\]</span></p>
+<p>L’autre équation, <span class="math inline">\(dF=0\)</span>, est déjà contenue dans la définition <span class="math inline">\(F=dA\)</span>.</p>
+</section>
+<section id="jauge-et-conservation-du-courant" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="jauge-et-conservation-du-courant"><span class="header-section-number">5.3</span> Jauge et conservation du courant</h3>
+<p>Sous la transformation</p>
+<p><span class="math display">\[
+A\longmapsto A+d\chi,
+\]</span></p>
+<p>le terme cinétique ne change pas, puisque <span class="math inline">\(F\)</span> reste invariant. Le terme de couplage varie de</p>
+<p><span class="math display">\[
+\Delta S_{\mathrm{int}}
+=
+\int_Md\chi\wedge J.
+\]</span></p>
+<p>La règle de Leibniz donne</p>
+<p><span class="math display">\[
+d(\chi J)=d\chi\wedge J+\chi\,dJ,
+\]</span></p>
+<p>donc</p>
+<p><span class="math display">\[
+\Delta S_{\mathrm{int}}
+=
+\int_{\partial M}\chi J
+-\int_M\chi\,dJ.
+\]</span></p>
+<p>En négligeant le terme de bord, l’invariance de jauge exige</p>
+<p><span class="math display">\[
+dJ=0.
+\]</span></p>
+<p>La conservation de la charge apparaît ainsi comme la condition nécessaire à la cohérence du couplage entre le courant et le potentiel.</p>
+</section>
+<section id="invariants-de-lorentz" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="invariants-de-lorentz"><span class="header-section-number">5.4</span> Invariants de Lorentz</h3>
+<p>À partir de <span class="math inline">\(F\)</span>, on peut construire deux 4-formes indépendantes :</p>
+<p><span class="math display">\[
+F\wedge\star F
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+F\wedge F.
+\]</span></p>
+<p>Avec nos conventions,</p>
+<p><span class="math display">\[
+\boxed{
+F\wedge\star F
+=(\mathbf B^2-\mathbf E^2)\operatorname{vol},
+}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{
+F\wedge F
+=-2(\mathbf E\cdot\mathbf B)\operatorname{vol}.
+}
+\]</span></p>
+<p>Les scalaires associés sont invariants sous les transformations de Lorentz propres préservant l’orientation. Ainsi, même si <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span> se mélangent lorsqu’on change de référentiel, les quantités</p>
+<p><span class="math display">\[
+\mathbf B^2-\mathbf E^2,
+\qquad
+\mathbf E\cdot\mathbf B
+\]</span></p>
+<p>restent inchangées.</p>
+<p>Ces invariants permettent une classification locale du champ :</p>
+<ul>
+<li>si <span class="math inline">\(\mathbf E\cdot\mathbf B=0\)</span> et <span class="math inline">\(\mathbf B^2&gt;\mathbf E^2\)</span>, il existe un référentiel où le champ est purement magnétique ;</li>
+<li>si <span class="math inline">\(\mathbf E\cdot\mathbf B=0\)</span> et <span class="math inline">\(\mathbf E^2&gt;\mathbf B^2\)</span>, il existe un référentiel où le champ est purement électrique ;</li>
+<li>si les deux invariants sont nuls, le champ est dit <strong>nul</strong> ; une onde plane électromagnétique en est l’exemple fondamental ;</li>
+<li>si <span class="math inline">\(\mathbf E\cdot\mathbf B\neq0\)</span>, aucun référentiel ne peut annuler entièrement <span class="math inline">\(\mathbf E\)</span> ou <span class="math inline">\(\mathbf B\)</span>.</li>
+</ul>
+</section>
+<section id="dualité-électrique-magnétique" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="dualité-électrique-magnétique"><span class="header-section-number">5.5</span> Dualité électrique-magnétique</h3>
+<p>Dans une région sans source,</p>
+<p><span class="math display">\[
+dF=0,
+\qquad
+d\star F=0.
+\]</span></p>
+<p>Comme <span class="math inline">\(\star^2=-1\)</span> sur les 2-formes, les équations sont invariantes sous la rotation</p>
+<p><span class="math display">\[
+\boxed{
+F_\theta
+=F\cos\theta+\star F\sin\theta.
+}
+\]</span></p>
+<p>En termes de champs,</p>
+<p><span class="math display">\[
+\mathbf E_\theta
+=\mathbf E\cos\theta+\mathbf B\sin\theta,
+\]</span></p>
+<p><span class="math display">\[
+\mathbf B_\theta
+=\mathbf B\cos\theta-\mathbf E\sin\theta.
+\]</span></p>
+<p>Pour <span class="math inline">\(\theta=\pi/2\)</span>,</p>
+<p><span class="math display">\[
+\mathbf E\longmapsto\mathbf B,
+\qquad
+\mathbf B\longmapsto-\mathbf E.
+\]</span></p>
+<p>Les sources électriques seules brisent cette symétrie manifeste. Elle peut être rétablie formellement en introduisant des charges et courants magnétiques.</p>
+<p>On peut aussi complexifier les 2-formes et définir</p>
+<p><span class="math display">\[
+F_+=F-i\star F,
+\qquad
+F_-=F+i\star F.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+\star F_+=iF_+,
+\qquad
+\star F_-=-iF_-.
+\]</span></p>
+<p>Ce sont les parties auto-duale et anti-auto-duale complexes du champ. La nécessité du nombre <span class="math inline">\(i\)</span> vient précisément de <span class="math inline">\(\star^2=-1\)</span>.</p>
+</section>
+<section id="énergie-et-impulsion-du-champ" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="énergie-et-impulsion-du-champ"><span class="header-section-number">5.6</span> Énergie et impulsion du champ</h3>
+<p>Le tenseur énergie-impulsion électromagnétique est</p>
+<p><span class="math display">\[
+\boxed{
+T^{\mu\nu}
+=F^{\mu\rho}F^\nu{}_{\rho}
+-\frac14\eta^{\mu\nu}F^{\rho\sigma}F_{\rho\sigma}.
+}
+\]</span></p>
+<p>Sa densité d’énergie vaut</p>
+<p><span class="math display">\[
+T^{00}=\frac12(\mathbf E^2+\mathbf B^2),
+\]</span></p>
+<p>et son flux d’énergie est le vecteur de Poynting</p>
+<p><span class="math display">\[
+\mathbf S=\mathbf E\times\mathbf B.
+\]</span></p>
+<p>En présence d’un courant, les équations de Maxwell impliquent</p>
+<p><span class="math display">\[
+\partial_\mu T^{\mu\nu}=-F^{\nu\rho}j_\rho.
+\]</span></p>
+<p>Le membre de droite est l’opposé de la densité de force exercée par le champ sur la matière ; la somme de l’énergie-impulsion de la matière et du champ est conservée.</p>
+<p>Pour la composante temporelle, on retrouve le théorème de Poynting :</p>
+<p><span class="math display">\[
+\boxed{
+\frac{\partial}{\partial t}
+\left[\frac12(\mathbf E^2+\mathbf B^2)\right]
++\nabla\cdot(\mathbf E\times\mathbf B)
+=-\mathbf j\cdot\mathbf E.
+}
+\]</span></p>
+</section>
+<section id="formulation-pré-métrique-et-milieux-matériels" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="formulation-pré-métrique-et-milieux-matériels"><span class="header-section-number">5.7</span> Formulation pré-métrique et milieux matériels</h3>
+<p>Il est utile de séparer le champ <span class="math inline">\(F\)</span> de l’<strong>excitation électromagnétique</strong> <span class="math inline">\(G\)</span>. On écrit alors</p>
+<p><span class="math display">\[
+\boxed{dF=0,\qquad dG=J.}
+\]</span></p>
+<p>La relation entre <span class="math inline">\(G\)</span> et <span class="math inline">\(F\)</span> est une loi constitutive. Dans le vide linéaire et isotrope, avec les unités choisies,</p>
+<p><span class="math display">\[
+G=\star F.
+\]</span></p>
+<p>Dans un milieu plus général,</p>
+<p><span class="math display">\[
+G=\chi(F),
+\]</span></p>
+<p>où <span class="math inline">\(\chi\)</span> peut dépendre de la position, être anisotrope, dispersif ou non linéaire. Cette écriture montre que les équations de conservation</p>
+<p><span class="math display">\[
+dF=0,
+\qquad
+dG=J
+\]</span></p>
+<p>peuvent être formulées avant même de choisir une métrique ; la métrique ou les propriétés du milieu entrent dans la relation constitutive.</p>
+</section>
+<section id="topologie-fermé-ne-signifie-pas-toujours-exact" class="level3" data-number="5.8">
+<h3 data-number="5.8" class="anchored" data-anchor-id="topologie-fermé-ne-signifie-pas-toujours-exact"><span class="header-section-number">5.8</span> Topologie : fermé ne signifie pas toujours exact</h3>
+<p>Le lemme de Poincaré garantit localement</p>
+<p><span class="math display">\[
+dF=0\quad\Longrightarrow\quad F=dA.
+\]</span></p>
+<p>Globalement, cette implication peut échouer. Les classes de formes fermées modulo les formes exactes constituent les groupes de cohomologie de de Rham :</p>
+<p><span class="math display">\[
+H^p_{\mathrm{dR}}(M)
+=
+\frac{\ker(d:\Omega^p\to\Omega^{p+1})}
+{\operatorname{im}(d:\Omega^{p-1}\to\Omega^p)}.
+\]</span></p>
+<p>Une classe non nulle dans <span class="math inline">\(H^2_{\mathrm{dR}}(M)\)</span> peut empêcher l’existence d’un potentiel global <span class="math inline">\(A\)</span>.</p>
+<p>Deux exemples physiques sont particulièrement importants :</p>
+<ol type="1">
+<li><p><strong>Effet Aharonov–Bohm.</strong> Dans une région accessible où <span class="math inline">\(F=0\)</span>, le potentiel peut être localement de jauge pure sans être globalement trivial. La circulation</p>
+<p><span class="math display">\[
+\oint_\gamma A
+\]</span></p>
+<p>autour d’un trou peut être non nulle et modifier la phase quantique d’une particule chargée.</p></li>
+<li><p><strong>Monopôle magnétique.</strong> Sur l’espace privé de l’origine, un champ de monopôle a un flux non nul à travers une sphère. La 2-forme <span class="math inline">\(F\)</span> est fermée hors de l’origine, mais elle ne peut pas être écrite comme <span class="math inline">\(dA\)</span> avec un potentiel régulier défini sur toute la sphère.</p></li>
+</ol>
+<p>La jauge n’est donc pas seulement une commodité de calcul : elle possède une structure globale décrite par la géométrie des fibrés et la cohomologie.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Repère historique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Repère historique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Maxwell formule sa théorie au XIXe siècle dans un langage très différent de celui d’aujourd’hui. La notion moderne de jauge émerge au XXe siècle, notamment avec Hermann Weyl. Les travaux d’Aharonov et Bohm montrent ensuite que le potentiel peut avoir un effet quantique global même là où les champs locaux s’annulent. L’électromagnétisme devient alors le prototype des théories de jauge modernes.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="synthèse" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="synthèse"><span class="header-section-number">6</span> Synthèse</h2>
+<p>La structure du cours peut se résumer par les dépendances suivantes :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objet ou opération</th>
+<th style="text-align: right;">Degré</th>
+<th>Structure nécessaire</th>
+<th>Rôle électromagnétique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Potentiel <span class="math inline">\(A\)</span></td>
+<td style="text-align: right;">1-forme</td>
+<td>variété différentiable</td>
+<td>variable de jauge</td>
+</tr>
+<tr class="even">
+<td>Champ <span class="math inline">\(F=dA\)</span></td>
+<td style="text-align: right;">2-forme</td>
+<td>variété différentiable</td>
+<td>champ électromagnétique</td>
+</tr>
+<tr class="odd">
+<td>Courant <span class="math inline">\(J\)</span></td>
+<td style="text-align: right;">3-forme</td>
+<td>orientation</td>
+<td>densité et flux de charge</td>
+</tr>
+<tr class="even">
+<td>Produit <span class="math inline">\(\wedge\)</span></td>
+<td style="text-align: right;">degrés additifs</td>
+<td>structure linéaire</td>
+<td>flux, action, invariants</td>
+</tr>
+<tr class="odd">
+<td>Dérivée <span class="math inline">\(d\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(p\mapsto p+1\)</span></td>
+<td>structure différentielle</td>
+<td>équations et identités de conservation</td>
+</tr>
+<tr class="even">
+<td>Dual <span class="math inline">\(\star\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(p\mapsto4-p\)</span></td>
+<td>métrique et orientation</td>
+<td>loi constitutive du vide</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(dF=0\)</span></td>
+<td style="text-align: right;">3-forme</td>
+<td>pas de métrique</td>
+<td>Faraday et Gauss magnétique</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d\star F=J\)</span></td>
+<td style="text-align: right;">3-forme</td>
+<td>métrique via <span class="math inline">\(\star\)</span></td>
+<td>Ampère–Maxwell et Gauss électrique</td>
+</tr>
+</tbody>
+</table>
+<p>Le passage de la notation vectorielle à celle des formes ne consiste donc pas à abréger artificiellement quatre équations. Il révèle :</p>
+<ul>
+<li>que <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span> forment un seul champ relativiste ;</li>
+<li>que la conservation de la charge est liée à <span class="math inline">\(d^2=0\)</span> ;</li>
+<li>que le potentiel est naturellement une variable de jauge ;</li>
+<li>que la métrique intervient dans la loi constitutive, non dans toute la structure de Maxwell ;</li>
+<li>que la topologie peut produire des effets physiques globaux.</li>
+</ul>
+</section>
+<section id="exercices-dapplication" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="exercices-dapplication"><span class="header-section-number">7</span> Exercices d’application</h2>
+<p>Les exercices sont classés par difficulté croissante. Les solutions sont volontairement détaillées afin que chaque calcul de signe puisse être contrôlé.</p>
+<section id="exercice-1-calculs-de-produits-extérieurs" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="exercice-1-calculs-de-produits-extérieurs"><span class="header-section-number">7.1</span> Exercice 1 — Calculs de produits extérieurs</h3>
+<p><strong>Difficulté :</strong> ★☆☆☆☆</p>
+<p>Dans un espace vectoriel de dimension quatre, on considère une base duale</p>
+<p><span class="math display">\[
+(e^0,e^1,e^2,e^3)
+\]</span></p>
+<p>et les formes</p>
+<p><span class="math display">\[
+\alpha=e^0+2e^1,
+\qquad
+\beta=e^1-e^2,
+\]</span></p>
+<p><span class="math display">\[
+\gamma=e^0\wedge e^2+3e^1\wedge e^3.
+\]</span></p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(\alpha\wedge\beta\)</span>.</li>
+<li>En déduire <span class="math inline">\(\beta\wedge\alpha\)</span>.</li>
+<li>Calculer <span class="math inline">\(\alpha\wedge\alpha\)</span>.</li>
+<li>Calculer <span class="math inline">\(\gamma\wedge\gamma\)</span> et expliquer pourquoi ce résultat n’est pas nécessairement nul.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Par bilinéarité,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\alpha\wedge\beta
+&amp;=(e^0+2e^1)\wedge(e^1-e^2)\\
+&amp;=e^0\wedge e^1-e^0\wedge e^2
++2e^1\wedge e^1-2e^1\wedge e^2.
+\end{aligned}
+\]</span></p>
+<p>Comme <span class="math inline">\(e^1\wedge e^1=0\)</span>,</p>
+<p><span class="math display">\[
+\boxed{
+\alpha\wedge\beta
+=e^0\wedge e^1-e^0\wedge e^2-2e^1\wedge e^2.
+}
+\]</span></p>
+<p>Deux 1-formes anticommutent, donc</p>
+<p><span class="math display">\[
+\boxed{
+\beta\wedge\alpha=-\alpha\wedge\beta.
+}
+\]</span></p>
+<p>De même,</p>
+<p><span class="math display">\[
+\boxed{\alpha\wedge\alpha=0.}
+\]</span></p>
+<p>Pour <span class="math inline">\(\gamma\)</span>, posons</p>
+<p><span class="math display">\[
+u=e^0\wedge e^2,
+\qquad
+v=3e^1\wedge e^3.
+\]</span></p>
+<p>Alors <span class="math inline">\(u\wedge u=v\wedge v=0\)</span> à cause des facteurs répétés. En revanche, <span class="math inline">\(u\)</span> et <span class="math inline">\(v\)</span> sont de degré deux, donc</p>
+<p><span class="math display">\[
+u\wedge v=(-1)^{2\times2}v\wedge u=v\wedge u.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\gamma\wedge\gamma=2u\wedge v
+=6e^0\wedge e^2\wedge e^1\wedge e^3.
+\]</span></p>
+<p>Il faut échanger <span class="math inline">\(e^2\)</span> et <span class="math inline">\(e^1\)</span> pour remettre les indices dans l’ordre :</p>
+<p><span class="math display">\[
+\boxed{
+\gamma\wedge\gamma
+=-6e^0\wedge e^1\wedge e^2\wedge e^3.
+}
+\]</span></p>
+<p>Une forme de degré pair commute avec elle-même au sens gradué ; l’antisymétrie ne force donc pas son carré à s’annuler.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-2-structure-dune-algèbre-de-grassmann" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="exercice-2-structure-dune-algèbre-de-grassmann"><span class="header-section-number">7.2</span> Exercice 2 — Structure d’une algèbre de Grassmann</h3>
+<p><strong>Difficulté :</strong> ★☆☆☆☆</p>
+<p>On considère cinq générateurs de Grassmann <span class="math inline">\(\theta^1,\ldots,\theta^5\)</span>.</p>
+<ol type="1">
+<li>Donner la dimension de l’espace des éléments homogènes de degrés <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span>, <span class="math inline">\(4\)</span> et <span class="math inline">\(5\)</span>.</li>
+<li>En déduire la dimension totale de l’algèbre.</li>
+<li>Montrer que les sous-espaces pair et impair ont la même dimension.</li>
+<li>Montrer que tout élément homogène de degré impair a un carré nul.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Un monôme de degré <span class="math inline">\(p\)</span> est déterminé par le choix de <span class="math inline">\(p\)</span> générateurs distincts parmi cinq. Par conséquent,</p>
+<p><span class="math display">\[
+\dim\Lambda^p=\binom5p.
+\]</span></p>
+<p>On obtient le tableau suivant :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(\dim\Lambda^p\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>La dimension totale est</p>
+<p><span class="math display">\[
+1+5+10+10+5+1=32=2^5.
+\]</span></p>
+<p>La partie paire a pour dimension</p>
+<p><span class="math display">\[
+\binom50+\binom52+\binom54=1+10+5=16,
+\]</span></p>
+<p>et la partie impaire</p>
+<p><span class="math display">\[
+\binom51+\binom53+\binom55=5+10+1=16.
+\]</span></p>
+<p>Cette égalité découle aussi de</p>
+<p><span class="math display">\[
+(1+1)^5=32,
+\qquad
+(1-1)^5=0.
+\]</span></p>
+<p>En additionnant puis en soustrayant ces identités binomiales, on isole les sommes paire et impaire.</p>
+<p>Enfin, si <span class="math inline">\(\omega\)</span> est homogène de degré impair <span class="math inline">\(p\)</span>, la commutativité graduée donne</p>
+<p><span class="math display">\[
+\omega\wedge\omega=(-1)^{p^2}\omega\wedge\omega
+=-\omega\wedge\omega.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+2\omega\wedge\omega=0,
+\]</span></p>
+<p>et, sur <span class="math inline">\(\mathbb R\)</span> ou <span class="math inline">\(\mathbb C\)</span>,</p>
+<p><span class="math display">\[
+\boxed{\omega\wedge\omega=0.}
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-3-décomposabilité-dune-2-forme" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="exercice-3-décomposabilité-dune-2-forme"><span class="header-section-number">7.3</span> Exercice 3 — Décomposabilité d’une 2-forme</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>Dans un espace de dimension quatre, une 2-forme non nulle est décomposable si elle peut s’écrire</p>
+<p><span class="math display">\[
+\omega=\alpha\wedge\beta.
+\]</span></p>
+<p>On admettra qu’en dimension quatre elle est décomposable si et seulement si</p>
+<p><span class="math display">\[
+\omega\wedge\omega=0.
+\]</span></p>
+<p>On considère</p>
+<p><span class="math display">\[
+\omega
+=e^1\wedge e^2+e^1\wedge e^3
++a\,e^3\wedge e^4+b\,e^2\wedge e^4.
+\]</span></p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(\omega\wedge\omega\)</span>.</li>
+<li>Pour quelle relation entre <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span> la forme est-elle décomposable ?</li>
+<li>Lorsque cette relation est vérifiée, factoriser explicitement <span class="math inline">\(\omega\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le carré de chacun des quatre termes est nul. La plupart des produits croisés sont également nuls parce qu’ils contiennent deux fois la même 1-forme.</p>
+<p>Les seuls produits non nuls sont</p>
+<p><span class="math display">\[
+(e^1\wedge e^2)\wedge(ae^3\wedge e^4)
+=a\,e^1\wedge e^2\wedge e^3\wedge e^4
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+(e^1\wedge e^3)\wedge(be^2\wedge e^4)
+=b\,e^1\wedge e^3\wedge e^2\wedge e^4.
+\]</span></p>
+<p>Le second terme exige un échange de <span class="math inline">\(e^3\)</span> et <span class="math inline">\(e^2\)</span>, donc</p>
+<p><span class="math display">\[
+(e^1\wedge e^3)\wedge(be^2\wedge e^4)
+=-b\,e^1\wedge e^2\wedge e^3\wedge e^4.
+\]</span></p>
+<p>Chaque produit croisé apparaît deux fois puisque les 2-formes commutent entre elles. Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+\omega\wedge\omega
+=2(a-b)e^1\wedge e^2\wedge e^3\wedge e^4.
+}
+\]</span></p>
+<p>La condition de décomposabilité est donc</p>
+<p><span class="math display">\[
+\boxed{a=b.}
+\]</span></p>
+<p>Lorsque <span class="math inline">\(a=b\)</span>, on regroupe les termes :</p>
+<p><span class="math display">\[
+\begin{aligned}
+\omega
+&amp;=e^1\wedge(e^2+e^3)
++a(e^2+e^3)\wedge e^4\\
+&amp;=(e^1-ae^4)\wedge(e^2+e^3).
+\end{aligned}
+\]</span></p>
+<p>La dernière égalité se vérifie car</p>
+<p><span class="math display">\[
+-ae^4\wedge(e^2+e^3)
+=a(e^2+e^3)\wedge e^4.
+\]</span></p>
+<p>On a donc bien obtenu une forme simple, c’est-à-dire le produit extérieur de deux 1-formes.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-4-dérivée-extérieure-et-nilpotence" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="exercice-4-dérivée-extérieure-et-nilpotence"><span class="header-section-number">7.4</span> Exercice 4 — Dérivée extérieure et nilpotence</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>Sur <span class="math inline">\(\mathbb R^3\)</span> muni des coordonnées <span class="math inline">\((x,y,z)\)</span>, on considère</p>
+<p><span class="math display">\[
+\alpha
+=xyz\,dx+x^2z\,dy+xy^2\,dz.
+\]</span></p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(d\alpha\)</span>.</li>
+<li>Vérifier directement que <span class="math inline">\(d(d\alpha)=0\)</span>.</li>
+<li>Expliquer pourquoi cette annulation était prévisible avant tout calcul.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Écrivons</p>
+<p><span class="math display">\[
+\alpha=Pdx+Qdy+Rdz
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+P=xyz,
+\qquad Q=x^2z,
+\qquad R=xy^2.
+\]</span></p>
+<p>La dérivée extérieure vaut</p>
+<p><span class="math display">\[
+d\alpha
+=(\partial_xQ-\partial_yP)dx\wedge dy
++(\partial_xR-\partial_zP)dx\wedge dz
++(\partial_yR-\partial_zQ)dy\wedge dz.
+\]</span></p>
+<p>Calculons les trois coefficients :</p>
+<p><span class="math display">\[
+\partial_xQ-\partial_yP=2xz-xz=xz,
+\]</span></p>
+<p><span class="math display">\[
+\partial_xR-\partial_zP=y^2-xy,
+\]</span></p>
+<p><span class="math display">\[
+\partial_yR-\partial_zQ=2xy-x^2.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{
+d\alpha
+=xz\,dx\wedge dy
++(y^2-xy)dx\wedge dz
++(2xy-x^2)dy\wedge dz.
+}
+\]</span></p>
+<p>Pour une 2-forme</p>
+<p><span class="math display">\[
+\beta=A\,dx\wedge dy+B\,dx\wedge dz+C\,dy\wedge dz,
+\]</span></p>
+<p>on a</p>
+<p><span class="math display">\[
+d\beta
+=(\partial_xC-\partial_yB+\partial_zA)
+dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Ici,</p>
+<p><span class="math display">\[
+\partial_xC=2y-2x,
+\]</span></p>
+<p><span class="math display">\[
+\partial_yB=2y-x,
+\]</span></p>
+<p><span class="math display">\[
+\partial_zA=x.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\partial_xC-\partial_yB+\partial_zA
+=(2y-2x)-(2y-x)+x=0.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{d(d\alpha)=0.}
+\]</span></p>
+<p>Ce résultat était garanti par l’identité structurelle <span class="math inline">\(d^2=0\)</span>, conséquence de la symétrie des dérivées partielles secondes et de l’antisymétrie du produit extérieur.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-5-théorème-de-stokes-sur-un-disque" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="exercice-5-théorème-de-stokes-sur-un-disque"><span class="header-section-number">7.5</span> Exercice 5 — Théorème de Stokes sur un disque</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>Dans le plan orienté par <span class="math inline">\(dx\wedge dy\)</span>, on considère la 1-forme</p>
+<p><span class="math display">\[
+\omega=\frac12(x\,dy-y\,dx).
+\]</span></p>
+<p>Soit <span class="math inline">\(D_R\)</span> le disque de rayon <span class="math inline">\(R\)</span>, orienté positivement, et <span class="math inline">\(C_R=\partial D_R\)</span> son cercle frontière.</p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(d\omega\)</span>.</li>
+<li>Paramétrer <span class="math inline">\(C_R\)</span> et calculer directement <span class="math inline">\(\displaystyle\oint_{C_R}\omega\)</span>.</li>
+<li>Retrouver le résultat à l’aide du théorème de Stokes.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On a</p>
+<p><span class="math display">\[
+d(x\,dy)=dx\wedge dy,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+d(y\,dx)=dy\wedge dx=-dx\wedge dy.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+d\omega
+=\frac12(dx\wedge dy-dy\wedge dx)
+=dx\wedge dy.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{d\omega=dx\wedge dy.}
+\]</span></p>
+<p>Paramétrons le cercle dans le sens trigonométrique :</p>
+<p><span class="math display">\[
+x=R\cos\theta,
+\qquad
+y=R\sin\theta,
+\qquad
+0\leq\theta\leq2\pi.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+dx=-R\sin\theta\,d\theta,
+\qquad
+dy=R\cos\theta\,d\theta.
+\]</span></p>
+<p>Le tiré en arrière de <span class="math inline">\(\omega\)</span> vaut</p>
+<p><span class="math display">\[
+\begin{aligned}
+\omega|_{C_R}
+&amp;=\frac12\left[
+R\cos\theta(R\cos\theta,d\theta)
+-R\sin\theta(-R\sin\theta,d\theta)
+\right]\\
+&amp;=\frac{R^2}{2}d\theta.
+\end{aligned}
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\oint_{C_R}\omega
+=\frac{R^2}{2}\int_0^{2\pi}d\theta
+=\boxed{\pi R^2}.
+\]</span></p>
+<p>Le théorème de Stokes donne directement</p>
+<p><span class="math display">\[
+\oint_{C_R}\omega
+=\int_{D_R}d\omega
+=\int_{D_R}dx\wedge dy
+=\operatorname{aire}(D_R)
+=\pi R^2.
+\]</span></p>
+<p>La forme <span class="math inline">\(\omega\)</span> est donc un potentiel local de la forme d’aire.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-6-formule-de-cartan" class="level3" data-number="7.6">
+<h3 data-number="7.6" class="anchored" data-anchor-id="exercice-6-formule-de-cartan"><span class="header-section-number">7.6</span> Exercice 6 — Formule de Cartan</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>Sur <span class="math inline">\(\mathbb R^2\)</span>, on considère le champ radial</p>
+<p><span class="math display">\[
+X=x\partial_x+y\partial_y
+\]</span></p>
+<p>et la 1-forme</p>
+<p><span class="math display">\[
+\omega=x\,dy-y\,dx.
+\]</span></p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(\iota_X\omega\)</span>.</li>
+<li>Calculer <span class="math inline">\(d\omega\)</span>, puis <span class="math inline">\(\iota_Xd\omega\)</span>.</li>
+<li>Utiliser la formule de Cartan pour déterminer <span class="math inline">\(\mathcal L_X\omega\)</span>.</li>
+<li>Interpréter le résultat en considérant une dilatation <span class="math inline">\((x,y)\mapsto(e^s x,e^s y)\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Par définition,</p>
+<p><span class="math display">\[
+\iota_X\omega=\omega(X).
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+dx(X)=x,
+\qquad
+dy(X)=y.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\iota_X\omega=xy-yx=0.
+\]</span></p>
+<p>Ensuite,</p>
+<p><span class="math display">\[
+d\omega=d(x\,dy)-d(y\,dx)
+=dx\wedge dy-dy\wedge dx
+=2dx\wedge dy.
+\]</span></p>
+<p>La contraction d’un produit extérieur donne</p>
+<p><span class="math display">\[
+\iota_X(dx\wedge dy)
+=dx(X)dy-dy(X)dx
+=xdy-ydx.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\iota_Xd\omega=2(xdy-ydx)=2\omega.
+\]</span></p>
+<p>La formule de Cartan conduit alors à</p>
+<p><span class="math display">\[
+\mathcal L_X\omega
+=d(\iota_X\omega)+\iota_Xd\omega
+=0+2\omega.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{\mathcal L_X\omega=2\omega.}
+\]</span></p>
+<p>Le flot de <span class="math inline">\(X\)</span> est la dilatation</p>
+<p><span class="math display">\[
+\Phi_s(x,y)=(e^s x,e^s y).
+\]</span></p>
+<p>Comme <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(dx\)</span> et <span class="math inline">\(dy\)</span> acquièrent chacun un facteur <span class="math inline">\(e^s\)</span> approprié,</p>
+<p><span class="math display">\[
+\Phi_s^\ast\omega=e^{2s}\omega.
+\]</span></p>
+<p>En dérivant en <span class="math inline">\(s=0\)</span>,</p>
+<p><span class="math display">\[
+\left.\frac{d}{ds}\right|_{s=0}\Phi_s^\ast\omega=2\omega,
+\]</span></p>
+<p>ce qui confirme le résultat.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-7-retrouver-rotationnel-et-divergence" class="level3" data-number="7.7">
+<h3 data-number="7.7" class="anchored" data-anchor-id="exercice-7-retrouver-rotationnel-et-divergence"><span class="header-section-number">7.7</span> Exercice 7 — Retrouver rotationnel et divergence</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>Dans <span class="math inline">\(\mathbb R^3\)</span> euclidien orienté par <span class="math inline">\(dx\wedge dy\wedge dz\)</span>, soit</p>
+<p><span class="math display">\[
+\mathbf a=(a_x,a_y,a_z)
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+a^\flat=a_xdx+a_ydy+a_zdz.
+\]</span></p>
+<ol type="1">
+<li><p>Montrer que</p>
+<p><span class="math display">\[
+(\nabla\times\mathbf a)^\flat=\star da^\flat.
+\]</span></p></li>
+<li><p>Montrer que</p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf a=\star d\star a^\flat.
+\]</span></p></li>
+<li><p>Vérifier ces identités pour</p>
+<p><span class="math display">\[
+\mathbf a=\left(-\frac y2,\frac x2,0\right).
+\]</span></p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Développons la dérivée extérieure :</p>
+<p><span class="math display">\[
+\begin{aligned}
+da^\flat={}&amp;(\partial_xa_y-\partial_ya_x)dx\wedge dy\\
+&amp;+(\partial_ya_z-\partial_za_y)dy\wedge dz\\
+&amp;+(\partial_za_x-\partial_xa_z)dz\wedge dx.
+\end{aligned}
+\]</span></p>
+<p>En dimension trois euclidienne,</p>
+<p><span class="math display">\[
+\star(dx\wedge dy)=dz,
+\qquad
+\star(dy\wedge dz)=dx,
+\qquad
+\star(dz\wedge dx)=dy.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\star da^\flat={}&amp;(\partial_ya_z-\partial_za_y)dx\\
+&amp;+(\partial_za_x-\partial_xa_z)dy\\
+&amp;+(\partial_xa_y-\partial_ya_x)dz,
+\end{aligned}
+\]</span></p>
+<p>ce qui est exactement <span class="math inline">\((\nabla\times\mathbf a)^\flat\)</span>.</p>
+<p>Ensuite,</p>
+<p><span class="math display">\[
+\star a^\flat
+=a_xdy\wedge dz+a_ydz\wedge dx+a_zdx\wedge dy.
+\]</span></p>
+<p>Sa dérivée extérieure vaut</p>
+<p><span class="math display">\[
+d\star a^\flat
+=(\partial_xa_x+\partial_ya_y+\partial_za_z)
+dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Comme</p>
+<p><span class="math display">\[
+\star(dx\wedge dy\wedge dz)=1,
+\]</span></p>
+<p>on obtient</p>
+<p><span class="math display">\[
+\star d\star a^\flat=\nabla\cdot\mathbf a.
+\]</span></p>
+<p>Pour le champ proposé,</p>
+<p><span class="math display">\[
+a^\flat=-\frac y2dx+\frac x2dy.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+da^\flat
+=\frac12dx\wedge dy+\frac12dx\wedge dy
+=dx\wedge dy,
+\]</span></p>
+<p>donc</p>
+<p><span class="math display">\[
+\star da^\flat=dz.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\nabla\times\mathbf a=(0,0,1).
+\]</span></p>
+<p>Par ailleurs,</p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf a
+=\partial_x\left(-\frac y2\right)
++\partial_y\left(\frac x2\right)=0.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-8-dual-de-hodge-en-espace-temps" class="level3" data-number="7.8">
+<h3 data-number="7.8" class="anchored" data-anchor-id="exercice-8-dual-de-hodge-en-espace-temps"><span class="header-section-number">7.8</span> Exercice 8 — Dual de Hodge en espace-temps</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>On considère un champ électrique et un champ magnétique parallèles à l’axe <span class="math inline">\(x\)</span> :</p>
+<p><span class="math display">\[
+\mathbf E=E\,\mathbf e_x,
+\qquad
+\mathbf B=B\,\mathbf e_x.
+\]</span></p>
+<ol type="1">
+<li>Écrire la 2-forme <span class="math inline">\(F\)</span>.</li>
+<li>Calculer <span class="math inline">\(\star F\)</span> avec les conventions du cours.</li>
+<li>Vérifier explicitement que <span class="math inline">\(\star^2F=-F\)</span>.</li>
+<li>Calculer <span class="math inline">\(F\wedge\star F\)</span> et <span class="math inline">\(F\wedge F\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La forme du champ est</p>
+<p><span class="math display">\[
+\boxed{F=-E\,dt\wedge dx+B\,dy\wedge dz.}
+\]</span></p>
+<p>Les relations de Hodge utiles sont</p>
+<p><span class="math display">\[
+\star(dt\wedge dx)=-dy\wedge dz,
+\]</span></p>
+<p><span class="math display">\[
+\star(dy\wedge dz)=dt\wedge dx.
+\]</span></p>
+<p>Par linéarité,</p>
+<p><span class="math display">\[
+\boxed{
+\star F
+=E\,dy\wedge dz+B\,dt\wedge dx.
+}
+\]</span></p>
+<p>Une seconde application donne</p>
+<p><span class="math display">\[
+\begin{aligned}
+\star^2F
+&amp;=E\,dt\wedge dx-B\,dy\wedge dz\\
+&amp;=-F.
+\end{aligned}
+\]</span></p>
+<p>Calculons ensuite le premier invariant. Les produits contenant deux fois <span class="math inline">\(dt\wedge dx\)</span> ou deux fois <span class="math inline">\(dy\wedge dz\)</span> s’annulent. Il reste</p>
+<p><span class="math display">\[
+\begin{aligned}
+F\wedge\star F
+={}&amp;(-E\,dt\wedge dx)\wedge(E\,dy\wedge dz)\\
+&amp;+(B\,dy\wedge dz)\wedge(B\,dt\wedge dx).
+\end{aligned}
+\]</span></p>
+<p>Les 2-formes commutent et</p>
+<p><span class="math display">\[
+dy\wedge dz\wedge dt\wedge dx
+=dt\wedge dx\wedge dy\wedge dz.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{
+F\wedge\star F=(B^2-E^2)\operatorname{vol}.
+}
+\]</span></p>
+<p>Enfin,</p>
+<p><span class="math display">\[
+F\wedge F
+=2(-E\,dt\wedge dx)\wedge(B\,dy\wedge dz),
+\]</span></p>
+<p>d’où</p>
+<p><span class="math display">\[
+\boxed{
+F\wedge F=-2EB\operatorname{vol}.
+}
+\]</span></p>
+<p>On retrouve bien les invariants <span class="math inline">\(\mathbf B^2-\mathbf E^2\)</span> et <span class="math inline">\(\mathbf E\cdot\mathbf B=EB\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-9-vérification-complète-des-équations-de-maxwell" class="level3" data-number="7.9">
+<h3 data-number="7.9" class="anchored" data-anchor-id="exercice-9-vérification-complète-des-équations-de-maxwell"><span class="header-section-number">7.9</span> Exercice 9 — Vérification complète des équations de Maxwell</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>On donne les champs statiques</p>
+<p><span class="math display">\[
+\mathbf E=a(x\,\mathbf e_x+y\,\mathbf e_y+z\,\mathbf e_z),
+\]</span></p>
+<p><span class="math display">\[
+\mathbf B=\frac b2(-y\,\mathbf e_x+x\,\mathbf e_y),
+\]</span></p>
+<p>où <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span> sont constants.</p>
+<ol type="1">
+<li>Vérifier les deux équations homogènes.</li>
+<li>Déterminer la densité <span class="math inline">\(\rho\)</span> et le courant <span class="math inline">\(\mathbf j\)</span> nécessaires.</li>
+<li>Écrire les formes <span class="math inline">\(F\)</span> et <span class="math inline">\(J\)</span>.</li>
+<li>Vérifier la conservation du courant.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le champ magnétique vérifie</p>
+<p><span class="math display">\[
+\nabla\cdot\mathbf B
+=\partial_x\left(-\frac b2y\right)
++\partial_y\left(\frac b2x\right)=0.
+\]</span></p>
+<p>Le champ électrique est le gradient de <span class="math inline">\(a(x^2+y^2+z^2)/2\)</span>, donc son rotationnel est nul :</p>
+<p><span class="math display">\[
+\nabla\times\mathbf E=0.
+\]</span></p>
+<p>Comme les champs sont statiques,</p>
+<p><span class="math display">\[
+\partial_t\mathbf B=0.
+\]</span></p>
+<p>Les deux équations homogènes sont donc satisfaites.</p>
+<p>Pour les sources,</p>
+<p><span class="math display">\[
+\rho=\nabla\cdot\mathbf E
+=a+a+a=3a.
+\]</span></p>
+<p>De plus,</p>
+<p><span class="math display">\[
+\mathbf j
+=\nabla\times\mathbf B
+=b\,\mathbf e_z.
+\]</span></p>
+<p>La 2-forme du champ est</p>
+<p><span class="math display">\[
+\boxed{
+\begin{aligned}
+F={}&amp;-ax\,dt\wedge dx-ay\,dt\wedge dy-az\,dt\wedge dz\\
+&amp;-\frac{by}{2}dy\wedge dz
++\frac{bx}{2}dz\wedge dx.
+\end{aligned}
+}
+\]</span></p>
+<p>La 3-forme courant vaut</p>
+<p><span class="math display">\[
+\boxed{
+J=3a\,dx\wedge dy\wedge dz
+-b\,dt\wedge dx\wedge dy.
+}
+\]</span></p>
+<p>L’équation <span class="math inline">\(dF=0\)</span> est équivalente aux deux vérifications déjà effectuées. Pour l’équation inhomogène, on peut écrire</p>
+<p><span class="math display">\[
+\begin{aligned}
+\star F={}&amp;-\frac{by}{2}dt\wedge dx
++\frac{bx}{2}dt\wedge dy\\
+&amp;+ax\,dy\wedge dz+ay\,dz\wedge dx+az\,dx\wedge dy.
+\end{aligned}
+\]</span></p>
+<p>La dérivée des trois derniers termes fournit</p>
+<p><span class="math display">\[
+3a\,dx\wedge dy\wedge dz.
+\]</span></p>
+<p>La dérivée des deux premiers fournit</p>
+<p><span class="math display">\[
+-b\,dt\wedge dx\wedge dy.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+d\star F=J.
+\]</span></p>
+<p>Enfin,</p>
+<p><span class="math display">\[
+\partial_t\rho=0,
+\qquad
+\nabla\cdot\mathbf j=\partial_zb=0.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\partial_t\rho+\nabla\cdot\mathbf j=0,
+\]</span></p>
+<p>ou, de manière équivalente,</p>
+<p><span class="math display">\[
+dJ=0.
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-10-deux-potentiels-pour-un-même-champ" class="level3" data-number="7.10">
+<h3 data-number="7.10" class="anchored" data-anchor-id="exercice-10-deux-potentiels-pour-un-même-champ"><span class="header-section-number">7.10</span> Exercice 10 — Deux potentiels pour un même champ</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>On cherche à décrire un champ électrique uniforme</p>
+<p><span class="math display">\[
+\mathbf E=E_0\mathbf e_x,
+\qquad
+\mathbf B=0.
+\]</span></p>
+<p>On considère les deux potentiels</p>
+<p><span class="math display">\[
+A_1=E_0x\,dt,
+\]</span></p>
+<p><span class="math display">\[
+A_2=-E_0t\,dx.
+\]</span></p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(dA_1\)</span> et <span class="math inline">\(dA_2\)</span>.</li>
+<li>Trouver une fonction <span class="math inline">\(\chi\)</span> telle que <span class="math inline">\(A_2=A_1+d\chi\)</span>.</li>
+<li>Traduire ces deux potentiels en couples <span class="math inline">\((\phi,\mathbf A)\)</span>.</li>
+<li>Vérifier que les deux potentiels satisfont la jauge de Lorenz.</li>
+<li>Vérifier que la transformation de jauge trouvée préserve cette condition.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour le premier potentiel,</p>
+<p><span class="math display">\[
+dA_1=E_0dx\wedge dt=-E_0dt\wedge dx.
+\]</span></p>
+<p>Pour le second,</p>
+<p><span class="math display">\[
+dA_2=-E_0dt\wedge dx.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{dA_1=dA_2=F=-E_0dt\wedge dx.}
+\]</span></p>
+<p>Leur différence est</p>
+<p><span class="math display">\[
+A_2-A_1=-E_0(t\,dx+x\,dt).
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+d(tx)=t\,dx+x\,dt.
+\]</span></p>
+<p>On peut donc choisir</p>
+<p><span class="math display">\[
+\boxed{\chi=-E_0tx.}
+\]</span></p>
+<p>Pour <span class="math inline">\(A_1\)</span>, l’identification</p>
+<p><span class="math display">\[
+A=-\phi\,dt+\mathbf A\cdot d\mathbf x
+\]</span></p>
+<p>donne</p>
+<p><span class="math display">\[
+\phi_1=-E_0x,
+\qquad
+\mathbf A_1=0.
+\]</span></p>
+<p>Pour <span class="math inline">\(A_2\)</span>,</p>
+<p><span class="math display">\[
+\phi_2=0,
+\qquad
+\mathbf A_2=-E_0t\,\mathbf e_x.
+\]</span></p>
+<p>Dans le premier cas,</p>
+<p><span class="math display">\[
+-\nabla\phi_1=E_0\mathbf e_x.
+\]</span></p>
+<p>Dans le second,</p>
+<p><span class="math display">\[
+-\partial_t\mathbf A_2=E_0\mathbf e_x.
+\]</span></p>
+<p>La condition de Lorenz est</p>
+<p><span class="math display">\[
+\partial_t\phi+\nabla\cdot\mathbf A=0.
+\]</span></p>
+<p>Elle est vérifiée pour les deux couples. Enfin,</p>
+<p><span class="math display">\[
+\Box\chi
+=(-\partial_t^2+\nabla^2)(-E_0tx)=0,
+\]</span></p>
+<p>donc <span class="math inline">\(\chi\)</span> appartient bien à la liberté de jauge résiduelle qui préserve la jauge de Lorenz.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-11-classification-dun-champ-par-ses-invariants" class="level3" data-number="7.11">
+<h3 data-number="7.11" class="anchored" data-anchor-id="exercice-11-classification-dun-champ-par-ses-invariants"><span class="header-section-number">7.11</span> Exercice 11 — Classification d’un champ par ses invariants</h3>
+<p><strong>Difficulté :</strong> ★★★★☆</p>
+<p>On considère des champs uniformes orthogonaux</p>
+<p><span class="math display">\[
+\mathbf E=E_0\mathbf e_x,
+\qquad
+\mathbf B=B_0\mathbf e_y,
+\]</span></p>
+<p>avec <span class="math inline">\(E_0&gt;0\)</span> et <span class="math inline">\(B_0&gt;0\)</span>.</p>
+<ol type="1">
+<li>Calculer les deux invariants de Lorentz.</li>
+<li>Si <span class="math inline">\(B_0&gt;E_0\)</span>, trouver la vitesse d’un référentiel dans lequel le champ électrique s’annule.</li>
+<li>Déterminer le champ magnétique dans ce référentiel.</li>
+<li>Traiter de même le cas <span class="math inline">\(E_0&gt;B_0\)</span>.</li>
+<li>Que se passe-t-il lorsque <span class="math inline">\(E_0=B_0\)</span> ?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Comme les champs sont orthogonaux,</p>
+<p><span class="math display">\[
+\mathbf E\cdot\mathbf B=0.
+\]</span></p>
+<p>L’autre invariant vaut</p>
+<p><span class="math display">\[
+\mathbf B^2-\mathbf E^2=B_0^2-E_0^2.
+\]</span></p>
+<p>Supposons d’abord <span class="math inline">\(B_0&gt;E_0\)</span>. Pour un changement de référentiel de vitesse <span class="math inline">\(\mathbf v\)</span> perpendiculaire aux deux champs, les transformations sont</p>
+<p><span class="math display">\[
+\mathbf E'=\gamma(\mathbf E+\mathbf v\times\mathbf B),
+\]</span></p>
+<p><span class="math display">\[
+\mathbf B'=\gamma(\mathbf B-\mathbf v\times\mathbf E),
+\]</span></p>
+<p>où</p>
+<p><span class="math display">\[
+\gamma=\frac1{\sqrt{1-v^2}}.
+\]</span></p>
+<p>Choisissons</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf v=\frac{\mathbf E\times\mathbf B}{B^2}
+=\frac{E_0}{B_0}\mathbf e_z.
+}
+\]</span></p>
+<p>Cette vitesse est admissible car <span class="math inline">\(E_0/B_0&lt;1\)</span>. De plus,</p>
+<p><span class="math display">\[
+\mathbf v\times\mathbf B
+=\frac{E_0}{B_0}\mathbf e_z\times B_0\mathbf e_y
+=-E_0\mathbf e_x=-\mathbf E.
+\]</span></p>
+<p>Donc <span class="math inline">\(\mathbf E'=0\)</span>.</p>
+<p>Pour le champ magnétique,</p>
+<p><span class="math display">\[
+\mathbf v\times\mathbf E
+=\frac{E_0^2}{B_0}\mathbf e_y.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\mathbf B'
+=\gamma\left(B_0-\frac{E_0^2}{B_0}\right)\mathbf e_y.
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+\gamma
+=\frac1{\sqrt{1-E_0^2/B_0^2}}
+=\frac{B_0}{\sqrt{B_0^2-E_0^2}}.
+\]</span></p>
+<p>Finalement,</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf B'=\sqrt{B_0^2-E_0^2}\,\mathbf e_y.
+}
+\]</span></p>
+<p>Si <span class="math inline">\(E_0&gt;B_0\)</span>, on choisit plutôt</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf v=\frac{\mathbf E\times\mathbf B}{E^2}
+=\frac{B_0}{E_0}\mathbf e_z.
+}
+\]</span></p>
+<p>Cette fois <span class="math inline">\(\mathbf B'=0\)</span> et</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf E'=\sqrt{E_0^2-B_0^2}\,\mathbf e_x.
+}
+\]</span></p>
+<p>Lorsque <span class="math inline">\(E_0=B_0\)</span>, les deux invariants sont nuls. Les vitesses proposées atteindraient <span class="math inline">\(v=1\)</span>, ce qui ne correspond à aucun référentiel inertiel matériel. On ne peut donc annuler ni <span class="math inline">\(\mathbf E\)</span> ni <span class="math inline">\(\mathbf B\)</span> par une transformation de Lorentz subluminale. Cette situation est celle d’un champ nul, caractéristique notamment d’une onde plane.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-12-variation-de-laction-et-courant-conservé" class="level3" data-number="7.12">
+<h3 data-number="7.12" class="anchored" data-anchor-id="exercice-12-variation-de-laction-et-courant-conservé"><span class="header-section-number">7.12</span> Exercice 12 — Variation de l’action et courant conservé</h3>
+<p><strong>Difficulté :</strong> ★★★★☆</p>
+<p>On considère</p>
+<p><span class="math display">\[
+S[A]
+=-\frac12\int_MdA\wedge\star dA
++\int_MA\wedge J.
+\]</span></p>
+<ol type="1">
+<li>Effectuer la variation <span class="math inline">\(A\mapsto A+\varepsilon a\)</span>, où <span class="math inline">\(a\)</span> est une 1-forme s’annulant au bord.</li>
+<li>Retrouver l’équation d’Euler–Lagrange.</li>
+<li>Calculer la variation de l’action sous <span class="math inline">\(A\mapsto A+d\chi\)</span> sans supposer que <span class="math inline">\(dJ=0\)</span>.</li>
+<li>Montrer que l’invariance de jauge pour toute fonction <span class="math inline">\(\chi\)</span> à support compact impose la conservation du courant.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Posons <span class="math inline">\(F=dA\)</span>. Sous la variation proposée,</p>
+<p><span class="math display">\[
+\delta F=da.
+\]</span></p>
+<p>La symétrie du produit scalaire induit par <span class="math inline">\(\star\)</span> donne</p>
+<p><span class="math display">\[
+\delta\left(\frac12F\wedge\star F\right)
+=da\wedge\star F.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\delta S
+=-\int_Mda\wedge\star F+\int_Ma\wedge J.
+\]</span></p>
+<p>La règle de Leibniz graduée fournit</p>
+<p><span class="math display">\[
+d(a\wedge\star F)
+=da\wedge\star F-a\wedge d\star F.
+\]</span></p>
+<p>On en déduit</p>
+<p><span class="math display">\[
+\delta S
+=-\int_{\partial M}a\wedge\star F
++\int_Ma\wedge(J-d\star F).
+\]</span></p>
+<p>Comme <span class="math inline">\(a\)</span> s’annule au bord,</p>
+<p><span class="math display">\[
+\delta S=\int_Ma\wedge(J-d\star F).
+\]</span></p>
+<p>Cette quantité doit être nulle pour toute 1-forme <span class="math inline">\(a\)</span>. Le lemme fondamental du calcul des variations impose alors</p>
+<p><span class="math display">\[
+\boxed{d\star F=J.}
+\]</span></p>
+<p>Sous une transformation de jauge, <span class="math inline">\(F\)</span> ne change pas et seule l’interaction varie :</p>
+<p><span class="math display">\[
+\Delta S=\int_Md\chi\wedge J.
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+d(\chi J)=d\chi\wedge J+\chi dJ.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+\Delta S
+=\int_{\partial M}\chi J-\int_M\chi dJ.
+\]</span></p>
+<p>Si <span class="math inline">\(\chi\)</span> est à support compact dans l’intérieur de <span class="math inline">\(M\)</span>, le terme de bord s’annule :</p>
+<p><span class="math display">\[
+\Delta S=-\int_M\chi dJ.
+\]</span></p>
+<p>L’invariance pour toute fonction <span class="math inline">\(\chi\)</span> à support compact exige</p>
+<p><span class="math display">\[
+\boxed{dJ=0.}
+\]</span></p>
+<p>Ainsi, l’invariance de jauge et la conservation de la charge sont deux faces d’une même structure.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problèmes-de-synthèse-et-prolongements" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="problèmes-de-synthèse-et-prolongements"><span class="header-section-number">8</span> Problèmes de synthèse et prolongements</h2>
+<section id="problème-1-onde-plane-et-caractère-nul-du-champ" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="problème-1-onde-plane-et-caractère-nul-du-champ"><span class="header-section-number">8.1</span> Problème 1 — Onde plane et caractère nul du champ</h3>
+<p><strong>Difficulté :</strong> ★★★★☆</p>
+<p>On travaille dans le vide et l’on utilise une représentation complexe, la partie réelle étant prise à la fin. On cherche une solution monochromatique sous la forme</p>
+<p><span class="math display">\[
+F(x)=f\,e^{ik_\mu x^\mu},
+\]</span></p>
+<p>où <span class="math inline">\(k\)</span> est une 1-forme constante et <span class="math inline">\(f\)</span> une 2-forme constante.</p>
+<ol type="1">
+<li><p>Montrer que les équations de Maxwell deviennent</p>
+<p><span class="math display">\[
+k\wedge f=0,
+\qquad
+k\wedge\star f=0.
+\]</span></p></li>
+<li><p>Montrer que la première relation implique, pour <span class="math inline">\(k\neq0\)</span>,</p>
+<p><span class="math display">\[
+f=k\wedge a
+\]</span></p>
+<p>pour une certaine 1-forme <span class="math inline">\(a\)</span>.</p></li>
+<li><p>Montrer que la seconde relation est équivalente à</p>
+<p><span class="math display">\[
+k^2a-(k\cdot a)k=0.
+\]</span></p></li>
+<li><p>En déduire qu’une solution non triviale exige</p>
+<p><span class="math display">\[
+k^2=0,
+\qquad
+k\cdot a=0.
+\]</span></p></li>
+<li><p>Expliquer la redondance <span class="math inline">\(a\mapsto a+\lambda k\)</span> et compter les polarisations physiques.</p></li>
+<li><p>Montrer que les deux invariants électromagnétiques sont nuls.</p></li>
+<li><p>Choisir une onde se propageant selon <span class="math inline">\(+z\)</span> et retrouver les relations entre <span class="math inline">\(\mathbf E\)</span>, <span class="math inline">\(\mathbf B\)</span> et la direction de propagation.</p></li>
+<li><p>Montrer que le tenseur énergie-impulsion est dirigé selon le quadrivecteur d’onde.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Comme <span class="math inline">\(f\)</span> et <span class="math inline">\(k\)</span> sont constants,</p>
+<p><span class="math display">\[
+dF
+=i\,k\wedge f\,e^{ik\cdot x}.
+\]</span></p>
+<p>De même,</p>
+<p><span class="math display">\[
+d\star F
+=i\,k\wedge\star f\,e^{ik\cdot x}.
+\]</span></p>
+<p>Les équations sans source donnent donc</p>
+<p><span class="math display">\[
+\boxed{k\wedge f=0,\qquad k\wedge\star f=0.}
+\]</span></p>
+<p>Pour montrer la première implication, choisissons localement une base de covecteurs dont le premier élément est <span class="math inline">\(k\)</span>. Toute 2-forme se décompose alors de manière unique en</p>
+<p><span class="math display">\[
+f=k\wedge a+b,
+\]</span></p>
+<p>où <span class="math inline">\(b\)</span> ne contient aucun facteur <span class="math inline">\(k\)</span>. La condition</p>
+<p><span class="math display">\[
+k\wedge f=k\wedge b=0
+\]</span></p>
+<p>impose <span class="math inline">\(b=0\)</span>, car les 3-formes obtenues en ajoutant <span class="math inline">\(k\)</span> aux composantes de <span class="math inline">\(b\)</span> sont linéairement indépendantes. Ainsi,</p>
+<p><span class="math display">\[
+\boxed{f=k\wedge a.}
+\]</span></p>
+<p>La seconde équation peut être réécrite, à un signe sans importance pour une équation homogène, sous la forme</p>
+<p><span class="math display">\[
+\iota_{k^\sharp}f=0.
+\]</span></p>
+<p>En composantes,</p>
+<p><span class="math display">\[
+f_{\mu\nu}=k_\mu a_\nu-k_\nu a_\mu.
+\]</span></p>
+<p>Par contraction,</p>
+<p><span class="math display">\[
+\begin{aligned}
+k^\mu f_{\mu\nu}
+&amp;=k^\mu k_\mu a_\nu-k^\mu a_\mu k_\nu\\
+&amp;=k^2a_\nu-(k\cdot a)k_\nu.
+\end{aligned}
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{k^2a-(k\cdot a)k=0.}
+\]</span></p>
+<p>Si <span class="math inline">\(k^2\neq0\)</span>, cette relation impose</p>
+<p><span class="math display">\[
+a=\frac{k\cdot a}{k^2}k,
+\]</span></p>
+<p>donc</p>
+<p><span class="math display">\[
+f=k\wedge a=0.
+\]</span></p>
+<p>Une solution non triviale exige ainsi</p>
+<p><span class="math display">\[
+k^2=0.
+\]</span></p>
+<p>L’équation restante devient</p>
+<p><span class="math display">\[
+-(k\cdot a)k=0,
+\]</span></p>
+<p>d’où</p>
+<p><span class="math display">\[
+k\cdot a=0.
+\]</span></p>
+<p>Le quadrivecteur d’onde est donc nul au sens lorentzien : la dispersion est celle d’une onde se propageant à la vitesse de la lumière.</p>
+<p>La transformation</p>
+<p><span class="math display">\[
+a\longmapsto a+\lambda k
+\]</span></p>
+<p>ne change pas <span class="math inline">\(f\)</span>, car</p>
+<p><span class="math display">\[
+k\wedge(a+\lambda k)=k\wedge a.
+\]</span></p>
+<p>La condition <span class="math inline">\(k\cdot a=0\)</span> laisse trois composantes indépendantes à <span class="math inline">\(a\)</span>, dont une est précisément la direction redondante proportionnelle à <span class="math inline">\(k\)</span>. Il reste donc</p>
+<p><span class="math display">\[
+3-1=2
+\]</span></p>
+<p>polarisations physiques.</p>
+<p>Pour les invariants, on a immédiatement</p>
+<p><span class="math display">\[
+f\wedge f
+=(k\wedge a)\wedge(k\wedge a)=0
+\]</span></p>
+<p>à cause du facteur <span class="math inline">\(k\)</span> répété. De plus,</p>
+<p><span class="math display">\[
+\frac12f_{\mu\nu}f^{\mu\nu}
+=k^2a^2-(k\cdot a)^2=0.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{F\wedge F=0,\qquad F\wedge\star F=0.}
+\]</span></p>
+<p>Prenons maintenant</p>
+<p><span class="math display">\[
+k=-\omega\,dt+\omega\,dz,
+\]</span></p>
+<p>pour lequel</p>
+<p><span class="math display">\[
+k^2=-\omega^2+\omega^2=0.
+\]</span></p>
+<p>On peut choisir</p>
+<p><span class="math display">\[
+a=a_xdx+a_ydy.
+\]</span></p>
+<p>Alors</p>
+<p><span class="math display">\[
+\begin{aligned}
+f={}&amp;-\omega a_xdt\wedge dx-\omega a_ydt\wedge dy\\
+&amp;+\omega a_xdz\wedge dx-\omega a_ydy\wedge dz.
+\end{aligned}
+\]</span></p>
+<p>On lit</p>
+<p><span class="math display">\[
+\mathbf E=\omega(a_x\mathbf e_x+a_y\mathbf e_y),
+\]</span></p>
+<p><span class="math display">\[
+\mathbf B=\omega(-a_y\mathbf e_x+a_x\mathbf e_y).
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf E\cdot\mathbf B=0,
+\qquad
+|\mathbf E|=|\mathbf B|,
+\qquad
+\mathbf B=\mathbf e_z\times\mathbf E.
+}
+\]</span></p>
+<p>Enfin, prenons pour simplicité le champ réel</p>
+<p><span class="math display">\[
+F=(k\wedge a)\cos(k\cdot x).
+\]</span></p>
+<p>Puisque les invariants sont nuls, le terme proportionnel à <span class="math inline">\(\eta^{\mu\nu}\)</span> dans <span class="math inline">\(T^{\mu\nu}\)</span> disparaît. Un calcul direct donne</p>
+<p><span class="math display">\[
+F^{\mu\rho}F^\nu{}_{\rho}
+=a^2k^\mu k^\nu\cos^2(k\cdot x).
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{
+T^{\mu\nu}
+=a^2k^\mu k^\nu\cos^2(k\cdot x).
+}
+\]</span></p>
+<p>L’énergie et l’impulsion sont transportées le long de la direction nulle <span class="math inline">\(k^\mu\)</span>. Après moyenne sur une période, <span class="math inline">\(\cos^2\)</span> est remplacé par <span class="math inline">\(1/2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="problème-2-dualité-et-décomposition-auto-duale" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="problème-2-dualité-et-décomposition-auto-duale"><span class="header-section-number">8.2</span> Problème 2 — Dualité et décomposition auto-duale</h3>
+<p><strong>Difficulté :</strong> ★★★★☆</p>
+<p>Dans une région sans source, on définit</p>
+<p><span class="math display">\[
+F_\theta=F\cos\theta+\star F\sin\theta.
+\]</span></p>
+<ol type="1">
+<li><p>Montrer que <span class="math inline">\(F_\theta\)</span> satisfait les équations de Maxwell si <span class="math inline">\(F\)</span> les satisfait.</p></li>
+<li><p>Sur l’espace complexifié des 2-formes, introduire</p>
+<p><span class="math display">\[
+P_+=\frac12(1-i\star),
+\qquad
+P_-=\frac12(1+i\star).
+\]</span></p>
+<p>Montrer qu’il s’agit de projecteurs complémentaires.</p></li>
+<li><p>Pour</p>
+<p><span class="math display">\[
+F_+=P_+F,
+\qquad
+F_-=P_-F,
+\]</span></p>
+<p>montrer que</p>
+<p><span class="math display">\[
+\star F_+=iF_+,
+\qquad
+\star F_-=-iF_-.
+\]</span></p></li>
+<li><p>Montrer que la dualité agit par des phases opposées sur <span class="math inline">\(F_+\)</span> et <span class="math inline">\(F_-\)</span>.</p></li>
+<li><p>Étudier la transformation de <span class="math inline">\(F\wedge\star F\)</span> et <span class="math inline">\(F\wedge F\)</span>.</p></li>
+<li><p>Montrer que la densité d’énergie et le vecteur de Poynting sont invariants.</p></li>
+<li><p>Expliquer pourquoi la dualité est une symétrie évidente des équations, mais plus subtile dans une action formulée avec un seul potentiel <span class="math inline">\(A\)</span>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans le vide,</p>
+<p><span class="math display">\[
+dF=0,
+\qquad
+d\star F=0.
+\]</span></p>
+<p>On calcule</p>
+<p><span class="math display">\[
+dF_\theta
+=\cos\theta\,dF+\sin\theta\,d\star F=0.
+\]</span></p>
+<p>De plus, puisque <span class="math inline">\(\star^2=-1\)</span> sur les 2-formes,</p>
+<p><span class="math display">\[
+\star F_\theta
+=\star F\cos\theta-F\sin\theta.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+d\star F_\theta
+=\cos\theta\,d\star F-\sin\theta\,dF=0.
+\]</span></p>
+<p>La dualité préserve bien les équations sans source.</p>
+<p>Vérifions ensuite les projecteurs. On a</p>
+<p><span class="math display">\[
+P_+^2
+=\frac14(1-2i\star-\star^2)
+=\frac12(1-i\star)
+=P_+,
+\]</span></p>
+<p>car <span class="math inline">\(\star^2=-1\)</span>. De même,</p>
+<p><span class="math display">\[
+P_-^2=P_-.
+\]</span></p>
+<p>En outre,</p>
+<p><span class="math display">\[
+P_+P_-
+=\frac14(1+\star^2)=0,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+P_++P_-=1.
+\]</span></p>
+<p>Ils décomposent donc toute 2-forme complexe en deux sous-espaces complémentaires.</p>
+<p>Pour la partie positive,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\star F_+
+&amp;=\frac12(\star F-i\star^2F)\\
+&amp;=\frac12(\star F+iF)\\
+&amp;=iF_+.
+\end{aligned}
+\]</span></p>
+<p>De même,</p>
+<p><span class="math display">\[
+\star F_-=-iF_-.
+\]</span></p>
+<p>Sous une rotation de dualité,</p>
+<p><span class="math display">\[
+\begin{aligned}
+(F_\theta)_+
+&amp;=\frac12(F_\theta-i\star F_\theta)\\
+&amp;=e^{i\theta}F_+,
+\end{aligned}
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+(F_\theta)_-=e^{-i\theta}F_-.
+\]</span></p>
+<p>Introduisons</p>
+<p><span class="math display">\[
+I=F\wedge\star F,
+\qquad
+K=F\wedge F.
+\]</span></p>
+<p>Les identités</p>
+<p><span class="math display">\[
+\star F\wedge F=F\wedge\star F,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\star F\wedge\star F=-F\wedge F
+\]</span></p>
+<p>donnent, après développement,</p>
+<p><span class="math display">\[
+\boxed{
+I_\theta=I\cos(2\theta)-K\sin(2\theta),
+}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{
+K_\theta=K\cos(2\theta)+I\sin(2\theta).
+}
+\]</span></p>
+<p>Les deux invariants se transforment donc comme un vecteur tournant d’un angle <span class="math inline">\(2\theta\)</span>.</p>
+<p>Dans le langage tridimensionnel,</p>
+<p><span class="math display">\[
+\mathbf E_\theta=\mathbf E\cos\theta+\mathbf B\sin\theta,
+\]</span></p>
+<p><span class="math display">\[
+\mathbf B_\theta=\mathbf B\cos\theta-\mathbf E\sin\theta.
+\]</span></p>
+<p>On vérifie immédiatement</p>
+<p><span class="math display">\[
+\mathbf E_\theta^2+\mathbf B_\theta^2
+=\mathbf E^2+\mathbf B^2.
+\]</span></p>
+<p>Pour le vecteur de Poynting,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf E_\theta\times\mathbf B_\theta
+={}&amp;\cos^2\theta\,\mathbf E\times\mathbf B
+-\sin^2\theta\,\mathbf B\times\mathbf E\\
+&amp;-\sin\theta\cos\theta\,\mathbf E\times\mathbf E
++\sin\theta\cos\theta\,\mathbf B\times\mathbf B.
+\end{aligned}
+\]</span></p>
+<p>Les deux derniers termes sont nuls et</p>
+<p><span class="math display">\[
+\mathbf B\times\mathbf E=-\mathbf E\times\mathbf B.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+\mathbf E_\theta\times\mathbf B_\theta
+=\mathbf E\times\mathbf B.
+}
+\]</span></p>
+<p>Le tenseur énergie-impulsion complet est lui aussi invariant.</p>
+<p>Enfin, l’action usuelle emploie <span class="math inline">\(F=dA\)</span>. Une variation infinitésimale de dualité voudrait imposer</p>
+<p><span class="math display">\[
+\delta F=\theta\star F.
+\]</span></p>
+<p>Or <span class="math inline">\(\star F\)</span> n’est localement de la forme <span class="math inline">\(d(\delta A)\)</span> que lorsque l’équation <span class="math inline">\(d\star F=0\)</span> est déjà satisfaite. La symétrie est donc immédiatement visible au niveau des équations, mais elle n’agit pas localement et hors couche de masse sur un unique potentiel <span class="math inline">\(A\)</span>.</p>
+<p>Sur une solution, la variation du terme cinétique est proportionnelle à</p>
+<p><span class="math display">\[
+\int_MF\wedge F.
+\]</span></p>
+<p>Lorsque <span class="math inline">\(F=dA\)</span> globalement,</p>
+<p><span class="math display">\[
+F\wedge F=d(A\wedge F),
+\]</span></p>
+<p>qui est un terme de bord. Des formulations à deux potentiels permettent de rendre la dualité plus manifeste dans l’action.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="méga-problème-monopôle-magnétique-potentiels-locaux-et-quantification-de-dirac" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="méga-problème-monopôle-magnétique-potentiels-locaux-et-quantification-de-dirac"><span class="header-section-number">8.3</span> Méga-problème — Monopôle magnétique, potentiels locaux et quantification de Dirac</h3>
+<p><strong>Difficulté :</strong> ★★★★★</p>
+<p>On considère l’espace <span class="math inline">\(\mathbb R^3\setminus\{0\}\)</span> et, en coordonnées sphériques <span class="math inline">\((r,\theta,\varphi)\)</span>, la 2-forme magnétique</p>
+<p><span class="math display">\[
+F=g\sin\theta\,d\theta\wedge d\varphi,
+\]</span></p>
+<p>où <span class="math inline">\(g\)</span> est une constante.</p>
+<ol type="1">
+<li><p>Montrer que <span class="math inline">\(dF=0\)</span> sur <span class="math inline">\(\mathbb R^3\setminus\{0\}\)</span>.</p></li>
+<li><p>Calculer le flux de <span class="math inline">\(F\)</span> à travers toute sphère <span class="math inline">\(S_R^2\)</span> centrée à l’origine.</p></li>
+<li><p>Montrer qu’il ne peut exister de 1-forme lisse globale <span class="math inline">\(A\)</span> sur <span class="math inline">\(S_R^2\)</span> telle que <span class="math inline">\(F=dA\)</span>.</p></li>
+<li><p>On définit deux ouverts : <span class="math inline">\(U_N\)</span>, qui exclut le pôle Sud, et <span class="math inline">\(U_S\)</span>, qui exclut le pôle Nord. Vérifier que</p>
+<p><span class="math display">\[
+A_N=g(1-\cos\theta)d\varphi
+\]</span></p>
+<p>est régulier sur <span class="math inline">\(U_N\)</span>, tandis que</p>
+<p><span class="math display">\[
+A_S=-g(1+\cos\theta)d\varphi
+\]</span></p>
+<p>est régulier sur <span class="math inline">\(U_S\)</span>, et que</p>
+<p><span class="math display">\[
+dA_N=dA_S=F.
+\]</span></p></li>
+<li><p>Déterminer la transformation de jauge reliant <span class="math inline">\(A_N\)</span> et <span class="math inline">\(A_S\)</span> sur leur intersection.</p></li>
+<li><p>Une particule de charge <span class="math inline">\(q\)</span> a une fonction d’onde qui se transforme sous <span class="math inline">\(A\mapsto A+d\chi\)</span> selon</p>
+<p><span class="math display">\[
+\psi\mapsto e^{iq\chi/\hbar}\psi.
+\]</span></p>
+<p>Imposer que la fonction de transition soit univoque lorsque <span class="math inline">\(\varphi\)</span> augmente de <span class="math inline">\(2\pi\)</span>, puis obtenir la condition de quantification de Dirac.</p></li>
+<li><p>Relier le résultat à la cohomologie de de Rham et au premier nombre de Chern.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La dérivée extérieure du champ vaut</p>
+<p><span class="math display">\[
+dF
+=g\,d(\sin\theta)\wedge d\theta\wedge d\varphi.
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+d(\sin\theta)=\cos\theta\,d\theta,
+\]</span></p>
+<p>donc</p>
+<p><span class="math display">\[
+dF
+=g\cos\theta\,d\theta\wedge d\theta\wedge d\varphi=0.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{dF=0}
+\]</span></p>
+<p>partout où les coordonnées décrivent l’espace privé de la source située à l’origine.</p>
+<p>Sur la sphère <span class="math inline">\(r=R\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Phi_B
+&amp;=\int_{S_R^2}F\\
+&amp;=g\int_0^{2\pi}d\varphi\int_0^\pi\sin\theta\,d\theta\\
+&amp;=g(2\pi)(2).
+\end{aligned}
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{\Phi_B=4\pi g.}
+\]</span></p>
+<p>Le résultat est indépendant de <span class="math inline">\(R\)</span>, comme attendu pour un champ radial en <span class="math inline">\(1/R^2\)</span>.</p>
+<p>Supposons maintenant qu’un potentiel global lisse existe sur la sphère :</p>
+<p><span class="math display">\[
+F=dA.
+\]</span></p>
+<p>Le théorème de Stokes donnerait</p>
+<p><span class="math display">\[
+\int_{S_R^2}F
+=\int_{S_R^2}dA
+=\int_{\partial S_R^2}A=0,
+\]</span></p>
+<p>car la sphère n’a pas de bord. Ce résultat contredit</p>
+<p><span class="math display">\[
+\int_{S_R^2}F=4\pi g
+\]</span></p>
+<p>dès que <span class="math inline">\(g\neq0\)</span>. Il n’existe donc aucun potentiel global régulier.</p>
+<p>Calculons les dérivées des potentiels locaux :</p>
+<p><span class="math display">\[
+dA_N
+=g\,d(1-\cos\theta)\wedge d\varphi
+=g\sin\theta\,d\theta\wedge d\varphi=F,
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+dA_S
+=-g\,d(1+\cos\theta)\wedge d\varphi
+=g\sin\theta\,d\theta\wedge d\varphi=F.
+\]</span></p>
+<p>Le facteur <span class="math inline">\(1-\cos\theta\)</span> s’annule quadratiquement lorsque <span class="math inline">\(\theta\to0\)</span> ; il compense la singularité de la coordonnée angulaire <span class="math inline">\(d\varphi\)</span> au pôle Nord. En revanche, il ne s’annule pas au pôle Sud. Le raisonnement inverse vaut pour <span class="math inline">\(A_S\)</span>. Chaque potentiel est donc régulier sur son propre ouvert.</p>
+<p>Sur <span class="math inline">\(U_N\cap U_S\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+A_N-A_S
+&amp;=g(1-\cos\theta)d\varphi
++g(1+\cos\theta)d\varphi\\
+&amp;=2g\,d\varphi.
+\end{aligned}
+\]</span></p>
+<p>On peut écrire</p>
+<p><span class="math display">\[
+\boxed{
+A_N=A_S+d\chi,
+\qquad
+\chi=2g\varphi.
+}
+\]</span></p>
+<p>La fonction <span class="math inline">\(\chi\)</span> elle-même change lorsque l’on fait un tour complet :</p>
+<p><span class="math display">\[
+\chi(\varphi+2\pi)-\chi(\varphi)=4\pi g.
+\]</span></p>
+<p>La fonction de transition quantique est</p>
+<p><span class="math display">\[
+e^{iq\chi/\hbar}.
+\]</span></p>
+<p>Pour qu’elle soit univoque, il faut</p>
+<p><span class="math display">\[
+\exp\left(\frac{iq}{\hbar}4\pi g\right)=1.
+\]</span></p>
+<p>Il existe donc un entier <span class="math inline">\(n\in\mathbb Z\)</span> tel que</p>
+<p><span class="math display">\[
+\frac{4\pi qg}{\hbar}=2\pi n.
+\]</span></p>
+<p>On obtient la condition de Dirac</p>
+<p><span class="math display">\[
+\boxed{
+\frac{2qg}{\hbar}=n\in\mathbb Z.
+}
+\]</span></p>
+<p>Autrement dit, l’existence cohérente de la fonction d’onde impose la quantification du produit des charges électrique et magnétique.</p>
+<p>La forme <span class="math inline">\(F\)</span> est fermée mais non exacte sur <span class="math inline">\(\mathbb R^3\setminus\{0\}\)</span>, dont la cohomologie en degré deux n’est pas triviale :</p>
+<p><span class="math display">\[
+H^2_{\mathrm{dR}}(\mathbb R^3\setminus\{0\})
+\simeq H^2_{\mathrm{dR}}(S^2)
+\simeq\mathbb R.
+\]</span></p>
+<p>La quantité</p>
+<p><span class="math display">\[
+\frac{q}{2\pi\hbar}\int_{S^2}F
+=\frac{q}{2\pi\hbar}(4\pi g)
+=\frac{2qg}{\hbar}
+\]</span></p>
+<p>est précisément le premier nombre de Chern du fibré de jauge associé à la particule chargée. La condition de Dirac affirme que ce nombre topologique doit être entier.</p>
+<p>Ce problème relie ainsi cinq idées qui pourraient sembler indépendantes :</p>
+<ul>
+<li>le flux magnétique ;</li>
+<li>l’impossibilité d’un potentiel global ;</li>
+<li>les transformations de jauge entre cartes locales ;</li>
+<li>l’univocité de la phase quantique ;</li>
+<li>la quantification d’un invariant topologique.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pour-aller-plus-loin" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="pour-aller-plus-loin"><span class="header-section-number">9</span> Pour aller plus loin</h2>
+<p>Les prolongements naturels de ce chapitre sont les suivants :</p>
+<ol type="1">
+<li><p><strong>Géométrie des fibrés principaux.</strong> Le potentiel <span class="math inline">\(A\)</span> devient une connexion sur un fibré principal de groupe <span class="math inline">\(U(1)\)</span>, et <span class="math inline">\(F\)</span> sa courbure.</p></li>
+<li><p><strong>Théories de Yang–Mills.</strong> Pour un groupe non abélien, le champ devient</p>
+<p><span class="math display">\[
+F=dA+A\wedge A,
+\]</span></p>
+<p>et l’identité de Bianchi prend la forme covariante</p>
+<p><span class="math display">\[
+D_AF=0.
+\]</span></p></li>
+<li><p><strong>Électromagnétisme sur espace-temps courbe.</strong> Les équations <span class="math inline">\(dF=0\)</span> et <span class="math inline">\(d\star F=J\)</span> gardent exactement la même forme ; toute la courbure de l’espace-temps entre dans <span class="math inline">\(\star\)</span>.</p></li>
+<li><p><strong>Cohomologie et quantification.</strong> Les flux, les classes caractéristiques et les anomalies relient la topologie globale aux observables quantiques.</p></li>
+<li><p><strong>Algèbres de Clifford et spineurs.</strong> Elles prolongent l’algèbre extérieure et conduisent naturellement à l’équation de Dirac.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Conclusion">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Conclusion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’écriture par formes différentielles ne remplace pas l’intuition physique de <span class="math inline">\(\mathbf E\)</span> et <span class="math inline">\(\mathbf B\)</span> ; elle l’organise. Le produit extérieur encode l’orientation et les flux, <span class="math inline">\(d\)</span> unifie les lois différentielles et intégrales, <span class="math inline">\(\star\)</span> introduit la métrique, et la jauge décrit la redondance nécessaire du potentiel. Dans ce langage, l’électromagnétisme apparaît comme la première théorie de jauge, à la fois locale dans ses équations et profondément globale dans sa topologie.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

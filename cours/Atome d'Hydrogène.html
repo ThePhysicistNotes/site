@@ -1,0 +1,3040 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Un cours sur la résolution de l’atome d’hydrogène, les nombres quantiques, les orbitales et les transitions spectrales.">
+
+<title>L’atome d’hydrogène – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#du-problème-à-deux-corps-à-lhamiltonien-coulombien" id="toc-du-problème-à-deux-corps-à-lhamiltonien-coulombien" class="nav-link active" data-scroll-target="#du-problème-à-deux-corps-à-lhamiltonien-coulombien"><span class="header-section-number">1</span> Du problème à deux corps à l’hamiltonien coulombien</a></li>
+  <li><a href="#séparer-les-variables-en-coordonnées-sphériques" id="toc-séparer-les-variables-en-coordonnées-sphériques" class="nav-link" data-scroll-target="#séparer-les-variables-en-coordonnées-sphériques"><span class="header-section-number">2</span> Séparer les variables en coordonnées sphériques</a></li>
+  <li><a href="#résoudre-léquation-radiale-et-quantifier-lénergie" id="toc-résoudre-léquation-radiale-et-quantifier-lénergie" class="nav-link" data-scroll-target="#résoudre-léquation-radiale-et-quantifier-lénergie"><span class="header-section-number">3</span> Résoudre l’équation radiale et quantifier l’énergie</a></li>
+  <li><a href="#comprendre-la-géométrie-des-orbitales" id="toc-comprendre-la-géométrie-des-orbitales" class="nav-link" data-scroll-target="#comprendre-la-géométrie-des-orbitales"><span class="header-section-number">4</span> Comprendre la géométrie des orbitales</a></li>
+  <li><a href="#spectre-de-lhydrogène-et-transitions-quantiques" id="toc-spectre-de-lhydrogène-et-transitions-quantiques" class="nav-link" data-scroll-target="#spectre-de-lhydrogène-et-transitions-quantiques"><span class="header-section-number">5</span> Spectre de l’hydrogène et transitions quantiques</a></li>
+  <li><a href="#simulations-interactives" id="toc-simulations-interactives" class="nav-link" data-scroll-target="#simulations-interactives"><span class="header-section-number">6</span> Simulations interactives</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">L’atome d’hydrogène</h1>
+<p class="subtitle lead">Équation de Schrödinger, orbitales, spectre et structure quantique</p>
+</div>
+
+<div>
+  <div class="description">
+    Un cours sur la résolution de l’atome d’hydrogène, les nombres quantiques, les orbitales et les transitions spectrales.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="du-problème-à-deux-corps-à-lhamiltonien-coulombien" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="du-problème-à-deux-corps-à-lhamiltonien-coulombien"><span class="header-section-number">1</span> Du problème à deux corps à l’hamiltonien coulombien</h2>
+<p>L’atome d’hydrogène est le système lié le plus simple de la physique atomique : un proton et un électron interagissent par attraction électrostatique. Sa simplicité est pourtant trompeuse. Sa résolution fait apparaître simultanément la quantification de l’énergie, le moment cinétique orbital, les nombres quantiques, les orbitales tridimensionnelles et les raies spectrales.</p>
+<p>Le modèle non relativiste de Schrödinger ne décrit pas toute la précision du spectre réel, mais il fournit l’ossature sur laquelle se construisent ensuite la structure fine, l’effet Zeeman, l’effet Stark, le décalage de Lamb et la structure hyperfine.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Cadre physique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Cadre physique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nous considérons d’abord :</p>
+<ul>
+<li>un noyau ponctuel de charge <span class="math inline">\(+Ze\)</span> et de masse <span class="math inline">\(m_N\)</span> ;</li>
+<li>un seul électron, de charge <span class="math inline">\(-e\)</span> et de masse <span class="math inline">\(m_e\)</span> ;</li>
+<li>une interaction coulombienne instantanée ;</li>
+<li>aucune interaction avec un champ extérieur ;</li>
+<li>ni spin, ni correction relativiste, ni structure interne du noyau.</li>
+</ul>
+<p>Le cas <span class="math inline">\(Z=1\)</span> est l’hydrogène. Les mêmes équations avec <span class="math inline">\(Z&gt;1\)</span> décrivent les ions hydrogénoïdes tels que <span class="math inline">\(\mathrm{He}^+\)</span> ou <span class="math inline">\(\mathrm{Li}^{2+}\)</span>.</p>
+</div>
+</div>
+<section id="séparation-du-centre-de-masse" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="séparation-du-centre-de-masse"><span class="header-section-number">1.1</span> Séparation du centre de masse</h3>
+<p>Notons <span class="math inline">\(\mathbf r_e\)</span> et <span class="math inline">\(\mathbf r_N\)</span> les positions de l’électron et du noyau. L’hamiltonien à deux corps est</p>
+<p><span id="eq-two-body-hydrogen"><span class="math display">\[
+\widehat H
+=-\frac{\hbar^2}{2m_e}\nabla_e^2
+-\frac{\hbar^2}{2m_N}\nabla_N^2
+-\frac{Ze^2}{4\pi\varepsilon_0|\mathbf r_e-\mathbf r_N|}.
+\tag{1}\]</span></span></p>
+<p>Il serait incorrect de fixer immédiatement le proton sans préciser l’approximation effectuée. Introduisons plutôt la position du centre de masse</p>
+<p><span class="math display">\[
+\mathbf R
+=\frac{m_e\mathbf r_e+m_N\mathbf r_N}{m_e+m_N},
+\]</span></p>
+<p>et la coordonnée relative</p>
+<p><span class="math display">\[
+\mathbf r=\mathbf r_e-\mathbf r_N.
+\]</span></p>
+<p>Avec la masse totale <span class="math inline">\(M=m_e+m_N\)</span> et la masse réduite</p>
+<p><span id="eq-reduced-mass"><span class="math display">\[
+\boxed{
+\mu=\frac{m_em_N}{m_e+m_N},
+}
+\tag{2}\]</span></span></p>
+<p>l’énergie cinétique se sépare :</p>
+<p><span class="math display">\[
+-\frac{\hbar^2}{2m_e}\nabla_e^2
+-\frac{\hbar^2}{2m_N}\nabla_N^2
+=-\frac{\hbar^2}{2M}\nabla_R^2
+-\frac{\hbar^2}{2\mu}\nabla_r^2.
+\]</span></p>
+<p>L’hamiltonien devient donc</p>
+<p><span id="eq-separated-hydrogen-hamiltonian"><span class="math display">\[
+\widehat H
+=\underbrace{-\frac{\hbar^2}{2M}\nabla_R^2}_{\widehat H_{\mathrm{CM}}}
++\underbrace{\left(
+-\frac{\hbar^2}{2\mu}\nabla_r^2
+-\frac{Ze^2}{4\pi\varepsilon_0r}
+\right)}_{\widehat H_{\mathrm{rel}}}.
+\tag{3}\]</span></span></p>
+<p>Le centre de masse se comporte comme une particule libre. Toute la structure interne de l’atome est contenue dans le mouvement relatif, équivalent à celui d’une particule de masse <span class="math inline">\(\mu\)</span> dans le potentiel</p>
+<p><span id="eq-coulomb-potential"><span class="math display">\[
+V(r)=-\frac{Ze^2}{4\pi\varepsilon_0r}.
+\tag{4}\]</span></span></p>
+<p>Comme <span class="math inline">\(m_N\gg m_e\)</span>, on a <span class="math inline">\(\mu\simeq m_e\)</span>, mais la masse réduite est nécessaire pour reproduire précisément les longueurs d’onde observées.</p>
+</section>
+<section id="échelles-naturelles-et-unités-atomiques" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="échelles-naturelles-et-unités-atomiques"><span class="header-section-number">1.2</span> Échelles naturelles et unités atomiques</h3>
+<p>L’équilibre entre énergie cinétique quantique et attraction coulombienne fixe une longueur caractéristique. À l’échelle <span class="math inline">\(r=a\)</span>, on estime</p>
+<p><span class="math display">\[
+T\sim\frac{\hbar^2}{2\mu a^2},
+\qquad
+|V|\sim\frac{Ze^2}{4\pi\varepsilon_0a}.
+\]</span></p>
+<p>Pour <span class="math inline">\(Z=1\)</span>, l’égalité des ordres de grandeur conduit au rayon de Bohr corrigé de la masse réduite :</p>
+<p><span id="eq-reduced-bohr-radius"><span class="math display">\[
+\boxed{
+a_\mu=\frac{4\pi\varepsilon_0\hbar^2}{\mu e^2}.
+}
+\tag{5}\]</span></span></p>
+<p>Si l’on remplace <span class="math inline">\(\mu\)</span> par <span class="math inline">\(m_e\)</span>, on obtient</p>
+<p><span class="math display">\[
+a_0=5{,}29\times10^{-11}\ \mathrm m.
+\]</span></p>
+<p>L’échelle d’énergie associée est le hartree réduit</p>
+<p><span class="math display">\[
+E_{\mathrm h}^{(\mu)}
+=\frac{\mu e^4}{(4\pi\varepsilon_0)^2\hbar^2}.
+\]</span></p>
+<p>Dans les <strong>unités atomiques</strong>, on pose <span class="math inline">\(\hbar=e=4\pi\varepsilon_0=m_e=1\)</span>. Pour un noyau infiniment lourd, l’hamiltonien relatif prend alors la forme très simple</p>
+<p><span id="eq-hydrogen-atomic-units"><span class="math display">\[
+\widehat H=-\frac12\nabla^2-\frac{Z}{r}.
+\tag{6}\]</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Repère historique : du spectre à l'atome quantique">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repère historique : du spectre à l’atome quantique
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En 1885, Johann Balmer découvre une formule empirique pour plusieurs raies visibles de l’hydrogène. Johannes Rydberg la généralise ensuite en séries spectrales. En 1913, Niels Bohr reproduit ces fréquences en imposant des orbites quantifiées. La théorie de Schrödinger, en 1926, remplace définitivement ces orbites par des états ondulatoires tridimensionnels et explique naturellement les nombres quantiques.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="schéma-énergétique-du-potentiel-coulombien" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="schéma-énergétique-du-potentiel-coulombien"><span class="header-section-number">1.3</span> Schéma énergétique du potentiel coulombien</h3>
+<p>Le potentiel tend vers <span class="math inline">\(-\infty\)</span> lorsque <span class="math inline">\(r\to0\)</span> et vers zéro lorsque <span class="math inline">\(r\to\infty\)</span>. Les états liés ont <span class="math inline">\(E&lt;0\)</span> ; le seuil <span class="math inline">\(E=0\)</span> sépare le spectre discret du continuum d’ionisation.</p>
+<div id="code-outils-hydrogene" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Afficher les fonctions et conventions graphiques</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.figsize"</span>: (<span class="fl">9.6</span>, <span class="fl">4.8</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.grid"</span>: <span class="va">True</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.22</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>BLEU <span class="op">=</span> <span class="st">"#2563eb"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ORANGE <span class="op">=</span> <span class="st">"#ea580c"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>VERT <span class="op">=</span> <span class="st">"#059669"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ROUGE <span class="op">=</span> <span class="st">"#dc2626"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>VIOLET <span class="op">=</span> <span class="st">"#7c3aed"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>GRIS <span class="op">=</span> <span class="st">"#64748b"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> laguerre_associe(p, alpha, x):</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Polynôme de Laguerre associé L_p^alpha(x), p entier positif ou nul."""</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.ones_like(x)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> alpha <span class="op">-</span> x</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    L_avant <span class="op">=</span> np.ones_like(x)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    L_courant <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> alpha <span class="op">-</span> x</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, p <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        L_suivant <span class="op">=</span> ((<span class="dv">2</span><span class="op">*</span>k <span class="op">-</span> <span class="dv">1</span> <span class="op">+</span> alpha <span class="op">-</span> x) <span class="op">*</span> L_courant</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                     <span class="op">-</span> (k <span class="op">-</span> <span class="dv">1</span> <span class="op">+</span> alpha) <span class="op">*</span> L_avant) <span class="op">/</span> k</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        L_avant, L_courant <span class="op">=</span> L_courant, L_suivant</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> L_courant</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> R_nl(n, l, r, Z<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fonction radiale hydrogénoïde en unités a_mu = 1."""</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> (n <span class="op">&gt;=</span> <span class="dv">1</span> <span class="kw">and</span> <span class="dv">0</span> <span class="op">&lt;=</span> l <span class="op">&lt;</span> n):</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Il faut n &gt;= 1 et 0 &lt;= l &lt; n."</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.asarray(r, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> Z <span class="op">*</span> r <span class="op">/</span> n</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    prefacteur <span class="op">=</span> (<span class="dv">2</span><span class="op">*</span>Z<span class="op">/</span>n)<span class="op">**</span><span class="fl">1.5</span> <span class="op">*</span> np.sqrt(</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        math.factorial(n<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>n<span class="op">*</span>math.factorial(n<span class="op">+</span>l))</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (prefacteur <span class="op">*</span> np.exp(<span class="op">-</span>rho<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> rho<span class="op">**</span>l</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span> laguerre_associe(n<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span><span class="op">*</span>l<span class="op">+</span><span class="dv">1</span>, rho))</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> probabilite_radiale(n, l, r, Z<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.<span class="bu">abs</span>(R_nl(n, l, r, Z))<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> harmonique_reelle(type_orbitale, theta, phi):</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Harmoniques sphériques réelles normalisées pour s, p et d."""</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"s"</span>:</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.ones_like(theta) <span class="op">/</span> np.sqrt(<span class="dv">4</span><span class="op">*</span>np.pi)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"pz"</span>:</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">3</span><span class="op">/</span>(<span class="dv">4</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.cos(theta)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"px"</span>:</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">3</span><span class="op">/</span>(<span class="dv">4</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.sin(theta) <span class="op">*</span> np.cos(phi)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"py"</span>:</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">3</span><span class="op">/</span>(<span class="dv">4</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.sin(theta) <span class="op">*</span> np.sin(phi)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"dz2"</span>:</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">5</span><span class="op">/</span>(<span class="dv">16</span><span class="op">*</span>np.pi)) <span class="op">*</span> (<span class="dv">3</span><span class="op">*</span>np.cos(theta)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"dxz"</span>:</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">15</span><span class="op">/</span>(<span class="dv">4</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.sin(theta)<span class="op">*</span>np.cos(theta)<span class="op">*</span>np.cos(phi)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"dxy"</span>:</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">15</span><span class="op">/</span>(<span class="dv">4</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.sin(theta)<span class="op">**</span><span class="dv">2</span><span class="op">*</span>np.sin(phi)<span class="op">*</span>np.cos(phi)</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> type_orbitale <span class="op">==</span> <span class="st">"dx2y2"</span>:</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(<span class="dv">15</span><span class="op">/</span>(<span class="dv">16</span><span class="op">*</span>np.pi)) <span class="op">*</span> np.sin(theta)<span class="op">**</span><span class="dv">2</span><span class="op">*</span>np.cos(<span class="dv">2</span><span class="op">*</span>phi)</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Type d'orbitale inconnu."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-fig-potentiel-coulombien" class="cell" data-fig-height="4.5" data-fig-width="10" data-execution_count="2">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.linspace(<span class="fl">0.12</span>, <span class="dv">12</span>, <span class="dv">1500</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>r</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.2</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(r, V, color<span class="op">=</span>VIOLET, lw<span class="op">=</span><span class="fl">2.4</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">V</span><span class="kw">(</span><span class="vs">r</span><span class="kw">)</span><span class="vs">=-1/r</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n, couleur <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>), [BLEU, ORANGE, VERT, ROUGE]):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>n<span class="op">*</span>n)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].hlines(E, <span class="fl">0.35</span>, <span class="fl">11.25</span>, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="fl">1.8</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    x_texte <span class="op">=</span> <span class="fl">11.0</span> <span class="op">-</span> <span class="fl">1.35</span><span class="op">*</span>(n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].text(x_texte, E<span class="op">+</span><span class="fl">0.015</span>, <span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>, va<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                 ha<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>couleur, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 bbox<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">"white"</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>, pad<span class="op">=</span><span class="fl">0.5</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"énergie (hartree)"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"États liés dans le potentiel de Coulomb"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">12</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.62</span>, <span class="fl">0.08</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>):</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> <span class="op">-</span><span class="fl">13.6057</span><span class="op">/</span>n<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].hlines(E, <span class="fl">0.8</span>, <span class="fl">3.8</span>, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="fl">2.2</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;=</span> <span class="dv">4</span>:</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        x_texte <span class="op">=</span> <span class="fl">0.95</span> <span class="op">+</span> <span class="fl">0.58</span><span class="op">*</span>(n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">1</span>].text(x_texte, E<span class="op">+</span><span class="fl">0.13</span>, <span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                     fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axhspan(<span class="dv">0</span>, <span class="fl">1.2</span>, color<span class="op">=</span>ORANGE, alpha<span class="op">=</span><span class="fl">0.12</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span>ORANGE, lw<span class="op">=</span><span class="fl">1.8</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="fl">2.3</span>, <span class="fl">0.35</span>, <span class="st">"continuum"</span>, ha<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span>ORANGE)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="fl">3.95</span>, <span class="op">-</span><span class="fl">0.18</span>, <span class="vs">r"</span><span class="dv">$</span><span class="vs">n</span><span class="ch">\t</span><span class="vs">o</span><span class="er">\</span><span class="vs">infty</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"top"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].annotate(<span class="st">"les niveaux s'accumulent</span><span class="ch">\n</span><span class="st">vers le seuil d'ionisation"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                 xy<span class="op">=</span>(<span class="fl">3.2</span>, <span class="op">-</span><span class="fl">0.38</span>), xytext<span class="op">=</span>(<span class="fl">4.5</span>, <span class="op">-</span><span class="fl">5.2</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                 arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span>GRIS), color<span class="op">=</span>GRIS)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">7.2</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">14.4</span>, <span class="fl">1.2</span>), ylabel<span class="op">=</span><span class="st">"énergie (eV)"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Spectre discret et continuum"</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticks([])</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-potentiel-coulombien" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-potentiel-coulombien-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-potentiel-coulombien-output-1.png" width="983" height="386" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-potentiel-coulombien-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Potentiel coulombien, niveaux liés et continuum d’ionisation dans le modèle de Schrödinger.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="séparer-les-variables-en-coordonnées-sphériques" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="séparer-les-variables-en-coordonnées-sphériques"><span class="header-section-number">2</span> Séparer les variables en coordonnées sphériques</h2>
+<p>Le potentiel <a href="#eq-coulomb-potential" class="quarto-xref">Equation&nbsp;4</a> ne dépend que de la distance <span class="math inline">\(r\)</span>. Le système possède donc une symétrie de rotation, et les coordonnées sphériques <span class="math inline">\((r,\theta,\varphi)\)</span> sont naturelles. L’équation indépendante du temps pour le mouvement relatif est</p>
+<p><span id="eq-hydrogen-schrodinger"><span class="math display">\[
+\left[
+-\frac{\hbar^2}{2\mu}\nabla^2
+-\frac{Ze^2}{4\pi\varepsilon_0r}
+\right]\psi(\mathbf r)=E\psi(\mathbf r).
+\tag{7}\]</span></span></p>
+<section id="laplacien-et-moment-cinétique" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="laplacien-et-moment-cinétique"><span class="header-section-number">2.1</span> Laplacien et moment cinétique</h3>
+<p>En coordonnées sphériques,</p>
+<p><span id="eq-spherical-laplacian"><span class="math display">\[
+\nabla^2
+=\frac{1}{r^2}\frac{\partial}{\partial r}
+\left(r^2\frac{\partial}{\partial r}\right)
++\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}
+\left(\sin\theta\frac{\partial}{\partial\theta}\right)
++\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial\varphi^2}.
+\tag{8}\]</span></span></p>
+<p>La partie angulaire est reliée au carré du moment cinétique orbital :</p>
+<p><span id="eq-angular-momentum-squared"><span class="math display">\[
+\widehat L^2
+=-\hbar^2\left[
+\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}
+\left(\sin\theta\frac{\partial}{\partial\theta}\right)
++\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial\varphi^2}
+\right].
+\tag{9}\]</span></span></p>
+<p>Le laplacien peut donc s’écrire</p>
+<p><span class="math display">\[
+\nabla^2
+=\frac{1}{r^2}\frac{\partial}{\partial r}
+\left(r^2\frac{\partial}{\partial r}\right)
+-\frac{\widehat L^2}{\hbar^2r^2}.
+\]</span></p>
+<p>Comme <span class="math inline">\([\widehat H,\widehat L^2]=[\widehat H,\widehat L_z]=0\)</span>, on peut chercher des états propres communs sous la forme</p>
+<p><span id="eq-hydrogen-separation"><span class="math display">\[
+\boxed{
+\psi_{n\ell m}(r,\theta,\varphi)
+=R_{n\ell}(r)Y_\ell^m(\theta,\varphi).
+}
+\tag{10}\]</span></span></p>
+</section>
+<section id="équation-angulaire-et-nombres-ell-et-m" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="équation-angulaire-et-nombres-ell-et-m"><span class="header-section-number">2.2</span> Équation angulaire et nombres <span class="math inline">\(\ell\)</span> et <span class="math inline">\(m\)</span></h3>
+<p>Les harmoniques sphériques satisfont</p>
+<p><span id="eq-l2-eigenvalue"><span class="math display">\[
+\widehat L^2Y_\ell^m
+=\hbar^2\ell(\ell+1)Y_\ell^m,
+\tag{11}\]</span></span></p>
+<p><span id="eq-lz-eigenvalue"><span class="math display">\[
+\widehat L_zY_\ell^m
+=\hbar mY_\ell^m.
+\tag{12}\]</span></span></p>
+<p>La périodicité suivant l’angle azimutal impose</p>
+<p><span class="math display">\[
+Y(\theta,\varphi+2\pi)=Y(\theta,\varphi),
+\]</span></p>
+<p>d’où un facteur <span class="math inline">\(e^{im\varphi}\)</span> avec <span class="math inline">\(m\)</span> entier. La régularité aux pôles <span class="math inline">\(\theta=0\)</span> et <span class="math inline">\(\theta=\pi\)</span> impose ensuite</p>
+<p><span id="eq-angular-quantum-numbers"><span class="math display">\[
+\ell=0,1,2,\ldots,
+\qquad
+m=-\ell,-\ell+1,\ldots,\ell.
+\tag{13}\]</span></span></p>
+<p>Avec la convention de Condon–Shortley, les fonctions normalisées sont, pour <span class="math inline">\(m\ge0\)</span>,</p>
+<p><span id="eq-spherical-harmonics"><span class="math display">\[
+Y_\ell^m(\theta,\varphi)
+=(-1)^m
+\sqrt{\frac{2\ell+1}{4\pi}
+\frac{(\ell-m)!}{(\ell+m)!}}
+P_\ell^m(\cos\theta)e^{im\varphi}.
+\tag{14}\]</span></span></p>
+<p>Les indices négatifs sont ensuite définis par</p>
+<p><span class="math display">\[
+Y_\ell^{-m}=(-1)^m\left(Y_\ell^m\right)^*.
+\]</span></p>
+<p>Les premières sont</p>
+<p><span class="math display">\[
+Y_0^0=\frac{1}{\sqrt{4\pi}},
+\]</span></p>
+<p><span class="math display">\[
+Y_1^0=\sqrt{\frac{3}{4\pi}}\cos\theta,
+\qquad
+Y_1^{\pm1}=\mp\sqrt{\frac{3}{8\pi}}\sin\theta\,e^{\pm i\varphi},
+\]</span></p>
+<p><span class="math display">\[
+Y_2^0=\sqrt{\frac{5}{16\pi}}(3\cos^2\theta-1).
+\]</span></p>
+<p>L’indice <span class="math inline">\(\ell\)</span> fixe la norme du moment cinétique,</p>
+<p><span class="math display">\[
+|\mathbf L|=\hbar\sqrt{\ell(\ell+1)},
+\]</span></p>
+<p>tandis que <span class="math inline">\(m\)</span> fixe sa projection mesurable suivant l’axe choisi,</p>
+<p><span class="math display">\[
+L_z=m\hbar.
+\]</span></p>
+<p>Il ne faut pas interpréter ces relations comme un vecteur classique possédant simultanément trois composantes déterminées : dans l’état <span class="math inline">\(|\ell,m\rangle\)</span>, seules <span class="math inline">\(L^2\)</span> et <span class="math inline">\(L_z\)</span> sont certaines.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Orbitales complexes et orbitales réelles">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Orbitales complexes et orbitales réelles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les états <span class="math inline">\(Y_\ell^m\)</span> avec <span class="math inline">\(m\ne0\)</span> sont généralement complexes. Les formes familières <span class="math inline">\(p_x\)</span>, <span class="math inline">\(p_y\)</span>, <span class="math inline">\(d_{xy}\)</span> ou <span class="math inline">\(d_{x^2-y^2}\)</span> sont des combinaisons linéaires réelles des états <span class="math inline">\(m\)</span> et <span class="math inline">\(-m\)</span>. Elles ont la même énergie dans un potentiel coulombien, mais ne sont pas états propres de <span class="math inline">\(L_z\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="équation-radiale" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="équation-radiale"><span class="header-section-number">2.3</span> Équation radiale</h3>
+<p>En insérant <a href="#eq-hydrogen-separation" class="quarto-xref">Equation&nbsp;10</a> dans <a href="#eq-hydrogen-schrodinger" class="quarto-xref">Equation&nbsp;7</a>, puis en utilisant <a href="#eq-l2-eigenvalue" class="quarto-xref">Equation&nbsp;11</a>, on obtient</p>
+<p><span id="eq-radial-R"><span class="math display">\[
+-\frac{\hbar^2}{2\mu}
+\frac{1}{r^2}\frac{\mathrm d}{\mathrm dr}
+\left(r^2\frac{\mathrm dR}{\mathrm dr}\right)
++\frac{\hbar^2\ell(\ell+1)}{2\mu r^2}R
+-\frac{Ze^2}{4\pi\varepsilon_0r}R
+=ER.
+\tag{15}\]</span></span></p>
+<p>La dérivée contenant <span class="math inline">\(r^2\)</span> disparaît si l’on pose</p>
+<p><span id="eq-reduced-radial-function"><span class="math display">\[
+u(r)=rR(r).
+\tag{16}\]</span></span></p>
+<p>En effet,</p>
+<p><span class="math display">\[
+R=\frac{u}{r},
+\qquad
+r^2\frac{\mathrm dR}{\mathrm dr}=ru'-u,
+\qquad
+\frac{\mathrm d}{\mathrm dr}(ru'-u)=ru''.
+\]</span></p>
+<p>Après multiplication par <span class="math inline">\(r\)</span>, l’équation devient une équation de Schrödinger unidimensionnelle sur <span class="math inline">\(r&gt;0\)</span> :</p>
+<p><span id="eq-reduced-radial-equation"><span class="math display">\[
+\boxed{
+-\frac{\hbar^2}{2\mu}\frac{\mathrm d^2u}{\mathrm dr^2}
++V_{\mathrm{eff}}(r)u(r)=Eu(r),
+}
+\tag{17}\]</span></span></p>
+<p>avec le potentiel effectif</p>
+<p><span id="eq-effective-potential"><span class="math display">\[
+\boxed{
+V_{\mathrm{eff}}(r)
+=-\frac{Ze^2}{4\pi\varepsilon_0r}
++\frac{\hbar^2\ell(\ell+1)}{2\mu r^2}.
+}
+\tag{18}\]</span></span></p>
+<p>Le second terme est la barrière centrifuge. Elle est absente pour les états <span class="math inline">\(s\)</span> (<span class="math inline">\(\ell=0\)</span>) et repousse les états de grand <span class="math inline">\(\ell\)</span> loin du noyau. Les conditions physiques sont</p>
+<p><span class="math display">\[
+u(0)=0,
+\qquad
+u(r)\longrightarrow0\quad\text{lorsque }r\to\infty
+\]</span></p>
+<p>pour un état lié normalisable.</p>
+<div id="cell-fig-potentiels-effectifs" class="cell" data-fig-height="4.7" data-fig-width="9.5" data-execution_count="3">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.linspace(<span class="fl">0.18</span>, <span class="dv">14</span>, <span class="dv">1800</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l, couleur <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [BLEU, ORANGE, VERT, VIOLET]):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    Veff <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>r <span class="op">+</span> l<span class="op">*</span>(l<span class="op">+</span><span class="dv">1</span>)<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>r<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.plot(r, Veff, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="fl">2.1</span>, label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ell=</span><span class="sc">{</span>l<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span>GRIS, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"énergie (hartree)"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>       title<span class="op">=</span><span class="st">"Attraction coulombienne et barrière centrifuge"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">14</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.75</span>, <span class="fl">0.45</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ax.legend(ncol<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-potentiels-effectifs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-potentiels-effectifs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-potentiels-effectifs-output-1.png" width="808" height="440" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-potentiels-effectifs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Potentiel effectif radial pour plusieurs moments cinétiques, en unités atomiques et pour Z=1.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="résoudre-léquation-radiale-et-quantifier-lénergie" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="résoudre-léquation-radiale-et-quantifier-lénergie"><span class="header-section-number">3</span> Résoudre l’équation radiale et quantifier l’énergie</h2>
+<p>Nous cherchons maintenant les états liés, donc <span class="math inline">\(E&lt;0\)</span>. Introduisons</p>
+<p><span id="eq-kappa-rho"><span class="math display">\[
+\kappa=\frac{\sqrt{-2\mu E}}{\hbar}&gt;0,
+\qquad
+\rho=2\kappa r,
+\tag{19}\]</span></span></p>
+<p>ainsi que le paramètre sans dimension</p>
+<p><span id="eq-gamma-hydrogen"><span class="math display">\[
+\gamma
+=\frac{\mu Ze^2}{4\pi\varepsilon_0\hbar^2\kappa}
+=\frac{Z}{a_\mu\kappa}.
+\tag{20}\]</span></span></p>
+<p>L’équation <a href="#eq-reduced-radial-equation" class="quarto-xref">Equation&nbsp;17</a> devient</p>
+<p><span id="eq-dimensionless-radial"><span class="math display">\[
+\frac{\mathrm d^2u}{\mathrm d\rho^2}
++\left[
+-\frac14+\frac{\gamma}{\rho}
+-\frac{\ell(\ell+1)}{\rho^2}
+\right]u=0.
+\tag{21}\]</span></span></p>
+<section id="comportements-asymptotiques" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="comportements-asymptotiques"><span class="header-section-number">3.1</span> Comportements asymptotiques</h3>
+<p>Lorsque <span class="math inline">\(\rho\to\infty\)</span>, les termes en <span class="math inline">\(1/\rho\)</span> disparaissent et</p>
+<p><span class="math display">\[
+u''-\frac14u\simeq0.
+\]</span></p>
+<p>Les solutions sont <span class="math inline">\(e^{\pm\rho/2}\)</span>. La normalisabilité élimine la solution croissante :</p>
+<p><span class="math display">\[
+u(\rho)\sim e^{-\rho/2}.
+\]</span></p>
+<p>Près de l’origine, le terme centrifuge domine. Si <span class="math inline">\(u\sim\rho^s\)</span>, alors</p>
+<p><span class="math display">\[
+s(s-1)-\ell(\ell+1)=0,
+\]</span></p>
+<p>d’où <span class="math inline">\(s=\ell+1\)</span> ou <span class="math inline">\(s=-\ell\)</span>. La seconde solution diverge et ne satisfait pas <span class="math inline">\(u(0)=0\)</span>. Ainsi,</p>
+<p><span class="math display">\[
+u(\rho)\sim\rho^{\ell+1}.
+\]</span></p>
+<p>Ces deux comportements suggèrent la factorisation</p>
+<p><span id="eq-radial-factorization"><span class="math display">\[
+u(\rho)=\rho^{\ell+1}e^{-\rho/2}v(\rho).
+\tag{22}\]</span></span></p>
+</section>
+<section id="série-entière-et-condition-de-terminaison" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="série-entière-et-condition-de-terminaison"><span class="header-section-number">3.2</span> Série entière et condition de terminaison</h3>
+<p>En substituant <a href="#eq-radial-factorization" class="quarto-xref">Equation&nbsp;22</a> dans <a href="#eq-dimensionless-radial" class="quarto-xref">Equation&nbsp;21</a> et en simplifiant, on trouve</p>
+<p><span id="eq-laguerre-equation"><span class="math display">\[
+\rho v''+(2\ell+2-\rho)v'
++(\gamma-\ell-1)v=0.
+\tag{23}\]</span></span></p>
+<p>Développons</p>
+<p><span class="math display">\[
+v(\rho)=\sum_{j=0}^{\infty}a_j\rho^j.
+\]</span></p>
+<p>Après décalage des indices, le coefficient de <span class="math inline">\(\rho^j\)</span> donne</p>
+<p><span class="math display">\[
+(j+1)(j+2\ell+2)a_{j+1}
++(\gamma-\ell-1-j)a_j=0.
+\]</span></p>
+<p>La relation de récurrence est donc</p>
+<p><span id="eq-radial-recurrence"><span class="math display">\[
+a_{j+1}
+=\frac{j+\ell+1-\gamma}
+{(j+1)(j+2\ell+2)}a_j.
+\tag{24}\]</span></span></p>
+<p>Si cette série ne s’arrête pas, son comportement asymptotique reconstruit un facteur <span class="math inline">\(e^{+\rho/2}\)</span> qui annule la décroissance extraite et rend l’état non normalisable. Il faut donc qu’un numérateur s’annule pour un entier <span class="math inline">\(j=n_r\ge0\)</span> :</p>
+<p><span class="math display">\[
+n_r+\ell+1-\gamma=0.
+\]</span></p>
+<p>On définit le nombre quantique principal</p>
+<p><span id="eq-principal-quantum-number"><span class="math display">\[
+\boxed{
+n=n_r+\ell+1=1,2,3,\ldots
+}
+\tag{25}\]</span></span></p>
+<p>et la condition de quantification devient</p>
+<p><span class="math display">\[
+\gamma=n.
+\]</span></p>
+<p>Comme <span class="math inline">\(\gamma=Z/(a_\mu\kappa)\)</span>,</p>
+<p><span class="math display">\[
+\kappa=\frac{Z}{na_\mu}.
+\]</span></p>
+<p>Enfin, la définition de <span class="math inline">\(\kappa\)</span> dans <a href="#eq-kappa-rho" class="quarto-xref">Equation&nbsp;19</a> donne</p>
+<p><span id="eq-hydrogen-energies"><span class="math display">\[
+\boxed{
+E_n
+=-\frac{\mu Z^2e^4}
+{2(4\pi\varepsilon_0)^2\hbar^2n^2}
+=-\frac{\mu c^2(Z\alpha)^2}{2n^2}.
+}
+\tag{26}\]</span></span></p>
+<p>Pour un noyau infiniment lourd et <span class="math inline">\(Z=1\)</span>,</p>
+<p><span class="math display">\[
+E_n=-\frac{13{,}6057\ \mathrm{eV}}{n^2}.
+\]</span></p>
+<p>Avec la masse réduite du véritable atome d’hydrogène, l’énergie d’ionisation fondamentale est légèrement plus faible, environ <span class="math inline">\(13{,}598\ \mathrm{eV}\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Origine de la quantification">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Origine de la quantification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’énergie n’est pas quantifiée parce que l’électron suivrait certaines orbites autorisées. Elle l’est parce que seules certaines valeurs de <span class="math inline">\(E\)</span> permettent à la solution radiale d’être à la fois régulière en <span class="math inline">\(r=0\)</span> et normalisable à l’infini.</p>
+</div>
+</div>
+</section>
+<section id="fonctions-radiales-normalisées" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="fonctions-radiales-normalisées"><span class="header-section-number">3.3</span> Fonctions radiales normalisées</h3>
+<p>La série terminée est un polynôme de Laguerre associé. En posant maintenant</p>
+<p><span class="math display">\[
+\rho=\frac{2Zr}{na_\mu},
+\]</span></p>
+<p>la solution normalisée est</p>
+<p><span id="eq-normalized-radial-functions"><span class="math display">\[
+\boxed{
+R_{n\ell}(r)
+=\left(\frac{2Z}{na_\mu}\right)^{3/2}
+\sqrt{\frac{(n-\ell-1)!}{2n(n+\ell)!}}
+e^{-\rho/2}\rho^\ell
+L_{n-\ell-1}^{2\ell+1}(\rho).
+}
+\tag{27}\]</span></span></p>
+<p>Elle vérifie</p>
+<p><span class="math display">\[
+\int_0^\infty |R_{n\ell}(r)|^2r^2\,\mathrm dr=1.
+\]</span></p>
+<p>Les trois premiers exemples utiles sont</p>
+<p><span class="math display">\[
+R_{10}(r)=2a_\mu^{-3/2}e^{-r/a_\mu},
+\]</span></p>
+<p><span class="math display">\[
+R_{20}(r)=\frac{1}{2\sqrt{2}}\,a_\mu^{-3/2}
+\left(2-\frac{r}{a_\mu}\right)e^{-r/(2a_\mu)},
+\]</span></p>
+<p><span class="math display">\[
+R_{21}(r)=\frac{1}{2\sqrt{6}}\,a_\mu^{-3/2}
+\frac{r}{a_\mu}e^{-r/(2a_\mu)}.
+\]</span></p>
+<p>Pour un ion hydrogénoïde, il suffit de remplacer <span class="math inline">\(a_\mu\)</span> par <span class="math inline">\(a_\mu/Z\)</span> dans ces expressions.</p>
+</section>
+<section id="distribution-radiale-et-nœuds" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="distribution-radiale-et-nœuds"><span class="header-section-number">3.4</span> Distribution radiale et nœuds</h3>
+<p>La quantité <span class="math inline">\(|R_{n\ell}(r)|^2\)</span> n’est pas directement la densité de probabilité de la distance au noyau. Le volume d’une coquille sphérique de rayon <span class="math inline">\(r\)</span> et d’épaisseur <span class="math inline">\(\mathrm dr\)</span> contient le facteur <span class="math inline">\(r^2\mathrm dr\,\mathrm d\Omega\)</span>. Puisque les harmoniques sphériques sont normalisées,</p>
+<p><span class="math display">\[
+\int |Y_\ell^m|^2\,\mathrm d\Omega=1,
+\]</span></p>
+<p>la probabilité de trouver l’électron entre <span class="math inline">\(r\)</span> et <span class="math inline">\(r+\mathrm dr\)</span> vaut</p>
+<p><span id="eq-radial-probability"><span class="math display">\[
+\boxed{
+\mathrm dP=P_{n\ell}(r)\,\mathrm dr,
+\qquad
+P_{n\ell}(r)=r^2|R_{n\ell}(r)|^2.
+}
+\tag{28}\]</span></span></p>
+<p>En particulier, <span class="math inline">\(R_{10}(r)\)</span> est maximal au noyau, mais <span class="math inline">\(P_{10}(0)=0\)</span> car une coquille de rayon nul possède un volume nul. Pour l’état <span class="math inline">\(1s\)</span>,</p>
+<p><span class="math display">\[
+P_{10}(r)=\frac{4r^2}{a_\mu^3}e^{-2r/a_\mu}.
+\]</span></p>
+<p>Sa dérivée s’annule pour</p>
+<p><span class="math display">\[
+\frac{\mathrm dP_{10}}{\mathrm dr}
+\propto 2r\left(1-\frac{r}{a_\mu}\right)e^{-2r/a_\mu}=0.
+\]</span></p>
+<p>Le rayon le plus probable non nul est donc</p>
+<p><span id="eq-most-probable-ground-radius"><span class="math display">\[
+r_{\mathrm{mp}}=a_\mu.
+\tag{29}\]</span></span></p>
+<p>Le polynôme <span class="math inline">\(L_{n-\ell-1}^{2\ell+1}\)</span> possède <span class="math inline">\(n-\ell-1\)</span> zéros positifs. Ainsi,</p>
+<p><span class="math display">\[
+N_{\mathrm{radial}}=n-\ell-1.
+\]</span></p>
+<p>La partie angulaire possède <span class="math inline">\(\ell\)</span> surfaces nodales au total. Le nombre total de nœuds est donc</p>
+<p><span id="eq-hydrogen-node-count"><span class="math display">\[
+\boxed{
+N_{\mathrm{total}}=(n-\ell-1)+\ell=n-1.
+}
+\tag{30}\]</span></span></p>
+<div id="cell-fig-distributions-radiales" class="cell" data-fig-height="4.6" data-fig-width="10" data-execution_count="4">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">55</span>, <span class="dv">2800</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.8</span>, <span class="fl">4.3</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n, couleur <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>), [BLEU, ORANGE, VERT, VIOLET]):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> probabilite_radiale(n, <span class="dv">0</span>, r)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(r, P, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="sc">{</span>n<span class="sc">}</span><span class="vs">s</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">P_{n0}</span><span class="kw">(</span><span class="vs">r</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Sous-couches s successives"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">48</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l, nom, couleur <span class="kw">in</span> [(<span class="dv">0</span>, <span class="st">"3s"</span>, BLEU), (<span class="dv">1</span>, <span class="st">"3p"</span>, ORANGE), (<span class="dv">2</span>, <span class="st">"3d"</span>, VERT)]:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> probabilite_radiale(<span class="dv">3</span>, l, r)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(r, P, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="fl">2.2</span>, label<span class="op">=</span>nom)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">P_{3</span><span class="er">\</span><span class="vs">ell}</span><span class="kw">(</span><span class="vs">r</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Même couche n = 3, différents ℓ"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">32</span>))</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-distributions-radiales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distributions-radiales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-distributions-radiales-output-1.png" width="1021" height="395" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distributions-radiales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Distributions radiales : croissance de l’atome avec n et réorganisation des nœuds selon le moment cinétique.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="couches-sous-couches-et-orbitales" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="couches-sous-couches-et-orbitales"><span class="header-section-number">3.5</span> Couches, sous-couches et orbitales</h3>
+<p>Les trois nombres quantiques ne décrivent pas le même niveau d’organisation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objet</th>
+<th>Nombre(s) quantique(s)</th>
+<th>Valeurs possibles</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Couche</td>
+<td><span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\(1,2,3,\ldots\)</span></td>
+<td>Énergie et échelle radiale principale</td>
+</tr>
+<tr class="even">
+<td>Sous-couche</td>
+<td><span class="math inline">\((n,\ell)\)</span></td>
+<td><span class="math inline">\(0\le\ell\le n-1\)</span></td>
+<td>Norme du moment cinétique et forme angulaire</td>
+</tr>
+<tr class="odd">
+<td>Orbitale</td>
+<td><span class="math inline">\((n,\ell,m)\)</span></td>
+<td><span class="math inline">\(-\ell\le m\le\ell\)</span></td>
+<td>Orientation quantique dans une base donnée</td>
+</tr>
+</tbody>
+</table>
+<p>La notation spectroscopique remplace <span class="math inline">\(\ell=0,1,2,3,\ldots\)</span> par les lettres</p>
+<p><span class="math display">\[
+s,p,d,f,\ldots
+\]</span></p>
+<p>Ainsi, <span class="math inline">\(3d\)</span> signifie <span class="math inline">\(n=3\)</span> et <span class="math inline">\(\ell=2\)</span>. Cette sous-couche contient cinq orbitales, car <span class="math inline">\(m=-2,-1,0,1,2\)</span>.</p>
+<p>Pour une valeur fixée de <span class="math inline">\(n\)</span>, le nombre d’états spatiaux est</p>
+<p><span id="eq-spatial-degeneracy"><span class="math display">\[
+g_n=\sum_{\ell=0}^{n-1}(2\ell+1)=n^2.
+\tag{31}\]</span></span></p>
+<p>En incluant les deux projections du spin électronique, on obtient <span class="math inline">\(2n^2\)</span> états à une particule. Ce nombre devient la capacité maximale d’une couche dans les atomes à plusieurs électrons, après application du principe de Pauli. L’atome d’hydrogène lui-même ne contient évidemment qu’un seul électron.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(n\)</span></th>
+<th>Sous-couches permises</th>
+<th style="text-align: right;">Nombre d’orbitales spatiales</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td><span class="math inline">\(1s\)</span></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td><span class="math inline">\(2s\)</span>, <span class="math inline">\(2p\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1+3=4\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td><span class="math inline">\(3s\)</span>, <span class="math inline">\(3p\)</span>, <span class="math inline">\(3d\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1+3+5=9\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td><span class="math inline">\(4s\)</span>, <span class="math inline">\(4p\)</span>, <span class="math inline">\(4d\)</span>, <span class="math inline">\(4f\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1+3+5+7=16\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Dans le modèle coulombien non relativiste, l’énergie <a href="#eq-hydrogen-energies" class="quarto-xref">Equation&nbsp;26</a> ne dépend que de <span class="math inline">\(n\)</span>. Toutes les valeurs de <span class="math inline">\(\ell\)</span> et <span class="math inline">\(m\)</span> d’une même couche sont donc dégénérées. La dégénérescence en <span class="math inline">\(m\)</span> vient de la symétrie de rotation ; la dégénérescence supplémentaire en <span class="math inline">\(\ell\)</span> est propre au potentiel en <span class="math inline">\(1/r\)</span> et est liée à une symétrie cachée décrite par le vecteur de Runge–Lenz.</p>
+</section>
+</section>
+<section id="comprendre-la-géométrie-des-orbitales" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="comprendre-la-géométrie-des-orbitales"><span class="header-section-number">4</span> Comprendre la géométrie des orbitales</h2>
+<p>Une orbitale hydrogénoïde est la fonction</p>
+<p><span class="math display">\[
+\psi_{n\ell m}(r,\theta,\varphi)
+=R_{n\ell}(r)Y_\ell^m(\theta,\varphi).
+\]</span></p>
+<p>Sa densité de probabilité est</p>
+<p><span id="eq-orbital-density"><span class="math display">\[
+\rho_{n\ell m}(\mathbf r)
+=|R_{n\ell}(r)|^2|Y_\ell^m(\theta,\varphi)|^2.
+\tag{32}\]</span></span></p>
+<p>Une surface 3D d’orbitale ne représente ni une frontière matérielle ni la trajectoire de l’électron. C’est généralement une surface sur laquelle <span class="math inline">\(|\psi|\)</span> possède une valeur fixée, ou un volume contenant une fraction choisie de la probabilité totale.</p>
+<section id="nœuds-et-signe-de-la-fonction-donde" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="nœuds-et-signe-de-la-fonction-donde"><span class="header-section-number">4.1</span> Nœuds et signe de la fonction d’onde</h3>
+<p>Un <strong>nœud radial</strong> est une sphère sur laquelle <span class="math inline">\(R_{n\ell}(r)=0\)</span>. Un <strong>nœud angulaire</strong> est un plan, un cône ou une autre surface sur laquelle <span class="math inline">\(Y_\ell^m=0\)</span>.</p>
+<p>Les deux couleurs habituellement utilisées pour dessiner une orbitale indiquent les deux signes, ou plus généralement les deux phases, de la fonction d’onde. Elles ne représentent pas deux charges électriques différentes. La densité <span class="math inline">\(|\psi|^2\)</span> est positive des deux côtés, mais le signe devient essentiel lorsque deux amplitudes interfèrent ou forment une liaison moléculaire.</p>
+<p>Quelques exemples :</p>
+<ul>
+<li><span class="math inline">\(1s\)</span> : aucun nœud, symétrie sphérique ;</li>
+<li><span class="math inline">\(2s\)</span> : une sphère nodale, aucune surface angulaire ;</li>
+<li><span class="math inline">\(2p\)</span> : aucun nœud radial, un plan nodal ;</li>
+<li><span class="math inline">\(3d\)</span> : aucun nœud radial, deux nœuds angulaires ;</li>
+<li><span class="math inline">\(3p\)</span> : une sphère nodale et un plan nodal.</li>
+</ul>
+<p>Les orbitales réelles usuelles s’écrivent par exemple</p>
+<p><span class="math display">\[
+p_z\propto\cos\theta,
+\qquad
+p_x\propto\sin\theta\cos\varphi,
+\qquad
+p_y\propto\sin\theta\sin\varphi,
+\]</span></p>
+<p><span class="math display">\[
+d_{z^2}\propto3\cos^2\theta-1,
+\qquad
+d_{xy}\propto\sin^2\theta\sin(2\varphi),
+\]</span></p>
+<p><span class="math display">\[
+d_{x^2-y^2}\propto\sin^2\theta\cos(2\varphi).
+\]</span></p>
+<div id="cell-fig-coupes-orbitales" class="cell" data-fig-height="8" data-fig-width="10" data-execution_count="5">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> coupe_orbitale(n, l, type_orbitale, etendue, points<span class="op">=</span><span class="dv">420</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(<span class="op">-</span>etendue, etendue, points)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> np.linspace(<span class="op">-</span>etendue, etendue, points)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    X, Zm <span class="op">=</span> np.meshgrid(x, z)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Ycoord <span class="op">=</span> np.zeros_like(X)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    rayon <span class="op">=</span> np.sqrt(X<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> Ycoord<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> Zm<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.arccos(np.divide(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        Zm, rayon, out<span class="op">=</span>np.ones_like(rayon), where<span class="op">=</span>rayon <span class="op">&gt;</span> <span class="fl">1e-14</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    phi <span class="op">=</span> np.arctan2(Ycoord, X)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    psi <span class="op">=</span> R_nl(n, l, rayon) <span class="op">*</span> harmonique_reelle(type_orbitale, theta, phi)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    psi <span class="op">/=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(psi))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, z, psi</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>orbitales <span class="op">=</span> [</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"s"</span>, <span class="fl">5.0</span>, <span class="st">"$1s$"</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">0</span>, <span class="st">"s"</span>, <span class="fl">12.0</span>, <span class="st">"$2s$"</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">1</span>, <span class="st">"pz"</span>, <span class="fl">12.0</span>, <span class="st">"$2p_z$"</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="dv">2</span>, <span class="st">"dz2"</span>, <span class="fl">20.0</span>, <span class="st">"$3d_{z^2}$"</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">9.5</span>, <span class="fl">8.2</span>))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (n, l, type_orbitale, etendue, titre) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, orbitales):</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    x, z, psi <span class="op">=</span> coupe_orbitale(n, l, type_orbitale, etendue)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    amplitude_affichee <span class="op">=</span> np.sign(psi) <span class="op">*</span> np.sqrt(np.<span class="bu">abs</span>(psi))</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> ax.imshow(amplitude_affichee, origin<span class="op">=</span><span class="st">"lower"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                      extent<span class="op">=</span>(<span class="op">-</span>etendue, etendue, <span class="op">-</span>etendue, etendue),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                      cmap<span class="op">=</span><span class="st">"coolwarm"</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                      interpolation<span class="op">=</span><span class="st">"bilinear"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">min</span>(psi) <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">&lt;</span> np.<span class="bu">max</span>(psi):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        ax.contour(x, z, psi, levels<span class="op">=</span>[<span class="dv">0</span>], colors<span class="op">=</span><span class="st">"black"</span>, linewidths<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    ax.scatter([<span class="dv">0</span>], [<span class="dv">0</span>], s<span class="op">=</span><span class="dv">20</span>, color<span class="op">=</span><span class="st">"black"</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">z/a_0</span><span class="dv">$</span><span class="vs">"</span>, title<span class="op">=</span>titre,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>           aspect<span class="op">=</span><span class="st">"equal"</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Le bleu et le rouge codent les deux signes de la fonction d'onde"</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>             y<span class="op">=</span><span class="fl">0.995</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-coupes-orbitales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coupes-orbitales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-coupes-orbitales-output-1.png" width="807" height="782" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coupes-orbitales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Coupes passant par le noyau : amplitude signée des orbitales et surfaces nodales.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="valeurs-moyennes-et-taille-de-latome" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="valeurs-moyennes-et-taille-de-latome"><span class="header-section-number">4.2</span> Valeurs moyennes et taille de l’atome</h3>
+<p>La taille d’une orbitale ne se résume pas à un rayon unique. On peut calculer différentes valeurs moyennes :</p>
+<p><span id="eq-hydrogen-inverse-radius"><span class="math display">\[
+\boxed{
+\left\langle\frac1r\right\rangle_{n\ell}
+=\frac{Z}{a_\mu n^2},
+}
+\tag{33}\]</span></span></p>
+<p><span id="eq-hydrogen-mean-radius"><span class="math display">\[
+\boxed{
+\langle r\rangle_{n\ell}
+=\frac{a_\mu}{2Z}
+\left[3n^2-\ell(\ell+1)\right],
+}
+\tag{34}\]</span></span></p>
+<p><span id="eq-hydrogen-mean-square-radius"><span class="math display">\[
+\boxed{
+\langle r^2\rangle_{n\ell}
+=\frac{a_\mu^2n^2}{2Z^2}
+\left[5n^2+1-3\ell(\ell+1)\right].
+}
+\tag{35}\]</span></span></p>
+<p>Pour l’état fondamental,</p>
+<p><span class="math display">\[
+r_{\mathrm{mp}}=a_\mu,
+\qquad
+\langle r\rangle_{100}=\frac32a_\mu,
+\qquad
+\sqrt{\langle r^2\rangle_{100}}=\sqrt{3}\,a_\mu.
+\]</span></p>
+<p>Ces trois nombres répondent à trois questions différentes : position du maximum radial, distance moyenne et rayon quadratique moyen.</p>
+<p>Pour un potentiel coulombien, le théorème du viriel donne</p>
+<p><span class="math display">\[
+2\langle T\rangle=-\langle V\rangle.
+\]</span></p>
+<p>Comme <span class="math inline">\(E=\langle T\rangle+\langle V\rangle\)</span>, il en résulte</p>
+<p><span id="eq-coulomb-virial"><span class="math display">\[
+\boxed{
+\langle T\rangle=-E_n,
+\qquad
+\langle V\rangle=2E_n.
+}
+\tag{36}\]</span></span></p>
+<p>L’énergie totale est négative, bien que l’énergie cinétique moyenne soit positive. Il faut fournir l’énergie <span class="math inline">\(|E_n|\)</span> pour ioniser l’atome depuis le niveau <span class="math inline">\(n\)</span>.</p>
+<div id="cell-fig-rayons-moyens" class="cell" data-fig-height="4.8" data-fig-width="9.5" data-execution_count="6">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>marqueurs <span class="op">=</span> [<span class="st">"o"</span>, <span class="st">"s"</span>, <span class="st">"^"</span>, <span class="st">"D"</span>, <span class="st">"P"</span>, <span class="st">"X"</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>couleurs <span class="op">=</span> [BLEU, ORANGE, VERT, ROUGE, VIOLET, GRIS]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ls <span class="op">=</span> np.arange(n)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    rayon_moyen <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">3</span><span class="op">*</span>n<span class="op">*</span>n <span class="op">-</span> ls<span class="op">*</span>(ls<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(ls, rayon_moyen, marker<span class="op">=</span>marqueurs[n<span class="op">-</span><span class="dv">1</span>], color<span class="op">=</span>couleurs[n<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            lw<span class="op">=</span><span class="fl">1.8</span>, ms<span class="op">=</span><span class="dv">7</span>, label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"nombre quantique </span><span class="dv">$</span><span class="er">\</span><span class="vs">ell</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">langle r</span><span class="ch">\r</span><span class="vs">angle/a_0</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       title<span class="op">=</span><span class="st">"Une couche ne possède pas un rayon unique"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>       xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">6</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>ax.legend(ncol<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-rayons-moyens" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rayons-moyens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-rayons-moyens-output-1.png" width="782" height="441" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rayons-moyens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Distance moyenne au noyau pour toutes les sous-couches des six premières couches.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="spectre-de-lhydrogène-et-transitions-quantiques" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="spectre-de-lhydrogène-et-transitions-quantiques"><span class="header-section-number">5</span> Spectre de l’hydrogène et transitions quantiques</h2>
+<p>Les états propres de l’hamiltonien sont stationnaires : leur densité de probabilité ne dépend pas du temps. Contrairement à une charge classique en orbite, un électron placé dans un état propre ne rayonne donc pas continuellement et ne s’effondre pas sur le noyau.</p>
+<p>Une raie spectrale apparaît lorsqu’une interaction, généralement avec le champ électromagnétique, fait passer l’atome d’un niveau initial <span class="math inline">\(n_i\)</span> à un niveau final <span class="math inline">\(n_f\)</span>. Pour une émission,</p>
+<p><span id="eq-photon-transition-energy"><span class="math display">\[
+n_i&gt;n_f,
+\qquad
+h\nu=E_{n_i}-E_{n_f}&gt;0.
+\tag{37}\]</span></span></p>
+<p>En utilisant <a href="#eq-hydrogen-energies" class="quarto-xref">Equation&nbsp;26</a>,</p>
+<p><span class="math display">\[
+h\nu
+=\frac{\mu Z^2e^4}{2(4\pi\varepsilon_0)^2\hbar^2}
+\left(\frac{1}{n_f^2}-\frac{1}{n_i^2}\right).
+\]</span></p>
+<p>Comme <span class="math inline">\(\nu=c/\lambda\)</span>, on obtient la formule de Rydberg :</p>
+<p><span id="eq-rydberg-formula"><span class="math display">\[
+\boxed{
+\frac{1}{\lambda}
+=R_\mu Z^2
+\left(\frac{1}{n_f^2}-\frac{1}{n_i^2}\right),
+}
+\tag{38}\]</span></span></p>
+<p>où</p>
+<p><span class="math display">\[
+R_\mu=\frac{\mu e^4}{8\varepsilon_0^2h^3c}.
+\]</span></p>
+<p>Pour l’hydrogène, <span class="math inline">\(R_\mathrm H\simeq1{,}0968\times10^7\ \mathrm{m}^{-1}\)</span>. La dépendance en masse réduite explique pourquoi l’hydrogène et le deutérium possèdent des raies légèrement décalées.</p>
+<section id="séries-spectrales" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="séries-spectrales"><span class="header-section-number">5.1</span> Séries spectrales</h3>
+<p>Une série regroupe les transitions possédant le même niveau final.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Série</th>
+<th style="text-align: right;">Niveau final</th>
+<th>Domaine principal</th>
+<th>Première transition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lyman</td>
+<td style="text-align: right;"><span class="math inline">\(n_f=1\)</span></td>
+<td>ultraviolet</td>
+<td><span class="math inline">\(2\to1\)</span>, <span class="math inline">\(121{,}6\ \mathrm{nm}\)</span></td>
+</tr>
+<tr class="even">
+<td>Balmer</td>
+<td style="text-align: right;"><span class="math inline">\(n_f=2\)</span></td>
+<td>visible et proche ultraviolet</td>
+<td><span class="math inline">\(3\to2\)</span>, <span class="math inline">\(656{,}3\ \mathrm{nm}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Paschen</td>
+<td style="text-align: right;"><span class="math inline">\(n_f=3\)</span></td>
+<td>infrarouge</td>
+<td><span class="math inline">\(4\to3\)</span>, <span class="math inline">\(1875\ \mathrm{nm}\)</span></td>
+</tr>
+<tr class="even">
+<td>Brackett</td>
+<td style="text-align: right;"><span class="math inline">\(n_f=4\)</span></td>
+<td>infrarouge</td>
+<td><span class="math inline">\(5\to4\)</span>, <span class="math inline">\(4051\ \mathrm{nm}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Lorsque <span class="math inline">\(n_i\to\infty\)</span>, la série atteint sa limite : le photon possède exactement l’énergie nécessaire pour relier le niveau <span class="math inline">\(n_f\)</span> au continuum.</p>
+<div id="cell-fig-series-spectrales" class="cell" data-fig-height="5" data-fig-width="10" data-execution_count="7">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>R_H <span class="op">=</span> <span class="fl">1.0967758e7</span>  <span class="co"># m^-1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> longueur_onde_nm(ni, nf, Z<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    inverse_lambda <span class="op">=</span> R_H <span class="op">*</span> Z<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span><span class="op">/</span>nf<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>ni<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">1e9</span> <span class="op">/</span> inverse_lambda</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="fl">4.7</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagramme des niveaux et de quelques transitions</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> <span class="op">-</span><span class="fl">13.5983</span><span class="op">/</span>n<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].hlines(E, <span class="fl">0.4</span>, <span class="fl">3.8</span>, color<span class="op">=</span>GRIS, lw<span class="op">=</span><span class="fl">1.8</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;=</span> <span class="dv">4</span>:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">0</span>].text(<span class="fl">0.25</span>, E, <span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> [</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">1.0</span>, BLEU, <span class="st">"Lyman α"</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="dv">2</span>, <span class="fl">2.0</span>, ROUGE, <span class="st">"Balmer α"</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="dv">3</span>, <span class="fl">3.0</span>, VIOLET, <span class="st">"Paschen α"</span>),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ni, nf, x0, couleur, nom <span class="kw">in</span> transitions:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    Ei, Ef <span class="op">=</span> <span class="op">-</span><span class="fl">13.5983</span><span class="op">/</span>ni<span class="op">**</span><span class="dv">2</span>, <span class="op">-</span><span class="fl">13.5983</span><span class="op">/</span>nf<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].annotate(<span class="st">""</span>, xy<span class="op">=</span>(x0, Ef), xytext<span class="op">=</span>(x0, Ei),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                     arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, lw<span class="op">=</span><span class="fl">2.3</span>, color<span class="op">=</span>couleur))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].text(x0<span class="op">+</span><span class="fl">0.12</span>, <span class="fl">0.5</span><span class="op">*</span>(Ei<span class="op">+</span>Ef), nom, color<span class="op">=</span>couleur,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                 va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span>ORANGE, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">4.4</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">14.3</span>, <span class="fl">0.8</span>), xticks<span class="op">=</span>[],</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>            ylabel<span class="op">=</span><span class="st">"énergie (eV)"</span>, title<span class="op">=</span><span class="st">"Émission d'un photon"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensemble des raies, avec un axe logarithmique pour conserver les trois séries</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nf, couleur, nom <span class="kw">in</span> [(<span class="dv">1</span>, BLEU, <span class="st">"Lyman"</span>),</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                         (<span class="dv">2</span>, ROUGE, <span class="st">"Balmer"</span>),</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                         (<span class="dv">3</span>, VIOLET, <span class="st">"Paschen"</span>)]:</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    premier <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ni <span class="kw">in</span> <span class="bu">range</span>(nf <span class="op">+</span> <span class="dv">1</span>, <span class="dv">11</span>):</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        onde <span class="op">=</span> longueur_onde_nm(ni, nf)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">1</span>].vlines(onde, <span class="dv">0</span>, <span class="dv">1</span>, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                       label<span class="op">=</span>nom <span class="cf">if</span> premier <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        premier <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvspan(<span class="dv">380</span>, <span class="dv">750</span>, color<span class="op">=</span>VERT, alpha<span class="op">=</span><span class="fl">0.08</span>, label<span class="op">=</span><span class="st">"visible"</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xscale(<span class="st">"log"</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">85</span>, <span class="dv">2100</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">1.08</span>),</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>            xlabel<span class="op">=</span><span class="st">"longueur d'onde (nm)"</span>, yticks<span class="op">=</span>[],</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Convergence des séries"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-series-spectrales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-series-spectrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-series-spectrales-output-1.png" width="1042" height="435" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-series-spectrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Niveaux de l’hydrogène et raies des séries de Lyman, Balmer et Paschen.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="règles-de-sélection-dipolaires" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="règles-de-sélection-dipolaires"><span class="header-section-number">5.2</span> Règles de sélection dipolaires</h3>
+<p>La conservation de l’énergie indique où se trouve une raie, mais pas si elle est intense ou même permise. Dans l’approximation dipolaire électrique, l’amplitude d’une transition contient</p>
+<p><span id="eq-dipole-matrix-element"><span class="math display">\[
+\mathbf d_{fi}
+=-e\langle n_f\ell_fm_f|\widehat{\mathbf r}|
+n_i\ell_im_i\rangle.
+\tag{39}\]</span></span></p>
+<p>L’opérateur position possède la parité impaire et se transforme comme un objet de moment cinétique un. Les propriétés angulaires imposent</p>
+<p><span id="eq-electric-dipole-selection-rules"><span class="math display">\[
+\boxed{
+\Delta\ell=\pm1,
+\qquad
+\Delta m=0,\pm1.
+}
+\tag{40}\]</span></span></p>
+<p>La polarisation du photon précise quelle valeur de <span class="math inline">\(\Delta m\)</span> est réalisée. En l’absence d’interaction agissant sur le spin,</p>
+<p><span class="math display">\[
+\Delta s=0.
+\]</span></p>
+<p>Une transition qui ne respecte pas ces règles est interdite au niveau dipolaire électrique, mais elle peut encore se produire beaucoup plus lentement par un mécanisme d’ordre supérieur. Ainsi, l’état <span class="math inline">\(2s\)</span> ne peut pas se désexciter vers <span class="math inline">\(1s\)</span> par émission d’un seul photon dipolaire ; il se désintègre principalement par émission de deux photons.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Une transition n'est pas une trajectoire">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Une transition n’est pas une trajectoire
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Entre deux mesures, la mécanique quantique ne décrit pas l’électron comme une petite bille sautant le long d’un chemin défini entre deux couches. L’interaction fait évoluer l’état quantique ; l’émission d’un photon corrèle finalement l’atome au champ électromagnétique avec une énergie <span class="math inline">\(E_i-E_f\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="contrôle-numérique-de-léquation-radiale" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="contrôle-numérique-de-léquation-radiale"><span class="header-section-number">5.3</span> Contrôle numérique de l’équation radiale</h3>
+<p>On peut retrouver les niveaux sans employer leur expression analytique. En unités atomiques, discrétisons <a href="#eq-reduced-radial-equation" class="quarto-xref">Equation&nbsp;17</a> sur une grille <span class="math inline">\(r_j=j\Delta r\)</span>. La dérivée seconde centrée est</p>
+<p><span class="math display">\[
+u''(r_j)\simeq
+\frac{u_{j+1}-2u_j+u_{j-1}}{\Delta r^2}.
+\]</span></p>
+<p>L’hamiltonien devient une matrice tridiagonale dont les valeurs propres négatives approchent les états liés.</p>
+<div id="cell-fig-resolution-radiale-numerique" class="cell" data-fig-height="4.7" data-fig-width="10" data-execution_count="8">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>r_max <span class="op">=</span> <span class="fl">55.0</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>N_grille <span class="op">=</span> <span class="dv">320</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dr <span class="op">=</span> r_max <span class="op">/</span> (N_grille <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> dr <span class="op">*</span> np.arange(<span class="dv">1</span>, N_grille <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spectre_radial_numerique(l):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    diagonale <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>dr<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>r <span class="op">+</span> l<span class="op">*</span>(l<span class="op">+</span><span class="dv">1</span>)<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>r<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    hors_diagonale <span class="op">=</span> <span class="op">-</span>np.ones(N_grille <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>dr<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    H <span class="op">=</span> (np.diag(diagonale)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         <span class="op">+</span> np.diag(hors_diagonale, <span class="dv">1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>         <span class="op">+</span> np.diag(hors_diagonale, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    energies, vecteurs <span class="op">=</span> np.linalg.eigh(H)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    masque <span class="op">=</span> energies <span class="op">&lt;</span> <span class="dv">0</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> energies[masque], vecteurs[:, masque]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.6</span>, <span class="fl">4.3</span>))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>resultats_radiaux <span class="op">=</span> {}</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l, couleur <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>], [BLEU, ORANGE, VERT]):</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    energies, vecteurs <span class="op">=</span> spectre_radial_numerique(l)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    resultats_radiaux[l] <span class="op">=</span> (energies, vecteurs)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    nombres_n <span class="op">=</span> np.arange(l <span class="op">+</span> <span class="dv">1</span>, l <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>(<span class="dv">4</span>, <span class="bu">len</span>(energies)))</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(nombres_n, energies[:<span class="bu">len</span>(nombres_n)], <span class="st">"o"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span>couleur, ms<span class="op">=</span><span class="dv">7</span>, label<span class="op">=</span><span class="vs">fr"numérique, </span><span class="dv">$</span><span class="er">\</span><span class="vs">ell=</span><span class="sc">{</span>l<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(n, <span class="op">-</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>n<span class="op">**</span><span class="dv">2</span>), color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.6</span>,</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">-1/</span><span class="kw">(</span><span class="vs">2n</span><span class="dv">^</span><span class="vs">2</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"$n$"</span>, ylabel<span class="op">=</span><span class="st">"énergie (hartree)"</span>,</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Convergence vers le spectre exact"</span>, xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>))</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>energies_s, vecteurs_s <span class="op">=</span> resultats_radiaux[<span class="dv">0</span>]</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> indice, couleur <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="dv">3</span>), [BLEU, ORANGE, VERT]):</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> vecteurs_s[:, indice]</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    u <span class="op">/=</span> np.sqrt(np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(u)<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> dr)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> u[np.argmax(np.<span class="bu">abs</span>(u))] <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> <span class="op">-</span>u</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(r, u <span class="op">+</span> <span class="fl">0.55</span><span class="op">*</span>indice, color<span class="op">=</span>couleur, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="sc">{</span>indice<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="vs">s</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r/a_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">u_{n0}</span><span class="kw">(</span><span class="vs">r</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">décalé</span><span class="kw">)</span><span class="vs">"</span>,</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Fonctions radiales réduites"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">28</span>))</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-resolution-radiale-numerique" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resolution-radiale-numerique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Atome d'Hydrogène_files/figure-html/fig-resolution-radiale-numerique-output-1.png" width="1004" height="395" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resolution-radiale-numerique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Résolution numérique radiale : fonctions réduites et comparaison aux énergies exactes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ce-que-le-modèle-de-schrödinger-ne-sépare-pas" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="ce-que-le-modèle-de-schrödinger-ne-sépare-pas"><span class="header-section-number">5.4</span> Ce que le modèle de Schrödinger ne sépare pas</h3>
+<p>La formule <a href="#eq-hydrogen-energies" class="quarto-xref">Equation&nbsp;26</a> est remarquablement précise, mais le spectre réel possède une structure plus fine.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Effet</th>
+<th>Origine physique</th>
+<th>Conséquence principale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Masse réduite</td>
+<td>Mouvement du noyau</td>
+<td>Décalage isotopique global</td>
+</tr>
+<tr class="even">
+<td>Structure fine</td>
+<td>Relativité, couplage spin–orbite, terme de Darwin</td>
+<td>Dépendance en <span class="math inline">\(n\)</span> et en <span class="math inline">\(j\)</span></td>
+</tr>
+<tr class="odd">
+<td>Décalage de Lamb</td>
+<td>Fluctuations quantiques du champ électromagnétique</td>
+<td>Séparation de <span class="math inline">\(2S_{1/2}\)</span> et <span class="math inline">\(2P_{1/2}\)</span></td>
+</tr>
+<tr class="even">
+<td>Structure hyperfine</td>
+<td>Couplage entre spins électronique et nucléaire</td>
+<td>Raie de <span class="math inline">\(21\ \mathrm{cm}\)</span> de l’hydrogène</td>
+</tr>
+<tr class="odd">
+<td>Effet Zeeman</td>
+<td>Champ magnétique extérieur</td>
+<td>Levée de dégénérescence selon <span class="math inline">\(m\)</span></td>
+</tr>
+<tr class="even">
+<td>Effet Stark</td>
+<td>Champ électrique extérieur</td>
+<td>Mélange des états et déplacement des niveaux</td>
+</tr>
+</tbody>
+</table>
+<p>À l’ordre dominant en <span class="math inline">\(Z\alpha\)</span>, la structure fine peut être résumée par</p>
+<p><span id="eq-hydrogen-fine-structure"><span class="math display">\[
+\Delta E_{nj}^{\mathrm{fine}}
+=-\frac{\mu c^2(Z\alpha)^4}{2n^4}
+\left(\frac{n}{j+1/2}-\frac34\right).
+\tag{41}\]</span></span></p>
+<p>Elle lève une partie de la dégénérescence en <span class="math inline">\(\ell\)</span>, mais la théorie de Dirac conserve encore l’égalité entre certains états, notamment <span class="math inline">\(2S_{1/2}\)</span> et <span class="math inline">\(2P_{1/2}\)</span>. Le décalage de Lamb, expliqué par l’électrodynamique quantique, lève cette dernière coïncidence.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi l'hydrogène reste un banc d'essai fondamental">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi l’hydrogène reste un banc d’essai fondamental
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Chaque amélioration de la théorie peut être comparée à des fréquences mesurées avec une précision exceptionnelle. L’hydrogène teste ainsi la mécanique quantique, l’électrodynamique quantique, les constantes fondamentales, la taille du proton et la recherche de faibles interactions nouvelles.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="simulations-interactives" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="simulations-interactives"><span class="header-section-number">6</span> Simulations interactives</h2>
+<p>Les représentations suivantes sont calculées directement à partir des fonctions hydrogénoïdes. Dans la première simulation, les points sont distribués selon <span class="math inline">\(|\psi|^2\)</span> : les régions plus denses sont donc réellement les régions où la probabilité de présence est la plus grande. Les couleurs conservent en plus le signe de la fonction d’onde réelle choisie.</p>
+<style>
+.hy-sim {
+  --hy-blue: #2563eb;
+  --hy-orange: #ea580c;
+  --hy-green: #059669;
+  --hy-red: #dc2626;
+  --hy-purple: #7c3aed;
+  margin: 1.4rem 0 2.2rem;
+  padding: clamp(0.9rem, 2vw, 1.35rem);
+  border: 1px solid rgba(127, 127, 127, 0.30);
+  border-radius: 16px;
+  background: var(--bs-body-bg, white);
+  background: color-mix(in srgb, var(--bs-body-bg, white) 96%, var(--hy-blue) 4%);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+}
+.hy-sim * { box-sizing: border-box; }
+.hy-sim .hy-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.hy-sim .hy-heading h3 { margin: 0; font-size: 1.2rem; }
+.hy-sim .hy-heading p { margin: 0; opacity: 0.78; font-size: 0.91rem; }
+.hy-sim .hy-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.75rem 1rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  background: rgba(127, 127, 127, 0.075);
+}
+.hy-sim .hy-control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-bottom: 0.18rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.hy-sim .hy-control output {
+  color: var(--hy-blue);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hy-sim input[type="range"],
+.hy-sim select {
+  width: 100%;
+  accent-color: var(--hy-blue);
+}
+.hy-sim select {
+  min-height: 2.15rem;
+  padding: 0.25rem 0.4rem;
+  color: inherit;
+  border: 1px solid rgba(127, 127, 127, 0.38);
+  border-radius: 7px;
+  background: var(--bs-body-bg, white);
+}
+.hy-sim .hy-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin: 0.85rem 0;
+}
+.hy-sim button {
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  border-radius: 8px;
+  padding: 0.42rem 0.78rem;
+  color: inherit;
+  background: var(--bs-body-bg, white);
+  cursor: pointer;
+  font-weight: 600;
+}
+.hy-sim button.primary {
+  color: white;
+  border-color: var(--hy-blue);
+  background: var(--hy-blue);
+}
+.hy-sim button:hover { filter: brightness(0.96); transform: translateY(-1px); }
+.hy-sim button:focus-visible,
+.hy-sim input:focus-visible,
+.hy-sim select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+}
+.hy-sim .hy-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 0.55rem;
+  margin: 0.85rem 0;
+}
+.hy-sim .hy-readout {
+  padding: 0.55rem 0.7rem;
+  border-left: 3px solid var(--hy-blue);
+  border-radius: 6px;
+  background: rgba(127, 127, 127, 0.075);
+  font-size: 0.86rem;
+}
+.hy-sim .hy-readout span {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.hy-sim .hy-canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+.hy-sim .hy-orbital-grid {
+  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.8fr);
+}
+.hy-sim .hy-canvas-card {
+  min-width: 0;
+  padding: 0.55rem;
+  border: 1px solid rgba(127, 127, 127, 0.24);
+  border-radius: 11px;
+  background: var(--bs-body-bg, white);
+}
+.hy-sim .hy-canvas-card.wide { grid-column: 1 / -1; }
+.hy-sim .hy-canvas-card.space {
+  color: #e5eefb;
+  border-color: rgba(96, 165, 250, 0.32);
+  background: #07111f;
+  box-shadow: inset 0 0 45px rgba(37, 99, 235, 0.08);
+}
+.hy-sim .hy-canvas-title {
+  margin: 0 0 0.25rem 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  opacity: 0.84;
+}
+.hy-sim canvas {
+  display: block;
+  width: 100%;
+  height: 285px;
+  touch-action: none;
+}
+.hy-sim .hy-orbital-canvas { height: 480px; cursor: grab; }
+.hy-sim .hy-orbital-canvas.dragging { cursor: grabbing; }
+.hy-sim .hy-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.4rem 0.2rem 0;
+  font-size: 0.78rem;
+  opacity: 0.88;
+}
+.hy-sim .legend-line::before,
+.hy-sim .legend-dot::before {
+  content: "";
+  display: inline-block;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+  background: var(--legend-color);
+}
+.hy-sim .legend-line::before { width: 1.3rem; height: 3px; border-radius: 2px; }
+.hy-sim .legend-dot::before { width: 0.62rem; height: 0.62rem; border-radius: 50%; }
+.hy-sim .hy-help { margin: 0.75rem 0 0; font-size: 0.83rem; opacity: 0.78; }
+@media (max-width: 800px) {
+  .hy-sim .hy-canvas-grid,
+  .hy-sim .hy-orbital-grid { grid-template-columns: 1fr; }
+  .hy-sim .hy-canvas-card.wide { grid-column: auto; }
+  .hy-sim .hy-orbital-canvas { height: 390px; }
+}
+@media (max-width: 480px) {
+  .hy-sim canvas { height: 245px; }
+  .hy-sim .hy-orbital-canvas { height: 330px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hy-sim button:hover { transform: none; }
+}
+</style>
+<script>
+window.HydrogenCanvas = window.HydrogenCanvas || (() => {
+  "use strict";
+
+  function palette(root) {
+    const style = getComputedStyle(root);
+    return {
+      text: style.color || "#20242a",
+      grid: "rgba(127,127,127,0.25)",
+      blue: style.getPropertyValue("--hy-blue").trim() || "#2563eb",
+      orange: style.getPropertyValue("--hy-orange").trim() || "#ea580c",
+      green: style.getPropertyValue("--hy-green").trim() || "#059669",
+      red: style.getPropertyValue("--hy-red").trim() || "#dc2626",
+      purple: style.getPropertyValue("--hy-purple").trim() || "#7c3aed",
+    };
+  }
+
+  function context(canvas, fallbackHeight = 285) {
+    const width = Math.max(280, canvas.clientWidth || 600);
+    const height = canvas.clientHeight || fallbackHeight;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    const pixelWidth = Math.round(width * ratio);
+    const pixelHeight = Math.round(height * ratio);
+    if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+      canvas.width = pixelWidth;
+      canvas.height = pixelHeight;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    return { ctx, width, height };
+  }
+
+  function tick(value) {
+    const a = Math.abs(value);
+    if (a >= 1000) return value.toFixed(0);
+    if (a >= 100) return value.toFixed(0);
+    if (a >= 10) return value.toFixed(1);
+    if (a >= 1) return value.toFixed(2).replace(/\.00$/, "");
+    if (a === 0) return "0";
+    return value.toFixed(2);
+  }
+
+  function axes(root, canvas, bounds, labels) {
+    const { ctx, width, height } = context(canvas);
+    const colors = palette(root);
+    const margin = { left: 57, right: 18, top: 15, bottom: 42 };
+    const plotWidth = Math.max(1, width - margin.left - margin.right);
+    const plotHeight = Math.max(1, height - margin.top - margin.bottom);
+    const X = value => margin.left + (value - bounds.xMin) /
+      (bounds.xMax - bounds.xMin) * plotWidth;
+    const Y = value => margin.top + (bounds.yMax - value) /
+      (bounds.yMax - bounds.yMin) * plotHeight;
+
+    ctx.font = "11px system-ui, sans-serif";
+    ctx.fillStyle = colors.text;
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const gx = margin.left + i * plotWidth / 5;
+      const gy = margin.top + i * plotHeight / 5;
+      ctx.beginPath(); ctx.moveTo(gx, margin.top); ctx.lineTo(gx, margin.top + plotHeight); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(margin.left, gy); ctx.lineTo(margin.left + plotWidth, gy); ctx.stroke();
+      const xv = bounds.xMin + i * (bounds.xMax - bounds.xMin) / 5;
+      const yv = bounds.yMax - i * (bounds.yMax - bounds.yMin) / 5;
+      ctx.textAlign = "center"; ctx.textBaseline = "top";
+      ctx.fillText(tick(xv), gx, margin.top + plotHeight + 5);
+      ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      ctx.fillText(tick(yv), margin.left - 7, gy);
+    }
+
+    ctx.strokeStyle = colors.text;
+    ctx.globalAlpha = 0.5;
+    ctx.strokeRect(margin.left, margin.top, plotWidth, plotHeight);
+    ctx.globalAlpha = 1;
+    ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+    ctx.fillText(labels.x || "", margin.left + plotWidth/2, height - 2);
+    ctx.save();
+    ctx.translate(14, margin.top + plotHeight/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText(labels.y || "", 0, 0);
+    ctx.restore();
+    return { ctx, width, height, margin, plotWidth, plotHeight, X, Y, colors };
+  }
+
+  function path(plot, points, color, width = 2, dash = []) {
+    if (points.length < 2) return;
+    const { ctx, X, Y, margin, plotWidth, plotHeight } = plot;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(margin.left, margin.top, plotWidth, plotHeight); ctx.clip();
+    ctx.beginPath();
+    points.forEach((point, index) => {
+      if (index === 0) ctx.moveTo(X(point[0]), Y(point[1]));
+      else ctx.lineTo(X(point[0]), Y(point[1]));
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function point(plot, x, y, color, radius = 4) {
+    const px = plot.X(x), py = plot.Y(y);
+    plot.ctx.beginPath(); plot.ctx.arc(px, py, radius, 0, 2*Math.PI);
+    plot.ctx.fillStyle = color; plot.ctx.fill();
+    plot.ctx.strokeStyle = "white"; plot.ctx.lineWidth = 1.1; plot.ctx.stroke();
+  }
+
+  return { palette, context, axes, path, point };
+})();
+</script>
+<section id="simulation-3d-explorer-les-orbitales" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="simulation-3d-explorer-les-orbitales"><span class="header-section-number">6.1</span> Simulation 3D — Explorer les orbitales</h3>
+<p>Les orbitales <span class="math inline">\(p_x\)</span>, <span class="math inline">\(p_y\)</span>, <span class="math inline">\(d_{xy}\)</span> et <span class="math inline">\(d_{x^2-y^2}\)</span> affichées ici sont les combinaisons réelles usuelles. La taille 3D est automatiquement adaptée à chaque état ; la distance moyenne, elle, reste donnée en rayons de Bohr et varie physiquement avec <span class="math inline">\(n\)</span>, <span class="math inline">\(\ell\)</span> et <span class="math inline">\(Z\)</span>.</p>
+<div id="orbital-3d-sim" class="hy-sim">
+  <div class="hy-heading">
+    <h3 class="anchored">Orbitales hydrogénoïdes en trois dimensions</h3>
+    <p>Faites glisser la vue pour tourner l'orbitale</p>
+  </div>
+
+  <div class="hy-controls">
+    <div class="hy-control">
+      <label for="orbital-choice">Orbitale</label>
+      <select id="orbital-choice">
+        <option value="1s">1s</option>
+        <option value="2s">2s</option>
+        <option value="2pz" selected="">2pᶻ</option>
+        <option value="2px">2pˣ</option>
+        <option value="2py">2pʸ</option>
+        <option value="3s">3s</option>
+        <option value="3pz">3pᶻ</option>
+        <option value="3dz2">3d(z²)</option>
+        <option value="3dxz">3d(xz)</option>
+        <option value="3dxy">3d(xy)</option>
+        <option value="3dx2y2">3d(x²−y²)</option>
+        <option value="4fz3">4f(z³)</option>
+      </select>
+    </div>
+    <div class="hy-control">
+      <label for="orbital-Z">Charge nucléaire Z <output id="orbital-Z-out"></output></label>
+      <input id="orbital-Z" type="range" min="1" max="4" step="1" value="1">
+    </div>
+    <div class="hy-control">
+      <label for="orbital-points">Points affichés <output id="orbital-points-out"></output></label>
+      <input id="orbital-points" type="range" min="800" max="6000" step="200" value="3600">
+    </div>
+    <div class="hy-control">
+      <label for="orbital-zoom">Grossissement <output id="orbital-zoom-out"></output></label>
+      <input id="orbital-zoom" type="range" min="0.65" max="1.55" step="0.01" value="1">
+    </div>
+  </div>
+
+  <div class="hy-actions">
+    <button type="button" class="primary" id="orbital-play">▶ Rotation</button>
+    <button type="button" id="orbital-pause">Ⅱ Pause</button>
+    <button type="button" id="orbital-reset">↺ Réinitialiser la vue</button>
+  </div>
+
+  <div class="hy-readouts" aria-live="polite">
+    <div class="hy-readout">Nombres quantiques <span id="orbital-quantum"></span></div>
+    <div class="hy-readout">Nœuds radial / angulaire <span id="orbital-nodes"></span></div>
+    <div class="hy-readout">Énergie <span id="orbital-energy"></span></div>
+    <div class="hy-readout">Distance moyenne <span id="orbital-radius"></span></div>
+  </div>
+
+  <div class="hy-canvas-grid hy-orbital-grid">
+    <div class="hy-canvas-card space">
+      <div class="hy-canvas-title">Nuage de probabilité tridimensionnel</div>
+      <canvas id="orbital-space" class="hy-orbital-canvas" aria-label="Représentation tridimensionnelle orientable de l'orbitale"></canvas>
+      <div class="hy-legend">
+        <span class="legend-dot" style="--legend-color:#60a5fa">phase positive</span>
+        <span class="legend-dot" style="--legend-color:#fb923c">phase négative</span>
+        <span class="legend-dot" style="--legend-color:#fde68a">noyau</span>
+      </div>
+    </div>
+    <div class="hy-canvas-card">
+      <div class="hy-canvas-title">Structure radiale de la même orbitale</div>
+      <canvas id="orbital-radial" aria-label="Fonction radiale et probabilité radiale"></canvas>
+      <div class="hy-legend">
+        <span class="legend-line" style="--legend-color:#2563eb">probabilité radiale</span>
+        <span class="legend-line" style="--legend-color:#ea580c">fonction Rₙₗ signée</span>
+        <span class="legend-line" style="--legend-color:#059669">distance moyenne</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="hy-help">Chaque point est un échantillon de la loi |ψ|². Une zone vide persistante révèle donc un nœud. Pour Z supérieur à 1, l'ion hydrogénoïde se contracte comme 1/Z, même si la vue 3D est réajustée pour rester lisible.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("orbital-3d-sim");
+  if (!root) return;
+  const HC = window.HydrogenCanvas;
+
+  const states = {
+    "1s":      { n:1, l:0, kind:"s",     m:"0",  label:"1s" },
+    "2s":      { n:2, l:0, kind:"s",     m:"0",  label:"2s" },
+    "2pz":     { n:2, l:1, kind:"pz",    m:"0",  label:"2pᶻ" },
+    "2px":     { n:2, l:1, kind:"px",    m:"±1", label:"2pˣ" },
+    "2py":     { n:2, l:1, kind:"py",    m:"±1", label:"2pʸ" },
+    "3s":      { n:3, l:0, kind:"s",     m:"0",  label:"3s" },
+    "3pz":     { n:3, l:1, kind:"pz",    m:"0",  label:"3pᶻ" },
+    "3dz2":    { n:3, l:2, kind:"dz2",   m:"0",  label:"3d(z²)" },
+    "3dxz":    { n:3, l:2, kind:"dxz",   m:"±1", label:"3d(xz)" },
+    "3dxy":    { n:3, l:2, kind:"dxy",   m:"±2", label:"3d(xy)" },
+    "3dx2y2":  { n:3, l:2, kind:"dx2y2", m:"±2", label:"3d(x²−y²)" },
+    "4fz3":    { n:4, l:3, kind:"fz3",   m:"0",  label:"4f(z³)" },
+  };
+
+  const controls = {
+    state: root.querySelector("#orbital-choice"),
+    Z: root.querySelector("#orbital-Z"),
+    points: root.querySelector("#orbital-points"),
+    zoom: root.querySelector("#orbital-zoom"),
+  };
+  const outputs = {
+    Z: root.querySelector("#orbital-Z-out"),
+    points: root.querySelector("#orbital-points-out"),
+    zoom: root.querySelector("#orbital-zoom-out"),
+    quantum: root.querySelector("#orbital-quantum"),
+    nodes: root.querySelector("#orbital-nodes"),
+    energy: root.querySelector("#orbital-energy"),
+    radius: root.querySelector("#orbital-radius"),
+  };
+  const spaceCanvas = root.querySelector("#orbital-space");
+  const radialCanvas = root.querySelector("#orbital-radial");
+
+  function factorial(n) {
+    let value = 1;
+    for (let k = 2; k <= n; k++) value *= k;
+    return value;
+  }
+
+  function associatedLaguerre(p, alpha, x) {
+    if (p === 0) return 1;
+    if (p === 1) return 1 + alpha - x;
+    let previous = 1;
+    let current = 1 + alpha - x;
+    for (let k = 2; k <= p; k++) {
+      const next = ((2*k - 1 + alpha - x)*current
+        - (k - 1 + alpha)*previous) / k;
+      previous = current;
+      current = next;
+    }
+    return current;
+  }
+
+  function radial(state, r, Z) {
+    const { n, l } = state;
+    const rho = 2*Z*r/n;
+    const prefactor = Math.pow(2*Z/n, 1.5) * Math.sqrt(
+      factorial(n-l-1) / (2*n*factorial(n+l))
+    );
+    return prefactor * Math.exp(-rho/2) * Math.pow(rho, l)
+      * associatedLaguerre(n-l-1, 2*l+1, rho);
+  }
+
+  function angular(kind, x, y, z) {
+    const pi = Math.PI;
+    if (kind === "s") return 1/Math.sqrt(4*pi);
+    if (kind === "px") return Math.sqrt(3/(4*pi))*x;
+    if (kind === "py") return Math.sqrt(3/(4*pi))*y;
+    if (kind === "pz") return Math.sqrt(3/(4*pi))*z;
+    if (kind === "dz2") return Math.sqrt(5/(16*pi))*(3*z*z-1);
+    if (kind === "dxz") return Math.sqrt(15/(4*pi))*x*z;
+    if (kind === "dxy") return Math.sqrt(15/(4*pi))*x*y;
+    if (kind === "dx2y2") return Math.sqrt(15/(16*pi))*(x*x-y*y);
+    if (kind === "fz3") return Math.sqrt(7/(16*pi))*(5*z*z*z-3*z);
+    return 0;
+  }
+
+  function seededRandom(seed) {
+    let state = seed >>> 0;
+    return () => {
+      state += 0x6D2B79F5;
+      let t = state;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function binarySample(cdf, grid, u) {
+    let low = 0, high = cdf.length - 1;
+    while (high - low > 1) {
+      const middle = (low + high) >> 1;
+      if (cdf[middle] < u) low = middle;
+      else high = middle;
+    }
+    const denominator = cdf[high] - cdf[low];
+    const fraction = denominator > 1e-14 ? (u-cdf[low])/denominator : 0;
+    return grid[low] + fraction*(grid[high]-grid[low]);
+  }
+
+  function radialData(state, Z) {
+    const samples = 1800;
+    const rMax = 7.2*state.n*state.n/Z;
+    const grid = [];
+    const probability = [];
+    const radialValues = [];
+    for (let i = 0; i <= samples; i++) {
+      const r = rMax*i/samples;
+      const R = radial(state, r, Z);
+      grid.push(r);
+      radialValues.push(R);
+      probability.push(r*r*R*R);
+    }
+    const cdf = Array(samples+1).fill(0);
+    for (let i = 1; i <= samples; i++) {
+      cdf[i] = cdf[i-1] + 0.5*(probability[i]+probability[i-1])
+        *(grid[i]-grid[i-1]);
+    }
+    const total = cdf[cdf.length-1];
+    for (let i = 0; i < cdf.length; i++) cdf[i] /= total;
+    const rDisplay = binarySample(cdf, grid, 0.997);
+    return { grid, probability, radialValues, cdf, rDisplay };
+  }
+
+  function angularMaximum(kind) {
+    let maximum = 0;
+    const golden = Math.PI*(3-Math.sqrt(5));
+    for (let i = 0; i < 3500; i++) {
+      const z = 1 - 2*(i+0.5)/3500;
+      const radius = Math.sqrt(Math.max(0, 1-z*z));
+      const phi = golden*i;
+      const x = radius*Math.cos(phi), y = radius*Math.sin(phi);
+      const value = angular(kind, x, y, z);
+      maximum = Math.max(maximum, value*value);
+    }
+    return maximum*1.01;
+  }
+
+  const cloudCache = new Map();
+  function buildCloud(stateKey, Z) {
+    const key = `${stateKey}-${Z}`;
+    if (cloudCache.has(key)) return cloudCache.get(key);
+    const state = states[stateKey];
+    const radialInfo = radialData(state, Z);
+    const maxAngular = angularMaximum(state.kind);
+    const random = seededRandom(104729 + 7919*Object.keys(states).indexOf(stateKey) + 97*Z);
+    const points = [];
+    let attempts = 0;
+    while (points.length < 6000 && attempts < 180000) {
+      attempts++;
+      const z = 2*random()-1;
+      const phi = 2*Math.PI*random();
+      const circle = Math.sqrt(Math.max(0, 1-z*z));
+      const x = circle*Math.cos(phi), y = circle*Math.sin(phi);
+      const Y = angular(state.kind, x, y, z);
+      if (random()*maxAngular > Y*Y) continue;
+      const r = binarySample(radialInfo.cdf, radialInfo.grid, random());
+      const R = radial(state, r, Z);
+      const scale = r/radialInfo.rDisplay;
+      points.push({ x:scale*x, y:scale*y, z:scale*z, sign:R*Y >= 0 ? 1 : -1 });
+    }
+    const cloud = { points, radialInfo };
+    cloudCache.set(key, cloud);
+    return cloud;
+  }
+
+  let yaw = -0.65;
+  let pitch = 0.28;
+  let running = false;
+  let lastTimestamp = null;
+  let dragging = false;
+  let lastPointer = null;
+  let currentCloud = null;
+
+  function drawSpace() {
+    const { ctx, width, height } = HC.context(spaceCanvas, 480);
+    const state = states[controls.state.value];
+    const count = Number(controls.points.value);
+    const zoom = Number(controls.zoom.value);
+    if (!currentCloud) currentCloud = buildCloud(controls.state.value, Number(controls.Z.value));
+
+    ctx.fillStyle = "#07111f";
+    ctx.fillRect(0, 0, width, height);
+
+    const cx = width/2, cy = height/2;
+    const scale = Math.min(width, height)*0.36*zoom;
+    const cyaw = Math.cos(yaw), syaw = Math.sin(yaw);
+    const cpitch = Math.cos(pitch), spitch = Math.sin(pitch);
+
+    function rotate(point) {
+      const x1 = cyaw*point.x + syaw*point.z;
+      const z1 = -syaw*point.x + cyaw*point.z;
+      const y2 = cpitch*point.y - spitch*z1;
+      const z2 = spitch*point.y + cpitch*z1;
+      return { x:x1, y:y2, z:z2, sign:point.sign };
+    }
+
+    function projectVector(x, y, z) {
+      const x1 = cyaw*x + syaw*z;
+      const z1 = -syaw*x + cyaw*z;
+      const y2 = cpitch*y - spitch*z1;
+      return [cx + scale*0.78*x1, cy - scale*0.78*y2];
+    }
+
+    // Axes de repérage
+    ctx.font = "12px system-ui, sans-serif";
+    const axes = [
+      { v:[1.15,0,0], label:"x", color:"rgba(248,113,113,.65)" },
+      { v:[0,1.15,0], label:"y", color:"rgba(74,222,128,.65)" },
+      { v:[0,0,1.15], label:"z", color:"rgba(96,165,250,.72)" },
+    ];
+    axes.forEach(axis => {
+      const plus = projectVector(...axis.v);
+      const minus = projectVector(...axis.v.map(value => -value));
+      ctx.beginPath(); ctx.moveTo(minus[0], minus[1]); ctx.lineTo(plus[0], plus[1]);
+      ctx.strokeStyle = axis.color; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = axis.color; ctx.fillText(axis.label, plus[0]+4, plus[1]-3);
+    });
+
+    const rotated = currentCloud.points.slice(0, count).map(rotate);
+    rotated.sort((a, b) => a.z-b.z);
+    for (const point of rotated) {
+      const perspective = 4/(4-point.z);
+      const px = cx + scale*point.x*perspective;
+      const py = cy - scale*point.y*perspective;
+      const depth = Math.max(0, Math.min(1, (point.z+1.4)/2.8));
+      const size = 1.15 + 1.15*depth;
+      ctx.globalAlpha = 0.30 + 0.55*depth;
+      ctx.fillStyle = point.sign > 0 ? "#60a5fa" : "#fb923c";
+      ctx.beginPath(); ctx.arc(px, py, size, 0, 2*Math.PI); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // Noyau lumineux
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 17);
+    glow.addColorStop(0, "rgba(255,255,255,1)");
+    glow.addColorStop(0.22, "rgba(253,230,138,.95)");
+    glow.addColorStop(1, "rgba(253,230,138,0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(cx, cy, 17, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = "#fde68a";
+    ctx.beginPath(); ctx.arc(cx, cy, 3.2, 0, 2*Math.PI); ctx.fill();
+
+    ctx.fillStyle = "rgba(229,238,251,.88)";
+    ctx.textAlign = "left";
+    ctx.font = "600 13px system-ui, sans-serif";
+    ctx.fillText(`${state.label}  •  Z = ${controls.Z.value}`, 14, 21);
+  }
+
+  function drawRadial() {
+    const state = states[controls.state.value];
+    const Z = Number(controls.Z.value);
+    if (!currentCloud) currentCloud = buildCloud(controls.state.value, Z);
+    const data = currentCloud.radialInfo;
+    const maxP = Math.max(...data.probability);
+    const maxR = Math.max(...data.radialValues.map(Math.abs));
+    const meanRadius = (3*state.n*state.n-state.l*(state.l+1))/(2*Z);
+    const xMax = data.rDisplay*1.08;
+    const plot = HC.axes(root, radialCanvas,
+      { xMin:0, xMax, yMin:-1.05, yMax:1.05 },
+      { x:"r / a₀", y:"valeur normalisée" });
+    const probability = [], radialCurve = [];
+    for (let i = 0; i < data.grid.length; i++) {
+      if (data.grid[i] > xMax) break;
+      probability.push([data.grid[i], data.probability[i]/maxP]);
+      radialCurve.push([data.grid[i], data.radialValues[i]/maxR]);
+    }
+    HC.path(plot, probability, plot.colors.blue, 2.4);
+    HC.path(plot, radialCurve, plot.colors.orange, 2, [7,4]);
+    HC.path(plot, [[meanRadius,-1.05],[meanRadius,1.05]], plot.colors.green, 1.5, [3,4]);
+  }
+
+  function updateAll(regenerate = false) {
+    const state = states[controls.state.value];
+    const Z = Number(controls.Z.value);
+    if (regenerate || !currentCloud) currentCloud = buildCloud(controls.state.value, Z);
+    outputs.Z.value = String(Z);
+    outputs.points.value = Number(controls.points.value).toLocaleString("fr-FR");
+    outputs.zoom.value = `${Number(controls.zoom.value).toFixed(2)}×`;
+    outputs.quantum.textContent = `n = ${state.n}, ℓ = ${state.l}, m = ${state.m}`;
+    outputs.nodes.textContent = `${state.n-state.l-1} / ${state.l}`;
+    outputs.energy.textContent = `${(-13.5983*Z*Z/(state.n*state.n)).toFixed(4)} eV`;
+    const meanRadius = (3*state.n*state.n-state.l*(state.l+1))/(2*Z);
+    outputs.radius.textContent = `${meanRadius.toFixed(3)} a₀`;
+    drawSpace();
+    drawRadial();
+  }
+
+  function animate(timestamp) {
+    if (!running) return;
+    if (lastTimestamp === null) lastTimestamp = timestamp;
+    const elapsed = Math.min((timestamp-lastTimestamp)/1000, 0.08);
+    lastTimestamp = timestamp;
+    yaw += 0.24*elapsed;
+    drawSpace();
+    requestAnimationFrame(animate);
+  }
+
+  controls.state.addEventListener("change", () => { currentCloud = null; updateAll(true); });
+  controls.Z.addEventListener("input", () => { currentCloud = null; updateAll(true); });
+  controls.points.addEventListener("input", () => updateAll(false));
+  controls.zoom.addEventListener("input", () => updateAll(false));
+
+  root.querySelector("#orbital-play").addEventListener("click", () => {
+    if (running) return;
+    running = true; lastTimestamp = null; requestAnimationFrame(animate);
+  });
+  root.querySelector("#orbital-pause").addEventListener("click", () => {
+    running = false; lastTimestamp = null;
+  });
+  root.querySelector("#orbital-reset").addEventListener("click", () => {
+    running = false; lastTimestamp = null;
+    yaw = -0.65; pitch = 0.28; controls.zoom.value = "1";
+    updateAll(false);
+  });
+
+  spaceCanvas.addEventListener("pointerdown", event => {
+    dragging = true;
+    lastPointer = [event.clientX, event.clientY];
+    spaceCanvas.classList.add("dragging");
+    spaceCanvas.setPointerCapture(event.pointerId);
+  });
+  spaceCanvas.addEventListener("pointermove", event => {
+    if (!dragging) return;
+    const dx = event.clientX-lastPointer[0];
+    const dy = event.clientY-lastPointer[1];
+    yaw += dx*0.009;
+    pitch += dy*0.009;
+    pitch = Math.max(-1.45, Math.min(1.45, pitch));
+    lastPointer = [event.clientX, event.clientY];
+    drawSpace();
+  });
+  function stopDragging(event) {
+    dragging = false;
+    lastPointer = null;
+    spaceCanvas.classList.remove("dragging");
+    if (event.pointerId !== undefined && spaceCanvas.hasPointerCapture(event.pointerId)) {
+      spaceCanvas.releasePointerCapture(event.pointerId);
+    }
+  }
+  spaceCanvas.addEventListener("pointerup", stopDragging);
+  spaceCanvas.addEventListener("pointercancel", stopDragging);
+
+  let resizeScheduled = false;
+  new ResizeObserver(() => {
+    if (resizeScheduled) return;
+    resizeScheduled = true;
+    requestAnimationFrame(() => { resizeScheduled = false; updateAll(false); });
+  }).observe(root);
+  new MutationObserver(() => updateAll(false)).observe(document.documentElement,
+    { attributes:true, attributeFilter:["data-bs-theme"] });
+
+  updateAll(true);
+})();
+</script>
+</section>
+<section id="simulation-spectre-et-transitions" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="simulation-spectre-et-transitions"><span class="header-section-number">6.2</span> Simulation — Spectre et transitions</h3>
+<p>Le spectroscope suivant relie directement les niveaux d’énergie, la longueur d’onde et la règle de sélection dipolaire. Les nombres <span class="math inline">\(\ell_i\)</span> et <span class="math inline">\(\ell_f\)</span> ne modifient pas l’énergie dans le modèle coulombien idéal, mais ils déterminent si l’élément de matrice dipolaire peut être non nul.</p>
+<div id="hydrogen-spectrum-sim" class="hy-sim">
+  <div class="hy-heading">
+    <h3 class="anchored">Spectroscope hydrogénoïde</h3>
+    <p>Choisissez deux états et observez le photon associé</p>
+  </div>
+
+  <div class="hy-controls">
+    <div class="hy-control">
+      <label for="spectrum-Z">Charge nucléaire Z <output id="spectrum-Z-out"></output></label>
+      <input id="spectrum-Z" type="range" min="1" max="4" step="1" value="1">
+    </div>
+    <div class="hy-control">
+      <label for="spectrum-ni">Niveau initial nᵢ <output id="spectrum-ni-out"></output></label>
+      <input id="spectrum-ni" type="range" min="2" max="10" step="1" value="3">
+    </div>
+    <div class="hy-control">
+      <label for="spectrum-li">Moment initial ℓᵢ <output id="spectrum-li-out"></output></label>
+      <input id="spectrum-li" type="range" min="0" max="2" step="1" value="1">
+    </div>
+    <div class="hy-control">
+      <label for="spectrum-nf">Niveau final n<sub>f</sub> <output id="spectrum-nf-out"></output></label>
+      <input id="spectrum-nf" type="range" min="1" max="2" step="1" value="2">
+    </div>
+    <div class="hy-control">
+      <label for="spectrum-lf">Moment final ℓ<sub>f</sub> <output id="spectrum-lf-out"></output></label>
+      <input id="spectrum-lf" type="range" min="0" max="1" step="1" value="0">
+    </div>
+  </div>
+
+  <div class="hy-actions">
+    <button type="button" class="primary" id="spectrum-play">▶ Animer le photon</button>
+    <button type="button" id="spectrum-pause">Ⅱ Pause</button>
+    <button type="button" id="spectrum-reset">↺ Réinitialiser</button>
+  </div>
+
+  <div class="hy-readouts" aria-live="polite">
+    <div class="hy-readout">Énergie du photon <span id="spectrum-energy"></span></div>
+    <div class="hy-readout">Longueur d'onde <span id="spectrum-wavelength"></span></div>
+    <div class="hy-readout">Domaine spectral <span id="spectrum-domain"></span></div>
+    <div class="hy-readout">Transition dipolaire E1 <span id="spectrum-rule"></span></div>
+  </div>
+
+  <div class="hy-canvas-grid">
+    <div class="hy-canvas-card">
+      <div class="hy-canvas-title">Niveaux et transition sélectionnée</div>
+      <canvas id="spectrum-levels" aria-label="Diagramme des niveaux d'énergie et transition"></canvas>
+    </div>
+    <div class="hy-canvas-card">
+      <div class="hy-canvas-title">Raies des quatre premières séries</div>
+      <canvas id="spectrum-lines" aria-label="Spectre des raies hydrogénoïdes"></canvas>
+    </div>
+    <div class="hy-canvas-card wide space">
+      <div class="hy-canvas-title">Photon émis — longueur d'onde visuelle rééchelonnée</div>
+      <canvas id="spectrum-photon" aria-label="Animation schématique du photon émis"></canvas>
+    </div>
+  </div>
+
+  <p class="hy-help">La règle affichée teste Δℓ = ±1. La condition sur Δm dépend en plus des états magnétiques et de la polarisation du photon. L'onde animée est volontairement rééchelonnée : une longueur d'onde optique est des milliers de fois plus grande que l'atome.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("hydrogen-spectrum-sim");
+  if (!root) return;
+  const HC = window.HydrogenCanvas;
+
+  const controls = {
+    Z: root.querySelector("#spectrum-Z"),
+    ni: root.querySelector("#spectrum-ni"),
+    li: root.querySelector("#spectrum-li"),
+    nf: root.querySelector("#spectrum-nf"),
+    lf: root.querySelector("#spectrum-lf"),
+  };
+  const outputs = {
+    Z: root.querySelector("#spectrum-Z-out"),
+    ni: root.querySelector("#spectrum-ni-out"),
+    li: root.querySelector("#spectrum-li-out"),
+    nf: root.querySelector("#spectrum-nf-out"),
+    lf: root.querySelector("#spectrum-lf-out"),
+    energy: root.querySelector("#spectrum-energy"),
+    wavelength: root.querySelector("#spectrum-wavelength"),
+    domain: root.querySelector("#spectrum-domain"),
+    rule: root.querySelector("#spectrum-rule"),
+  };
+  const levelCanvas = root.querySelector("#spectrum-levels");
+  const lineCanvas = root.querySelector("#spectrum-lines");
+  const photonCanvas = root.querySelector("#spectrum-photon");
+
+  const RYDBERG_ENERGY = 13.5983;
+  const HC_EV_NM = 1239.841984;
+  const LIGHT_SPEED = 299792458;
+  let running = false;
+  let phase = 0;
+  let previousTimestamp = null;
+
+  function transitionData() {
+    const Z = Number(controls.Z.value);
+    const ni = Number(controls.ni.value);
+    const nf = Number(controls.nf.value);
+    const li = Number(controls.li.value);
+    const lf = Number(controls.lf.value);
+    const initial = -RYDBERG_ENERGY*Z*Z/(ni*ni);
+    const final = -RYDBERG_ENERGY*Z*Z/(nf*nf);
+    const photonEnergy = initial-final;
+    const wavelength = HC_EV_NM/photonEnergy;
+    const frequency = LIGHT_SPEED/(wavelength*1e-9);
+    return { Z, ni, nf, li, lf, initial, final, photonEnergy, wavelength, frequency };
+  }
+
+  function spectralDomain(wavelength) {
+    if (wavelength < 10) return "rayons X mous / EUV";
+    if (wavelength < 380) return "ultraviolet";
+    if (wavelength <= 750) return "visible";
+    if (wavelength < 2500) return "proche infrarouge";
+    return "infrarouge";
+  }
+
+  function wavelengthColor(wavelength) {
+    if (wavelength < 380) return "#a78bfa";
+    if (wavelength > 750) return "#fb7185";
+    let red = 0, green = 0, blue = 0;
+    if (wavelength < 440) { red = -(wavelength-440)/60; blue = 1; }
+    else if (wavelength < 490) { green = (wavelength-440)/50; blue = 1; }
+    else if (wavelength < 510) { green = 1; blue = -(wavelength-510)/20; }
+    else if (wavelength < 580) { red = (wavelength-510)/70; green = 1; }
+    else if (wavelength < 645) { red = 1; green = -(wavelength-645)/65; }
+    else { red = 1; }
+    const factor = wavelength < 420 ? 0.45+0.55*(wavelength-380)/40
+      : wavelength > 700 ? 0.45+0.55*(750-wavelength)/50 : 1;
+    const channel = value => Math.round(255*Math.pow(Math.max(0, value*factor), 0.8));
+    return `rgb(${channel(red)},${channel(green)},${channel(blue)})`;
+  }
+
+  function enforceQuantumNumbers(changed) {
+    let ni = Number(controls.ni.value);
+    controls.nf.max = String(ni-1);
+    if (Number(controls.nf.value) >= ni) controls.nf.value = String(ni-1);
+    const nf = Number(controls.nf.value);
+
+    controls.li.max = String(ni-1);
+    if (Number(controls.li.value) >= ni) controls.li.value = String(ni-1);
+    controls.lf.max = String(nf-1);
+    if (Number(controls.lf.value) >= nf) controls.lf.value = String(nf-1);
+
+    // Lorsqu'un niveau final change, choisir par défaut une valeur voisine permise.
+    if (changed === "nf") {
+      const li = Number(controls.li.value);
+      const candidates = [li-1, li+1].filter(value => value >= 0 && value < nf);
+      const candidate = candidates.length ? candidates[0] : Math.min(li, nf-1);
+      controls.lf.value = String(candidate);
+    }
+  }
+
+  function drawLevels(data) {
+    const { ctx, width, height } = HC.context(levelCanvas);
+    const colors = HC.palette(root);
+    const left = 58, right = width-28, top = 22, bottom = height-35;
+    const yLevel = n => bottom-(n-1)*(bottom-top)/9;
+
+    ctx.font = "11px system-ui, sans-serif";
+    ctx.textBaseline = "middle";
+    for (let n = 1; n <= 10; n++) {
+      const y = yLevel(n);
+      const selected = n === data.ni || n === data.nf;
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(right, y);
+      ctx.strokeStyle = selected ? colors.blue : colors.grid;
+      ctx.lineWidth = selected ? 2.5 : 1.2; ctx.stroke();
+      ctx.fillStyle = selected ? colors.blue : colors.text;
+      ctx.textAlign = "right"; ctx.fillText(`n=${n}`, left-7, y);
+      if (selected) {
+        const energy = -RYDBERG_ENERGY*data.Z*data.Z/(n*n);
+        ctx.textAlign = "left";
+        ctx.fillText(`${energy.toFixed(3)} eV`, right-78, y-10);
+      }
+    }
+
+    const xArrow = left + 0.46*(right-left);
+    const yi = yLevel(data.ni), yf = yLevel(data.nf);
+    ctx.strokeStyle = wavelengthColor(data.wavelength);
+    ctx.fillStyle = wavelengthColor(data.wavelength);
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(xArrow, yi+4); ctx.lineTo(xArrow, yf-7); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(xArrow, yf);
+    ctx.lineTo(xArrow-6, yf-10);
+    ctx.lineTo(xArrow+6, yf-10);
+    ctx.closePath(); ctx.fill();
+    ctx.textAlign = "left";
+    ctx.fillStyle = colors.text;
+    ctx.fillText(`n=${data.ni}, ℓ=${data.li} → n=${data.nf}, ℓ=${data.lf}`,
+      xArrow+12, 0.5*(yi+yf));
+  }
+
+  function drawSpectrum(data) {
+    const { ctx, width, height } = HC.context(lineCanvas);
+    const colors = HC.palette(root);
+    const margin = { left:48, right:18, top:22, bottom:44 };
+    const plotWidth = width-margin.left-margin.right;
+    const plotHeight = height-margin.top-margin.bottom;
+    const minWave = 5, maxWave = 5000;
+    const X = wavelength => margin.left
+      +(Math.log(wavelength)-Math.log(minWave))
+      /(Math.log(maxWave)-Math.log(minWave))*plotWidth;
+
+    ctx.strokeStyle = colors.grid; ctx.lineWidth = 1;
+    const ticks = [5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000];
+    ctx.font = "10px system-ui, sans-serif";
+    ticks.forEach((tick, index) => {
+      const x = X(tick);
+      ctx.beginPath(); ctx.moveTo(x, margin.top); ctx.lineTo(x, margin.top+plotHeight); ctx.stroke();
+      if (index % 2 === 0 || width > 500) {
+        ctx.fillStyle = colors.text; ctx.textAlign = "center"; ctx.textBaseline = "top";
+        ctx.fillText(String(tick), x, margin.top+plotHeight+6);
+      }
+    });
+    ctx.strokeStyle = colors.text; ctx.globalAlpha = 0.55;
+    ctx.strokeRect(margin.left, margin.top, plotWidth, plotHeight);
+    ctx.globalAlpha = 1;
+
+    // Bande visible
+    ctx.fillStyle = "rgba(5,150,105,.10)";
+    ctx.fillRect(X(380), margin.top, X(750)-X(380), plotHeight);
+    ctx.fillStyle = colors.green; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillText("visible", 0.5*(X(380)+X(750)), margin.top+4);
+
+    const seriesColors = [colors.blue, colors.red, colors.purple, colors.orange];
+    const names = ["Lyman", "Balmer", "Paschen", "Brackett"];
+    for (let nf = 1; nf <= 4; nf++) {
+      const y0 = margin.top+22+(nf-1)*(plotHeight-35)/3;
+      for (let ni = nf+1; ni <= 14; ni++) {
+        const energy = RYDBERG_ENERGY*data.Z*data.Z*(1/(nf*nf)-1/(ni*ni));
+        const wavelength = HC_EV_NM/energy;
+        if (wavelength < minWave || wavelength > maxWave) continue;
+        const x = X(wavelength);
+        ctx.beginPath(); ctx.moveTo(x, y0-9); ctx.lineTo(x, y0+9);
+        ctx.strokeStyle = seriesColors[nf-1]; ctx.lineWidth = 1.7; ctx.stroke();
+      }
+      ctx.fillStyle = seriesColors[nf-1]; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText(names[nf-1], margin.left+4, y0);
+    }
+
+    if (data.wavelength >= minWave && data.wavelength <= maxWave) {
+      const x = X(data.wavelength);
+      ctx.beginPath(); ctx.moveTo(x, margin.top); ctx.lineTo(x, margin.top+plotHeight);
+      ctx.strokeStyle = wavelengthColor(data.wavelength); ctx.lineWidth = 4; ctx.stroke();
+      ctx.fillStyle = colors.text; ctx.textAlign = x > width-95 ? "right" : "left";
+      const labelX = x > width-95 ? x-5 : x+5;
+      ctx.fillText(`${data.wavelength.toFixed(1)} nm`, labelX, margin.top+plotHeight-9);
+    }
+
+    ctx.fillStyle = colors.text; ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+    ctx.fillText("longueur d'onde (nm, échelle logarithmique)",
+      margin.left+plotWidth/2, height-2);
+  }
+
+  function drawPhoton(data) {
+    const { ctx, width, height } = HC.context(photonCanvas, 285);
+    ctx.fillStyle = "#07111f"; ctx.fillRect(0, 0, width, height);
+    const centerY = height/2;
+    const atomX = Math.max(48, width*0.09);
+
+    const glow = ctx.createRadialGradient(atomX, centerY, 0, atomX, centerY, 28);
+    glow.addColorStop(0, "rgba(255,255,255,1)");
+    glow.addColorStop(0.22, "rgba(253,230,138,.95)");
+    glow.addColorStop(1, "rgba(253,230,138,0)");
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(atomX, centerY, 28, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = "#fde68a"; ctx.beginPath(); ctx.arc(atomX, centerY, 4, 0, 2*Math.PI); ctx.fill();
+
+    const start = atomX+32, end = width-20;
+    const logWave = Math.log10(Math.max(5, Math.min(5000, data.wavelength)));
+    const cycles = 10-1.8*(logWave-Math.log10(5));
+    const color = wavelengthColor(data.wavelength);
+    ctx.beginPath();
+    for (let i = 0; i <= 520; i++) {
+      const x = start+(end-start)*i/520;
+      const q = (x-start)/(end-start);
+      const envelope = Math.sin(Math.PI*Math.min(1, Math.max(0, q)));
+      const y = centerY-42*envelope*Math.sin(2*Math.PI*cycles*q-phase);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.shadowColor = color;
+    ctx.shadowBlur = 10; ctx.stroke(); ctx.shadowBlur = 0;
+
+    ctx.fillStyle = "rgba(229,238,251,.9)";
+    ctx.font = "600 13px system-ui, sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText(`hν = ${data.photonEnergy.toFixed(4)} eV`, start, 23);
+    ctx.textAlign = "right";
+    ctx.fillText(`λ = ${data.wavelength.toFixed(2)} nm`, width-18, 23);
+  }
+
+  function update() {
+    enforceQuantumNumbers();
+    const data = transitionData();
+    outputs.Z.value = String(data.Z);
+    outputs.ni.value = String(data.ni);
+    outputs.li.value = String(data.li);
+    outputs.nf.value = String(data.nf);
+    outputs.lf.value = String(data.lf);
+    outputs.energy.textContent = `${data.photonEnergy.toFixed(5)} eV`;
+    outputs.wavelength.textContent = data.wavelength < 100
+      ? `${data.wavelength.toFixed(3)} nm`
+      : `${data.wavelength.toFixed(2)} nm`;
+    outputs.domain.textContent = `${spectralDomain(data.wavelength)} • ${(data.frequency/1e12).toFixed(2)} THz`;
+    const allowed = Math.abs(data.li-data.lf) === 1;
+    outputs.rule.textContent = allowed
+      ? "compatible avec Δℓ = ±1"
+      : "interdite au niveau dipolaire";
+    outputs.rule.style.color = allowed ? "var(--hy-green)" : "var(--hy-red)";
+    drawLevels(data); drawSpectrum(data); drawPhoton(data);
+  }
+
+  Object.entries(controls).forEach(([name, control]) => {
+    control.addEventListener("input", () => {
+      enforceQuantumNumbers(name);
+      update();
+    });
+  });
+
+  function animate(timestamp) {
+    if (!running) return;
+    if (previousTimestamp === null) previousTimestamp = timestamp;
+    const elapsed = Math.min((timestamp-previousTimestamp)/1000, 0.08);
+    previousTimestamp = timestamp;
+    phase += 4.2*elapsed;
+    drawPhoton(transitionData());
+    requestAnimationFrame(animate);
+  }
+
+  root.querySelector("#spectrum-play").addEventListener("click", () => {
+    if (running) return;
+    running = true; previousTimestamp = null; requestAnimationFrame(animate);
+  });
+  root.querySelector("#spectrum-pause").addEventListener("click", () => {
+    running = false; previousTimestamp = null;
+  });
+  root.querySelector("#spectrum-reset").addEventListener("click", () => {
+    running = false; previousTimestamp = null; phase = 0;
+    controls.Z.value = "1";
+    controls.ni.value = "3";
+    controls.li.value = "1";
+    controls.nf.value = "2";
+    controls.lf.value = "0";
+    enforceQuantumNumbers(); update();
+  });
+
+  let resizeScheduled = false;
+  new ResizeObserver(() => {
+    if (resizeScheduled) return;
+    resizeScheduled = true;
+    requestAnimationFrame(() => { resizeScheduled = false; update(); });
+  }).observe(root);
+  new MutationObserver(update).observe(document.documentElement,
+    { attributes:true, attributeFilter:["data-bs-theme"] });
+
+  enforceQuantumNumbers();
+  update();
+})();
+</script>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7</span> Conclusion</h2>
+<p>L’atome d’hydrogène rassemble dans un seul problème les idées importantes de la mécanique quantique à trois dimensions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Propriété</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hamiltonien relatif</td>
+<td><span class="math inline">\(\widehat H=-\dfrac{\hbar^2}{2\mu}\nabla^2-\dfrac{Ze^2}{4\pi\varepsilon_0r}\)</span></td>
+</tr>
+<tr class="even">
+<td>Séparation</td>
+<td><span class="math inline">\(\psi_{n\ell m}=R_{n\ell}Y_\ell^m\)</span></td>
+</tr>
+<tr class="odd">
+<td>Nombres quantiques</td>
+<td><span class="math inline">\(n\ge1\)</span>, <span class="math inline">\(0\le\ell\le n-1\)</span>, <span class="math inline">\(-\ell\le m\le\ell\)</span></td>
+</tr>
+<tr class="even">
+<td>Énergie</td>
+<td><span class="math inline">\(E_n=-\dfrac{\mu c^2(Z\alpha)^2}{2n^2}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Dégénérescence spatiale</td>
+<td><span class="math inline">\(g_n=n^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Nœuds radiaux</td>
+<td><span class="math inline">\(n-\ell-1\)</span></td>
+</tr>
+<tr class="odd">
+<td>Nœuds angulaires</td>
+<td><span class="math inline">\(\ell\)</span></td>
+</tr>
+<tr class="even">
+<td>Distance moyenne</td>
+<td><span class="math inline">\(\langle r\rangle=\dfrac{a_\mu}{2Z}[3n^2-\ell(\ell+1)]\)</span></td>
+</tr>
+<tr class="odd">
+<td>Raies spectrales</td>
+<td><span class="math inline">\(\lambda^{-1}=R_\mu Z^2(n_f^{-2}-n_i^{-2})\)</span></td>
+</tr>
+<tr class="even">
+<td>Transition dipolaire</td>
+<td><span class="math inline">\(\Delta\ell=\pm1\)</span>, <span class="math inline">\(\Delta m=0,\pm1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La logique complète peut se lire comme une chaîne : la symétrie sphérique sépare les variables ; la régularité quantifie le moment cinétique ; la normalisabilité quantifie l’énergie ; les nombres quantiques organisent les orbitales ; enfin, les différences d’énergie et les éléments de matrice déterminent le spectre observé.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Méthode de lecture d'une orbitale">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Méthode de lecture d’une orbitale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour interpréter une orbitale <span class="math inline">\(n\ell m\)</span>, procéder toujours dans cet ordre :</p>
+<ol type="1">
+<li>lire <span class="math inline">\(n\)</span> pour connaître l’énergie et l’échelle radiale ;</li>
+<li>lire <span class="math inline">\(\ell\)</span> pour connaître <span class="math inline">\(L^2\)</span> et le nombre de nœuds angulaires ;</li>
+<li>lire <span class="math inline">\(m\)</span> pour identifier la projection <span class="math inline">\(L_z\)</span> dans la base complexe ;</li>
+<li>compter <span class="math inline">\(n-\ell-1\)</span> nœuds radiaux ;</li>
+<li>distinguer le signe de <span class="math inline">\(\psi\)</span> de la densité positive <span class="math inline">\(|\psi|^2\)</span>.</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

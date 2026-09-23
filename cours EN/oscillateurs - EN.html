@@ -1,0 +1,2377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Newtonian oscillators – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-harmonic-oscillator" id="toc-the-harmonic-oscillator" class="nav-link active" data-scroll-target="#the-harmonic-oscillator"><span class="header-section-number">1</span> The harmonic oscillator</a></li>
+  <li><a href="#damping-and-driving" id="toc-damping-and-driving" class="nav-link" data-scroll-target="#damping-and-driving"><span class="header-section-number">2</span> Damping and driving</a></li>
+  <li><a href="#coupled-and-parametric-oscillators" id="toc-coupled-and-parametric-oscillators" class="nav-link" data-scroll-target="#coupled-and-parametric-oscillators"><span class="header-section-number">3</span> Coupled and parametric oscillators</a></li>
+  <li><a href="#nonlinear-oscillators" id="toc-nonlinear-oscillators" class="nav-link" data-scroll-target="#nonlinear-oscillators"><span class="header-section-number">4</span> Nonlinear oscillators</a></li>
+  <li><a href="#numerical-methods" id="toc-numerical-methods" class="nav-link" data-scroll-target="#numerical-methods"><span class="header-section-number">5</span> Numerical methods</a></li>
+  <li><a href="#interactive-simulations" id="toc-interactive-simulations" class="nav-link" data-scroll-target="#interactive-simulations"><span class="header-section-number">6</span> Interactive simulations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Newtonian oscillators</h1>
+<p class="subtitle lead">Harmonic motion, damping and resonance</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A mass on a spring keeps moving after it first reaches its equilibrium position. The spring pulls it back, but its velocity carries it past that position. This repeated motion is an oscillation.</p>
+<p>We start with this simple model, then add friction, an external force and a second mass. The pendulum will show what changes when the restoring force is no longer proportional to the displacement. Throughout these notes, a dot means a derivative with respect to time: <span class="math inline">\(\dot x\)</span> is velocity and <span class="math inline">\(\ddot x\)</span> is acceleration.</p>
+<section id="the-harmonic-oscillator" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="the-harmonic-oscillator"><span class="header-section-number">1</span> The harmonic oscillator</h2>
+<section id="from-the-force-to-the-equation" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="from-the-force-to-the-equation"><span class="header-section-number">1.1</span> From the force to the equation</h3>
+<p>Consider a mass <span class="math inline">\(m\)</span> moving horizontally on a frictionless surface, attached to a spring with positive stiffness <span class="math inline">\(k\)</span>. We measure its displacement <span class="math inline">\(x\)</span> from equilibrium. Within the range where Hooke’s law applies, the spring force is <span class="math inline">\(F=-kx\)</span>. The minus sign means that the force points towards equilibrium. The weight and the normal force cancel vertically, so Newton’s second law gives</p>
+<p><span id="eq-spring-newton"><span class="math display">\[
+m\ddot x=-kx,
+\qquad\text{or}\qquad
+m\ddot x+kx=0.
+\tag{1}\]</span></span></p>
+<p>A similar equation describes many other systems near a stable equilibrium. To see why, consider a force that comes from a potential energy <span class="math inline">\(V(q)\)</span>:</p>
+<p><span id="eq-newton-potential"><span class="math display">\[
+m\ddot q=-\frac{\mathrm dV}{\mathrm dq}.
+\tag{2}\]</span></span></p>
+<p>At equilibrium, <span class="math inline">\(q=q_e\)</span> and <span class="math inline">\(V'(q_e)=0\)</span>. With <span class="math inline">\(x=q-q_e\)</span>, a Taylor expansion gives</p>
+<p><span id="eq-taylor-potential"><span class="math display">\[
+V(q_e+x)=V(q_e)+V'(q_e)x
++\frac12V''(q_e)x^2+\frac{1}{3!}V^{(3)}(q_e)x^3+\cdots.
+\tag{3}\]</span></span></p>
+<p>Suppose that <span class="math inline">\(V''(q_e)&gt;0\)</span>. The equilibrium is then a local minimum. For small enough <span class="math inline">\(x\)</span>, we can neglect the higher powers and set <span class="math inline">\(k_{\mathrm{eff}}=V''(q_e)\)</span>:</p>
+<p><span id="eq-harmonic-linearization"><span class="math display">\[
+V(q_e+x)\simeq V(q_e)+\frac12k_{\mathrm{eff}}x^2,
+\qquad
+F(q_e+x)\simeq-k_{\mathrm{eff}}x.
+\tag{4}\]</span></span></p>
+<p>Thus,</p>
+<p><span id="eq-harmonic-oscillator"><span class="math display">\[
+m\ddot x+k_{\mathrm{eff}}x=0.
+\tag{5}\]</span></span></p>
+<p>The effective stiffness measures the curvature of the potential near equilibrium. If <span class="math inline">\(V''(q_e)=0\)</span>, the higher powers must be kept, even for small motion. If <span class="math inline">\(V''(q_e)&lt;0\)</span>, the force pushes the system away from equilibrium and this position is unstable. Below, we write the positive stiffness simply as <span class="math inline">\(k\)</span>.</p>
+</section>
+<section id="solution-and-initial-conditions" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="solution-and-initial-conditions"><span class="header-section-number">1.2</span> Solution and initial conditions</h3>
+<p>Dividing by <span class="math inline">\(m\)</span> gives</p>
+<p><span id="eq-harmonic-canonical"><span class="math display">\[
+\ddot x+\omega_0^2x=0,
+\qquad
+\omega_0=\sqrt{\frac{k}{m}}.
+\tag{6}\]</span></span></p>
+<p>The quantity <span class="math inline">\(\omega_0\)</span> is the natural angular frequency, in radians per second. We look for a solution proportional to <span class="math inline">\(e^{rt}\)</span>. Substitution gives</p>
+<p><span class="math display">\[
+(r^2+\omega_0^2)e^{rt}=0.
+\]</span></p>
+<p>Since the exponential does not vanish, <span class="math inline">\(r=\pm i\omega_0\)</span>. The real solution is therefore</p>
+<p><span class="math display">\[
+x(t)=A\cos(\omega_0t)+B\sin(\omega_0t).
+\]</span></p>
+<p>For <span class="math inline">\(x(0)=x_0\)</span> and <span class="math inline">\(\dot x(0)=v_0\)</span>, we have <span class="math inline">\(A=x_0\)</span> and <span class="math inline">\(B=v_0/\omega_0\)</span>, hence</p>
+<p><span id="eq-harmonic-initial"><span class="math display">\[
+x(t)=x_0\cos(\omega_0t)
++\frac{v_0}{\omega_0}\sin(\omega_0t).
+\tag{7}\]</span></span></p>
+<p>We can also write <span class="math inline">\(x(t)=R\cos(\omega_0t-\varphi)\)</span>. Expanding this cosine and comparing the coefficients gives</p>
+<p><span id="eq-amplitude-phase"><span class="math display">\[
+R=\sqrt{x_0^2+\left(\frac{v_0}{\omega_0}\right)^2},
+\qquad
+\varphi=\operatorname{atan2}\!\left(\frac{v_0}{\omega_0},x_0\right).
+\tag{8}\]</span></span></p>
+<p>Here <span class="math inline">\(\operatorname{atan2}\)</span> chooses the angle in the correct quadrant. The period and the frequency are</p>
+<p><span class="math display">\[
+T_0=\frac{2\pi}{\omega_0}=2\pi\sqrt{\frac{m}{k}},
+\qquad
+f_0=\frac{1}{T_0}.
+\]</span></p>
+<p>A larger mass gives slower motion; a stiffer spring gives faster motion. The period does not depend on the amplitude <span class="math inline">\(R\)</span>. This is called isochronism.</p>
+</section>
+<section id="energy-and-phase-portrait" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="energy-and-phase-portrait"><span class="header-section-number">1.3</span> Energy and phase portrait</h3>
+<p>Multiplying <span class="math inline">\(m\ddot x+kx=0\)</span> by <span class="math inline">\(\dot x\)</span> gives</p>
+<p><span class="math display">\[
+m\ddot x\dot x+kx\dot x=0.
+\]</span></p>
+<p>Each term is a time derivative:</p>
+<p><span class="math display">\[
+m\ddot x\dot x=\frac{\mathrm d}{\mathrm dt}\left(\frac12m\dot x^2\right),
+\qquad
+kx\dot x=\frac{\mathrm d}{\mathrm dt}\left(\frac12kx^2\right).
+\]</span></p>
+<p>It follows that the mechanical energy is constant:</p>
+<p><span id="eq-harmonic-energy"><span class="math display">\[
+\frac{\mathrm dE}{\mathrm dt}=0,
+\qquad
+E=\frac12m\dot x^2+\frac12kx^2.
+\tag{9}\]</span></span></p>
+<p>At the turning points <span class="math inline">\(x=\pm R\)</span>, the velocity is zero and the energy is entirely potential. At equilibrium, the speed is greatest and the energy is entirely kinetic.</p>
+<p>A phase portrait plots velocity against position, rather than against time. Since <span class="math inline">\(E=kR^2/2\)</span>, energy conservation gives, for <span class="math inline">\(R&gt;0\)</span>,</p>
+<p><span id="eq-phase-ellipse"><span class="math display">\[
+\frac{x^2}{R^2}+\frac{\dot x^2}{\omega_0^2R^2}=1.
+\tag{10}\]</span></span></p>
+<p>The trajectory is an ellipse in the <span class="math inline">\((x,\dot x)\)</span> plane. It runs clockwise: at <span class="math inline">\((R,0)\)</span>, the acceleration is negative, so the velocity becomes negative. When <span class="math inline">\(R=0\)</span>, the mass stays at the origin.</p>
+<div class="historical-note callout callout-style-default callout-note no-icon callout-titled" title="Hooke's law">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hooke’s law
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Hooke published his law of elasticity in 1678. It relates the force exerted by a spring to its extension. Real springs follow this law only over a limited range; the harmonic oscillator is the model obtained within that range.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-solution" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="numerical-solution"><span class="header-section-number">1.4</span> Numerical solution</h3>
+<p>To solve the equation numerically, set <span class="math inline">\(v=\dot x\)</span>. One second-order equation becomes two first-order equations:</p>
+<p><span id="eq-first-order-system"><span class="math display">\[
+\frac{\mathrm d}{\mathrm dt}
+\begin{pmatrix}x\\v\end{pmatrix}
+=
+\begin{pmatrix}v\\-\omega_0^2x\end{pmatrix}.
+\tag{11}\]</span></span></p>
+<p>The function below applies the same method to any equation of the form <span class="math inline">\(\ddot x=a(t,x,v)\)</span>.</p>
+<div id="code-integrateur-general" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Python — general solver</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.figsize"</span>: (<span class="dv">9</span>, <span class="fl">4.8</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.grid"</span>: <span class="va">True</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.25</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resoudre_oscillateur(acceleration, y0, temps, <span class="op">*</span>, args<span class="op">=</span>(), methode<span class="op">=</span><span class="st">"DOP853"</span>):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Solve x'' = acceleration(t, x, v, *args)."""</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> systeme(t, y):</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        x, v <span class="op">=</span> y</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (v, acceleration(t, x, v, <span class="op">*</span>args))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    solution <span class="op">=</span> solve_ivp(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        systeme,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        (temps[<span class="dv">0</span>], temps[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        y0,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>temps,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        method<span class="op">=</span>methode,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-10</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-12</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> solution.success:</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">RuntimeError</span>(solution.message)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> solution.y[<span class="dv">0</span>], solution.y[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>For the harmonic oscillator, we can compare the result with the exact solution. The last graph shows the relative change in energy, <span class="math inline">\((E-E_0)/E_0\)</span>, which would be zero in an exact calculation.</p>
+<div id="cell-fig-oscillateur-harmonique" class="cell" data-fig-height="3.7" data-fig-width="11" data-execution_count="2">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m, k <span class="op">=</span> <span class="fl">1.5</span>, <span class="fl">6.0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> np.sqrt(k <span class="op">/</span> m)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x0, v0 <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.65</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="fl">0.0</span>, <span class="fl">8.0</span> <span class="op">*</span> <span class="fl">2.0</span> <span class="op">*</span> np.pi <span class="op">/</span> omega0, <span class="dv">2500</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acceleration_harmonique(t, x, v, m, k):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>(k <span class="op">/</span> m) <span class="op">*</span> x</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>x, v <span class="op">=</span> resoudre_oscillateur(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    acceleration_harmonique, (x0, v0), temps, args<span class="op">=</span>(m, k)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>x_exact <span class="op">=</span> x0 <span class="op">*</span> np.cos(omega0 <span class="op">*</span> temps) <span class="op">+</span> (v0 <span class="op">/</span> omega0) <span class="op">*</span> np.sin(omega0 <span class="op">*</span> temps)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>energie <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> m <span class="op">*</span> v<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> k <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>erreur_energie <span class="op">=</span> (energie <span class="op">-</span> energie[<span class="dv">0</span>]) <span class="op">/</span> energie[<span class="dv">0</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="fl">3.6</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(temps, x, label<span class="op">=</span><span class="st">"numerical solution"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(temps, x_exact, <span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.3</span>, label<span class="op">=</span><span class="st">"analytical solution"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">s</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">m</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, v, color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter([x[<span class="dv">0</span>]], [v[<span class="dv">0</span>]], s<span class="op">=</span><span class="dv">35</span>, color<span class="op">=</span><span class="st">"black"</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">m</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$\d</span><span class="vs">ot x</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">m s</span><span class="dv">$^</span><span class="vs">{-1}</span><span class="dv">$</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_aspect(<span class="st">"equal"</span>, adjustable<span class="op">=</span><span class="st">"datalim"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].plot(temps, erreur_energie, color<span class="op">=</span><span class="st">"tab:green"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">s</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="kw">(</span><span class="vs">E-E_0</span><span class="kw">)</span><span class="vs">/E_0</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].ticklabel_format(axis<span class="op">=</span><span class="st">"y"</span>, style<span class="op">=</span><span class="st">"sci"</span>, scilimits<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-oscillateur-harmonique" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillateur-harmonique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-oscillateur-harmonique-output-1.png" width="1136" height="328" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillateur-harmonique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Harmonic oscillator: position, phase portrait, and energy check.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="damping-and-driving" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="damping-and-driving"><span class="header-section-number">2</span> Damping and driving</h2>
+<p>A real oscillator loses energy through friction. We model this by <span class="math inline">\(F_f=-b\dot x\)</span>, with <span class="math inline">\(b\geq0\)</span>. This force opposes the motion and is proportional to speed. It describes viscous damping; dry sliding friction would require a different model.</p>
+<p>We can also apply a periodic force, for example through a motor. With amplitude <span class="math inline">\(F_0\)</span> and angular frequency <span class="math inline">\(\Omega\)</span>, Newton’s law becomes</p>
+<p><span id="eq-driven-damped"><span class="math display">\[
+m\ddot x+b\dot x+kx=F_0\cos(\Omega t).
+\tag{12}\]</span></span></p>
+<p>The frequency <span class="math inline">\(\Omega\)</span> belongs to the external force; <span class="math inline">\(\omega_0=\sqrt{k/m}\)</span> belongs to the mass and spring.</p>
+<section id="free-damped-motion" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="free-damped-motion"><span class="header-section-number">2.1</span> Free damped motion</h3>
+<p>First set <span class="math inline">\(F_0=0\)</span>. Introduce the damping rate <span class="math inline">\(\gamma=b/(2m)\)</span> and the damping ratio <span class="math inline">\(\zeta=\gamma/\omega_0\)</span>. The equation is</p>
+<p><span id="eq-free-damped"><span class="math display">\[
+\ddot x+2\gamma\dot x+\omega_0^2x=0.
+\tag{13}\]</span></span></p>
+<p>Trying <span class="math inline">\(x=e^{rt}\)</span> gives</p>
+<p><span id="eq-damped-roots"><span class="math display">\[
+r^2+2\gamma r+\omega_0^2=0,
+\qquad
+r_\pm=-\gamma\pm\sqrt{\gamma^2-\omega_0^2}.
+\tag{14}\]</span></span></p>
+<p>For <span class="math inline">\(0&lt;\gamma&lt;\omega_0\)</span>, the roots are complex. This is the underdamped regime. With</p>
+<p><span id="eq-damped-frequency"><span class="math display">\[
+\omega_d=\sqrt{\omega_0^2-\gamma^2}
+=\omega_0\sqrt{1-\zeta^2},
+\tag{15}\]</span></span></p>
+<p>we obtain <span class="math inline">\(x=e^{-\gamma t}[A\cos(\omega_dt)+B\sin(\omega_dt)]\)</span>. The initial conditions give <span class="math inline">\(A=x_0\)</span> and <span class="math inline">\(v_0=-\gamma A+\omega_dB\)</span>, so</p>
+<p><span id="eq-underdamped-solution"><span class="math display">\[
+x(t)=e^{-\gamma t}
+\left[
+x_0\cos(\omega_dt)
++\frac{v_0+\gamma x_0}{\omega_d}\sin(\omega_dt)
+\right].
+\tag{16}\]</span></span></p>
+<p>The mass still oscillates, but its amplitude decreases with the envelope <span class="math inline">\(e^{-\gamma t}\)</span>. Multiplying the equation by <span class="math inline">\(m\dot x\)</span> gives</p>
+<p><span id="eq-damped-energy"><span class="math display">\[
+\frac{\mathrm d}{\mathrm dt}
+\left(\frac12m\dot x^2+\frac12kx^2\right)
+=-b\dot x^2\leq0.
+\tag{17}\]</span></span></p>
+<p>This is the energy lost to friction per unit time. The phase trajectory spirals towards the origin.</p>
+<p>At <span class="math inline">\(\gamma=\omega_0\)</span>, the two roots are equal. This is critical damping, with <span class="math inline">\(b_c=2\sqrt{km}\)</span>. The two independent solutions are <span class="math inline">\(e^{-\omega_0t}\)</span> and <span class="math inline">\(te^{-\omega_0t}\)</span>. Applying the initial conditions gives</p>
+<p><span id="eq-critical-solution"><span class="math display">\[
+x(t)=e^{-\omega_0t}
+\left[x_0+(v_0+\omega_0x_0)t\right].
+\tag{18}\]</span></span></p>
+<p>For <span class="math inline">\(\gamma&gt;\omega_0\)</span>, both roots are real and negative. This is the overdamped regime. With <span class="math inline">\(\Delta=\sqrt{\gamma^2-\omega_0^2}\)</span> and <span class="math inline">\(r_\pm=-\gamma\pm\Delta\)</span>,</p>
+<p><span class="math display">\[
+x(t)=C_+e^{r_+t}+C_-e^{r_-t},
+\]</span></p>
+<p>where <span class="math inline">\(C_++C_-=x_0\)</span> and <span class="math inline">\(r_+C_++r_-C_-=v_0\)</span>. Solving these two equations gives</p>
+<p><span id="eq-overdamped-solution"><span class="math display">\[
+C_+=\frac{v_0-r_-x_0}{r_+-r_-},
+\qquad
+C_-=\frac{r_+x_0-v_0}{r_+-r_-}.
+\tag{19}\]</span></span></p>
+<p>For a mass released from rest, critical damping gives a faster return than overdamping, without crossing equilibrium. Very strong friction makes the return slow: for <span class="math inline">\(\gamma\gg\omega_0\)</span>, the slow root is <span class="math inline">\(r_+\simeq-\omega_0^2/(2\gamma)\)</span>. With a nonzero initial velocity, even a critically damped mass can cross equilibrium once.</p>
+<div id="cell-fig-regimes-amortissement" class="cell" data-fig-height="4.1" data-fig-width="10.5" data-execution_count="3">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m, k <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">1.0</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> np.sqrt(k <span class="op">/</span> m)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">18</span>, <span class="dv">2500</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>regimes <span class="op">=</span> [(<span class="fl">0.20</span>, <span class="st">"underdamped"</span>), (<span class="fl">1.00</span>, <span class="st">"critical"</span>), (<span class="fl">1.60</span>, <span class="st">"overdamped"</span>)]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>couleurs <span class="op">=</span> [<span class="st">"tab:blue"</span>, <span class="st">"tab:orange"</span>, <span class="st">"tab:green"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="fl">4.0</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (zeta, nom), couleur <span class="kw">in</span> <span class="bu">zip</span>(regimes, couleurs):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> zeta <span class="op">*</span> np.sqrt(k <span class="op">*</span> m)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> acceleration_amortie(t, x, v, m, k, b):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span>(b <span class="op">*</span> v <span class="op">+</span> k <span class="op">*</span> x) <span class="op">/</span> m</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    x, v <span class="op">=</span> resoudre_oscillateur(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        acceleration_amortie, (<span class="fl">1.0</span>, <span class="fl">0.0</span>), temps, args<span class="op">=</span>(m, k, b)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(temps, x, color<span class="op">=</span>couleur, label<span class="op">=</span><span class="vs">rf"</span><span class="sc">{</span>nom<span class="sc">}</span><span class="vs">, </span><span class="dv">$\z</span><span class="vs">eta=</span><span class="sc">{</span>zeta<span class="sc">:.1f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(x, v, color<span class="op">=</span>couleur, label<span class="op">=</span>nom)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">s</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="vs">/x_0</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter([<span class="dv">1</span>], [<span class="dv">0</span>], color<span class="op">=</span><span class="st">"black"</span>, s<span class="op">=</span><span class="dv">30</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x/x_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$\d</span><span class="vs">ot x/</span><span class="kw">(</span><span class="er">\</span><span class="vs">omega_0x_0</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-regimes-amortissement" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-regimes-amortissement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-regimes-amortissement-output-1.png" width="1040" height="367" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regimes-amortissement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The three regimes of a free damped oscillator and their phase portraits.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sinusoidal-force" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="sinusoidal-force"><span class="header-section-number">2.2</span> Sinusoidal force</h3>
+<p>For <span class="math inline">\(b&gt;0\)</span>, the full solution is the sum of a free damped solution and a particular solution:</p>
+<p><span class="math display">\[
+x(t)=x_{\mathrm{trans}}(t)+x_{\mathrm{perm}}(t).
+\]</span></p>
+<p>The first term depends on the initial conditions and tends to zero. The second is the steady response to the force. In the underdamped case, the transient has an envelope <span class="math inline">\(e^{-\gamma t}\)</span>; in the other regimes, its decay follows the real roots found above.</p>
+<p>To find the steady response, write the force as the real part of <span class="math inline">\(F_0e^{i\Omega t}\)</span> and try <span class="math inline">\(\widetilde x=Xe^{i\Omega t}\)</span>. Then</p>
+<p><span class="math display">\[
+\dot{\widetilde x}=i\Omega Xe^{i\Omega t},
+\qquad
+\ddot{\widetilde x}=-\Omega^2Xe^{i\Omega t}.
+\]</span></p>
+<p>Substitution gives</p>
+<p><span class="math display">\[
+(k-m\Omega^2+ib\Omega)Xe^{i\Omega t}=F_0e^{i\Omega t},
+\]</span></p>
+<p>and therefore</p>
+<p><span id="eq-complex-susceptibility"><span class="math display">\[
+X=\frac{F_0}{k-m\Omega^2+ib\Omega}.
+\tag{20}\]</span></span></p>
+<p>Writing <span class="math inline">\(X=Ae^{-i\delta}\)</span> and taking the real part gives</p>
+<p><span class="math display">\[
+x_{\mathrm{perm}}(t)=A(\Omega)\cos(\Omega t-\delta),
+\]</span></p>
+<p>with</p>
+<p><span id="eq-forced-amplitude"><span class="math display">\[
+A(\Omega)=\frac{F_0}{\sqrt{(k-m\Omega^2)^2+(b\Omega)^2}},
+\tag{21}\]</span></span></p>
+<p>and</p>
+<p><span id="eq-forced-phase"><span class="math display">\[
+\delta(\Omega)=\operatorname{atan2}(b\Omega,k-m\Omega^2).
+\tag{22}\]</span></span></p>
+<p>At low frequency, <span class="math inline">\(A\simeq F_0/k\)</span> and <span class="math inline">\(\delta\simeq0\)</span>: the spring follows the force almost as if it were static. At high frequency, <span class="math inline">\(A\simeq F_0/(m\Omega^2)\)</span> and <span class="math inline">\(\delta\simeq\pi\)</span>. At <span class="math inline">\(\Omega=\omega_0\)</span>, the displacement lags the force by a quarter of a cycle, <span class="math inline">\(\delta=\pi/2\)</span>.</p>
+</section>
+<section id="resonance-and-energy-transfer" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="resonance-and-energy-transfer"><span class="header-section-number">2.3</span> Resonance and energy transfer</h3>
+<p>For <span class="math inline">\(F_0&gt;0\)</span>, the amplitude is largest when the denominator of <a href="#eq-forced-amplitude" class="quarto-xref">Equation&nbsp;21</a> is smallest. Let</p>
+<p><span class="math display">\[
+D(\Omega)=(k-m\Omega^2)^2+b^2\Omega^2.
+\]</span></p>
+<p>Differentiating,</p>
+<p><span class="math display">\[
+D'(\Omega)=2\Omega\left[-2m(k-m\Omega^2)+b^2\right].
+\]</span></p>
+<p>A peak at a nonzero frequency therefore occurs at</p>
+<p><span id="eq-resonance-frequency"><span class="math display">\[
+\Omega_r=\sqrt{\omega_0^2-2\gamma^2}
+=\omega_0\sqrt{1-2\zeta^2},
+\tag{23}\]</span></span></p>
+<p>provided <span class="math inline">\(0&lt;\zeta&lt;1/\sqrt2\)</span>. For larger damping, the displacement amplitude decreases from its value at <span class="math inline">\(\Omega=0\)</span>, with no nonzero-frequency peak. The free oscillation frequency <span class="math inline">\(\omega_d\)</span>, the displacement resonance frequency <span class="math inline">\(\Omega_r\)</span> and the natural frequency <span class="math inline">\(\omega_0\)</span> are distinct. They are close when damping is weak.</p>
+<p>For the graphs, use <span class="math inline">\(r=\Omega/\omega_0\)</span> and divide the amplitude by <span class="math inline">\(F_0/k\)</span>:</p>
+<p><span id="eq-dimensionless-response"><span class="math display">\[
+\frac{A}{F_0/k}
+=\frac{1}{\sqrt{(1-r^2)^2+(2\zeta r)^2}}.
+\tag{24}\]</span></span></p>
+<div id="cell-fig-reponse-frequentielle" class="cell" data-fig-height="4" data-fig-width="10" data-execution_count="4">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.linspace(<span class="fl">0.0</span>, <span class="fl">2.5</span>, <span class="dv">1600</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>zetas <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.20</span>, <span class="fl">0.70</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">4.0</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> zeta <span class="kw">in</span> zetas:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    gain <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> np.sqrt((<span class="fl">1.0</span> <span class="op">-</span> r<span class="op">**</span><span class="dv">2</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (<span class="fl">2.0</span> <span class="op">*</span> zeta <span class="op">*</span> r)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    phase <span class="op">=</span> np.arctan2(<span class="fl">2.0</span> <span class="op">*</span> zeta <span class="op">*</span> r, <span class="fl">1.0</span> <span class="op">-</span> r<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(r, gain, label<span class="op">=</span><span class="vs">rf"</span><span class="dv">$\z</span><span class="vs">eta=</span><span class="sc">{</span>zeta<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(r, np.degrees(phase), label<span class="op">=</span><span class="vs">rf"</span><span class="dv">$\z</span><span class="vs">eta=</span><span class="sc">{</span>zeta<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r=</span><span class="er">\</span><span class="vs">Omega/</span><span class="er">\</span><span class="vs">omega_0</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">A/</span><span class="kw">(</span><span class="vs">F_0/k</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">11</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">r=</span><span class="er">\</span><span class="vs">Omega/</span><span class="er">\</span><span class="vs">omega_0</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="vs">r"phase shift </span><span class="dv">$\d</span><span class="vs">elta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">degrees</span><span class="kw">)</span><span class="vs">"</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>, <span class="dv">180</span>],</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="fl">1.0</span>, color<span class="op">=</span><span class="st">"black"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">0.9</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-reponse-frequentielle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reponse-frequentielle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-reponse-frequentielle-output-1.png" width="993" height="367" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reponse-frequentielle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Amplitude and phase shift of the driven response for several damping values.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Multiplying <a href="#eq-driven-damped" class="quarto-xref">Equation&nbsp;12</a> by <span class="math inline">\(\dot x\)</span> gives the power balance <span class="math inline">\(\dot E=-b\dot x^2+F(t)\dot x\)</span>. In steady motion with <span class="math inline">\(\Omega&gt;0\)</span>, the average of <span class="math inline">\(\dot E\)</span> over one period is zero. Since the average of <span class="math inline">\(\sin^2(\Omega t-\delta)\)</span> is <span class="math inline">\(1/2\)</span>,</p>
+<p><span id="eq-average-power"><span class="math display">\[
+\langle P_{\mathrm{diss}}\rangle
+=b\langle\dot x^2\rangle
+=\frac12b\Omega^2A^2.
+\tag{25}\]</span></span></p>
+<p>The average power supplied by the force is</p>
+<p><span class="math display">\[
+\langle P_{\mathrm{ext}}\rangle
+=\frac12F_0A\Omega\sin\delta
+=\langle P_{\mathrm{diss}}\rangle.
+\]</span></p>
+<p>For fixed <span class="math inline">\(F_0\)</span> and <span class="math inline">\(b&gt;0\)</span>, this power is greatest at <span class="math inline">\(\Omega=\omega_0\)</span>, which differs from the frequency of maximum displacement. The quality factor is</p>
+<p><span id="eq-quality-factor"><span class="math display">\[
+Q=\frac{m\omega_0}{b}=\frac{1}{2\zeta}.
+\tag{26}\]</span></span></p>
+<p>A large <span class="math inline">\(Q\)</span> means weak damping and a narrow resonance peak. When <span class="math inline">\(Q\gg1\)</span>, the frequency width between the two half-power points is approximately <span class="math inline">\(\Delta\Omega\simeq\omega_0/Q\)</span>. For free weakly damped motion, the energy decreases over many oscillations.</p>
+</section>
+<section id="without-damping-beats-and-resonance" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="without-damping-beats-and-resonance"><span class="header-section-number">2.4</span> Without damping: beats and resonance</h3>
+<p>If <span class="math inline">\(b=0\)</span>, the free part does not decay. For a mass initially at rest at equilibrium and <span class="math inline">\(\Omega\neq\omega_0\)</span>, the solution is</p>
+<p><span class="math display">\[
+x(t)=\frac{F_0/m}{\omega_0^2-\Omega^2}
+\left[\cos(\Omega t)-\cos(\omega_0t)\right].
+\]</span></p>
+<p>The difference of cosines can be written as</p>
+<p><span class="math display">\[
+\cos(\Omega t)-\cos(\omega_0t)
+=-2\sin\left(\frac{\Omega+\omega_0}{2}t\right)
+\sin\left(\frac{\Omega-\omega_0}{2}t\right).
+\]</span></p>
+<p>When the two frequencies are close, the first factor oscillates rapidly and the second varies slowly. The resulting changes in amplitude are called beats. Taking the limit <span class="math inline">\(\Omega\to\omega_0\)</span> gives</p>
+<p><span class="math display">\[
+x(t)=\frac{F_0}{2m\omega_0}\,t\sin(\omega_0t).
+\]</span></p>
+<p>At exact resonance, the amplitude grows linearly with time in this ideal model. There is no finite steady amplitude.</p>
+</section>
+</section>
+<section id="coupled-and-parametric-oscillators" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="coupled-and-parametric-oscillators"><span class="header-section-number">3</span> Coupled and parametric oscillators</h2>
+<section id="two-coupled-masses" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="two-coupled-masses"><span class="header-section-number">3.1</span> Two coupled masses</h3>
+<p>Consider two identical masses <span class="math inline">\(m\)</span>. Each is connected to a fixed support by a spring of stiffness <span class="math inline">\(k\)</span>, and a spring of stiffness <span class="math inline">\(\kappa\)</span> connects the two masses. Their displacements from equilibrium are <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
+<p>The extension of the middle spring is <span class="math inline">\(x_2-x_1\)</span>. It exerts a force <span class="math inline">\(\kappa(x_2-x_1)\)</span> on the first mass and the opposite force on the second. Newton’s equations are</p>
+<p><span id="eq-coupled-equations"><span class="math display">\[
+\begin{aligned}
+m\ddot x_1+(k+\kappa)x_1-\kappa x_2&amp;=0,\\
+m\ddot x_2+(k+\kappa)x_2-\kappa x_1&amp;=0.
+\end{aligned}
+\tag{27}\]</span></span></p>
+<p>In matrix form,</p>
+<p><span id="eq-matrix-oscillator"><span class="math display">\[
+\mathbf M\ddot{\mathbf x}+\mathbf K\mathbf x=0,
+\quad
+\mathbf M=m\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix},
+\quad
+\mathbf K=\begin{pmatrix}k+\kappa&amp;-\kappa\\-\kappa&amp;k+\kappa\end{pmatrix},
+\quad
+\mathbf x=\begin{pmatrix}x_1\\x_2\end{pmatrix}.
+\tag{28}\]</span></span></p>
+<p>A normal mode is a motion in which the two masses oscillate at one frequency with a fixed ratio of amplitudes. Set <span class="math inline">\(\mathbf x(t)=\mathbf u\cos(\omega t+\phi)\)</span>. We obtain</p>
+<p><span id="eq-generalized-eigenvalue"><span class="math display">\[
+(\mathbf K-\omega^2\mathbf M)\mathbf u=0.
+\tag{29}\]</span></span></p>
+<p>For a nonzero vector <span class="math inline">\(\mathbf u\)</span>, the determinant must vanish:</p>
+<p><span class="math display">\[
+\det(\mathbf K-\omega^2\mathbf M)
+=(k+\kappa-m\omega^2)^2-\kappa^2=0.
+\]</span></p>
+<p>This gives</p>
+<p><span id="eq-two-normal-modes"><span class="math display">\[
+\begin{aligned}
+\omega_+&amp;=\sqrt{\frac{k}{m}},
+&amp;\mathbf u_+&amp;=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\\
+\omega_-&amp;=\sqrt{\frac{k+2\kappa}{m}},
+&amp;\mathbf u_-&amp;=\frac1{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}.
+\end{aligned}
+\tag{30}\]</span></span></p>
+<p>In the symmetric mode, the masses move together and the middle spring does not stretch. In the antisymmetric mode, they move in opposite directions. The middle spring then adds a restoring force, giving the higher frequency <span class="math inline">\(\omega_-\)</span>.</p>
+<p>The normal coordinates are</p>
+<p><span id="eq-normal-coordinates"><span class="math display">\[
+Q_+=\frac{x_1+x_2}{\sqrt2},
+\qquad
+Q_-=\frac{x_1-x_2}{\sqrt2}.
+\tag{31}\]</span></span></p>
+<p>Adding and subtracting Newton’s equations gives two independent equations:</p>
+<p><span id="eq-decoupled-normal-modes"><span class="math display">\[
+\ddot Q_++\omega_+^2Q_+=0,
+\qquad
+\ddot Q_-+\omega_-^2Q_-=0.
+\tag{32}\]</span></span></p>
+<p>For example, displace only the first mass by <span class="math inline">\(A\)</span> and release both from rest. Then <span class="math inline">\(Q_+(0)=Q_-(0)=A/\sqrt2\)</span>. Returning to <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+x_1(t)&amp;=\frac A2\left[\cos(\omega_+t)+\cos(\omega_-t)\right],\\
+x_2(t)&amp;=\frac A2\left[\cos(\omega_+t)-\cos(\omega_-t)\right].
+\end{aligned}
+\]</span></p>
+<div id="cell-fig-oscillateurs-couples" class="cell" data-fig-height="4" data-fig-width="10.5" data-execution_count="5">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>m, k, kappa <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.12</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>omega_plus <span class="op">=</span> np.sqrt(k <span class="op">/</span> m)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>omega_moins <span class="op">=</span> np.sqrt((k <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> kappa) <span class="op">/</span> m)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">180</span>, <span class="dv">5000</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial conditions: only the first mass is displaced.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> A <span class="op">*</span> (np.cos(omega_plus <span class="op">*</span> temps) <span class="op">+</span> np.cos(omega_moins <span class="op">*</span> temps))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> A <span class="op">*</span> (np.cos(omega_plus <span class="op">*</span> temps) <span class="op">-</span> np.cos(omega_moins <span class="op">*</span> temps))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Q_plus <span class="op">=</span> (x1 <span class="op">+</span> x2) <span class="op">/</span> np.sqrt(<span class="dv">2</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>Q_moins <span class="op">=</span> (x1 <span class="op">-</span> x2) <span class="op">/</span> np.sqrt(<span class="dv">2</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="fl">4.0</span>))</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(temps, x1, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(temps, x2, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">s</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"displacement"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(temps, Q_plus, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">Q_</span><span class="op">+</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(temps, Q_moins, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">Q_-</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">s</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="st">"normal coordinate"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-oscillateurs-couples" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-oscillateurs-couples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-oscillateurs-couples-output-1.png" width="1043" height="367" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-oscillateurs-couples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Exchange of amplitude between two coupled oscillators and decomposition into normal modes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For weak coupling, the two frequencies are close and beats appear. Energy passes back and forth between the masses through the middle spring. The total energy, including the energy in that spring, remains constant.</p>
+<p>For several masses, the same calculation leads to <span class="math inline">\(\mathbf K\mathbf u_n=\omega_n^2\mathbf M\mathbf u_n\)</span>. Each normal coordinate then behaves like a harmonic oscillator.</p>
+</section>
+<section id="a-time-dependent-stiffness" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="a-time-dependent-stiffness"><span class="header-section-number">3.2</span> A time-dependent stiffness</h3>
+<p>Energy can also enter a system when one of its parameters changes. Suppose that a device varies the spring stiffness according to</p>
+<p><span class="math display">\[
+k(t)=k_0[1+h\cos(\Omega t)],
+\]</span></p>
+<p>where <span class="math inline">\(h\)</span> is the relative modulation amplitude. With <span class="math inline">\(\omega_0=\sqrt{k_0/m}\)</span>, the equation becomes</p>
+<p><span id="eq-mathieu-damped"><span class="math display">\[
+\ddot x+2\gamma\dot x
++\omega_0^2[1+h\cos(\Omega t)]x=0.
+\tag{33}\]</span></span></p>
+<p>This is a damped Mathieu equation. There is no added force on the right-hand side, but the device can still do work. For <span class="math inline">\(E=m\dot x^2/2+k(t)x^2/2\)</span>,</p>
+<p><span class="math display">\[
+\dot E=-b\dot x^2+\frac12\dot k(t)x^2.
+\]</span></p>
+<p>Increasing the stiffness when <span class="math inline">\(|x|\)</span> is large adds energy. Decreasing it when <span class="math inline">\(x\)</span> is near zero removes less energy. Since <span class="math inline">\(x^2\)</span> has two maxima during one oscillation, the main parametric resonance occurs near</p>
+<p><span id="eq-parametric-resonance"><span class="math display">\[
+\Omega\simeq2\omega_0.
+\tag{34}\]</span></span></p>
+<p>We can estimate the growth rate when <span class="math inline">\(0&lt;h\ll1\)</span>, <span class="math inline">\(\gamma\ll\omega_0\)</span> and <span class="math inline">\(\Omega=2\omega_0\)</span>. Write</p>
+<p><span class="math display">\[
+x(t)=a(t)\cos(\omega_0t)+c(t)\sin(\omega_0t),
+\]</span></p>
+<p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(c\)</span> vary slowly. Neglect their second derivatives and products such as <span class="math inline">\(\gamma\dot a\)</span>. The terms containing <span class="math inline">\(\cos(2\omega_0t)\)</span> produce frequencies <span class="math inline">\(\omega_0\)</span> and <span class="math inline">\(3\omega_0\)</span>. Keeping the terms at <span class="math inline">\(\omega_0\)</span>, which drive the slow change, gives</p>
+<p><span class="math display">\[
+\dot a=-\gamma a-\frac{h\omega_0}{4}c,
+\qquad
+\dot c=-\gamma c-\frac{h\omega_0}{4}a.
+\]</span></p>
+<p>The combination <span class="math inline">\(a-c\)</span> therefore satisfies</p>
+<p><span class="math display">\[
+\frac{\mathrm d}{\mathrm dt}(a-c)
+=\left(\frac{h\omega_0}{4}-\gamma\right)(a-c).
+\]</span></p>
+<p>The growing component has an envelope<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><span id="eq-parametric-growth"><span class="math display">\[
+R(t)\propto
+\exp\left[\left(\frac{h\omega_0}{4}-\gamma\right)t\right].
+\tag{35}\]</span></span></p>
+<p>To this order, growth begins when <span class="math inline">\(h\omega_0/4&gt;\gamma\)</span>. The exact state <span class="math inline">\(x=\dot x=0\)</span> stays at rest, but a small disturbance with a growing component is amplified. The next example starts with a small nonzero displacement.</p>
+<div id="cell-fig-resonance-parametrique" class="cell" data-fig-height="4.2" data-fig-width="9" data-execution_count="6">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.02</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Omega <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> omega0</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">220</span>, <span class="dv">6000</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acceleration_parametrique(t, x, v, omega0, gamma, h, Omega):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> gamma <span class="op">*</span> v <span class="op">-</span> omega0<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> h <span class="op">*</span> np.cos(Omega <span class="op">*</span> t)) <span class="op">*</span> x</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.2</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> h, couleur <span class="kw">in</span> [(<span class="fl">0.05</span>, <span class="st">"tab:blue"</span>), (<span class="fl">0.16</span>, <span class="st">"tab:red"</span>)]:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    x, v <span class="op">=</span> resoudre_oscillateur(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        acceleration_parametrique,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1e-2</span>, <span class="fl">0.0</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        temps,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        args<span class="op">=</span>(omega0, gamma, h, Omega),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    amplitude_instantanee <span class="op">=</span> np.sqrt(x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (v <span class="op">/</span> omega0)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    ax.semilogy(temps, amplitude_instantanee, color<span class="op">=</span>couleur, label<span class="op">=</span><span class="vs">rf"</span><span class="dv">$</span><span class="vs">h=</span><span class="sc">{</span>h<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$\s</span><span class="vs">qrt{x</span><span class="dv">^</span><span class="vs">2</span><span class="op">+</span><span class="kw">(</span><span class="dv">\d</span><span class="vs">ot x/</span><span class="er">\</span><span class="vs">omega_0</span><span class="kw">)</span><span class="dv">^</span><span class="vs">2}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ax.legend(title<span class="op">=</span><span class="st">"modulation"</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-resonance-parametrique" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resonance-parametrique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-resonance-parametrique-output-1.png" width="848" height="388" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resonance-parametrique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Parametric stability and instability near <span class="math inline">\(\Omega=2\omega_0\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="nonlinear-oscillators" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="nonlinear-oscillators"><span class="header-section-number">4</span> Nonlinear oscillators</h2>
+<section id="the-pendulum" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="the-pendulum"><span class="header-section-number">4.1</span> The pendulum</h3>
+<p>Consider a point mass <span class="math inline">\(m\)</span> at the end of a rigid, massless rod of length <span class="math inline">\(\ell\)</span>. The pivot is fixed and <span class="math inline">\(\theta\)</span> is measured from the downward vertical. Gravity gives the torque <span class="math inline">\(-mg\ell\sin\theta\)</span>, while the moment of inertia is <span class="math inline">\(m\ell^2\)</span>. Thus,</p>
+<p><span class="math display">\[
+m\ell^2\ddot\theta=-mg\ell\sin\theta,
+\]</span></p>
+<p>or</p>
+<p><span id="eq-exact-pendulum"><span class="math display">\[
+\ddot\theta+\frac g\ell\sin\theta=0.
+\tag{36}\]</span></span></p>
+<p>For <span class="math inline">\(|\theta|\ll1\)</span> in radians,</p>
+<p><span class="math display">\[
+\sin\theta=\theta-\frac{\theta^3}{6}+\mathcal O(\theta^5).
+\]</span></p>
+<p>Keeping the first term gives</p>
+<p><span id="eq-small-angle-pendulum"><span class="math display">\[
+\ddot\theta+\omega_0^2\theta=0,
+\qquad
+\omega_0=\sqrt{\frac g\ell}.
+\tag{37}\]</span></span></p>
+<p>The neglected term is smaller than the linear term by about <span class="math inline">\(\theta^2/6\)</span>. The small-angle approximation is therefore controlled by the angle, not by the mass or the rod length.</p>
+<p>Multiplying the exact equation by <span class="math inline">\(m\ell^2\dot\theta\)</span> gives the conserved energy</p>
+<p><span id="eq-pendulum-energy"><span class="math display">\[
+E=\frac12m\ell^2\dot\theta^2+mg\ell(1-\cos\theta).
+\tag{38}\]</span></span></p>
+<p>The top position <span class="math inline">\(\theta=\pi\)</span> has energy <span class="math inline">\(E_s=2mg\ell\)</span>. For <span class="math inline">\(0&lt;E&lt;E_s\)</span>, the pendulum swings between two turning points; this motion is called libration. For <span class="math inline">\(E&gt;E_s\)</span>, it can pass over the top and keep rotating. At <span class="math inline">\(E=E_s\)</span>, a moving pendulum approaches the top only as <span class="math inline">\(t\to\infty\)</span>. This limiting trajectory is the separatrix.</p>
+</section>
+<section id="why-the-period-increases-with-amplitude" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="why-the-period-increases-with-amplitude"><span class="header-section-number">4.2</span> Why the period increases with amplitude</h3>
+<p>Release the pendulum from rest at an angle <span class="math inline">\(0&lt;\theta_{\max}&lt;\pi\)</span>. Energy conservation gives</p>
+<p><span class="math display">\[
+\frac12m\ell^2\dot\theta^2
+=mg\ell(\cos\theta-\cos\theta_{\max}),
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+|\dot\theta|
+=\sqrt{\frac{2g}{\ell}(\cos\theta-\cos\theta_{\max})}.
+\]</span></p>
+<p>A quarter of a period is the time taken to travel from <span class="math inline">\(0\)</span> to <span class="math inline">\(\theta_{\max}\)</span>. Therefore,</p>
+<p><span class="math display">\[
+\frac T4=\sqrt{\frac{\ell}{2g}}
+\int_0^{\theta_{\max}}
+\frac{\mathrm d\theta}{\sqrt{\cos\theta-\cos\theta_{\max}}}.
+\]</span></p>
+<p>Use <span class="math inline">\(\sin(\theta/2)=\sin(\theta_{\max}/2)\sin\phi\)</span>. The limits become <span class="math inline">\(0\)</span> and <span class="math inline">\(\pi/2\)</span>, giving</p>
+<p><span id="eq-exact-pendulum-period"><span class="math display">\[
+T(\theta_{\max})
+=4\sqrt{\frac{\ell}{g}}\,
+K\left(\sin^2\frac{\theta_{\max}}2\right),
+\tag{39}\]</span></span></p>
+<p>where</p>
+<p><span class="math display">\[
+K(p)=\int_0^{\pi/2}\frac{\mathrm d\phi}{\sqrt{1-p\sin^2\phi}}.
+\]</span></p>
+<p>This integral is called the complete elliptic integral of the first kind. Expanding its integrand in powers of <span class="math inline">\(p\)</span> gives</p>
+<p><span class="math display">\[
+K(p)=\frac\pi2
+\left(1+\frac p4+\frac{9p^2}{64}+\cdots\right).
+\]</span></p>
+<p>Using <span class="math inline">\(p=\sin^2(\theta_{\max}/2)\)</span> then gives, with the angle in radians,</p>
+<p><span id="eq-pendulum-period-expansion"><span class="math display">\[
+T(\theta_{\max})
+=T_0\left[
+1+\frac{\theta_{\max}^2}{16}
++\frac{11\theta_{\max}^4}{3072}
++\mathcal O(\theta_{\max}^6)
+\right],
+\qquad
+T_0=2\pi\sqrt{\frac{\ell}{g}}.
+\tag{40}\]</span></span></p>
+<p>The period increases with amplitude. As <span class="math inline">\(\theta_{\max}\to\pi\)</span>, the pendulum spends longer near the unstable top position and the period diverges.</p>
+<div id="cell-fig-pendule-nonlineaire" class="cell" data-fig-height="4" data-fig-width="11" data-execution_count="7">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>g, ell <span class="op">=</span> <span class="fl">9.81</span>, <span class="fl">1.0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> np.sqrt(g <span class="op">/</span> ell)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>T0 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">/</span> omega0</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">6</span> <span class="op">*</span> T0, <span class="dv">3000</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>angles_deg <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">60</span>, <span class="dv">120</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>couleurs <span class="op">=</span> [<span class="st">"tab:blue"</span>, <span class="st">"tab:orange"</span>, <span class="st">"tab:red"</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="fl">4.0</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> angle_deg, couleur <span class="kw">in</span> <span class="bu">zip</span>(angles_deg, couleurs):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    theta0 <span class="op">=</span> np.radians(angle_deg)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> acceleration_pendule(t, theta, omega, g, ell):</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span>(g <span class="op">/</span> ell) <span class="op">*</span> np.sin(theta)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    theta, omega <span class="op">=</span> resoudre_oscillateur(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        acceleration_pendule, (theta0, <span class="fl">0.0</span>), temps, args<span class="op">=</span>(g, ell)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    theta_lineaire <span class="op">=</span> theta0 <span class="op">*</span> np.cos(omega0 <span class="op">*</span> temps)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(temps <span class="op">/</span> T0, np.degrees(theta), color<span class="op">=</span>couleur,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                 label<span class="op">=</span><span class="vs">rf"exact, </span><span class="dv">$</span><span class="ch">\t</span><span class="vs">heta_0=</span><span class="sc">{</span>angle_deg<span class="sc">}</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(temps <span class="op">/</span> T0, np.degrees(theta_lineaire), <span class="st">"--"</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span>couleur, alpha<span class="op">=</span><span class="fl">0.55</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(theta, omega, color<span class="op">=</span>couleur, label<span class="op">=</span><span class="vs">rf"</span><span class="dv">$</span><span class="sc">{</span>angle_deg<span class="sc">}</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t/T_0</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">heta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">degrees</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">8</span>, ncol<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="ch">\t</span><span class="vs">heta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">rad</span><span class="kw">)</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$\d</span><span class="vs">ot</span><span class="ch">\t</span><span class="vs">heta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">rad s</span><span class="dv">$^</span><span class="vs">{-1}</span><span class="dv">$</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(title<span class="op">=</span><span class="st">"amplitude"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-pendule-nonlineaire" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pendule-nonlineaire-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-pendule-nonlineaire-output-1.png" width="1041" height="367" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pendule-nonlineaire-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Difference between the exact pendulum and the harmonic approximation as the amplitude increases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The dashed curves use the small-angle approximation. At large amplitude, the exact pendulum has a longer period, so the two solutions gradually move out of phase.</p>
+</section>
+<section id="the-duffing-oscillator" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="the-duffing-oscillator"><span class="header-section-number">4.3</span> The Duffing oscillator</h3>
+<p>A spring may become harder or softer to stretch as its displacement increases. If the force is symmetric about equilibrium, <span class="math inline">\(F(-x)=-F(x)\)</span>, its expansion contains odd powers of <span class="math inline">\(x\)</span>. Keeping the first nonlinear term gives <span class="math inline">\(F=-kx-\alpha x^3\)</span>. With damping and driving,</p>
+<p><span id="eq-duffing"><span class="math display">\[
+m\ddot x+b\dot x+kx+\alpha x^3
+=F_0\cos(\Omega t).
+\tag{41}\]</span></span></p>
+<p>This is the Duffing equation. Without damping or driving, its potential energy is</p>
+<p><span id="eq-duffing-potential"><span class="math display">\[
+V(x)=\frac12kx^2+\frac14\alpha x^4.
+\tag{42}\]</span></span></p>
+<p>For <span class="math inline">\(k&gt;0\)</span> and <span class="math inline">\(\alpha&gt;0\)</span>, the restoring force grows faster than in the harmonic model, so the oscillation frequency increases with amplitude. For <span class="math inline">\(\alpha&lt;0\)</span>, it decreases for small enough amplitudes. The latter model is only local: the negative quartic term cannot describe a stable system at arbitrarily large <span class="math inline">\(|x|\)</span>.</p>
+<p>Another case is <span class="math inline">\(k&lt;0\)</span> and <span class="math inline">\(\alpha&gt;0\)</span>. Solving <span class="math inline">\(V'(x)=x(k+\alpha x^2)=0\)</span> gives</p>
+<p><span class="math display">\[
+x=0,
+\qquad
+x=\pm\sqrt{-\frac{k}{\alpha}}.
+\]</span></p>
+<p>Since <span class="math inline">\(V''(0)=k&lt;0\)</span> and <span class="math inline">\(V''(\pm\sqrt{-k/\alpha})=-2k&gt;0\)</span>, the origin is unstable and the other two positions are stable. This double-well model can describe a bent strip that can move between two stable shapes.</p>
+<p>The following example uses the dimensionless equation <span class="math inline">\(x''+\delta x'-x+x^3=f\cos(\Omega t)\)</span>. With driving, the motion can cross between the wells and become irregular. We plot both <span class="math inline">\(x(t)\)</span> and a Poincaré section: one point <span class="math inline">\((x,\dot x)\)</span> is taken at each driving period <span class="math inline">\(T=2\pi/\Omega\)</span>, after the initial transient.</p>
+<div id="cell-fig-duffing-poincare" class="cell" data-fig-height="4" data-fig-width="10.5" data-execution_count="8">
+<details class="code-fold">
+<summary>Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensionless equation: x'' + delta*x' - x + x^3 = f*cos(Omega*t)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>delta, f, Omega <span class="op">=</span> <span class="fl">0.20</span>, <span class="fl">0.30</span>, <span class="fl">1.20</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>periode <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">/</span> Omega</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>n_periodes <span class="op">=</span> <span class="dv">550</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>points_par_periode <span class="op">=</span> <span class="dv">90</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>temps <span class="op">=</span> np.linspace(<span class="dv">0</span>, n_periodes <span class="op">*</span> periode,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                    n_periodes <span class="op">*</span> points_par_periode <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acceleration_duffing(t, x, v, delta, f, Omega):</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>delta <span class="op">*</span> v <span class="op">+</span> x <span class="op">-</span> x<span class="op">**</span><span class="dv">3</span> <span class="op">+</span> f <span class="op">*</span> np.cos(Omega <span class="op">*</span> t)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>x, v <span class="op">=</span> resoudre_oscillateur(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    acceleration_duffing, (<span class="fl">0.1</span>, <span class="fl">0.0</span>), temps, args<span class="op">=</span>(delta, f, Omega)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the transient and take one point per period.</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>indices_poincare <span class="op">=</span> np.arange(<span class="dv">150</span>, n_periodes <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> points_par_periode</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>masque_fin <span class="op">=</span> temps <span class="op">&gt;</span> (n_periodes <span class="op">-</span> <span class="dv">25</span>) <span class="op">*</span> periode</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="fl">4.0</span>))</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(temps[masque_fin] <span class="op">/</span> periode, x[masque_fin], lw<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"number of periods"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter(x[indices_poincare], v[indices_poincare], s<span class="op">=</span><span class="dv">9</span>, alpha<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="kw">(</span><span class="vs">nT</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>, ylabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$\d</span><span class="vs">ot x</span><span class="kw">(</span><span class="vs">nT</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-duffing-poincare" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-duffing-poincare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="oscillateurs - EN_files/figure-html/fig-duffing-poincare-output-1.png" width="1044" height="367" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-duffing-poincare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Double-well Duffing oscillator: late-time motion and Poincaré section.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A response that repeats after one driving period gives one point in this section. A response that repeats after several periods gives several points. A more complex set can occur in chaotic motion, where nearby initial states separate rapidly. The section alone is not a proof of chaos; that requires a separate stability study.</p>
+</section>
+<section id="energy-balance" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="energy-balance"><span class="header-section-number">4.4</span> Energy balance</h3>
+<p>For a fixed potential <span class="math inline">\(V(x)\)</span>, the models above can be written as</p>
+<p><span id="eq-general-oscillator"><span class="math display">\[
+m\ddot x+b\dot x+\frac{\mathrm dV}{\mathrm dx}
+=F_{\mathrm{ext}}(x,t).
+\tag{43}\]</span></span></p>
+<p>Multiplication by <span class="math inline">\(\dot x\)</span> gives</p>
+<p><span id="eq-general-energy-balance"><span class="math display">\[
+\frac{\mathrm d}{\mathrm dt}
+\left(\frac12m\dot x^2+V(x)\right)
+=-b\dot x^2+F_{\mathrm{ext}}(x,t)\dot x.
+\tag{44}\]</span></span></p>
+<p>Friction removes energy, while the external force can add or remove it depending on its direction relative to the velocity. For a time-dependent potential, an additional term <span class="math inline">\(\partial V/\partial t\)</span> appears, as in the parametric oscillator.</p>
+</section>
+</section>
+<section id="numerical-methods" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="numerical-methods"><span class="header-section-number">5</span> Numerical methods</h2>
+<section id="state-variables-and-scales" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="state-variables-and-scales"><span class="header-section-number">5.1</span> State variables and scales</h3>
+<p>The general equation becomes</p>
+<p><span id="eq-general-first-order"><span class="math display">\[
+\dot x=v,
+\qquad
+\dot v=\frac1m\left[F_{\mathrm{ext}}(x,t)-bv-V'(x)\right].
+\tag{45}\]</span></span></p>
+<p>This is the system used by the Python function at the beginning of the chapter.</p>
+<p>For the driven linear oscillator with <span class="math inline">\(F_0&gt;0\)</span>, choose <span class="math inline">\(\tau=\omega_0t\)</span> and <span class="math inline">\(x_s=F_0/k\)</span>, then set <span class="math inline">\(X=x/x_s\)</span>. Since <span class="math inline">\(\dot x=x_s\omega_0X'\)</span> and <span class="math inline">\(\ddot x=x_s\omega_0^2X''\)</span>, division by <span class="math inline">\(kx_s=F_0\)</span> gives</p>
+<p><span id="eq-nondimensional-oscillator"><span class="math display">\[
+X''+2\zeta X'+X=\cos(r\tau),
+\qquad
+r=\frac{\Omega}{\omega_0}.
+\tag{46}\]</span></span></p>
+<p>Primes now mean derivatives with respect to <span class="math inline">\(\tau\)</span>. In these units, the response depends only on <span class="math inline">\(\zeta\)</span> and <span class="math inline">\(r\)</span>, together with the initial conditions. If <span class="math inline">\(F_0=0\)</span>, a nonzero initial amplitude can provide the length scale instead.</p>
+</section>
+<section id="velocity-verlet" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="velocity-verlet"><span class="header-section-number">5.2</span> Velocity Verlet</h3>
+<p>The Python figures use an adaptive Runge–Kutta method. For a conservative force depending only on position, velocity Verlet is another useful choice. With <span class="math inline">\(a_n=F(x_n)/m\)</span> and a fixed time step <span class="math inline">\(\Delta t\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+x_{n+1}&amp;=x_n+v_n\Delta t+\frac12a_n\Delta t^2,\\
+a_{n+1}&amp;=\frac{F(x_{n+1})}{m},\\
+v_{n+1}&amp;=v_n+\frac12(a_n+a_{n+1})\Delta t.
+\end{aligned}
+\]</span></p>
+<p>The position step uses the current acceleration; the velocity step uses the average of the old and new accelerations. This method does not conserve the energy exactly, but with a suitably small step it often keeps the energy error bounded over long integrations.</p>
+<div id="code-verlet" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Python — velocity Verlet</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verlet_vitesse(force, x0, v0, temps, m<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Symplectic integration of m*x'' = force(x), on a uniform grid."""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    temps <span class="op">=</span> np.asarray(temps)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> temps[<span class="dv">1</span>] <span class="op">-</span> temps[<span class="dv">0</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> np.allclose(np.diff(temps), dt):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The time grid must be uniform."</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.empty_like(temps, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> np.empty_like(temps, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>], v[<span class="dv">0</span>] <span class="op">=</span> x0, v0</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> force(x[<span class="dv">0</span>]) <span class="op">/</span> m</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(temps) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        x[n <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> x[n] <span class="op">+</span> v[n] <span class="op">*</span> dt <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> a <span class="op">*</span> dt<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        a_suivante <span class="op">=</span> force(x[n <span class="op">+</span> <span class="dv">1</span>]) <span class="op">/</span> m</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        v[n <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> v[n] <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> (a <span class="op">+</span> a_suivante) <span class="op">*</span> dt</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> a_suivante</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, v</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>For a harmonic oscillator, compare the numerical result with <a href="#eq-harmonic-initial" class="quarto-xref">Equation&nbsp;7</a>. For a nonlinear conservative system, check the energy and repeat the calculation with a smaller time step. These comparisons tell us whether a visible change comes from the physics or from the numerical method.</p>
+</section>
+</section>
+<section id="interactive-simulations" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="interactive-simulations"><span class="header-section-number">6</span> Interactive simulations</h2>
+<script>
+/* Plotting tools shared by both simulations */
+window.OscillatorCanvas = window.OscillatorCanvas || (() => {
+  "use strict";
+
+  function colors(root) {
+    const style = getComputedStyle(root);
+    return {
+      text: style.color,
+      grid: style.getPropertyValue("--osc-grid").trim(),
+      contrast: style.getPropertyValue("--osc-contrast").trim(),
+      blue: style.getPropertyValue("--osc-blue").trim() || style.color,
+      orange: style.getPropertyValue("--osc-orange").trim() || style.color,
+      green: style.getPropertyValue("--osc-green").trim() || style.color,
+      red: style.getPropertyValue("--osc-red").trim() || style.color,
+      purple: style.getPropertyValue("--osc-purple").trim() || style.color,
+    };
+  }
+
+  function font(root, role = "label") {
+    return getComputedStyle(root).getPropertyValue(`--plot-${role}-font`).trim();
+  }
+
+  function context(canvas, cssHeight) {
+    const width = Math.max(280, canvas.clientWidth || 600);
+    const height = canvas.clientHeight || cssHeight || 250;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    const pixelWidth = Math.round(width * ratio);
+    const pixelHeight = Math.round(height * ratio);
+    if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+      canvas.width = pixelWidth;
+      canvas.height = pixelHeight;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    return { ctx, width, height };
+  }
+
+  function tick(value) {
+    const a = Math.abs(value);
+    if (a >= 100) return value.toFixed(0);
+    if (a >= 10) return value.toFixed(1);
+    if (a >= 1) return value.toFixed(2).replace(/\.00$/, "");
+    if (a === 0) return "0";
+    return value.toFixed(2);
+  }
+
+  function axes(root, canvas, bounds, labels, cssHeight) {
+    const { ctx, width, height } = context(canvas, cssHeight);
+    const palette = colors(root);
+    const margin = { left: 51, right: 16, top: 14, bottom: 39 };
+    const plotWidth = Math.max(1, width - margin.left - margin.right);
+    const plotHeight = Math.max(1, height - margin.top - margin.bottom);
+    const X = value => margin.left + (value - bounds.xMin) / (bounds.xMax - bounds.xMin) * plotWidth;
+    const Y = value => margin.top + (bounds.yMax - value) / (bounds.yMax - bounds.yMin) * plotHeight;
+
+    ctx.font = font(root);
+    ctx.fillStyle = palette.text;
+    ctx.strokeStyle = palette.grid;
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 5; i++) {
+      const gx = margin.left + i * plotWidth / 5;
+      const gy = margin.top + i * plotHeight / 5;
+      ctx.beginPath(); ctx.moveTo(gx, margin.top); ctx.lineTo(gx, margin.top + plotHeight); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(margin.left, gy); ctx.lineTo(margin.left + plotWidth, gy); ctx.stroke();
+
+      const xv = bounds.xMin + i * (bounds.xMax - bounds.xMin) / 5;
+      const yv = bounds.yMax - i * (bounds.yMax - bounds.yMin) / 5;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(tick(xv), gx, margin.top + plotHeight + 5);
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(tick(yv), margin.left - 7, gy);
+    }
+
+    ctx.strokeStyle = palette.text;
+    ctx.globalAlpha = 0.55;
+    ctx.strokeRect(margin.left, margin.top, plotWidth, plotHeight);
+    ctx.globalAlpha = 1;
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.fillText(labels.x || "", margin.left + plotWidth / 2, height - 2);
+    ctx.save();
+    ctx.translate(13, margin.top + plotHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(labels.y || "", 0, 0);
+    ctx.restore();
+
+    return { ctx, width, height, margin, plotWidth, plotHeight, X, Y, palette };
+  }
+
+  function path(plot, points, color, lineWidth = 2, discontinuity = null, dash = []) {
+    const { ctx, X, Y, margin, plotWidth, plotHeight } = plot;
+    if (points.length < 2) return;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(margin.left, margin.top, plotWidth, plotHeight);
+    ctx.clip();
+    ctx.beginPath();
+    let started = false;
+    let previous = null;
+    for (const point of points) {
+      if (!Number.isFinite(point[0]) || !Number.isFinite(point[1])) continue;
+      const jump = previous && discontinuity && discontinuity(previous, point);
+      if (!started || jump) {
+        ctx.moveTo(X(point[0]), Y(point[1]));
+        started = true;
+      } else {
+        ctx.lineTo(X(point[0]), Y(point[1]));
+      }
+      previous = point;
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function point(plot, x, y, color, radius = 4) {
+    const { ctx, X, Y, margin, plotWidth, plotHeight } = plot;
+    const px = X(x), py = Y(y);
+    if (px < margin.left || px > margin.left + plotWidth ||
+        py < margin.top || py > margin.top + plotHeight) return;
+    ctx.beginPath();
+    ctx.arc(px, py, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = plot.palette.contrast;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+
+  function spring(ctx, x1, x2, y, turns, amplitude, color) {
+    const lead = Math.min(16, (x2 - x1) * 0.08);
+    ctx.beginPath();
+    ctx.moveTo(x1, y);
+    ctx.lineTo(x1 + lead, y);
+    const start = x1 + lead;
+    const end = x2 - lead;
+    const segments = Math.max(4, turns * 2);
+    for (let i = 1; i < segments; i++) {
+      const x = start + i * (end - start) / segments;
+      const yy = y + (i % 2 === 0 ? -amplitude : amplitude);
+      ctx.lineTo(x, yy);
+    }
+    ctx.lineTo(end, y);
+    ctx.lineTo(x2, y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+  }
+
+  function symmetricLimit(values, minimum) {
+    let largest = minimum;
+    for (const value of values) {
+      if (Number.isFinite(value)) largest = Math.max(largest, Math.abs(value));
+    }
+    return 1.15 * largest;
+  }
+
+  function wrapPi(angle) {
+    return ((angle + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+  }
+
+  return { colors, font, context, axes, path, point, spring, symmetricLimit, wrapPi };
+})();
+</script>
+<section id="nonlinear-pendulum" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="nonlinear-pendulum"><span class="header-section-number">6.1</span> Nonlinear pendulum</h3>
+<p>The simulation solves</p>
+<p><span class="math display">\[
+\ddot\theta+2\gamma\dot\theta+\frac g\ell\sin\theta=0
+\]</span></p>
+<p>and compares it with the small-angle model, using the same initial conditions. The damping term corresponds to a friction torque <span class="math inline">\(-2\gamma m\ell^2\dot\theta\)</span>.</p>
+<p>For the phase portrait, angles that differ by <span class="math inline">\(2\pi\)</span> describe the same position. The graph therefore wraps <span class="math inline">\(\theta\)</span> into <span class="math inline">\([-\pi,\pi]\)</span>. The dashed curves mark the undamped separatrix. The reduced energy is <span class="math inline">\(\varepsilon=E/(mg\ell)\)</span>; rotation requires <span class="math inline">\(\varepsilon&gt;2\)</span> when <span class="math inline">\(\gamma=0\)</span>.</p>
+<div id="pendulum-lab" class="oscillator-notes physics-simulation">
+  <div class="lab-heading">
+    <h4 class="anchored">Exact pendulum and harmonic approximation</h4>
+    <p>Both models start from the same angle and angular velocity</p>
+  </div>
+
+  <div class="lab-controls">
+    <div class="lab-control">
+      <label for="pend-length"><span>Length ℓ</span> <output id="pend-length-out"></output></label>
+      <input id="pend-length" type="range" min="0.30" max="3" step="0.05" value="1">
+    </div>
+    <div class="lab-control">
+      <label for="pend-gamma"><span>Damping γ</span> <output id="pend-gamma-out"></output></label>
+      <input id="pend-gamma" type="range" min="0" max="0.8" step="0.01" value="0">
+    </div>
+    <div class="lab-control">
+      <label for="pend-theta0"><span>Initial angle θ<sub>0</sub></span> <output id="pend-theta0-out"></output></label>
+      <input id="pend-theta0" type="range" min="5" max="175" step="1" value="70">
+    </div>
+    <div class="lab-control">
+      <label for="pend-winit"><span>Initial angular velocity</span> <output id="pend-winit-out"></output></label>
+      <input id="pend-winit" type="range" min="-7" max="7" step="0.1" value="0">
+    </div>
+  </div>
+
+  <div class="lab-actions">
+    <button type="button" class="primary" id="pend-play">Start</button>
+    <button type="button" id="pend-pause">Pause</button>
+    <button type="button" id="pend-reset">Reset</button>
+  </div>
+
+  <dl class="lab-readouts" aria-live="polite">
+    <div class="lab-readout"><dt>Small-angle period (γ = 0)</dt><dd id="pend-small-period"></dd></div>
+    <div class="lab-readout"><dt>Exact period (γ = 0, from rest)</dt><dd id="pend-exact-period"></dd></div>
+    <div class="lab-readout"><dt>Initial motion for γ = 0</dt><dd id="pend-motion"></dd></div>
+    <div class="lab-readout"><dt>Current reduced energy</dt><dd id="pend-energy"></dd></div>
+  </dl>
+
+  <div class="canvas-grid">
+    <div class="canvas-card wide">
+      <div class="canvas-title">Pendulum motion</div>
+      <canvas id="pend-mechanics" aria-label="Animation of a simple pendulum"></canvas>
+      <div class="lab-legend">
+        <span class="legend-line legend-secondary">exact model</span>
+        <span class="legend-line legend-primary">small angles</span>
+      </div>
+    </div>
+    <div class="canvas-card">
+      <div class="canvas-title">Angle over time</div>
+      <canvas id="pend-time" aria-label="Comparison of exact and harmonic angles"></canvas>
+      <div class="lab-legend">
+        <span class="legend-line legend-secondary">exact θ</span>
+        <span class="legend-line legend-primary legend-dashed">linear θ</span>
+      </div>
+    </div>
+    <div class="canvas-card">
+      <div class="canvas-title">Phase portrait</div>
+      <canvas id="pend-phase" aria-label="Phase portrait of the pendulum"></canvas>
+      <div class="lab-legend">
+        <span class="legend-line legend-secondary">trajectory</span>
+        <span class="legend-line legend-reference legend-dashed">separatrices</span>
+      </div>
+    </div>
+  </div>
+  <p class="lab-help">With γ = 0 and zero initial velocity, compare starting angles of 10° and 120°. Then increase the initial velocity until ε exceeds 2 to obtain a rotation.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("pendulum-lab");
+  if (!root || root.dataset.initialized === "true") return;
+  root.dataset.initialized = "true";
+  const G = window.OscillatorCanvas;
+  const gravity = 9.81;
+
+  const ids = ["length", "gamma", "theta0", "winit"];
+  const inputs = Object.fromEntries(ids.map(id => [id, root.querySelector(`#pend-${id}`)]));
+  const outputs = Object.fromEntries(ids.map(id => [id, root.querySelector(`#pend-${id}-out`)]));
+  const mechanics = root.querySelector("#pend-mechanics");
+  const timeCanvas = root.querySelector("#pend-time");
+  const phaseCanvas = root.querySelector("#pend-phase");
+
+  let state = { t: 0, theta: 0, omega: 0, thetaLin: 0, omegaLin: 0 };
+  let history = [];
+  let running = false;
+  let animationId = null;
+  let lastWallTime = null;
+  let lastSample = 0;
+  const historyWindow = 18;
+
+  function parameters() {
+    const length = Number(inputs.length.value);
+    const gamma = Number(inputs.gamma.value);
+    const theta0 = Number(inputs.theta0.value) * Math.PI / 180;
+    const winit = Number(inputs.winit.value);
+    return { length, gamma, theta0, winit, omega0: Math.sqrt(gravity / length) };
+  }
+
+  function ellipticK(parameter) {
+    if (parameter >= 1) return Infinity;
+    let a = 1;
+    let b = Math.sqrt(Math.max(0, 1 - parameter));
+    for (let i = 0; i < 40; i++) {
+      const nextA = 0.5 * (a + b);
+      const nextB = Math.sqrt(a * b);
+      a = nextA;
+      b = nextB;
+      if (Math.abs(a - b) < 1e-14) break;
+    }
+    return Math.PI / (2 * a);
+  }
+
+  function reducedEnergy(theta, omega, p) {
+    return 0.5 * p.length * omega**2 / gravity + 1 - Math.cos(theta);
+  }
+
+  function formatControls() {
+    outputs.length.textContent = `${Number(inputs.length.value).toFixed(2)} m`;
+    outputs.gamma.textContent = `${Number(inputs.gamma.value).toFixed(2)} s⁻¹`;
+    outputs.theta0.textContent = `${Number(inputs.theta0.value).toFixed(0)}°`;
+    outputs.winit.textContent = `${Number(inputs.winit.value).toFixed(1)} rad·s⁻¹`;
+  }
+
+  function updateReadouts() {
+    const p = parameters();
+    const smallPeriod = 2 * Math.PI / p.omega0;
+    const initialEnergy = reducedEnergy(p.theta0, p.winit, p);
+    let motion;
+    if (Math.abs(initialEnergy - 2) < 0.025) motion = `separatrix, ε₀=${initialEnergy.toFixed(2)}`;
+    else if (initialEnergy < 2) motion = `libration, ε₀=${initialEnergy.toFixed(2)}`;
+    else motion = `rotation, ε₀=${initialEnergy.toFixed(2)}`;
+
+    const exactPeriod = 4 * Math.sqrt(p.length / gravity) *
+      ellipticK(Math.sin(p.theta0 / 2)**2);
+    const periodText = Math.abs(p.winit) < 1e-9
+      ? `${exactPeriod.toFixed(3)} s (+${(100 * (exactPeriod / smallPeriod - 1)).toFixed(1)} %)`
+      : "θmax formula not applicable";
+
+    root.querySelector("#pend-small-period").textContent =
+      `T₀ = ${smallPeriod.toFixed(3)} s`;
+    root.querySelector("#pend-exact-period").textContent = periodText;
+    root.querySelector("#pend-motion").textContent = motion;
+    root.querySelector("#pend-energy").textContent =
+      `ε = ${reducedEnergy(state.theta, state.omega, p).toFixed(3)}`;
+  }
+
+  function derivative(vector, p) {
+    const [theta, omega, thetaLin, omegaLin] = vector;
+    return [
+      omega,
+      -2 * p.gamma * omega - (gravity / p.length) * Math.sin(theta),
+      omegaLin,
+      -2 * p.gamma * omegaLin - (gravity / p.length) * thetaLin,
+    ];
+  }
+
+  function addScaled(a, b, scale) {
+    return a.map((value, i) => value + scale * b[i]);
+  }
+
+  function rk4Step(h, p) {
+    const y = [state.theta, state.omega, state.thetaLin, state.omegaLin];
+    const k1 = derivative(y, p);
+    const k2 = derivative(addScaled(y, k1, 0.5 * h), p);
+    const k3 = derivative(addScaled(y, k2, 0.5 * h), p);
+    const k4 = derivative(addScaled(y, k3, h), p);
+    const next = y.map((value, i) => value + h *
+      (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) / 6);
+    [state.theta, state.omega, state.thetaLin, state.omegaLin] = next;
+    state.t += h;
+  }
+
+  function advance(duration) {
+    const p = parameters();
+    const hMax = Math.min(0.006, 0.04 / Math.max(1, p.omega0, Math.abs(state.omega)));
+    const steps = Math.max(1, Math.ceil(duration / hMax));
+    const h = duration / steps;
+    for (let i = 0; i < steps; i++) {
+      rk4Step(h, p);
+      if (state.t - lastSample >= 0.018) {
+        history.push({ ...state });
+        lastSample = state.t;
+      }
+    }
+    const cutoff = state.t - historyWindow;
+    while (history.length > 2 && history[0].t < cutoff) history.shift();
+  }
+
+  function drawBob(ctx, pivotX, pivotY, rodLength, angle, color, alpha, radius) {
+    const x = pivotX + rodLength * Math.sin(angle);
+    const y = pivotY + rodLength * Math.cos(angle);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(pivotX, pivotY); ctx.lineTo(x, y); ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, 2 * Math.PI); ctx.fill();
+    ctx.restore();
+    return { x, y };
+  }
+
+  function drawMechanics() {
+    const { ctx, width, height } = G.context(mechanics, 245);
+    const palette = G.colors(root);
+    const p = parameters();
+    const pivotX = width / 2;
+    const pivotY = 30;
+    const rodLength = 72 + 26 * (p.length - 0.3) / 2.7;
+
+    ctx.strokeStyle = palette.text;
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(pivotX - 45, 17); ctx.lineTo(pivotX + 45, 17); ctx.stroke();
+    for (let x = pivotX - 40; x < pivotX + 44; x += 13) {
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, 17); ctx.lineTo(x + 9, 7); ctx.stroke();
+    }
+    ctx.setLineDash([5, 5]);
+    ctx.globalAlpha = 0.45;
+    ctx.beginPath(); ctx.moveTo(pivotX, pivotY); ctx.lineTo(pivotX, pivotY + rodLength + 30); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+
+    drawBob(ctx, pivotX, pivotY, rodLength, state.thetaLin, palette.blue, 0.38, 9);
+    const bob = drawBob(ctx, pivotX, pivotY, rodLength, state.theta, palette.orange, 1, 13);
+
+    ctx.fillStyle = palette.text;
+    ctx.font = G.font(root, "note");
+    ctx.textAlign = "right";
+    ctx.textBaseline = "top";
+    ctx.fillText(`t = ${state.t.toFixed(2)} s`, width - 12, 10);
+    ctx.fillText(`θ = ${(G.wrapPi(state.theta) * 180 / Math.PI).toFixed(1)}°`, width - 12, 28);
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = palette.orange;
+    ctx.fillText("exact", Math.min(width - 55, bob.x + 17), Math.min(height - 18, bob.y));
+  }
+
+  function drawTime() {
+    const xMin = Math.max(0, state.t - historyWindow);
+    const xMax = Math.max(historyWindow, state.t);
+    const angles = history.flatMap(item => [item.theta, item.thetaLin])
+      .concat([state.theta, state.thetaLin]);
+    const yLimit = G.symmetricLimit(angles, Math.PI / 4);
+    const plot = G.axes(root, timeCanvas,
+      { xMin, xMax, yMin: -yLimit, yMax: yLimit },
+      { x: "time t (s)", y: "angle θ (rad)" }, 250);
+    G.path(plot, history.map(item => [item.t, item.thetaLin]),
+      plot.palette.blue, 1.7, null, [6, 4]);
+    G.path(plot, history.map(item => [item.t, item.theta]), plot.palette.orange, 2.2);
+    G.point(plot, state.t, state.theta, plot.palette.orange, 4.1);
+  }
+
+  function drawPhase() {
+    const p = parameters();
+    const velocityLimit = G.symmetricLimit(history.map(item => item.omega)
+      .concat([state.omega, 2 * Math.sqrt(gravity / p.length)]), 2.0);
+    const plot = G.axes(root, phaseCanvas,
+      { xMin: -Math.PI, xMax: Math.PI, yMin: -velocityLimit, yMax: velocityLimit },
+      { x: "reduced angle θ (rad)", y: "angular velocity" }, 250);
+
+    const upper = [];
+    const lower = [];
+    for (let i = 0; i <= 240; i++) {
+      const theta = -Math.PI + 2 * Math.PI * i / 240;
+      const omega = 2 * Math.sqrt(gravity / p.length) * Math.cos(theta / 2);
+      upper.push([theta, omega]);
+      lower.push([theta, -omega]);
+    }
+    G.path(plot, upper, plot.palette.purple, 1.4, null, [6, 4]);
+    G.path(plot, lower, plot.palette.purple, 1.4, null, [6, 4]);
+
+    const phasePoints = history.map(item => [G.wrapPi(item.theta), item.omega]);
+    G.path(plot, phasePoints, plot.palette.orange, 2.0,
+      (previous, current) => Math.abs(previous[0] - current[0]) > Math.PI);
+    G.point(plot, G.wrapPi(state.theta), state.omega, plot.palette.orange, 4.2);
+  }
+
+  function draw() {
+    formatControls();
+    updateReadouts();
+    drawMechanics();
+    drawTime();
+    drawPhase();
+  }
+
+  function frame(timestamp) {
+    if (!running) return;
+    if (lastWallTime === null) lastWallTime = timestamp;
+    const elapsed = Math.min(0.05, Math.max(0, (timestamp - lastWallTime) / 1000));
+    lastWallTime = timestamp;
+    advance(1.45 * elapsed);
+    draw();
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function play() {
+    if (running) return;
+    running = true;
+    lastWallTime = null;
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    running = false;
+    if (animationId !== null) cancelAnimationFrame(animationId);
+    animationId = null;
+  }
+
+  function reset(keepRunning = false) {
+    const wasRunning = keepRunning && running;
+    if (!wasRunning) pause();
+    const p = parameters();
+    state = {
+      t: 0,
+      theta: p.theta0,
+      omega: p.winit,
+      thetaLin: p.theta0,
+      omegaLin: p.winit,
+    };
+    history = [{ ...state }];
+    lastSample = 0;
+    lastWallTime = null;
+    draw();
+    if (wasRunning && animationId === null) animationId = requestAnimationFrame(frame);
+  }
+
+  root.querySelector("#pend-play").addEventListener("click", play);
+  root.querySelector("#pend-pause").addEventListener("click", pause);
+  root.querySelector("#pend-reset").addEventListener("click", () => reset(false));
+  Object.values(inputs).forEach(input => {
+    input.addEventListener("input", () => reset(true));
+  });
+
+  const resizeObserver = new ResizeObserver(draw);
+  [mechanics, timeCanvas, phaseCanvas].forEach(canvas => resizeObserver.observe(canvas));
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true });
+  reset(false);
+})();
+</script>
+</section>
+<section id="damped-and-driven-spring" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="damped-and-driven-spring"><span class="header-section-number">6.2</span> Damped and driven spring</h3>
+<p>This simulation solves</p>
+<p><span class="math display">\[
+m\ddot x+b\dot x+kx=F_0\cos(\Omega t)
+\]</span></p>
+<p>from the chosen initial position and velocity. The curves include the transient motion. Set <span class="math inline">\(F_0=0\)</span> to study free motion, or use a small <span class="math inline">\(b\)</span> and vary <span class="math inline">\(\Omega\)</span> to study resonance. Changing a slider restarts the motion with the new parameters.</p>
+<div id="linear-oscillator-lab" class="oscillator-notes physics-simulation">
+  <div class="lab-heading">
+    <h4 class="anchored">Linear oscillator</h4>
+    <p>Motion, displacement and phase portrait</p>
+  </div>
+
+  <div class="lab-controls">
+    <div class="lab-control">
+      <label for="lin-m"><span>Mass <i>m</i></span> <output id="lin-m-out"></output></label>
+      <input id="lin-m" type="range" min="0.2" max="5" step="0.1" value="1">
+    </div>
+    <div class="lab-control">
+      <label for="lin-k"><span>Stiffness <i>k</i></span> <output id="lin-k-out"></output></label>
+      <input id="lin-k" type="range" min="0.2" max="20" step="0.1" value="4">
+    </div>
+    <div class="lab-control">
+      <label for="lin-b"><span>Damping <i>b</i></span> <output id="lin-b-out"></output></label>
+      <input id="lin-b" type="range" min="0" max="6" step="0.05" value="0.35">
+    </div>
+    <div class="lab-control">
+      <label for="lin-f"><span>Force <i>F</i><sub>0</sub></span> <output id="lin-f-out"></output></label>
+      <input id="lin-f" type="range" min="0" max="6" step="0.1" value="1.2">
+    </div>
+    <div class="lab-control">
+      <label for="lin-Omega"><span>Angular frequency Ω</span> <output id="lin-Omega-out"></output></label>
+      <input id="lin-Omega" type="range" min="0" max="8" step="0.05" value="1.7">
+    </div>
+    <div class="lab-control">
+      <label for="lin-x0"><span>Initial position <i>x</i><sub>0</sub></span> <output id="lin-x0-out"></output></label>
+      <input id="lin-x0" type="range" min="-2" max="2" step="0.05" value="1">
+    </div>
+    <div class="lab-control">
+      <label for="lin-v0"><span>Initial velocity <i>v</i><sub>0</sub></span> <output id="lin-v0-out"></output></label>
+      <input id="lin-v0" type="range" min="-4" max="4" step="0.05" value="0">
+    </div>
+  </div>
+
+  <div class="lab-actions">
+    <button type="button" class="primary" id="lin-play">Start</button>
+    <button type="button" id="lin-pause">Pause</button>
+    <button type="button" id="lin-reset">Reset</button>
+  </div>
+
+  <dl class="lab-readouts" aria-live="polite">
+    <div class="lab-readout"><dt>Natural angular frequency</dt><dd id="lin-natural"></dd></div>
+    <div class="lab-readout"><dt>Damping</dt><dd id="lin-damping"></dd></div>
+    <div class="lab-readout"><dt>Free regime</dt><dd id="lin-regime"></dd></div>
+    <div class="lab-readout"><dt>Mechanical energy</dt><dd id="lin-energy"></dd></div>
+  </dl>
+
+  <div class="canvas-grid">
+    <div class="canvas-card wide">
+      <div class="canvas-title">Mechanical view</div>
+      <canvas id="lin-mechanics" aria-label="Animation of a mass attached to a spring"></canvas>
+    </div>
+    <div class="canvas-card">
+      <div class="canvas-title">Position over time</div>
+      <canvas id="lin-time" aria-label="Position as a function of time"></canvas>
+      <div class="lab-legend">
+        <span class="legend-line legend-primary">position <i>x(t)</i></span>
+      </div>
+    </div>
+    <div class="canvas-card">
+      <div class="canvas-title">Phase portrait</div>
+      <canvas id="lin-phase" aria-label="Position-velocity phase portrait"></canvas>
+      <div class="lab-legend">
+        <span class="legend-line legend-secondary">trajectory (<i>x</i>, <i>v</i>)</span>
+      </div>
+    </div>
+  </div>
+  <p class="lab-help">For <i>F</i><sub>0</sub> = 0 and <i>b</i> = 0, changing the initial position changes the amplitude but not the period.</p>
+</div>
+<script>
+(() => {
+  "use strict";
+  const root = document.getElementById("linear-oscillator-lab");
+  if (!root || root.dataset.initialized === "true") return;
+  root.dataset.initialized = "true";
+  const G = window.OscillatorCanvas;
+
+  const ids = ["m", "k", "b", "f", "Omega", "x0", "v0"];
+  const inputs = Object.fromEntries(ids.map(id => [id, root.querySelector(`#lin-${id}`)]));
+  const outputs = Object.fromEntries(ids.map(id => [id, root.querySelector(`#lin-${id}-out`)]));
+  const mechanics = root.querySelector("#lin-mechanics");
+  const timeCanvas = root.querySelector("#lin-time");
+  const phaseCanvas = root.querySelector("#lin-phase");
+
+  let state = { t: 0, x: 1, v: 0 };
+  let history = [];
+  let running = false;
+  let animationId = null;
+  let lastWallTime = null;
+  let lastSample = 0;
+  const historyWindow = 16;
+
+  function parameters() {
+    const m = Number(inputs.m.value);
+    const k = Number(inputs.k.value);
+    const b = Number(inputs.b.value);
+    const F0 = Number(inputs.f.value);
+    const Omega = Number(inputs.Omega.value);
+    const omega0 = Math.sqrt(k / m);
+    const gamma = b / (2 * m);
+    const zeta = b / (2 * Math.sqrt(k * m));
+    return { m, k, b, F0, Omega, omega0, gamma, zeta };
+  }
+
+  function formatControls() {
+    outputs.m.textContent = `${Number(inputs.m.value).toFixed(1)} kg`;
+    outputs.k.textContent = `${Number(inputs.k.value).toFixed(1)} N·m⁻¹`;
+    outputs.b.textContent = `${Number(inputs.b.value).toFixed(2)} kg·s⁻¹`;
+    outputs.f.textContent = `${Number(inputs.f.value).toFixed(1)} N`;
+    outputs.Omega.textContent = `${Number(inputs.Omega.value).toFixed(2)} rad·s⁻¹`;
+    outputs.x0.textContent = `${Number(inputs.x0.value).toFixed(2)} m`;
+    outputs.v0.textContent = `${Number(inputs.v0.value).toFixed(2)} m·s⁻¹`;
+  }
+
+  function updateReadouts() {
+    const p = parameters();
+    const omegaD = p.zeta < 1 ? p.omega0 * Math.sqrt(1 - p.zeta**2) : 0;
+    let regime;
+    if (p.b < 1e-10) regime = "conservative";
+    else if (p.zeta < 0.995) regime = "underdamped";
+    else if (p.zeta > 1.005) regime = "overdamped";
+    else regime = "critical";
+    const energy = 0.5 * p.m * state.v**2 + 0.5 * p.k * state.x**2;
+    root.querySelector("#lin-natural").textContent = `ω₀ = ${p.omega0.toFixed(2)} rad·s⁻¹`;
+    root.querySelector("#lin-damping").textContent = p.zeta < 1
+      ? `ζ = ${p.zeta.toFixed(2)} ; ωd = ${omegaD.toFixed(2)}`
+      : `ζ = ${p.zeta.toFixed(2)}`;
+    root.querySelector("#lin-regime").textContent = regime;
+    root.querySelector("#lin-energy").textContent = `E = ${energy.toFixed(3)} J`;
+  }
+
+  function acceleration(t, x, v, p) {
+    return (p.F0 * Math.cos(p.Omega * t) - p.b * v - p.k * x) / p.m;
+  }
+
+  function rk4Step(h, p) {
+    const { t, x, v } = state;
+    const k1x = v;
+    const k1v = acceleration(t, x, v, p);
+    const k2x = v + 0.5 * h * k1v;
+    const k2v = acceleration(t + 0.5 * h, x + 0.5 * h * k1x, v + 0.5 * h * k1v, p);
+    const k3x = v + 0.5 * h * k2v;
+    const k3v = acceleration(t + 0.5 * h, x + 0.5 * h * k2x, v + 0.5 * h * k2v, p);
+    const k4x = v + h * k3v;
+    const k4v = acceleration(t + h, x + h * k3x, v + h * k3v, p);
+    state.x += h * (k1x + 2 * k2x + 2 * k3x + k4x) / 6;
+    state.v += h * (k1v + 2 * k2v + 2 * k3v + k4v) / 6;
+    state.t += h;
+  }
+
+  function advance(duration) {
+    const p = parameters();
+    const fastest = Math.max(1, p.omega0, p.Omega);
+    const hMax = Math.min(0.008, 0.045 / fastest);
+    const steps = Math.max(1, Math.ceil(duration / hMax));
+    const h = duration / steps;
+    for (let i = 0; i < steps; i++) {
+      rk4Step(h, p);
+      if (state.t - lastSample >= 0.018) {
+        history.push({ t: state.t, x: state.x, v: state.v });
+        lastSample = state.t;
+      }
+    }
+    const cutoff = state.t - historyWindow;
+    while (history.length > 2 && history[0].t < cutoff) history.shift();
+  }
+
+  function drawMechanics() {
+    const { ctx, width, height } = G.context(mechanics, 185);
+    const palette = G.colors(root);
+    const p = parameters();
+    const recentX = history.map(item => item.x).concat([state.x]);
+    const scale = Math.min(90, 0.28 * width / Math.max(0.7, ...recentX.map(Math.abs)));
+    const wallX = 26;
+    const equilibriumX = 0.62 * width;
+    const massWidth = Math.min(74, 0.13 * width);
+    const massHeight = 54;
+    const centerX = Math.max(wallX + 85, Math.min(width - massWidth / 2 - 14,
+      equilibriumX + scale * state.x));
+    const floorY = 0.72 * height;
+    const centerY = floorY - massHeight / 2;
+
+    ctx.strokeStyle = palette.text;
+    ctx.globalAlpha = 0.75;
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(10, floorY); ctx.lineTo(width - 10, floorY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(wallX, 25); ctx.lineTo(wallX, floorY); ctx.stroke();
+    for (let y = 33; y < floorY; y += 13) {
+      ctx.beginPath(); ctx.moveTo(11, y + 9); ctx.lineTo(wallX, y); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    G.spring(ctx, wallX, centerX - massWidth / 2, centerY, 10, 10, palette.blue);
+
+    ctx.fillStyle = palette.orange;
+    ctx.fillRect(centerX - massWidth / 2, centerY - massHeight / 2, massWidth, massHeight);
+    ctx.strokeStyle = palette.text;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(centerX - massWidth / 2, centerY - massHeight / 2, massWidth, massHeight);
+    ctx.fillStyle = palette.contrast;
+    ctx.font = G.font(root, "symbol");
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("m", centerX, centerY);
+
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = palette.green;
+    ctx.beginPath(); ctx.moveTo(equilibriumX, 20); ctx.lineTo(equilibriumX, floorY + 8); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = palette.green;
+    ctx.font = G.font(root);
+    ctx.textBaseline = "top";
+    ctx.fillText("x = 0", equilibriumX, floorY + 10);
+
+    const force = p.F0 * Math.cos(p.Omega * state.t);
+    if (Math.abs(force) > 0.02) {
+      const length = Math.sign(force) * Math.min(62, 11 * Math.abs(force));
+      const y = centerY - massHeight / 2 - 19;
+      const start = centerX;
+      const end = centerX + length;
+      ctx.strokeStyle = palette.red;
+      ctx.fillStyle = palette.red;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(start, y); ctx.lineTo(end, y); ctx.stroke();
+      const direction = Math.sign(length);
+      ctx.beginPath();
+      ctx.moveTo(end, y);
+      ctx.lineTo(end - 8 * direction, y - 5);
+      ctx.lineTo(end - 8 * direction, y + 5);
+      ctx.closePath(); ctx.fill();
+    }
+
+    ctx.fillStyle = palette.text;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "top";
+    ctx.font = G.font(root, "note");
+    ctx.fillText(`t = ${state.t.toFixed(2)} s`, width - 12, 10);
+    ctx.fillText(`x = ${state.x.toFixed(3)} m`, width - 12, 28);
+  }
+
+  function drawTime() {
+    const xMin = Math.max(0, state.t - historyWindow);
+    const xMax = Math.max(historyWindow, state.t);
+    const yLimit = G.symmetricLimit(history.map(item => item.x).concat([state.x]), 0.75);
+    const plot = G.axes(root, timeCanvas,
+      { xMin, xMax, yMin: -yLimit, yMax: yLimit },
+      { x: "time t (s)", y: "position x (m)" }, 250);
+    G.path(plot, history.map(item => [item.t, item.x]), plot.palette.blue, 2.2);
+    G.point(plot, state.t, state.x, plot.palette.blue, 4.2);
+  }
+
+  function drawPhase() {
+    const xLimit = G.symmetricLimit(history.map(item => item.x).concat([state.x]), 0.75);
+    const vLimit = G.symmetricLimit(history.map(item => item.v).concat([state.v]), 0.75);
+    const plot = G.axes(root, phaseCanvas,
+      { xMin: -xLimit, xMax: xLimit, yMin: -vLimit, yMax: vLimit },
+      { x: "position x (m)", y: "velocity v (m·s⁻¹)" }, 250);
+    G.path(plot, history.map(item => [item.x, item.v]), plot.palette.orange, 2.0);
+    G.point(plot, state.x, state.v, plot.palette.orange, 4.2);
+  }
+
+  function draw() {
+    formatControls();
+    updateReadouts();
+    drawMechanics();
+    drawTime();
+    drawPhase();
+  }
+
+  function frame(timestamp) {
+    if (!running) return;
+    if (lastWallTime === null) lastWallTime = timestamp;
+    const elapsed = Math.min(0.05, Math.max(0, (timestamp - lastWallTime) / 1000));
+    lastWallTime = timestamp;
+    advance(1.6 * elapsed);
+    draw();
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function play() {
+    if (running) return;
+    running = true;
+    lastWallTime = null;
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    running = false;
+    if (animationId !== null) cancelAnimationFrame(animationId);
+    animationId = null;
+  }
+
+  function reset(keepRunning = false) {
+    const wasRunning = keepRunning && running;
+    if (!wasRunning) pause();
+    state = { t: 0, x: Number(inputs.x0.value), v: Number(inputs.v0.value) };
+    history = [{ ...state }];
+    lastSample = 0;
+    lastWallTime = null;
+    draw();
+    if (wasRunning && animationId === null) animationId = requestAnimationFrame(frame);
+  }
+
+  root.querySelector("#lin-play").addEventListener("click", play);
+  root.querySelector("#lin-pause").addEventListener("click", pause);
+  root.querySelector("#lin-reset").addEventListener("click", () => reset(false));
+  Object.values(inputs).forEach(input => {
+    input.addEventListener("input", () => reset(true));
+  });
+
+  const resizeObserver = new ResizeObserver(draw);
+  [mechanics, timeCanvas, phaseCanvas].forEach(canvas => resizeObserver.observe(canvas));
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true });
+  reset(false);
+})();
+</script>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>For this approximation, see Michael Fowler’s <a href="https://galileoandeinstein.phys.virginia.edu/7010/CM_20_Parametric_Resonance.html">notes on parametric resonance</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The Jaynes–Cummings model – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-atom-and-the-field" id="toc-the-atom-and-the-field" class="nav-link active" data-scroll-target="#the-atom-and-the-field"><span class="header-section-number">1</span> The atom and the field</a></li>
+  <li><a href="#doublets-and-dressed-states" id="toc-doublets-and-dressed-states" class="nav-link" data-scroll-target="#doublets-and-dressed-states"><span class="header-section-number">2</span> Doublets and dressed states</a></li>
+  <li><a href="#rabi-oscillations" id="toc-rabi-oscillations" class="nav-link" data-scroll-target="#rabi-oscillations"><span class="header-section-number">3</span> Rabi oscillations</a></li>
+  <li><a href="#a-coherent-field-collapse-and-revival" id="toc-a-coherent-field-collapse-and-revival" class="nav-link" data-scroll-target="#a-coherent-field-collapse-and-revival"><span class="header-section-number">4</span> A coherent field: collapse and revival</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5</span> Exercises</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">6</span> Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Jaynes–Cummings model</h1>
+<p class="subtitle lead">A two-level atom coupled to a quantized field mode</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-atom-and-the-field" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="the-atom-and-the-field"><span class="header-section-number">1</span> The atom and the field</h2>
+<p>An excited atom placed in a cavity can emit a photon into a cavity mode and later absorb it again. The Jaynes–Cummings model describes this exchange when two atomic levels and one field mode are enough to describe the system. Both the atom and the field are treated quantum mechanically.</p>
+<p>We take a constant coupling and neglect photon loss and emission into other modes. The evolution is therefore closed and coherent.</p>
+<section id="the-uncoupled-system" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="the-uncoupled-system"><span class="header-section-number">1.1</span> The uncoupled system</h3>
+<p>Let <span class="math inline">\(|g\rangle\)</span> and <span class="math inline">\(|e\rangle\)</span> be the atomic ground and excited states, separated by <span class="math inline">\(\hbar\omega_a\)</span>. Choosing the energy origin halfway between them gives</p>
+<p><span class="math display">\[
+H_a=\frac{\hbar\omega_a}{2}\sigma_z,
+\qquad
+\sigma_z=|e\rangle\langle e|-|g\rangle\langle g|.
+\]</span></p>
+<p>The transition operators raise or lower the atom:</p>
+<p><span class="math display">\[
+\sigma_+=|e\rangle\langle g|,
+\qquad
+\sigma_-=|g\rangle\langle e|.
+\]</span></p>
+<p>Thus <span class="math inline">\(\sigma_+|g\rangle=|e\rangle\)</span> and <span class="math inline">\(\sigma_-|e\rangle=|g\rangle\)</span>, while <span class="math inline">\(\sigma_+|e\rangle=\sigma_-|g\rangle=0\)</span>.</p>
+<p>A field mode of angular frequency <span class="math inline">\(\omega_c\)</span> is a quantum harmonic oscillator. Dropping its constant zero-point energy,</p>
+<p><span class="math display">\[
+H_c=\hbar\omega_c a^\dagger a,
+\qquad [a,a^\dagger]=1.
+\]</span></p>
+<p>The Fock state <span class="math inline">\(|n\rangle\)</span> contains exactly <span class="math inline">\(n\)</span> photons, and</p>
+<p><span class="math display">\[
+a|n\rangle=\sqrt n\,|n-1\rangle,
+\qquad
+a^\dagger|n\rangle=\sqrt{n+1}\,|n+1\rangle.
+\]</span></p>
+<p>Here <span class="math inline">\(a|0\rangle=0\)</span>. We write product states as <span class="math inline">\(|e,n\rangle=|e\rangle\otimes|n\rangle\)</span>. Atomic and field operators act on different factors, so they commute. Identity operators on the other factor will be left implicit. The free Hamiltonian is <span class="math inline">\(H_0=H_a+H_c\)</span>.</p>
+</section>
+<section id="the-interaction" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="the-interaction"><span class="header-section-number">1.2</span> The interaction</h3>
+<p>In the electric dipole approximation, <span class="math inline">\(H_I=-\mathbf d\cdot\mathbf E\)</span>. For a dipole-allowed transition with no diagonal dipole moments, the two-level dipole operator contains <span class="math inline">\(\sigma_+\)</span> and <span class="math inline">\(\sigma_-\)</span>. The mode’s electric field contains <span class="math inline">\(a\)</span> and <span class="math inline">\(a^\dagger\)</span>. With a suitable phase choice, this gives</p>
+<p><span class="math display">\[
+H_I=\hbar g(a+a^\dagger)(\sigma_++\sigma_-),
+\]</span></p>
+<p>where <span class="math inline">\(g&gt;0\)</span> has units of angular frequency. It depends on the transition dipole, the field strength per photon and the atom’s position in the mode.</p>
+<p>The terms <span class="math inline">\(a\sigma_+\)</span> and <span class="math inline">\(a^\dagger\sigma_-\)</span> exchange one excitation: the atom absorbs or emits one photon. The other terms, <span class="math inline">\(a\sigma_-\)</span> and <span class="math inline">\(a^\dagger\sigma_+\)</span>, remove or create two excitations at once.</p>
+<p>In the interaction picture defined by <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+a(t)=ae^{-i\omega_ct},
+\qquad \sigma_+(t)=\sigma_+e^{i\omega_at}.
+\]</span></p>
+<p>The exchange terms therefore oscillate at <span class="math inline">\(\Delta=\omega_a-\omega_c\)</span>, while the other two oscillate at <span class="math inline">\(\pm(\omega_a+\omega_c)\)</span>. Near resonance, the latter vary much faster. If</p>
+<p><span class="math display">\[
+|\Delta|\ll\omega_a+\omega_c,
+\qquad g\sqrt{n+1}\ll\omega_a+\omega_c
+\]</span></p>
+<p>for the photon numbers that are populated, their effect averages out on the exchange timescale. Dropping them is the rotating-wave approximation. It gives</p>
+<p><span id="eq-jc-hamiltonian"><span class="math display">\[
+\boxed{
+H_{\mathrm{JC}}=\hbar\omega_c a^\dagger a
++\frac{\hbar\omega_a}{2}\sigma_z
++\hbar g(a\sigma_++a^\dagger\sigma_-).
+}
+\tag{1}\]</span></span></p>
+</section>
+</section>
+<section id="doublets-and-dressed-states" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="doublets-and-dressed-states"><span class="header-section-number">2</span> Doublets and dressed states</h2>
+<section id="conserved-excitation-number" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="conserved-excitation-number"><span class="header-section-number">2.1</span> Conserved excitation number</h3>
+<p>The operator</p>
+<p><span class="math display">\[
+N=a^\dagger a+\sigma_+\sigma_-
+=a^\dagger a+|e\rangle\langle e|
+\]</span></p>
+<p>counts photons plus the atomic excitation. Absorption decreases the photon number by one and raises the atomic contribution by one; emission does the reverse. This gives <span class="math inline">\([H_{\mathrm{JC}},N]=0\)</span>, proved explicitly in Exercise 2.</p>
+<p>The states <span class="math inline">\(|e,n\rangle\)</span> and <span class="math inline">\(|g,n+1\rangle\)</span> both have <span class="math inline">\(N=n+1\)</span>. The Hamiltonian only mixes these two states, so we solve it in each subspace</p>
+<p><span class="math display">\[
+\mathcal H_n=\operatorname{span}\{|e,n\rangle,|g,n+1\rangle\},
+\qquad n=0,1,2,\ldots.
+\]</span></p>
+<p>The state <span class="math inline">\(|g,0\rangle\)</span> is uncoupled and has energy <span class="math inline">\(-\hbar\omega_a/2\)</span>.</p>
+</section>
+<section id="a-two-by-two-hamiltonian" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="a-two-by-two-hamiltonian"><span class="header-section-number">2.2</span> A two-by-two Hamiltonian</h3>
+<p>Set <span class="math inline">\(G_n=g\sqrt{n+1}\)</span>. Applying the Hamiltonian gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+H_{\mathrm{JC}}|e,n\rangle
+&amp;=\hbar\left(n\omega_c+\frac{\omega_a}{2}\right)|e,n\rangle
++\hbar G_n|g,n+1\rangle,\\
+H_{\mathrm{JC}}|g,n+1\rangle
+&amp;=\hbar G_n|e,n\rangle
++\hbar\left((n+1)\omega_c-\frac{\omega_a}{2}\right)|g,n+1\rangle.
+\end{aligned}
+\]</span></p>
+<p>In the ordered basis <span class="math inline">\((|e,n\rangle,|g,n+1\rangle)\)</span>, subtracting the mean of the diagonal entries gives</p>
+<p><span id="eq-jc-block"><span class="math display">\[
+H_n=\hbar\omega_c\left(n+\frac12\right)I
++\hbar K_n,
+\qquad
+K_n=\begin{pmatrix}\Delta/2&amp;G_n\\G_n&amp;-\Delta/2\end{pmatrix}.
+\tag{2}\]</span></span></p>
+<p>If <span class="math inline">\(\lambda\)</span> is an eigenvalue of <span class="math inline">\(K_n\)</span>, its characteristic equation is</p>
+<p><span class="math display">\[
+\det(K_n-\lambda I)=\lambda^2-\frac{\Delta^2}{4}-G_n^2=0.
+\]</span></p>
+<p>Define the generalized Rabi angular frequency</p>
+<p><span id="eq-jc-rabi-frequency"><span class="math display">\[
+\Omega_n=\sqrt{\Delta^2+4g^2(n+1)}.
+\tag{3}\]</span></span></p>
+<p>The energies are then</p>
+<p><span id="eq-jc-energies"><span class="math display">\[
+E_{n,\pm}=\hbar\omega_c\left(n+\frac12\right)
+\pm\frac{\hbar\Omega_n}{2}.
+\tag{4}\]</span></span></p>
+<p>The eigenstates are called dressed states because they combine atomic and field excitations. To specify the mixing angle for either sign of <span class="math inline">\(\Delta\)</span>, choose <span class="math inline">\(0&lt;\theta_n&lt;\pi/2\)</span> with</p>
+<p><span class="math display">\[
+\cos(2\theta_n)=\frac{\Delta}{\Omega_n},
+\qquad
+\sin(2\theta_n)=\frac{2G_n}{\Omega_n}.
+\]</span></p>
+<p>The corresponding normalized states are</p>
+<p><span class="math display">\[
+\begin{aligned}
+|n,+\rangle&amp;=\cos\theta_n|e,n\rangle+\sin\theta_n|g,n+1\rangle,\\
+|n,-\rangle&amp;=-\sin\theta_n|e,n\rangle+\cos\theta_n|g,n+1\rangle.
+\end{aligned}
+\]</span></p>
+<p>At resonance, <span class="math inline">\(\Delta=0\)</span> and <span class="math inline">\(\theta_n=\pi/4\)</span>. The two states are equal-weight combinations, and their energy separation is <span class="math inline">\(2\hbar g\sqrt{n+1}\)</span>. For <span class="math inline">\(n=0\)</span>, the splitting <span class="math inline">\(2\hbar g\)</span> is the vacuum Rabi splitting.</p>
+<div id="setup-jaynes-cummings" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Plot settings</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.figsize"</span>: (<span class="fl">8.5</span>, <span class="fl">4.8</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.grid"</span>: <span class="va">True</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.23</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>folders <span class="op">=</span> [Path.cwd(), <span class="op">*</span>Path.cwd().parents]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>stylesheet <span class="op">=</span> <span class="bu">next</span>((p <span class="op">/</span> <span class="st">"styles.css"</span> <span class="cf">for</span> p <span class="kw">in</span> folders</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">if</span> (p <span class="op">/</span> <span class="st">"styles.css"</span>).is_file()), <span class="va">None</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>palette <span class="op">=</span> <span class="bu">dict</span>(re.findall(<span class="vs">r"--</span><span class="kw">(</span><span class="pp">[</span><span class="dv">\w</span><span class="pp">-]</span><span class="op">+</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="vs">:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="pp">[^;{}]</span><span class="op">+</span><span class="kw">)</span><span class="vs">"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                         stylesheet.read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="cf">if</span> stylesheet <span class="cf">else</span> <span class="st">""</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>defaults <span class="op">=</span> plt.rcParams[<span class="st">"axes.prop_cycle"</span>].by_key()[<span class="st">"color"</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plot_colors <span class="op">=</span> [palette.get(<span class="ss">f"plot-</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>, defaults[i<span class="op">-</span><span class="dv">1</span>]).strip() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">6</span>)]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>BLEU, ORANGE, VERT, ROUGE, VIOLET <span class="op">=</span> plot_colors</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>GRIS <span class="op">=</span> palette.get(<span class="st">"muted"</span>, <span class="st">"0.45"</span>).strip()</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.prop_cycle"</span>] <span class="op">=</span> plt.cycler(color<span class="op">=</span>plot_colors)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-fig-croisement-evite-jc" class="cell" data-fig-height="4.8" data-fig-width="8.5" data-execution_count="2">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">800</span>)  <span class="co"># Delta / g</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> np.sqrt(delta<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>e_plus <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> omega</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>e_minus <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> omega</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>e_bare_1 <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> delta</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>e_bare_2 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> delta</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_plus, lw<span class="op">=</span><span class="fl">2.4</span>, color<span class="op">=</span>BLEU, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">E_{</span><span class="op">+</span><span class="vs">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_minus, lw<span class="op">=</span><span class="fl">2.4</span>, color<span class="op">=</span>ORANGE, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">E_{-}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_bare_1, <span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.2</span>, color<span class="op">=</span>GRIS, label<span class="op">=</span><span class="st">"uncoupled levels"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_bare_2, <span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.2</span>, color<span class="op">=</span>GRIS)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Detuning </span><span class="dv">$\D</span><span class="vs">elta/g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Shifted energy in units of </span><span class="dv">$</span><span class="er">\</span><span class="vs">hbar g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Dressed energies near resonance"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-croisement-evite-jc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-croisement-evite-jc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="jaynes-cummings - EN_files/figure-html/fig-croisement-evite-jc-output-1.png" width="704" height="440" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-croisement-evite-jc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Avoided crossing in the first doublet. The common energy is subtracted.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The uncoupled levels would cross at resonance. The interaction opens a gap, giving the avoided crossing in the figure.</p>
+</section>
+</section>
+<section id="rabi-oscillations" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="rabi-oscillations"><span class="header-section-number">3</span> Rabi oscillations</h2>
+<p>Suppose the initial state is <span class="math inline">\(|e,n\rangle\)</span>. The evolution stays within <span class="math inline">\(\mathcal H_n\)</span>. Since</p>
+<p><span class="math display">\[
+K_n^2=\frac{\Omega_n^2}{4}I,
+\]</span></p>
+<p>the even and odd powers in the exponential give</p>
+<p><span class="math display">\[
+e^{-iK_nt}=I\cos\frac{\Omega_nt}{2}
+-\frac{2iK_n}{\Omega_n}\sin\frac{\Omega_nt}{2}.
+\]</span></p>
+<p>Applying this matrix to <span class="math inline">\((1,0)^T\)</span> and restoring the common phase gives</p>
+<p><span id="eq-jc-evolution"><span class="math display">\[
+\begin{aligned}
+|\psi(t)\rangle=e^{-i\omega_c(n+1/2)t}\Bigg[&amp;
+\left(\cos\frac{\Omega_nt}{2}
+-i\frac{\Delta}{\Omega_n}\sin\frac{\Omega_nt}{2}\right)|e,n\rangle\\
+&amp;-i\frac{2G_n}{\Omega_n}\sin\frac{\Omega_nt}{2}|g,n+1\rangle\Bigg].
+\end{aligned}
+\tag{5}\]</span></span></p>
+<p>Taking the squared modulus of the first amplitude yields</p>
+<p><span id="eq-jc-excited-probability"><span class="math display">\[
+P_e^{(n)}(t)=1-\frac{4g^2(n+1)}{\Omega_n^2}
+\sin^2\left(\frac{\Omega_nt}{2}\right).
+\tag{6}\]</span></span></p>
+<p>At resonance this becomes <span class="math inline">\(P_e^{(n)}(t)=\cos^2(g\sqrt{n+1}\,t)\)</span>. The excitation moves back and forth between <span class="math inline">\(|e,n\rangle\)</span> and <span class="math inline">\(|g,n+1\rangle\)</span>. For <span class="math inline">\(n=0\)</span>, the initially excited atom exchanges its excitation with the empty mode. This is a vacuum Rabi oscillation; the energy comes from the excited atom, not from the vacuum.</p>
+<div id="cell-fig-rabi-etats-fock" class="cell" data-fig-height="4.8" data-fig-width="8.5" data-execution_count="3">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tau <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span> <span class="op">*</span> np.pi, <span class="dv">1400</span>)  <span class="co"># tau = g t</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n, color <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>], [BLEU, ORANGE, VIOLET]):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    probability <span class="op">=</span> np.cos(np.sqrt(n <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> tau) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.plot(tau, probability, lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>color, label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Scaled time </span><span class="dv">$</span><span class="vs">gt</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Probability </span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Rabi oscillations for different photon numbers"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-rabi-etats-fock" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rabi-etats-fock-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="jaynes-cummings - EN_files/figure-html/fig-rabi-etats-fock-output-1.png" width="706" height="440" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rabi-etats-fock-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Excited-state probability at resonance, starting from the excited atom and a Fock state.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Away from resonance, the maximum transfer probability is</p>
+<p><span class="math display">\[
+P_{e,n\to g,n+1}^{\max}
+=\frac{4g^2(n+1)}{\Delta^2+4g^2(n+1)}&lt;1.
+\]</span></p>
+<p>Detuning therefore reduces the transfer, even though the oscillation frequency <span class="math inline">\(\Omega_n\)</span> increases.</p>
+</section>
+<section id="a-coherent-field-collapse-and-revival" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="a-coherent-field-collapse-and-revival"><span class="header-section-number">4</span> A coherent field: collapse and revival</h2>
+<p>A Fock state has a fixed photon number. A coherent state is a superposition,</p>
+<p><span class="math display">\[
+|\alpha\rangle=e^{-|\alpha|^2/2}
+\sum_{n=0}^{\infty}\frac{\alpha^n}{\sqrt{n!}}|n\rangle,
+\]</span></p>
+<p>with Poisson probabilities</p>
+<p><span class="math display">\[
+p_n=e^{-\bar n}\frac{\bar n^n}{n!},
+\qquad \bar n=|\alpha|^2.
+\]</span></p>
+<p>Start from <span class="math inline">\(|e\rangle\otimes|\alpha\rangle\)</span> at resonance. Each component <span class="math inline">\(|e,n\rangle\)</span> evolves with its own Rabi frequency. To find the probability of an excited atom, we sum over all final photon numbers. Their orthogonality removes cross terms, leaving</p>
+<p><span id="eq-jc-coherent-probability"><span class="math display">\[
+P_e(t)=\sum_{n=0}^{\infty}p_n\cos^2(g\sqrt{n+1}\,t).
+\tag{7}\]</span></span></p>
+<p>Initially the oscillations add together. As their phases separate, their sum approaches <span class="math inline">\(1/2\)</span> and the visible oscillations collapse. At later times, neighboring components partly return to phase and the oscillations revive. The total evolution remains unitary: the collapse is not energy loss.</p>
+<p>For <span class="math inline">\(\bar n\gg1\)</span>, the first revival occurs at approximately</p>
+<p><span class="math display">\[
+t_{\mathrm{rev}}\simeq\frac{2\pi\sqrt{\bar n}}{g}.
+\]</span></p>
+<p>Exercise 5 derives this estimate. The collapse time is of order <span class="math inline">\(1/g\)</span>, so collapse and revival occur on different timescales when <span class="math inline">\(\bar n\)</span> is large.</p>
+<div id="cell-fig-effondrement-resurgence" class="cell" data-fig-height="4.8" data-fig-width="9" data-execution_count="4">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nbar <span class="op">=</span> <span class="fl">16.0</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>nmax <span class="op">=</span> <span class="bu">int</span>(nbar <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> np.sqrt(nbar) <span class="op">+</span> <span class="dv">40</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n_values <span class="op">=</span> np.arange(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson probabilities from their recurrence relation.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>poisson <span class="op">=</span> np.empty(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>poisson[<span class="dv">0</span>] <span class="op">=</span> np.exp(<span class="op">-</span>nbar)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    poisson[n <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> poisson[n] <span class="op">*</span> nbar <span class="op">/</span> (n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>poisson <span class="op">/=</span> poisson.<span class="bu">sum</span>()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>t_rev <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.sqrt(nbar)  <span class="co"># scaled time g t</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>tau <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">2.15</span> <span class="op">*</span> t_rev, <span class="dv">4500</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>phases <span class="op">=</span> np.sqrt(n_values[:, <span class="va">None</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> tau[<span class="va">None</span>, :]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>p_excited <span class="op">=</span> np.<span class="bu">sum</span>(poisson[:, <span class="va">None</span>] <span class="op">*</span> np.cos(phases) <span class="op">**</span> <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.8</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ax.plot(tau, p_excited, color<span class="op">=</span>BLEU, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ax.axvline(t_rev, color<span class="op">=</span>ORANGE, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.3</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t_{</span><span class="dv">\m</span><span class="vs">athrm{rev}}</span><span class="dv">\s</span><span class="vs">imeq2</span><span class="er">\</span><span class="vs">pi</span><span class="dv">\s</span><span class="vs">qrt{</span><span class="dv">\b</span><span class="vs">ar n}/g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2</span> <span class="op">*</span> t_rev, color<span class="op">=</span>ORANGE, ls<span class="op">=</span><span class="st">":"</span>, lw<span class="op">=</span><span class="fl">1.1</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Scaled time </span><span class="dv">$</span><span class="vs">gt</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Probability </span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="vs">r"Coherent field : </span><span class="dv">$\b</span><span class="vs">ar n=16</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-effondrement-resurgence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effondrement-resurgence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="jaynes-cummings - EN_files/figure-html/fig-effondrement-resurgence-output-1.png" width="743" height="440" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effondrement-resurgence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Collapse and revivals for an initially excited atom and a coherent field with mean photon number 16.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5</span> Exercises</h2>
+<section id="exercise-1-interaction-processes" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="exercise-1-interaction-processes"><span class="header-section-number">5.1</span> Exercise 1 — Interaction processes</h3>
+<p>Consider <span class="math inline">\(V=\hbar g(a+a^\dagger)(\sigma_++\sigma_-)\)</span>.</p>
+<ol type="1">
+<li>Expand <span class="math inline">\(V\)</span> into four terms.</li>
+<li>Give the nonzero action of each term on <span class="math inline">\(|g,n\rangle\)</span> or <span class="math inline">\(|e,n\rangle\)</span>.</li>
+<li>Identify which terms conserve <span class="math inline">\(N\)</span>.</li>
+<li>Explain why the other two can be neglected in the rotating-wave approximation.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Expanding the product gives</p>
+<p><span class="math display">\[
+V=\hbar g(a\sigma_++a^\dagger\sigma_-+a\sigma_-+a^\dagger\sigma_+).
+\]</span></p>
+<p>Apply the field and atomic operators separately:</p>
+<p><span class="math display">\[
+\begin{aligned}
+a\sigma_+|g,n\rangle&amp;=\sqrt n\,|e,n-1\rangle,\\
+a^\dagger\sigma_-|e,n\rangle&amp;=\sqrt{n+1}\,|g,n+1\rangle,\\
+a\sigma_-|e,n\rangle&amp;=\sqrt n\,|g,n-1\rangle,\\
+a^\dagger\sigma_+|g,n\rangle&amp;=\sqrt{n+1}\,|e,n+1\rangle.
+\end{aligned}
+\]</span></p>
+<p>The terms containing <span class="math inline">\(a\)</span> give zero when <span class="math inline">\(n=0\)</span>. Each term also gives zero on the other atomic state because <span class="math inline">\(\sigma_+|e\rangle=\sigma_-|g\rangle=0\)</span>.</p>
+<p>For <span class="math inline">\(a\sigma_+\)</span>, the field loses one excitation and the atom gains one. For <span class="math inline">\(a^\dagger\sigma_-\)</span>, the changes are reversed. Both conserve <span class="math inline">\(N\)</span>. The other two change <span class="math inline">\(N\)</span> by <span class="math inline">\(-2\)</span> and <span class="math inline">\(+2\)</span>.</p>
+<p>In the interaction picture, the exchange terms have factors <span class="math inline">\(e^{\pm i\Delta t}\)</span>. The counter-rotating terms have factors <span class="math inline">\(e^{\pm i(\omega_a+\omega_c)t}\)</span>. Near resonance and at weak coupling, these fast terms average out on the slower exchange timescale, leaving the Jaynes–Cummings interaction.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-conservation-of-excitations" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="exercise-2-conservation-of-excitations"><span class="header-section-number">5.2</span> Exercise 2 — Conservation of excitations</h3>
+<p>Let <span class="math inline">\(N=a^\dagger a+\sigma_+\sigma_-\)</span>.</p>
+<ol type="1">
+<li>Show explicitly that <span class="math inline">\([N,a\sigma_+]=0\)</span>.</li>
+<li>Show that <span class="math inline">\([N,a^\dagger\sigma_-]=0\)</span>.</li>
+<li>Deduce <span class="math inline">\([H_{\mathrm{JC}},N]=0\)</span>.</li>
+<li>Find the product basis states with exactly two excitations.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since atomic and field operators commute,</p>
+<p><span class="math display">\[
+[N,a\sigma_+]=[a^\dagger a,a]\sigma_+
++a[\sigma_+\sigma_-,\sigma_+].
+\]</span></p>
+<p>The field commutator is <span class="math inline">\([a^\dagger a,a]=-a\)</span>. For the atom, <span class="math inline">\(\sigma_+\sigma_-=|e\rangle\langle e|\)</span>, so</p>
+<p><span class="math display">\[
+[|e\rangle\langle e|,\sigma_+]=\sigma_+.
+\]</span></p>
+<p>Thus <span class="math inline">\([N,a\sigma_+]=-a\sigma_++a\sigma_+=0\)</span>. Similarly,</p>
+<p><span class="math display">\[
+[a^\dagger a,a^\dagger]=a^\dagger,
+\qquad
+[|e\rangle\langle e|,\sigma_-]=-\sigma_-,
+\]</span></p>
+<p>which gives <span class="math inline">\([N,a^\dagger\sigma_-]=a^\dagger\sigma_--a^\dagger\sigma_-=0\)</span>.</p>
+<p>The free terms also commute with <span class="math inline">\(N\)</span>, since <span class="math inline">\(|e\rangle\langle e|=(I+\sigma_z)/2\)</span>. Every term of the Hamiltonian therefore commutes with <span class="math inline">\(N\)</span>.</p>
+<p>Two excitations mean either an excited atom with one photon, <span class="math inline">\(|e,1\rangle\)</span>, or a ground-state atom with two photons, <span class="math inline">\(|g,2\rangle\)</span>. They span <span class="math inline">\(\mathcal H_1\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3-vacuum-oscillations-and-entanglement" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="exercise-3-vacuum-oscillations-and-entanglement"><span class="header-section-number">5.3</span> Exercise 3 — Vacuum oscillations and entanglement</h3>
+<p>The atom starts in <span class="math inline">\(|e\rangle\)</span> and the cavity in <span class="math inline">\(|0\rangle\)</span>, at resonance.</p>
+<ol type="1">
+<li>Write <span class="math inline">\(|\psi(t)\rangle\)</span> in the interaction picture.</li>
+<li>Find the first time when the excitation has been transferred completely to the field.</li>
+<li>Find the first time when the atom and field are maximally entangled.</li>
+<li>Calculate the reduced atomic density matrix at that time.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here <span class="math inline">\(n=0\)</span> and <span class="math inline">\(\Omega_0=2g\)</span>. Removing the free evolution from <a href="#eq-jc-evolution" class="quarto-xref">Equation&nbsp;5</a> gives</p>
+<p><span class="math display">\[
+|\psi(t)\rangle=\cos(gt)|e,0\rangle-i\sin(gt)|g,1\rangle.
+\]</span></p>
+<p>Complete transfer requires <span class="math inline">\(\cos(gt)=0\)</span>. The first positive time is</p>
+<p><span class="math display">\[
+t_{\mathrm{transfer}}=\frac{\pi}{2g}.
+\]</span></p>
+<p>At that time the state is <span class="math inline">\(-i|g,1\rangle\)</span>, a product state. Entanglement is instead maximal when the two coefficients have equal magnitude:</p>
+<p><span class="math display">\[
+\cos^2(gt)=\sin^2(gt)=\frac12,
+\qquad t_{\mathrm{ent}}=\frac{\pi}{4g}.
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+|\psi(t_{\mathrm{ent}})\rangle
+=\frac{|e,0\rangle-i|g,1\rangle}{\sqrt2}.
+\]</span></p>
+<p>To trace out the field, use</p>
+<p><span class="math display">\[
+\operatorname{Tr}_c\bigl(|a,n\rangle\langle b,m|\bigr)
+=\langle m|n\rangle\,|a\rangle\langle b|.
+\]</span></p>
+<p>The cross terms vanish because <span class="math inline">\(\langle0|1\rangle=0\)</span>, so</p>
+<p><span class="math display">\[
+\rho_a=\frac12|e\rangle\langle e|+\frac12|g\rangle\langle g|
+=\frac I2.
+\]</span></p>
+<p>The total state is pure, while the atom is maximally mixed. Since the displayed two terms are already orthogonal product states with equal weights, they give maximal entanglement between the atom and this two-dimensional field subspace.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4-detuning" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="exercise-4-detuning"><span class="header-section-number">5.4</span> Exercise 4 — Detuning</h3>
+<p>Start from <span class="math inline">\(|e,n\rangle\)</span> with arbitrary <span class="math inline">\(\Delta\)</span>.</p>
+<ol type="1">
+<li>Find <span class="math inline">\(P_{g,n+1}(t)\)</span>.</li>
+<li>Find its maximum value and the first time it is reached.</li>
+<li>Evaluate these quantities for <span class="math inline">\(\Delta=2g\sqrt{n+1}\)</span>.</li>
+<li>Interpret the limit <span class="math inline">\(|\Delta|\gg g\sqrt{n+1}\)</span>.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Squaring the second amplitude in <a href="#eq-jc-evolution" class="quarto-xref">Equation&nbsp;5</a> gives</p>
+<p><span class="math display">\[
+P_{g,n+1}(t)=\frac{4g^2(n+1)}{\Omega_n^2}
+\sin^2\left(\frac{\Omega_nt}{2}\right).
+\]</span></p>
+<p>The first maximum has <span class="math inline">\(\Omega_nt/2=\pi/2\)</span>, hence</p>
+<p><span class="math display">\[
+P_{g,n+1}^{\max}=\frac{4g^2(n+1)}{\Delta^2+4g^2(n+1)},
+\qquad t_{\max}=\frac{\pi}{\Omega_n}.
+\]</span></p>
+<p>For <span class="math inline">\(\Delta=2g\sqrt{n+1}\)</span>,</p>
+<p><span class="math display">\[
+\Omega_n=2\sqrt2\,g\sqrt{n+1},
+\qquad P_{g,n+1}^{\max}=\frac12,
+\qquad t_{\max}=\frac{\pi}{2\sqrt2\,g\sqrt{n+1}}.
+\]</span></p>
+<p>For large detuning,</p>
+<p><span class="math display">\[
+P_{g,n+1}^{\max}\simeq\frac{4g^2(n+1)}{\Delta^2}\ll1.
+\]</span></p>
+<p>Very little excitation is exchanged. The interaction still shifts the energies, as Exercise 6 shows.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-5-revival-time" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="exercise-5-revival-time"><span class="header-section-number">5.5</span> Exercise 5 — Revival time</h3>
+<p>For an initially excited atom and a coherent field at resonance, the atomic inversion is</p>
+<p><span class="math display">\[
+W(t)=2P_e(t)-1=\sum_{n=0}^\infty p_n\cos(\omega_nt),
+\qquad \omega_n=2g\sqrt{n+1}.
+\]</span></p>
+<p>Assume <span class="math inline">\(\bar n\gg1\)</span>.</p>
+<ol type="1">
+<li>Expand <span class="math inline">\(\omega_n\)</span> to first order about <span class="math inline">\(n=\bar n\)</span>.</li>
+<li>Require neighboring components to recover a phase difference of <span class="math inline">\(2\pi\)</span> and estimate <span class="math inline">\(t_{\mathrm{rev}}\)</span>.</li>
+<li>Evaluate the large-<span class="math inline">\(\bar n\)</span> estimate for <span class="math inline">\(\bar n=25\)</span> and <span class="math inline">\(g/(2\pi)=50\ \mathrm{kHz}\)</span>.</li>
+<li>Explain why a single Fock state does not show collapse and revival.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since <span class="math inline">\(d\omega_n/dn=g/\sqrt{n+1}\)</span>,</p>
+<p><span class="math display">\[
+\omega_n\simeq2g\sqrt{\bar n+1}
++\frac{g}{\sqrt{\bar n+1}}(n-\bar n).
+\]</span></p>
+<p>Neighboring frequencies differ by approximately <span class="math inline">\(g/\sqrt{\bar n+1}\)</span>. Setting their phase difference to <span class="math inline">\(2\pi\)</span> gives</p>
+<p><span class="math display">\[
+t_{\mathrm{rev}}\simeq\frac{2\pi\sqrt{\bar n+1}}g
+\simeq\frac{2\pi\sqrt{\bar n}}g.
+\]</span></p>
+<p>Higher terms in the expansion prevent all the components from returning exactly to phase, so the revival is partial.</p>
+<p>For the given values, <span class="math inline">\(g=2\pi\times50\times10^3\ \mathrm{s}^{-1}\)</span> and <span class="math inline">\(\sqrt{\bar n}=5\)</span>. Thus</p>
+<p><span class="math display">\[
+t_{\mathrm{rev}}\simeq
+\frac{2\pi\times5}{2\pi\times50\times10^3}
+=10^{-4}\ \mathrm s=100\ \mu\mathrm s.
+\]</span></p>
+<p>A single Fock state has only one Rabi frequency. Its oscillations are periodic, with no set of frequencies to lose and recover their relative phase.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-6-the-dispersive-regime" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="exercise-6-the-dispersive-regime"><span class="header-section-number">5.6</span> Exercise 6 — The dispersive regime</h3>
+<p>Work within the Jaynes–Cummings model, with <span class="math inline">\(\Delta&gt;0\)</span> and <span class="math inline">\(g\sqrt{n+1}\ll\Delta\)</span>. Let <span class="math inline">\(H_0=H_a+H_c\)</span>.</p>
+<ol type="1">
+<li><p>Expand <span class="math inline">\(\Omega_n\)</span> through second order in <span class="math inline">\(g/\Delta\)</span>.</p></li>
+<li><p>Find the energy shifts of the states close to <span class="math inline">\(|e,n\rangle\)</span> and <span class="math inline">\(|g,n+1\rangle\)</span>.</p></li>
+<li><p>Show that, to this order, the effective Hamiltonian in the approximately uncoupled basis is</p>
+<p><span class="math display">\[
+H_{\mathrm{eff}}=H_0+\hbar\chi
+\left[(a^\dagger a+1)|e\rangle\langle e|
+-a^\dagger a|g\rangle\langle g|\right],
+\qquad\chi=\frac{g^2}{\Delta}.
+\]</span></p></li>
+<li><p>Find the atomic transition angular frequency when the field contains <span class="math inline">\(n\)</span> photons.</p></li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Expand the square root using <span class="math inline">\(\sqrt{1+x}=1+x/2+O(x^2)\)</span>:</p>
+<p><span class="math display">\[
+\Omega_n=\Delta\sqrt{1+\frac{4g^2(n+1)}{\Delta^2}}
+=\Delta+\frac{2g^2(n+1)}{\Delta}
++O\!\left(\frac{g^4(n+1)^2}{\Delta^3}\right).
+\]</span></p>
+<p>For <span class="math inline">\(\Delta&gt;0\)</span>, the upper dressed state is close to <span class="math inline">\(|e,n\rangle\)</span> and the lower one to <span class="math inline">\(|g,n+1\rangle\)</span>. Substituting the expansion into <a href="#eq-jc-energies" class="quarto-xref">Equation&nbsp;4</a> gives</p>
+<p><span class="math display">\[
+\delta E_{e,n}\simeq\frac{\hbar g^2(n+1)}{\Delta},
+\qquad
+\delta E_{g,n+1}\simeq-\frac{\hbar g^2(n+1)}{\Delta}.
+\]</span></p>
+<p>For a ground-state atom with <span class="math inline">\(n\)</span> photons, relabel the second result:</p>
+<p><span class="math display">\[
+\delta E_{g,n}\simeq-\hbar\chi n,
+\qquad \delta E_{e,n}\simeq\hbar\chi(n+1).
+\]</span></p>
+<p>The shift of <span class="math inline">\(|g,0\rangle\)</span> is zero, as it must be for the uncoupled state. These shifts are reproduced by</p>
+<p><span class="math display">\[
+H_{\mathrm{eff}}=H_0+\hbar\chi
+\left[(a^\dagger a+1)|e\rangle\langle e|
+-a^\dagger a|g\rangle\langle g|\right].
+\]</span></p>
+<p>Using <span class="math inline">\(|e\rangle\langle e|=(I+\sigma_z)/2\)</span> and <span class="math inline">\(|g\rangle\langle g|=(I-\sigma_z)/2\)</span>, the correction becomes</p>
+<p><span class="math display">\[
+\hbar\chi\left[\left(a^\dagger a+\frac12\right)\sigma_z+\frac12I\right].
+\]</span></p>
+<p>The last term is a common energy shift. For a fixed photon number, subtracting the two atomic energies gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hbar\omega_a(n)
+&amp;\simeq\hbar\omega_a+\delta E_{e,n}-\delta E_{g,n}\\
+&amp;=\hbar\omega_a+\hbar\chi(2n+1).
+\end{aligned}
+\]</span></p>
+<p>Therefore <span class="math inline">\(\omega_a(n)\simeq\omega_a+\chi(2n+1)\)</span>. The photon number shifts the atomic frequency while excitation exchange remains weak. This is the basis of dispersive measurements.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-7-numerical-diagonalization" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="exercise-7-numerical-diagonalization"><span class="header-section-number">5.7</span> Exercise 7 — Numerical diagonalization</h3>
+<p>Keep field states <span class="math inline">\(|0\rangle,\ldots,|N_{\max}\rangle\)</span>.</p>
+<ol type="1">
+<li>Construct the matrices <span class="math inline">\(a\)</span>, <span class="math inline">\(a^\dagger\)</span> and <span class="math inline">\(a^\dagger a\)</span>.</li>
+<li>Build <span class="math inline">\(H_{\mathrm{JC}}\)</span> using Kronecker products.</li>
+<li>For <span class="math inline">\(\hbar=1\)</span>, <span class="math inline">\(\omega_a=\omega_c=1\)</span> and <span class="math inline">\(g=0.08\)</span>, compare the lowest numerical eigenvalues with the analytical ones.</li>
+<li>Explain why the truncation leaves an artificial uncoupled state at the upper boundary.</li>
+</ol>
+<div class="solution callout callout-style-default callout-note no-icon callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the photon basis, <span class="math inline">\(a_{n-1,n}=\sqrt n\)</span> and all other entries vanish. The creation matrix is its conjugate transpose.</p>
+<p>The code uses the order <span class="math inline">\(\mathcal H_{\mathrm{field}}\otimes\mathcal H_{\mathrm{atom}}\)</span>, with atomic basis <span class="math inline">\((|g\rangle,|e\rangle)\)</span>. This only changes the ordering of basis vectors; the state <span class="math inline">\(|e,n\rangle\)</span> is represented by <span class="math inline">\(|n\rangle\otimes|e\rangle\)</span> in the code.</p>
+<div id="code-jc-diagonalization" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>nmax <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>omega_c <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>omega_a <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Field operators.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.zeros((nmax <span class="op">+</span> <span class="dv">1</span>, nmax <span class="op">+</span> <span class="dv">1</span>), dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, nmax <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    a[n <span class="op">-</span> <span class="dv">1</span>, n] <span class="op">=</span> np.sqrt(n)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>adag <span class="op">=</span> a.conj().T</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>number <span class="op">=</span> adag <span class="op">@</span> a</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>identity_field <span class="op">=</span> np.eye(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Atomic operators in the basis (|g&gt;, |e&gt;).</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>sigma_z <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>]], dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>sigma_plus <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">0</span>]], dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>sigma_minus <span class="op">=</span> sigma_plus.conj().T</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>identity_atom <span class="op">=</span> np.eye(<span class="dv">2</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> (</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    omega_c <span class="op">*</span> np.kron(number, identity_atom)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> omega_a <span class="op">*</span> np.kron(identity_field, sigma_z)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> g <span class="op">*</span> (</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        np.kron(a, sigma_plus)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.kron(adag, sigma_minus)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>energies <span class="op">=</span> np.linalg.eigvalsh(H)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Numerical:"</span>, np.<span class="bu">round</span>(energies[:<span class="dv">7</span>], <span class="dv">6</span>))</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Analytical energies: |g,0&gt;, then the doublets n = 0, 1, 2.</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>analytic <span class="op">=</span> [<span class="op">-</span><span class="fl">0.5</span>]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    analytic.extend([</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        (n <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">-</span> g <span class="op">*</span> np.sqrt(n <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        (n <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">+</span> g <span class="op">*</span> np.sqrt(n <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Analytical:"</span>, np.<span class="bu">round</span>(<span class="bu">sorted</span>(analytic), <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Numerical: [-0.5       0.42      0.58      1.386863  1.613137  2.361436  2.638564]
+Analytical: [-0.5       0.42      0.58      1.386863  1.613137  2.361436  2.638564]</code></pre>
+</div>
+</div>
+<p>The isolated state has energy <span class="math inline">\(E_{g,0}=-1/2\)</span>. At resonance the doublets have</p>
+<p><span class="math display">\[
+E_{n,\pm}=n+\frac12\pm g\sqrt{n+1}.
+\]</span></p>
+<p>The first pair is <span class="math inline">\(0.5\pm0.08\)</span>, giving <span class="math inline">\(0.42\)</span> and <span class="math inline">\(0.58\)</span>. The next is <span class="math inline">\(1.5\pm0.08\sqrt2\)</span>, giving approximately <span class="math inline">\(1.3869\)</span> and <span class="math inline">\(1.6131\)</span>. The numerical results agree with these values.</p>
+<p>In the full space, <span class="math inline">\(|e,N_{\max}\rangle\)</span> couples to <span class="math inline">\(|g,N_{\max}+1\rangle\)</span>. The latter is absent from the truncated basis, so the former is artificially uncoupled. With the parameters above it lies at the top of the numerical spectrum. It must be excluded from the doublet comparison; complete doublets with <span class="math inline">\(n&lt;N_{\max}\)</span> are represented exactly.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="further-reading" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">6</span> Further reading</h2>
+<p>Keeping the counter-rotating terms gives the quantum Rabi model. Cavity loss and emission into other modes require an open-system description, usually a master equation.</p>
+<p>For a longer treatment of dressed states, Rabi oscillations and revivals, see Matteo Bina, <a href="https://arxiv.org/abs/1111.1143"><em>The coherent interaction between matter and radiation: a tutorial on the Jaynes–Cummings model</em></a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

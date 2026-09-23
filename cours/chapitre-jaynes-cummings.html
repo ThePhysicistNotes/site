@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Cours et exercices corrigés sur le modèle de Jaynes-Cummings.">
+
+<title>Le modèle de Jaynes-Cummings – Physics: notes and simulations</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../images/favicon-ylm.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c2c8aa21b5b5c74fc793be120329b22b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Physics: notes and simulations</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#le-système-physique" id="toc-le-système-physique" class="nav-link active" data-scroll-target="#le-système-physique"><span class="header-section-number">1</span> Le système physique</a></li>
+  <li><a href="#pourquoi-le-modèle-est-exactement-soluble" id="toc-pourquoi-le-modèle-est-exactement-soluble" class="nav-link" data-scroll-target="#pourquoi-le-modèle-est-exactement-soluble"><span class="header-section-number">2</span> Pourquoi le modèle est exactement soluble</a></li>
+  <li><a href="#oscillations-de-rabi-quantifiées" id="toc-oscillations-de-rabi-quantifiées" class="nav-link" data-scroll-target="#oscillations-de-rabi-quantifiées"><span class="header-section-number">3</span> Oscillations de Rabi quantifiées</a></li>
+  <li><a href="#champ-cohérent-effondrement-et-résurgence" id="toc-champ-cohérent-effondrement-et-résurgence" class="nav-link" data-scroll-target="#champ-cohérent-effondrement-et-résurgence"><span class="header-section-number">4</span> Champ cohérent : effondrement et résurgence</a></li>
+  <li><a href="#exercices" id="toc-exercices" class="nav-link" data-scroll-target="#exercices"><span class="header-section-number">5</span> Exercices</a></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin"><span class="header-section-number">6</span> Pour aller plus loin</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Le modèle de Jaynes-Cummings</h1>
+<p class="subtitle lead">Un atome à deux niveaux couplé à un mode quantifié du champ</p>
+</div>
+
+<div>
+  <div class="description">
+    Cours et exercices corrigés sur le modèle de Jaynes-Cummings.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="Le modèle en une phrase">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Le modèle en une phrase
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le modèle de Jaynes-Cummings décrit l’échange cohérent d’une excitation entre un système quantique à deux niveaux et un unique mode quantifié du champ électromagnétique.</p>
+<p>Sa simplicité est remarquable : il constitue l’un des rares modèles d’interaction lumière-matière que l’on puisse résoudre exactement, tout en faisant apparaître des phénomènes profondément quantiques comme les oscillations de Rabi du vide, les états habillés et les effondrements-résurgences.</p>
+</div>
+</div>
+<section id="le-système-physique" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="le-système-physique"><span class="header-section-number">1</span> Le système physique</h2>
+<section id="deux-sous-systèmes-très-simples" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="deux-sous-systèmes-très-simples"><span class="header-section-number">1.1</span> Deux sous-systèmes très simples</h3>
+<p>Le modèle réunit deux objets.</p>
+<p>Le premier est un atome idéal à deux niveaux :</p>
+<p><span class="math display">\[
+|g\rangle \quad \text{et} \quad |e\rangle,
+\]</span></p>
+<p>séparés par l’énergie</p>
+<p><span class="math display">\[
+E_e-E_g=\hbar\omega_a.
+\]</span></p>
+<p>Son hamiltonien peut s’écrire</p>
+<p><span class="math display">\[
+H_a=\frac{\hbar\omega_a}{2}\sigma_z,
+\]</span></p>
+<p>avec</p>
+<p><span class="math display">\[
+\sigma_z=|e\rangle\langle e|-|g\rangle\langle g|.
+\]</span></p>
+<p>On introduit également les opérateurs de transition</p>
+<p><span class="math display">\[
+\sigma_+=|e\rangle\langle g|,
+\qquad
+\sigma_-=|g\rangle\langle e|.
+\]</span></p>
+<p>Le second objet est un mode du champ électromagnétique de fréquence <span class="math inline">\(\omega_c\)</span>. Mathématiquement, il s’agit d’un oscillateur harmonique quantique :</p>
+<p><span class="math display">\[
+H_c=\hbar\omega_c a^\dagger a.
+\]</span></p>
+<p>Les opérateurs <span class="math inline">\(a\)</span> et <span class="math inline">\(a^\dagger\)</span> vérifient</p>
+<p><span class="math display">\[
+[a,a^\dagger]=1
+\]</span></p>
+<p>et agissent sur les états de Fock selon</p>
+<p><span class="math display">\[
+a|n\rangle=\sqrt n\,|n-1\rangle,
+\qquad
+a^\dagger|n\rangle=\sqrt{n+1}\,|n+1\rangle.
+\]</span></p>
+<p>L’état complet appartient au produit tensoriel</p>
+<p><span class="math display">\[
+\mathcal H=\mathcal H_{\mathrm{atome}}\otimes\mathcal H_{\mathrm{champ}}.
+\]</span></p>
+<p>On utilisera donc des états comme</p>
+<p><span class="math display">\[
+|e,n\rangle=|e\rangle\otimes|n\rangle.
+\]</span></p>
+</section>
+<section id="hamiltonien-dinteraction-et-approximation-des-ondes-tournantes" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="hamiltonien-dinteraction-et-approximation-des-ondes-tournantes"><span class="header-section-number">1.2</span> Hamiltonien d’interaction et approximation des ondes tournantes</h3>
+<p>Une interaction dipolaire complète contient schématiquement</p>
+<p><span class="math display">\[
+H_{\mathrm{int}}
+\propto
+(a+a^\dagger)(\sigma_++\sigma_-).
+\]</span></p>
+<p>Son développement fait apparaître quatre processus :</p>
+<p><span class="math display">\[
+a\sigma_+,
+\qquad
+a^\dagger\sigma_-,
+\qquad
+a\sigma_-,
+\qquad
+a^\dagger\sigma_+.
+\]</span></p>
+<p>Les deux premiers échangent une excitation entre l’atome et le champ :</p>
+<p><span class="math display">\[
+|g,n+1\rangle
+\underset{a^\dagger\sigma_-}{\stackrel{a\sigma_+}{\rightleftarrows}}
+|e,n\rangle.
+\]</span></p>
+<p>Les deux derniers créent ou détruisent simultanément deux excitations. Dans l’image d’interaction, ils oscillent approximativement à la fréquence rapide <span class="math inline">\(\omega_a+\omega_c\)</span>.</p>
+<p>Lorsque</p>
+<p><span class="math display">\[
+g\ll\omega_a,\omega_c
+\]</span></p>
+<p>et que l’atome est proche de la résonance avec le mode, on néglige ces termes rapidement oscillants. C’est l’<strong>approximation des ondes tournantes</strong>.</p>
+<p>L’hamiltonien de Jaynes-Cummings est alors</p>
+<p><span class="math display">\[
+\boxed{
+H_{\mathrm{JC}}
+=\hbar\omega_c a^\dagger a
++\frac{\hbar\omega_a}{2}\sigma_z
++\hbar g\left(a\sigma_++a^\dagger\sigma_-\right).
+}
+\]</span></p>
+<p>Le paramètre <span class="math inline">\(g\)</span> mesure la force du couplage entre l’atome et le mode. Dans nos conventions, il a la dimension d’une pulsation.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Ce qui est supposé">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Ce qui est supposé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le modèle élémentaire suppose un seul mode, un seul atome à deux niveaux, un couplage constant, aucune perte de photons et aucune émission vers les autres modes. Il décrit donc une évolution cohérente et fermée.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="pourquoi-le-modèle-est-exactement-soluble" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="pourquoi-le-modèle-est-exactement-soluble"><span class="header-section-number">2</span> Pourquoi le modèle est exactement soluble</h2>
+<section id="conservation-du-nombre-total-dexcitations" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="conservation-du-nombre-total-dexcitations"><span class="header-section-number">2.1</span> Conservation du nombre total d’excitations</h3>
+<p>Définissons</p>
+<p><span class="math display">\[
+N=a^\dagger a+\sigma_+\sigma_-.
+\]</span></p>
+<p>Le premier terme compte les photons. Le second est le projecteur</p>
+<p><span class="math display">\[
+\sigma_+\sigma_-=|e\rangle\langle e|,
+\]</span></p>
+<p>qui vaut <span class="math inline">\(1\)</span> lorsque l’atome est excité et <span class="math inline">\(0\)</span> lorsqu’il est dans son état fondamental.</p>
+<p>L’hamiltonien vérifie</p>
+<p><span class="math display">\[
+\boxed{[H_{\mathrm{JC}},N]=0.}
+\]</span></p>
+<p>Le nombre total d’excitations est donc conservé. Par exemple,</p>
+<p><span class="math display">\[
+N|e,n\rangle=(n+1)|e,n\rangle
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+N|g,n+1\rangle=(n+1)|g,n+1\rangle.
+\]</span></p>
+<p>L’hamiltonien ne mélange que ces deux états. L’espace de Hilbert infini se décompose ainsi en une infinité de sous-espaces de dimension deux :</p>
+<p><span class="math display">\[
+\mathcal H_n
+=\operatorname{Vect}\{|e,n\rangle,|g,n+1\rangle\}.
+\]</span></p>
+<p>L’état <span class="math inline">\(|g,0\rangle\)</span>, qui ne contient aucune excitation, reste isolé.</p>
+</section>
+<section id="hamiltonien-dans-un-doublet" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="hamiltonien-dans-un-doublet"><span class="header-section-number">2.2</span> Hamiltonien dans un doublet</h3>
+<p>Introduisons le désaccord</p>
+<p><span class="math display">\[
+\boxed{\Delta=\omega_a-\omega_c.}
+\]</span></p>
+<p>Dans la base ordonnée</p>
+<p><span class="math display">\[
+\{|e,n\rangle,|g,n+1\rangle\},
+\]</span></p>
+<p>l’hamiltonien prend la forme</p>
+<p><span class="math display">\[
+H_n
+=\hbar\omega_c\left(n+\frac12\right)I
++\frac{\hbar}{2}
+\begin{pmatrix}
+\Delta &amp; 2g\sqrt{n+1}\\
+2g\sqrt{n+1} &amp; -\Delta
+\end{pmatrix}.
+\]</span></p>
+<p>Le problème complet est donc ramené à la diagonalisation d’une matrice <span class="math inline">\(2\times2\)</span> pour chaque valeur de <span class="math inline">\(n\)</span>.</p>
+<p>La pulsation de Rabi généralisée est</p>
+<p><span class="math display">\[
+\boxed{
+\Omega_n=\sqrt{\Delta^2+4g^2(n+1)}.
+}
+\]</span></p>
+<p>Les deux valeurs propres sont</p>
+<p><span class="math display">\[
+\boxed{
+E_{n,\pm}
+=\hbar\omega_c\left(n+\frac12\right)
+\pm\frac{\hbar\Omega_n}{2}.
+}
+\]</span></p>
+<p>Les états propres correspondants sont appelés <strong>états habillés</strong>, car ils ne sont ni purement atomiques ni purement photoniques.</p>
+<p>En posant</p>
+<p><span class="math display">\[
+\tan(2\theta_n)=\frac{2g\sqrt{n+1}}{\Delta},
+\]</span></p>
+<p>on peut les écrire</p>
+<p><span class="math display">\[
+|n,+\rangle
+=\cos\theta_n|e,n\rangle
++\sin\theta_n|g,n+1\rangle,
+\]</span></p>
+<p><span class="math display">\[
+|n,-\rangle
+=-\sin\theta_n|e,n\rangle
++\cos\theta_n|g,n+1\rangle.
+\]</span></p>
+<p>À la résonance, <span class="math inline">\(\Delta=0\)</span>, donc <span class="math inline">\(\theta_n=\pi/4\)</span> et</p>
+<p><span class="math display">\[
+|n,\pm\rangle
+=\frac{|e,n\rangle\pm|g,n+1\rangle}{\sqrt2}.
+\]</span></p>
+<p>La séparation entre leurs énergies vaut alors</p>
+<p><span class="math display">\[
+\boxed{E_{n,+}-E_{n,-}=2\hbar g\sqrt{n+1}.}
+\]</span></p>
+<p>Ce dédoublement est le <strong>dédoublement de Rabi du vide</strong> pour <span class="math inline">\(n=0\)</span>.</p>
+<div id="cell-fig-croisement-evite-jc" class="cell" data-fig-height="4.8" data-fig-width="8.5" data-execution_count="2">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">800</span>)  <span class="co"># Delta / g</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> np.sqrt(delta<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>e_plus <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> omega</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>e_minus <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> omega</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>e_bare_1 <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> delta</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>e_bare_2 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> delta</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_plus, lw<span class="op">=</span><span class="fl">2.4</span>, color<span class="op">=</span><span class="st">"#1769aa"</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">E_{</span><span class="op">+</span><span class="vs">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_minus, lw<span class="op">=</span><span class="fl">2.4</span>, color<span class="op">=</span><span class="st">"#c44e52"</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">E_{-}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_bare_1, <span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.2</span>, color<span class="op">=</span><span class="st">"0.55"</span>, label<span class="op">=</span><span class="st">"niveaux non couplés"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ax.plot(delta, e_bare_2, <span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.2</span>, color<span class="op">=</span><span class="st">"0.55"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Désaccord </span><span class="dv">$\D</span><span class="vs">elta/g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Énergie décalée en unités de </span><span class="dv">$</span><span class="er">\</span><span class="vs">hbar g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"États habillés et croisement évité"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-croisement-evite-jc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-croisement-evite-jc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapitre-jaynes-cummings_files/figure-html/fig-croisement-evite-jc-output-1.png" width="706" height="441" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-croisement-evite-jc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Croisement évité des deux énergies habillées du premier doublet.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Le couplage remplace le croisement des niveaux non couplés par un croisement évité. À la résonance, l’écart minimal vaut <span class="math inline">\(2\hbar g\)</span> dans le premier doublet.</p>
+</section>
+</section>
+<section id="oscillations-de-rabi-quantifiées" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="oscillations-de-rabi-quantifiées"><span class="header-section-number">3</span> Oscillations de Rabi quantifiées</h2>
+<p>Supposons le système initialement dans l’état <span class="math inline">\(|e,n\rangle\)</span>. L’évolution reste dans <span class="math inline">\(\mathcal H_n\)</span>. L’exponentielle d’une matrice de Pauli permet d’obtenir</p>
+<p><span class="math display">\[
+\begin{aligned}
+|\psi(t)\rangle
+=e^{-i\omega_c(n+1/2)t}
+\Bigg[&amp;
+\left(
+\cos\frac{\Omega_nt}{2}
+-i\frac{\Delta}{\Omega_n}\sin\frac{\Omega_nt}{2}
+\right)|e,n\rangle\\
+&amp;-i\frac{2g\sqrt{n+1}}{\Omega_n}
+\sin\frac{\Omega_nt}{2}|g,n+1\rangle
+\Bigg].
+\end{aligned}
+\]</span></p>
+<p>La probabilité de trouver l’atome excité est donc</p>
+<p><span class="math display">\[
+\boxed{
+P_e^{(n)}(t)
+=1-rac{4g^2(n+1)}{\Omega_n^2}
+\sin^2\left(\frac{\Omega_nt}{2}\right).
+}
+\]</span></p>
+<p>À la résonance,</p>
+<p><span class="math display">\[
+\boxed{
+P_e^{(n)}(t)=\cos^2\left(g\sqrt{n+1}\,t\right).
+}
+\]</span></p>
+<p>L’excitation oscille périodiquement entre l’atome et le champ :</p>
+<p><span class="math display">\[
+|e,n\rangle
+\longleftrightarrow
+|g,n+1\rangle.
+\]</span></p>
+<p>Même pour <span class="math inline">\(n=0\)</span>, un atome initialement excité échange son excitation avec le vide du mode. C’est l’oscillation de Rabi du vide.</p>
+<p>La dépendance</p>
+<p><span class="math display">\[
+\Omega_n(\Delta=0)=2g\sqrt{n+1}
+\]</span></p>
+<p>est essentielle : différents nombres de photons produisent différentes fréquences d’oscillation.</p>
+<div id="cell-fig-rabi-etats-fock" class="cell" data-fig-height="4.8" data-fig-width="8.5" data-execution_count="3">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tau <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span> <span class="op">*</span> np.pi, <span class="dv">1400</span>)  <span class="co"># tau = g t</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n, color <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>], [<span class="st">"#1769aa"</span>, <span class="st">"#d17c00"</span>, <span class="st">"#7b4ab5"</span>]):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    probability <span class="op">=</span> np.cos(np.sqrt(n <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> tau) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ax.plot(tau, probability, lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>color, label<span class="op">=</span><span class="vs">fr"</span><span class="dv">$</span><span class="vs">n=</span><span class="sc">{</span>n<span class="sc">}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Temps réduit </span><span class="dv">$</span><span class="vs">gt</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Probabilité </span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"La fréquence augmente avec le nombre de photons"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-rabi-etats-fock" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rabi-etats-fock-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapitre-jaynes-cummings_files/figure-html/fig-rabi-etats-fock-output-1.png" width="706" height="442" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rabi-etats-fock-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Oscillations de Rabi résonantes pour plusieurs nombres initiaux de photons.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Conséquence du désaccord">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Conséquence du désaccord
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(\Delta\neq0\)</span>, l’échange n’est plus complet. La probabilité maximale de transférer l’excitation au champ est</p>
+<p><span class="math display">\[
+P_{e,n\to g,n+1}^{\max}
+=\frac{4g^2(n+1)}{\Delta^2+4g^2(n+1)}.
+\]</span></p>
+<p>La résonance est donc la condition permettant un transfert parfait.</p>
+</div>
+</div>
+</section>
+<section id="champ-cohérent-effondrement-et-résurgence" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="champ-cohérent-effondrement-et-résurgence"><span class="header-section-number">4</span> Champ cohérent : effondrement et résurgence</h2>
+<p>Un état de Fock possède un nombre de photons parfaitement défini. Un champ quasi classique est plutôt décrit par un état cohérent</p>
+<p><span class="math display">\[
+|\alpha\rangle
+=e^{-|\alpha|^2/2}
+\sum_{n=0}^{\infty}
+\frac{\alpha^n}{\sqrt{n!}}|n\rangle.
+\]</span></p>
+<p>Sa distribution de photons est poissonnienne :</p>
+<p><span class="math display">\[
+p_n
+=|\langle n|\alpha\rangle|^2
+=e^{-\bar n}\frac{\bar n^n}{n!},
+\qquad
+\bar n=|\alpha|^2.
+\]</span></p>
+<p>Si l’atome est initialement excité et si le couplage est résonant, chaque composante <span class="math inline">\(|e,n\rangle\)</span> oscille à sa propre fréquence. On obtient</p>
+<p><span class="math display">\[
+\boxed{
+P_e(t)
+=\sum_{n=0}^{\infty}p_n
+\cos^2\left(g\sqrt{n+1}\,t\right).
+}
+\]</span></p>
+<p>Au début, les composantes oscillent presque en phase. Elles se déphasent ensuite : les oscillations observables s’effondrent. À un temps plus long, la discrétisation des fréquences permet une remise en phase partielle : les oscillations réapparaissent.</p>
+<p>Pour <span class="math inline">\(\bar n\gg1\)</span>, le premier temps de résurgence est approximativement</p>
+<p><span class="math display">\[
+\boxed{
+t_{\mathrm{rev}}
+\simeq\frac{2\pi\sqrt{\bar n}}{g}.
+}
+\]</span></p>
+<p>Le temps d’effondrement reste, en ordre de grandeur, de l’ordre de <span class="math inline">\(1/g\)</span>.</p>
+<div id="cell-fig-effondrement-resurgence" class="cell" data-fig-height="4.8" data-fig-width="9" data-execution_count="4">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nbar <span class="op">=</span> <span class="fl">16.0</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>nmax <span class="op">=</span> <span class="bu">int</span>(nbar <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> np.sqrt(nbar) <span class="op">+</span> <span class="dv">40</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n_values <span class="op">=</span> np.arange(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution de Poisson calculée par récurrence.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>poisson <span class="op">=</span> np.empty(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>poisson[<span class="dv">0</span>] <span class="op">=</span> np.exp(<span class="op">-</span>nbar)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    poisson[n <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> poisson[n] <span class="op">*</span> nbar <span class="op">/</span> (n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>poisson <span class="op">/=</span> poisson.<span class="bu">sum</span>()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>t_rev <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.sqrt(nbar)  <span class="co"># temps réduit g t</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>tau <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">2.15</span> <span class="op">*</span> t_rev, <span class="dv">4500</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>phases <span class="op">=</span> np.sqrt(n_values[:, <span class="va">None</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> tau[<span class="va">None</span>, :]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>p_excited <span class="op">=</span> np.<span class="bu">sum</span>(poisson[:, <span class="va">None</span>] <span class="op">*</span> np.cos(phases) <span class="op">**</span> <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.8</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax.plot(tau, p_excited, color<span class="op">=</span><span class="st">"#1769aa"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ax.axvline(t_rev, color<span class="op">=</span><span class="st">"#c44e52"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.3</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">t_{</span><span class="dv">\m</span><span class="vs">athrm{rev}}</span><span class="dv">\s</span><span class="vs">imeq2</span><span class="er">\</span><span class="vs">pi</span><span class="dv">\s</span><span class="vs">qrt{</span><span class="dv">\b</span><span class="vs">ar n}/g</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2</span> <span class="op">*</span> t_rev, color<span class="op">=</span><span class="st">"#c44e52"</span>, ls<span class="op">=</span><span class="st">":"</span>, lw<span class="op">=</span><span class="fl">1.1</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"Temps réduit </span><span class="dv">$</span><span class="vs">gt</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"Probabilité </span><span class="dv">$</span><span class="vs">P_e</span><span class="kw">(</span><span class="vs">t</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.03</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="vs">r"Champ cohérent : </span><span class="dv">$\b</span><span class="vs">ar n=16</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-effondrement-resurgence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effondrement-resurgence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapitre-jaynes-cummings_files/figure-html/fig-effondrement-resurgence-output-1.png" width="743" height="443" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effondrement-resurgence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Effondrement et résurgences pour un champ cohérent contenant en moyenne seize photons.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>L’effondrement n’est pas une dissipation : l’évolution totale reste unitaire. Il provient du déphasage entre les nombreuses fréquences <span class="math inline">\(2g\sqrt{n+1}\)</span>. La résurgence constitue ainsi une signature de la structure discrète du champ quantifié.</p>
+</section>
+<section id="exercices" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="exercices"><span class="header-section-number">5</span> Exercices</h2>
+<section id="exercice-1---identifier-les-processus-dinteraction" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="exercice-1---identifier-les-processus-dinteraction"><span class="header-section-number">5.1</span> Exercice 1 - Identifier les processus d’interaction</h3>
+<p><strong>Difficulté :</strong> ★☆☆☆☆</p>
+<p>On part de l’interaction complète</p>
+<p><span class="math display">\[
+V=\hbar g(a+a^\dagger)(\sigma_++\sigma_-).
+\]</span></p>
+<ol type="1">
+<li>Développer <span class="math inline">\(V\)</span> en quatre termes.</li>
+<li>Donner l’action de chacun de ces termes sur <span class="math inline">\(|g,n\rangle\)</span> ou <span class="math inline">\(|e,n\rangle\)</span>.</li>
+<li>Identifier les deux termes qui conservent le nombre total d’excitations.</li>
+<li>Expliquer brièvement pourquoi les deux autres sont négligés dans l’approximation des ondes tournantes.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Le développement donne</p>
+<p><span class="math display">\[
+V=\hbar g
+\left(
+a\sigma_++a\sigma_-+a^\dagger\sigma_++a^\dagger\sigma_-
+\right).
+\]</span></p>
+<p>Les opérateurs atomiques vérifient</p>
+<p><span class="math display">\[
+\sigma_+|g\rangle=|e\rangle,
+\qquad
+\sigma_-|e\rangle=|g\rangle,
+\]</span></p>
+<p>et donnent zéro lorsqu’ils tentent d’élever <span class="math inline">\(|e\rangle\)</span> ou d’abaisser <span class="math inline">\(|g\rangle\)</span>.</p>
+<p>On obtient donc</p>
+<p><span class="math display">\[
+a\sigma_+|g,n\rangle
+=\sqrt n\,|e,n-1\rangle,
+\]</span></p>
+<p><span class="math display">\[
+a^\dagger\sigma_-|e,n\rangle
+=\sqrt{n+1}\,|g,n+1\rangle,
+\]</span></p>
+<p><span class="math display">\[
+a\sigma_-|e,n\rangle
+=\sqrt n\,|g,n-1\rangle,
+\]</span></p>
+<p><span class="math display">\[
+a^\dagger\sigma_+|g,n\rangle
+=\sqrt{n+1}\,|e,n+1\rangle.
+\]</span></p>
+<p>Le terme <span class="math inline">\(a\sigma_+\)</span> détruit un photon mais excite l’atome : la variation totale du nombre d’excitations est nulle. Le terme <span class="math inline">\(a^\dagger\sigma_-\)</span> crée un photon en désexcitant l’atome : il conserve lui aussi ce nombre.</p>
+<p>En revanche, <span class="math inline">\(a\sigma_-\)</span> détruit deux excitations et <span class="math inline">\(a^\dagger\sigma_+\)</span> en crée deux.</p>
+<p>Dans l’image d’interaction, les termes conservatifs oscillent comme</p>
+<p><span class="math display">\[
+e^{\pm i(\omega_a-\omega_c)t}=e^{\pm i\Delta t},
+\]</span></p>
+<p>alors que les termes contre-rotatifs oscillent comme</p>
+<p><span class="math display">\[
+e^{\pm i(\omega_a+\omega_c)t}.
+\]</span></p>
+<p>Près de la résonance et pour un couplage faible devant les fréquences propres, leur moyenne sur le temps est très petite. On conserve ainsi</p>
+<p><span class="math display">\[
+V_{\mathrm{JC}}
+=\hbar g(a\sigma_++a^\dagger\sigma_-).
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-2---conservation-des-excitations" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="exercice-2---conservation-des-excitations"><span class="header-section-number">5.2</span> Exercice 2 - Conservation des excitations</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>On considère</p>
+<p><span class="math display">\[
+N=a^\dagger a+\sigma_+\sigma_-.
+\]</span></p>
+<ol type="1">
+<li><p>Montrer explicitement que</p>
+<p><span class="math display">\[
+[N,a\sigma_+]=0.
+\]</span></p></li>
+<li><p>Montrer de même que</p>
+<p><span class="math display">\[
+[N,a^\dagger\sigma_-]=0.
+\]</span></p></li>
+<li><p>En déduire que <span class="math inline">\([H_{\mathrm{JC}},N]=0\)</span>.</p></li>
+<li><p>Déterminer tous les états de base ayant exactement deux excitations.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les opérateurs du champ commutent avec les opérateurs atomiques. On peut donc écrire</p>
+<p><span class="math display">\[
+[N,a\sigma_+]
+=[a^\dagger a,a]\sigma_+
++a[\sigma_+\sigma_-,\sigma_+].
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+[a^\dagger a,a]=-a.
+\]</span></p>
+<p>De plus, <span class="math inline">\(\sigma_+\sigma_-=|e\rangle\langle e|\)</span>, donc</p>
+<p><span class="math display">\[
+[\sigma_+\sigma_-,\sigma_+]=\sigma_+.
+\]</span></p>
+<p>Par conséquent,</p>
+<p><span class="math display">\[
+[N,a\sigma_+]
+=-a\sigma_++a\sigma_+=0.
+\]</span></p>
+<p>De même,</p>
+<p><span class="math display">\[
+[a^\dagger a,a^\dagger]=a^\dagger
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+[\sigma_+\sigma_-,\sigma_-]=-\sigma_-.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+[N,a^\dagger\sigma_-]
+=a^\dagger\sigma_--a^\dagger\sigma_-=0.
+\]</span></p>
+<p>Les hamiltoniens libres sont des fonctions de <span class="math inline">\(a^\dagger a\)</span> et de <span class="math inline">\(\sigma_z\)</span> ; ils commutent eux aussi avec <span class="math inline">\(N\)</span>. Il vient donc</p>
+<p><span class="math display">\[
+\boxed{[H_{\mathrm{JC}},N]=0.}
+\]</span></p>
+<p>Pour obtenir deux excitations, deux possibilités existent :</p>
+<ul>
+<li>l’atome est excité et le champ contient un photon : <span class="math inline">\(|e,1\rangle\)</span> ;</li>
+<li>l’atome est dans son état fondamental et le champ contient deux photons : <span class="math inline">\(|g,2\rangle\)</span>.</li>
+</ul>
+<p>Le sous-espace recherché est donc</p>
+<p><span class="math display">\[
+\boxed{
+\operatorname{Vect}\{|e,1\rangle,|g,2\rangle\}.
+}
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-3---oscillation-du-vide-et-intrication" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="exercice-3---oscillation-du-vide-et-intrication"><span class="header-section-number">5.3</span> Exercice 3 - Oscillation du vide et intrication</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>L’atome est initialement excité et la cavité est dans le vide. Le système est résonant.</p>
+<ol type="1">
+<li>Écrire <span class="math inline">\(|\psi(t)\rangle\)</span> dans l’image d’interaction.</li>
+<li>À quel premier instant l’atome a-t-il transféré avec certitude son excitation au champ ?</li>
+<li>À quel premier instant l’état est-il maximalement intriqué ?</li>
+<li>Calculer la matrice densité réduite de l’atome à cet instant.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans le doublet</p>
+<p><span class="math display">\[
+\{|e,0\rangle,|g,1\rangle\},
+\]</span></p>
+<p>la pulsation est <span class="math inline">\(2g\)</span>. Dans l’image d’interaction,</p>
+<p><span class="math display">\[
+\boxed{
+|\psi(t)\rangle
+=\cos(gt)|e,0\rangle-i\sin(gt)|g,1\rangle.
+}
+\]</span></p>
+<p>Le transfert est complet lorsque</p>
+<p><span class="math display">\[
+\cos(gt)=0.
+\]</span></p>
+<p>Le premier instant positif est</p>
+<p><span class="math display">\[
+\boxed{t_{\mathrm{transfert}}=\frac{\pi}{2g}.}
+\]</span></p>
+<p>À cet instant,</p>
+<p><span class="math display">\[
+|\psi\rangle=-i|g,1\rangle.
+\]</span></p>
+<p>Le système n’est alors plus intriqué : l’atome et le champ sont de nouveau dans un état produit.</p>
+<p>L’intrication est maximale lorsque les deux amplitudes ont le même module :</p>
+<p><span class="math display">\[
+\cos^2(gt)=\sin^2(gt)=\frac12.
+\]</span></p>
+<p>Le premier instant correspondant est</p>
+<p><span class="math display">\[
+\boxed{t_{\mathrm{ent}}=\frac{\pi}{4g}.}
+\]</span></p>
+<p>L’état vaut alors</p>
+<p><span class="math display">\[
+|\psi(t_{\mathrm{ent}})\rangle
+=\frac{|e,0\rangle-i|g,1\rangle}{\sqrt2}.
+\]</span></p>
+<p>La matrice densité totale est <span class="math inline">\(\rho=|\psi\rangle\langle\psi|\)</span>. En prenant la trace sur les états du champ et en utilisant</p>
+<p><span class="math display">\[
+\langle0|1\rangle=0,
+\]</span></p>
+<p>les termes croisés disparaissent. On obtient</p>
+<p><span class="math display">\[
+\boxed{
+\rho_a
+=\operatorname{Tr}_{c}(\rho)
+=\frac12|e\rangle\langle e|
++\frac12|g\rangle\langle g|
+=\frac I2.
+}
+\]</span></p>
+<p>Le système total est dans un état pur, mais l’atome seul est dans un état complètement mélangé : c’est une signature de l’intrication maximale.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-4---effet-du-désaccord" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="exercice-4---effet-du-désaccord"><span class="header-section-number">5.4</span> Exercice 4 - Effet du désaccord</h3>
+<p><strong>Difficulté :</strong> ★★☆☆☆</p>
+<p>On part de l’état <span class="math inline">\(|e,n\rangle\)</span>, avec un désaccord quelconque <span class="math inline">\(\Delta\)</span>.</p>
+<ol type="1">
+<li><p>Donner la probabilité <span class="math inline">\(P_{g,n+1}(t)\)</span>.</p></li>
+<li><p>Déterminer sa valeur maximale et le premier instant où elle est atteinte.</p></li>
+<li><p>Étudier le cas particulier</p>
+<p><span class="math display">\[
+\Delta=2g\sqrt{n+1}.
+\]</span></p></li>
+<li><p>Interpréter physiquement la limite <span class="math inline">\(|\Delta|\gg g\sqrt{n+1}\)</span>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La probabilité recherchée est le module carré du coefficient de <span class="math inline">\(|g,n+1\rangle\)</span> :</p>
+<p><span class="math display">\[
+\boxed{
+P_{g,n+1}(t)
+=\frac{4g^2(n+1)}{\Omega_n^2}
+\sin^2\left(\frac{\Omega_nt}{2}\right),
+}
+\]</span></p>
+<p>où</p>
+<p><span class="math display">\[
+\Omega_n=\sqrt{\Delta^2+4g^2(n+1)}.
+\]</span></p>
+<p>Le sinus carré atteint <span class="math inline">\(1\)</span>. Par conséquent,</p>
+<p><span class="math display">\[
+\boxed{
+P_{g,n+1}^{\max}
+=\frac{4g^2(n+1)}{\Delta^2+4g^2(n+1)}.
+}
+\]</span></p>
+<p>Le premier maximum est obtenu lorsque</p>
+<p><span class="math display">\[
+\frac{\Omega_nt}{2}=\frac\pi2,
+\]</span></p>
+<p>soit</p>
+<p><span class="math display">\[
+\boxed{t_{\max}=\frac\pi{\Omega_n}.}
+\]</span></p>
+<p>Si</p>
+<p><span class="math display">\[
+\Delta=2g\sqrt{n+1},
+\]</span></p>
+<p>alors</p>
+<p><span class="math display">\[
+\Omega_n
+=2\sqrt2\,g\sqrt{n+1}
+\]</span></p>
+<p>et</p>
+<p><span class="math display">\[
+\boxed{P_{g,n+1}^{\max}=\frac12.}
+\]</span></p>
+<p>Dans la limite du grand désaccord,</p>
+<p><span class="math display">\[
+P_{g,n+1}^{\max}
+\simeq\frac{4g^2(n+1)}{\Delta^2}\ll1.
+\]</span></p>
+<p>L’échange réel d’excitation est presque bloqué. L’interaction ne disparaît cependant pas complètement : elle produit encore de petits déplacements d’énergie, étudiés dans l’exercice 6.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-5---temps-de-résurgence-dun-état-cohérent" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="exercice-5---temps-de-résurgence-dun-état-cohérent"><span class="header-section-number">5.5</span> Exercice 5 - Temps de résurgence d’un état cohérent</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>À la résonance, l’inversion atomique pour un champ cohérent peut s’écrire</p>
+<p><span class="math display">\[
+W(t)=2P_e(t)-1
+=\sum_{n=0}^{\infty}p_n
+\cos\left(2g\sqrt{n+1}\,t\right).
+\]</span></p>
+<ol type="1">
+<li><p>Développer la pulsation</p>
+<p><span class="math display">\[
+\omega_n=2g\sqrt{n+1}
+\]</span></p>
+<p>au premier ordre autour de <span class="math inline">\(n=\bar n\)</span>.</p></li>
+<li><p>En demandant que deux composantes voisines retrouvent une différence de phase égale à <span class="math inline">\(2\pi\)</span>, retrouver</p>
+<p><span class="math display">\[
+t_{\mathrm{rev}}\simeq\frac{2\pi\sqrt{\bar n}}{g}.
+\]</span></p></li>
+<li><p>Estimer ce temps pour</p>
+<p><span class="math display">\[
+\bar n=25,
+\qquad
+\frac g{2\pi}=50\ \mathrm{kHz}.
+\]</span></p></li>
+<li><p>Pourquoi ce phénomène ne se produit-il pas pour un état de Fock unique ?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Au voisinage de <span class="math inline">\(\bar n\)</span>,</p>
+<p><span class="math display">\[
+\omega_n
+\simeq\omega_{\bar n}
++(n-\bar n)
+\left.\frac{d\omega_n}{dn}\right|_{\bar n}.
+\]</span></p>
+<p>Or</p>
+<p><span class="math display">\[
+\frac{d\omega_n}{dn}
+=\frac g{\sqrt{n+1}}.
+\]</span></p>
+<p>Pour <span class="math inline">\(\bar n\gg1\)</span>,</p>
+<p><span class="math display">\[
+\omega_n
+\simeq
+2g\sqrt{\bar n}
++\frac g{\sqrt{\bar n}}(n-\bar n).
+\]</span></p>
+<p>Deux nombres de photons voisins ont donc une différence de pulsation approximative</p>
+<p><span class="math display">\[
+\omega_{n+1}-\omega_n
+\simeq\frac g{\sqrt{\bar n}}.
+\]</span></p>
+<p>La remise en phase se produit lorsque</p>
+<p><span class="math display">\[
+(\omega_{n+1}-\omega_n)t_{\mathrm{rev}}=2\pi.
+\]</span></p>
+<p>On retrouve</p>
+<p><span class="math display">\[
+\boxed{
+t_{\mathrm{rev}}
+\simeq\frac{2\pi\sqrt{\bar n}}g.
+}
+\]</span></p>
+<p>Pour <span class="math inline">\(\bar n=25\)</span>, <span class="math inline">\(\sqrt{\bar n}=5\)</span>. De plus,</p>
+<p><span class="math display">\[
+g=2\pi\times50\times10^3\ \mathrm{s}^{-1}.
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+t_{\mathrm{rev}}
+=\frac{2\pi\times5}{2\pi\times50\times10^3}
+=10^{-4}\ \mathrm{s}.
+\]</span></p>
+<p>Donc</p>
+<p><span class="math display">\[
+\boxed{t_{\mathrm{rev}}\simeq100\ \mu\mathrm{s}.}
+\]</span></p>
+<p>Un état de Fock unique ne contient qu’une seule valeur de <span class="math inline">\(n\)</span>, donc une seule fréquence de Rabi. Il n’existe ni ensemble de composantes à déphaser, ni remise en phase ultérieure : les oscillations restent parfaitement périodiques.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-6---régime-dispersif" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="exercice-6---régime-dispersif"><span class="header-section-number">5.6</span> Exercice 6 - Régime dispersif</h3>
+<p><strong>Difficulté :</strong> ★★★★☆</p>
+<p>On suppose</p>
+<p><span class="math display">\[
+|\Delta|\gg g\sqrt{n+1}
+\]</span></p>
+<p>et, pour simplifier les signes, <span class="math inline">\(\Delta&gt;0\)</span>.</p>
+<ol type="1">
+<li><p>Développer <span class="math inline">\(\Omega_n\)</span> au deuxième ordre en <span class="math inline">\(g/\Delta\)</span>.</p></li>
+<li><p>En déduire les déplacements d’énergie des états proches de <span class="math inline">\(|e,n\rangle\)</span> et <span class="math inline">\(|g,n+1\rangle\)</span>.</p></li>
+<li><p>Montrer que l’hamiltonien effectif peut s’écrire</p>
+<p><span class="math display">\[
+H_{\mathrm{eff}}
+=H_0+\hbar\chi
+\left[(a^\dagger a+1)|e\rangle\langle e|
+-a^\dagger a|g\rangle\langle g|\right],
+\]</span></p>
+<p>avec <span class="math inline">\(\chi=g^2/\Delta\)</span>.</p></li>
+<li><p>Quelle est alors la pulsation de transition atomique lorsque le champ contient exactement <span class="math inline">\(n\)</span> photons ?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Partons de</p>
+<p><span class="math display">\[
+\Omega_n
+=\Delta\sqrt{1+\frac{4g^2(n+1)}{\Delta^2}}.
+\]</span></p>
+<p>Avec</p>
+<p><span class="math display">\[
+\sqrt{1+x}\simeq1+\frac x2
+\]</span></p>
+<p>pour <span class="math inline">\(|x|\ll1\)</span>, il vient</p>
+<p><span class="math display">\[
+\boxed{
+\Omega_n
+\simeq\Delta+\frac{2g^2(n+1)}{\Delta}.
+}
+\]</span></p>
+<p>Les énergies exactes sont</p>
+<p><span class="math display">\[
+E_{n,\pm}
+=\hbar\omega_c\left(n+\frac12\right)
+\pm\frac{\hbar\Omega_n}{2}.
+\]</span></p>
+<p>Pour <span class="math inline">\(\Delta&gt;0\)</span>, la branche positive tend vers l’état <span class="math inline">\(|e,n\rangle\)</span>. Son déplacement est</p>
+<p><span class="math display">\[
+\boxed{
+\delta E_{e,n}
+=\frac{\hbar g^2(n+1)}{\Delta}.
+}
+\]</span></p>
+<p>La branche négative tend vers <span class="math inline">\(|g,n+1\rangle\)</span> et subit</p>
+<p><span class="math display">\[
+\boxed{
+\delta E_{g,n+1}
+=-\frac{\hbar g^2(n+1)}{\Delta}.
+}
+\]</span></p>
+<p>Pour un état générique <span class="math inline">\(|g,n\rangle\)</span>, il suffit de remplacer <span class="math inline">\(n+1\)</span> par <span class="math inline">\(n\)</span> :</p>
+<p><span class="math display">\[
+\delta E_{g,n}=-\hbar\chi n,
+\qquad
+\chi=\frac{g^2}{\Delta}.
+\]</span></p>
+<p>Ces deux familles de déplacements sont produites par</p>
+<p><span class="math display">\[
+\boxed{
+H_{\mathrm{eff}}
+=H_0+\hbar\chi
+\left[(a^\dagger a+1)|e\rangle\langle e|
+-a^\dagger a|g\rangle\langle g|\right].
+}
+\]</span></p>
+<p>À une constante globale près, cette expression est aussi</p>
+<p><span class="math display">\[
+H_{\mathrm{eff}}
+\equiv
+H_0+\hbar\chi
+\left(a^\dagger a+\frac12\right)\sigma_z.
+\]</span></p>
+<p>Pour un même nombre de photons <span class="math inline">\(n\)</span>, l’écart entre <span class="math inline">\(|e,n\rangle\)</span> et <span class="math inline">\(|g,n\rangle\)</span> devient</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hbar\omega_a(n)
+&amp;=\hbar\omega_a
++\delta E_{e,n}-\delta E_{g,n}\\
+&amp;=\hbar\omega_a+\hbar\chi(2n+1).
+\end{aligned}
+\]</span></p>
+<p>Ainsi,</p>
+<p><span class="math display">\[
+\boxed{
+\omega_a(n)=\omega_a+\chi(2n+1).
+}
+\]</span></p>
+<p>La fréquence atomique dépend du nombre de photons sans échange réel d’excitation. Cette propriété est à la base de nombreuses mesures dispersives en électrodynamique quantique en cavité et en circuit quantique.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-7---diagonalisation-numérique-du-modèle" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="exercice-7---diagonalisation-numérique-du-modèle"><span class="header-section-number">5.7</span> Exercice 7 - Diagonalisation numérique du modèle</h3>
+<p><strong>Difficulté :</strong> ★★★☆☆</p>
+<p>On tronque l’espace du champ aux états</p>
+<p><span class="math display">\[
+|0\rangle,\ldots,|N_{\max}\rangle.
+\]</span></p>
+<ol type="1">
+<li><p>Construire les matrices <span class="math inline">\(a\)</span>, <span class="math inline">\(a^\dagger\)</span> et <span class="math inline">\(a^\dagger a\)</span>.</p></li>
+<li><p>Construire <span class="math inline">\(H_{\mathrm{JC}}\)</span> avec des produits de Kronecker.</p></li>
+<li><p>Pour</p>
+<p><span class="math display">\[
+\hbar=1,
+\qquad
+\omega_a=\omega_c=1,
+\qquad
+g=0.08,
+\]</span></p>
+<p>comparer numériquement les premières valeurs propres aux formules analytiques.</p></li>
+<li><p>Expliquer pourquoi la troncature crée un état artificiellement non apparié au sommet de la base.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Correction détaillée">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Correction détaillée
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans la base <span class="math inline">\((|0\rangle,|1\rangle,\ldots)\)</span>, l’élément non nul de <span class="math inline">\(a\)</span> est</p>
+<p><span class="math display">\[
+a_{n-1,n}=\sqrt n.
+\]</span></p>
+<p>Le code suivant construit l’hamiltonien. L’ordre tensoriel choisi est</p>
+<p><span class="math display">\[
+\mathcal H_{\mathrm{champ}}\otimes\mathcal H_{\mathrm{atome}},
+\]</span></p>
+<p>avec la base atomique <span class="math inline">\((|g\rangle,|e\rangle)\)</span>.</p>
+<div id="2e647fb3" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Afficher le code Python</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>nmax <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>omega_c <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>omega_a <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Opérateurs du champ.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.zeros((nmax <span class="op">+</span> <span class="dv">1</span>, nmax <span class="op">+</span> <span class="dv">1</span>), dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, nmax <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    a[n <span class="op">-</span> <span class="dv">1</span>, n] <span class="op">=</span> np.sqrt(n)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>adag <span class="op">=</span> a.conj().T</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>number <span class="op">=</span> adag <span class="op">@</span> a</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>identity_field <span class="op">=</span> np.eye(nmax <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Opérateurs atomiques dans la base (|g&gt;, |e&gt;).</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>sigma_z <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>]], dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>sigma_plus <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">0</span>]], dtype<span class="op">=</span><span class="bu">complex</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>sigma_minus <span class="op">=</span> sigma_plus.conj().T</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>identity_atom <span class="op">=</span> np.eye(<span class="dv">2</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> (</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    omega_c <span class="op">*</span> np.kron(number, identity_atom)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> omega_a <span class="op">*</span> np.kron(identity_field, sigma_z)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> g <span class="op">*</span> (</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        np.kron(a, sigma_plus)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.kron(adag, sigma_minus)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>energies <span class="op">=</span> np.linalg.eigvalsh(H)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(energies[:<span class="dv">7</span>], <span class="dv">6</span>))</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Valeurs analytiques : état |g,0&gt;, puis les doublets n = 0, 1, 2.</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>analytic <span class="op">=</span> [<span class="op">-</span><span class="fl">0.5</span>]</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    analytic.extend([</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        (n <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">-</span> g <span class="op">*</span> np.sqrt(n <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        (n <span class="op">+</span> <span class="fl">0.5</span>) <span class="op">+</span> g <span class="op">*</span> np.sqrt(n <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(<span class="bu">sorted</span>(analytic), <span class="dv">6</span>))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>À la résonance, les résultats attendus sont</p>
+<p><span class="math display">\[
+E_{g,0}=-\frac12,
+\]</span></p>
+<p>puis</p>
+<p><span class="math display">\[
+E_{n,\pm}=n+\frac12\pm g\sqrt{n+1}.
+\]</span></p>
+<p>Pour le premier doublet,</p>
+<p><span class="math display">\[
+E_{0,\pm}=0.5\pm0.08,
+\]</span></p>
+<p>soit</p>
+<p><span class="math display">\[
+0.42 \quad \text{et} \quad 0.58.
+\]</span></p>
+<p>Pour le suivant,</p>
+<p><span class="math display">\[
+E_{1,\pm}=1.5\pm0.08\sqrt2,
+\]</span></p>
+<p>soit approximativement</p>
+<p><span class="math display">\[
+1.3869 \quad \text{et} \quad 1.6131.
+\]</span></p>
+<p>Dans l’espace exact, <span class="math inline">\(|e,N_{\max}\rangle\)</span> serait couplé à <span class="math inline">\(|g,N_{\max}+1\rangle\)</span>. Ce dernier état a été supprimé par la troncature. Le niveau situé au sommet du spectre numérique ne respecte donc pas la structure normale d’un doublet et doit être ignoré lors de la comparaison.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pour-aller-plus-loin" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="pour-aller-plus-loin"><span class="header-section-number">6</span> Pour aller plus loin</h2>
+<p>Le modèle peut être prolongé dans plusieurs directions :</p>
+<ul>
+<li>ajout des pertes de la cavité et de l’émission spontanée par une équation maîtresse ;</li>
+<li>conservation des termes contre-rotatifs dans le modèle quantique de Rabi ;</li>
+<li>interaction de plusieurs atomes avec un même mode dans le modèle de Tavis-Cummings ;</li>
+<li>couplage dispersif et lecture non destructive de l’état d’un qubit ;</li>
+<li>génération d’états non classiques du champ.</li>
+</ul>
+<p>Pour une présentation beaucoup plus complète, on pourra consulter la revue fournie avec ce chapitre : B. W. Shore et P. L. Knight, <em>The Jaynes-Cummings model</em>, Journal of Modern Optics <strong>40</strong> (1993), 1195-1238.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
