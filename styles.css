@@ -1,0 +1,763 @@
+/* Shared appearance for the whole site.
+   Edit the variables below to change colours and fonts in one place.
+   Course files contain the content and calculations, without local CSS. */
+
+:root {
+  --paper: #fafaf7;
+  --ink: #28332e;
+  --muted: #59655f;
+  --link: #305b70;
+  --line: #d8ddd6;
+  --soft: #f0f2ed;
+  --box-bg: #ededed;
+  --box-heading: #e2e2e2;
+  --box-border: #8a8a8a;
+  --box-text: #2b2b2b;
+  --control-ink: #505050;
+  --code-text: #252525;
+  --code-comment: #575757;
+  --plot-1: #305b70;
+  --plot-2: #8a5035;
+  --plot-3: #526d57;
+  --plot-4: #92534a;
+  --plot-5: #6c6374;
+  --plot-grid: rgba(127, 127, 127, 0.25);
+  --plot-contrast: #ffffff;
+  --plot-height: 250px;
+  --plot-height-mobile: 225px;
+  --plot-height-tall: 400px;
+  --plot-height-tall-mobile: 330px;
+  --body-size: 17px;
+  --body-leading: 1.75;
+  --code-size: 0.82rem;
+  --heading-size: 1.7rem;
+  --subheading-size: 1.18rem;
+  --corner: 2px;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  /* Web counterpart of LaTeX's newpxtext: a Palatino-style family. */
+  --serif: "Palatino Linotype", "Book Antiqua", Palatino, "TeX Gyre Pagella", Georgia, serif;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --plot-label-font: 11px var(--sans);
+  --plot-note-font: 12px var(--sans);
+  --plot-symbol-font: 600 14px var(--sans);
+  --bs-body-bg: var(--paper);
+  --bs-body-color: var(--ink);
+  --bs-body-font-family: var(--serif);
+  --bs-link-color: var(--link);
+  --bs-link-hover-color: #173b50;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--body-size);
+  line-height: var(--body-leading);
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.19em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: #173b50;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 4px;
+}
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+h1, h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h1.title {
+  font-size: clamp(2rem, 4vw, 2.65rem);
+}
+
+h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--heading-size);
+}
+
+h3 {
+  font-family: var(--serif);
+  font-size: var(--subheading-size);
+  font-weight: 600;
+}
+
+h4 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+#title-block-header {
+  margin-bottom: 2rem;
+}
+
+#title-block-header .subtitle {
+  max-width: 65ch;
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 1.06rem;
+  font-weight: 400;
+}
+
+/* Compact shared navigation; Quarto manages the mobile menu. */
+
+#quarto-header .navbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: none;
+  padding-block: 0.7rem;
+}
+
+#quarto-header .navbar-container {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+}
+
+#quarto-header .navbar-brand {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+#quarto-header .nav-link {
+  color: var(--muted);
+  font-size: 0.87rem;
+}
+
+#quarto-header .nav-link:hover,
+#quarto-header .nav-link.active {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+#quarto-header .navbar-toggler {
+  border-color: var(--line);
+  border-radius: 2px;
+}
+
+.nav-footer {
+  padding-block: 1.4rem;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.nav-footer a {
+  color: inherit;
+}
+
+/* Homepage: a reading list, without cards or decorative banners. */
+
+.home-page #title-block-header {
+  display: none;
+}
+
+.notes-home {
+  width: 100%;
+  max-width: 1000px;
+  margin: 1rem auto 3.5rem;
+}
+
+.home-intro {
+  max-width: 800px;
+  padding-top: 1rem;
+  margin-bottom: 3rem;
+}
+
+.home-intro h1 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+}
+
+.home-intro > p {
+  margin-bottom: 1.5rem;
+}
+
+.reading-note {
+  padding-left: 1rem;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.reading-note p:last-child {
+  margin-bottom: 0;
+}
+
+.notes-home h2 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0;
+  border: 0;
+  font-size: 1.6rem;
+}
+
+.catalogue-intro {
+  max-width: 76ch;
+  margin-bottom: 1.7rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.subject {
+  display: grid;
+  grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+  gap: 2rem;
+  padding-block: 1.6rem 0.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.subject-heading h3 {
+  margin: 0.15rem 0 1rem;
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-weight: 400;
+  text-wrap: wrap;
+}
+
+.reading-list {
+  min-width: 0;
+}
+
+.reading-list dl {
+  margin: 0;
+}
+
+.reading-list dt {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.reading-list .note-title {
+  text-decoration: none;
+}
+
+.reading-list .note-title:hover,
+.reading-list .note-title:focus-visible {
+  text-decoration: underline;
+}
+
+.reading-list dd {
+  margin: 0.2rem 0 1.5rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.reading-list dd p {
+  margin-bottom: 0.25rem;
+}
+
+.note-meta {
+  display: block;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.about-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.about-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 144px;
+  align-items: start;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.about-copy {
+  max-width: 70ch;
+}
+
+.profile-photo {
+  display: block;
+  width: 144px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.reuse-section {
+  max-width: 80ch;
+  margin-top: 2.2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.reuse-section h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.35rem;
+}
+
+/* Long-form notes: retain Quarto's equations, TOC and collapsible answers. */
+
+.sidebar nav[role="doc-toc"] {
+  font-size: 0.83rem;
+}
+
+.sidebar nav[role="doc-toc"] > ul {
+  display: block;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active {
+  color: var(--link);
+  border-left-color: var(--link);
+}
+
+#TOC .nav-link.active {
+  color: var(--link) !important;
+  border-left-color: var(--link);
+}
+
+/* One neutral treatment for historical notes and solutions.
+   This also removes the coloured borders/icons from older Quarto callouts. */
+
+#quarto-content div.callout {
+  margin-block: 1.4rem;
+  border: 1px solid var(--box-border) !important;
+  border-left-width: 3px !important;
+  border-radius: var(--corner);
+  background: var(--box-bg) !important;
+  color: var(--box-text);
+  box-shadow: none;
+}
+#quarto-content div.callout > .callout-header {
+  padding: 0.6rem 0.8rem;
+  border: 0;
+  background: var(--box-heading) !important;
+  color: var(--box-text);
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+#quarto-content .callout-icon-container {
+  display: none;
+}
+#quarto-content .callout-body {
+  padding: 0.7rem 0.9rem;
+  color: var(--box-text);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+#quarto-content .callout-body > :last-child {
+  margin-bottom: 0;
+}
+#quarto-content .callout-toggle {
+  color: var(--box-text);
+  filter: grayscale(1);
+}
+
+/* Python and other source code use the same grey background.
+   Folding is provided by Quarto; these rules only style its output. */
+
+pre, code, kbd, samp {
+  font-family: var(--mono);
+}
+pre {
+  max-width: 100%;
+  line-height: 1.55;
+}
+#quarto-content div.sourceCode {
+  margin-block: 0.8rem;
+  border: 1px solid var(--box-border);
+  border-radius: var(--corner);
+  background: var(--box-bg) !important;
+  color: var(--code-text);
+}
+#quarto-content div.sourceCode pre.sourceCode {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 0;
+  background: transparent !important;
+  font-size: var(--code-size);
+}
+#quarto-content code.sourceCode,
+#quarto-content code.sourceCode span {
+  color: var(--code-text);
+}
+#quarto-content code.sourceCode .co,
+#quarto-content code.sourceCode .an,
+#quarto-content code.sourceCode .cv {
+  color: var(--code-comment);
+  font-style: italic;
+}
+#quarto-content code.sourceCode .kw,
+#quarto-content code.sourceCode .cf,
+#quarto-content code.sourceCode .im {
+  font-weight: 600;
+}
+#quarto-content :not(pre) > code:not(.sourceCode) {
+  color: var(--code-text);
+  background: var(--box-bg);
+}
+details > summary {
+  color: var(--control-ink);
+  cursor: pointer;
+}
+#quarto-content details.code-fold {
+  margin-block: 1.2rem;
+  border: 1px solid var(--box-border);
+  border-radius: var(--corner);
+  background: var(--box-bg);
+}
+#quarto-content details.code-fold > summary {
+  padding: 0.55rem 0.8rem;
+  color: var(--box-text);
+  font-size: 0.88rem;
+}
+#quarto-content details.code-fold[open] > summary {
+  border-bottom: 1px solid var(--box-border);
+  background: var(--box-heading);
+}
+#quarto-content details.code-fold div.sourceCode {
+  margin: 0;
+  border: 0;
+}
+#quarto-content .code-copy-button {
+  color: var(--control-ink);
+}
+#quarto-content .figure-caption {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.2rem;
+}
+
+/* Keep long equations scrollable even before MathJax has loaded. */
+.math.display {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 16px;
+  }
+
+  #quarto-document-content table.table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .notes-home {
+    margin-top: 0.5rem;
+  }
+
+  .home-intro {
+    margin-bottom: 2.2rem;
+    padding-top: 0.5rem;
+  }
+
+  .subject {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+    padding-top: 1.3rem;
+  }
+
+  .subject-heading h3 {
+    font-size: 1.25rem;
+  }
+
+  .about-details {
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 1.25rem;
+  }
+
+  .profile-photo {
+    width: 112px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .about-portrait {
+    margin-top: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .notes-home {
+    max-width: none;
+    margin: 0;
+  }
+
+  .note-title {
+    color: black;
+  }
+}
+
+/* Shared simulation component: add .physics-simulation to its root.
+   Curves keep distinct colours; controls and panels remain neutral. */
+.physics-simulation {
+  --osc-blue: var(--plot-1);
+  --osc-orange: var(--plot-2);
+  --osc-green: var(--plot-3);
+  --osc-red: var(--plot-4);
+  --osc-purple: var(--plot-5);
+  --osc-ink: var(--ink);
+  --osc-muted: var(--muted);
+  --osc-line: var(--line);
+  --osc-soft: var(--box-bg);
+  --osc-grid: var(--plot-grid);
+  --osc-contrast: var(--plot-contrast);
+  margin: 1.5rem 0 2.2rem;
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--osc-line);
+  border-bottom: 1px solid var(--osc-line);
+  color: var(--osc-ink);
+  background: transparent;
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+.physics-simulation * { box-sizing: border-box; }
+.physics-simulation .lab-heading { margin-bottom: 1.25rem; }
+.physics-simulation .lab-heading h4 {
+  margin: 0 0 0.35rem;
+  color: var(--osc-ink);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.physics-simulation .lab-heading p {
+  margin: 0;
+  color: var(--osc-muted);
+  font-size: 0.8rem;
+}
+.physics-simulation .lab-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 2.3rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  background: transparent;
+}
+.physics-simulation .lab-control { min-width: 0; }
+.physics-simulation .lab-control label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-bottom: 0.05rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.physics-simulation .lab-control label > span { min-width: 0; }
+.physics-simulation .lab-control output {
+  flex-shrink: 0;
+  color: var(--osc-muted);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.physics-simulation input[type="range"] {
+  display: block;
+  width: 100%;
+  min-height: 24px;
+  margin: 0;
+  accent-color: var(--control-ink);
+  cursor: pointer;
+}
+.physics-simulation .lab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.85rem 0 1.15rem;
+}
+.physics-simulation button {
+  min-height: 36px;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--box-border);
+  border-radius: var(--corner);
+  color: var(--osc-ink);
+  background: transparent;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+.physics-simulation button.primary {
+  border-color: var(--control-ink);
+  color: var(--control-ink);
+  background: transparent;
+}
+.physics-simulation button:hover { background: var(--osc-soft); }
+.physics-simulation button:focus-visible,
+.physics-simulation input:focus-visible {
+  outline: 2px solid var(--control-ink);
+  outline-offset: 3px;
+}
+.physics-simulation .lab-readouts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 2.3rem;
+  margin: 0 0 1.3rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--osc-line);
+  border-bottom: 1px solid var(--osc-line);
+  font-size: 0.77rem;
+}
+.physics-simulation .lab-readout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: baseline;
+  gap: 0.7rem;
+  min-width: 0;
+}
+.physics-simulation .lab-readout dt {
+  margin: 0;
+  color: var(--osc-muted);
+  font-weight: 400;
+}
+.physics-simulation .lab-readout dd {
+  margin: 0;
+  color: var(--osc-ink);
+  font-variant-numeric: tabular-nums;
+}
+.physics-simulation .canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+.physics-simulation .canvas-card {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.physics-simulation .canvas-card.wide { grid-column: 1 / -1; }
+.physics-simulation .canvas-title {
+  margin: 0 0 0.3rem;
+  color: var(--osc-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.physics-simulation canvas {
+  display: block;
+  width: 100%;
+  height: var(--plot-height);
+}
+.physics-simulation .lab-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.1rem;
+  margin-top: 0.35rem;
+  color: var(--osc-muted);
+  font-size: 0.74rem;
+}
+.physics-simulation .legend-line::before {
+  content: "";
+  display: inline-block;
+  width: 1.3rem;
+  margin-right: 0.4rem;
+  border-top: 2px solid var(--legend-color);
+  vertical-align: middle;
+}
+.physics-simulation .legend-dashed::before { border-top-style: dashed; }
+.physics-simulation .lab-help {
+  margin: 1.2rem 0 0;
+  color: var(--osc-muted);
+  font-size: 0.79rem;
+}
+@media (max-width: 650px) {
+  .physics-simulation .lab-controls,
+  .physics-simulation .lab-readouts,
+  .physics-simulation .canvas-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .physics-simulation .lab-controls { gap: 0.6rem; }
+  .physics-simulation .lab-readout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+  .physics-simulation .canvas-card.wide { grid-column: auto; }
+  .physics-simulation canvas { height: var(--plot-height-mobile); }
+}
+
+.physics-simulation .legend-primary { --legend-color: var(--plot-1); }
+.physics-simulation .legend-secondary { --legend-color: var(--plot-2); }
+.physics-simulation .legend-reference { --legend-color: var(--plot-5); }
+
+
+/* Dropdowns and rotatable views, shared by course simulations. */
+.physics-simulation select {
+  display: block;
+  width: 100%;
+  min-height: 34px;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--box-border);
+  border-radius: var(--corner);
+  color: var(--ink);
+  background: var(--paper);
+  font: inherit;
+  font-size: 0.8rem;
+}
+.physics-simulation select:focus-visible {
+  outline: 2px solid var(--control-ink);
+  outline-offset: 3px;
+}
+.physics-simulation button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.physics-simulation canvas.canvas-tall { height: var(--plot-height-tall); }
+.physics-simulation canvas.canvas-3d { cursor: grab; touch-action: none; }
+.physics-simulation canvas.canvas-3d.dragging { cursor: grabbing; }
+@media (max-width: 650px) {
+  .physics-simulation canvas.canvas-tall { height: var(--plot-height-tall-mobile); }
+}
